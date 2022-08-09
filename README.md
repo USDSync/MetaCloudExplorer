@@ -7,14 +7,17 @@ CloudArchitect.live
 ![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/meta_cloud_explorer.png)
 
 
-Quickly connect to your Cloud Infrastructure and visualize it in the Omniverse!
+Quickly connect to your Cloud Infrastructure and visualize it in the Omniverse!*
+
 This extension generates digital models of your Cloud Infrastructure that can be used to gain insights to drive better infrastructure, optimized resources, reduced costs, and breakthrough customer experiences.
 
-*Only works with Microsoft Azure Cloud currently*
+**Only works with Microsoft Azure Cloud currently*
 
 # Enable the extension
 
-Look for "cloud.explorer.azure" extension in extension manager and enable it. 
+Pull this repo to your local machine, add the path to the extension to your Extensions Search Path in Omniverse Code:  <local folder>/metacloudexplorer/exts
+
+Look for "meta.cloud.explorer.azure" extension in extension manager and enable it. 
 
 Alternatively, you can launch your app from console with this folder added to search path and your extension enabled, e.g.:
 
@@ -22,7 +25,7 @@ Alternatively, you can launch your app from console with this folder added to se
 
 # Azure API App Link Setup
 
-This extension lets you easily load and explore a representation of your Cloud Infrastructure as a Digital Twin in the Omniverse. This extension can connect to the Azure Resource Manager API to access your Azure Infrastructure. A read-only account can be utilized to ensure infrastructure security.  * Write-options are also avaialable, see Template View.
+This extension lets you easily load and explore a representation of your Cloud Infrastructure in the Omniverse. This extension can connect to the Azure Resource Manager API to access your Azure Infrastructure. A read-only account can be utilized to ensure infrastructure security.  See the wiki page for more info on creating an account.
 
 Steps to Connect:
 1. Create an Azure AAD Application to act as a Service principal to read your Azure resources.
@@ -34,10 +37,9 @@ Steps to Connect:
 
 # Azure 3D Objects
 
-The Azure 3D Icon set is a derivative work, created by several artists to help bring the needed visual context into the Meta Cloud Explorer.  The application code includes an Object Resource Map that maps Azure Objects to their corresponding 3D objects.  By default these can use Cubes or other primitive shapes.  see: cloudarchitect.live/cloud/explorer/azure/resource_map.py  
+The Azure 3D Icon set is a derivative work, created by several artists to help bring the needed visual context into the Meta Cloud Explorer.  The application code includes an Object Resource Map that maps Azure Objects to their corresponding 3D object assets.  By default these can use Cubes or other primitive shapes.  see: cloudarchitect.live/cloud/explorer/azure/resource_map.py
 
-* The icon set is not yet publicly available pending permission copyright from Microsoft.
-
+**The icon set is not yet publicly available pending copyright permission from Microsoft.*
 
 # Disconnected mode
 
@@ -51,14 +53,14 @@ Due to some technical issues with the Azure / Python / OmniVerse Create API inte
 
 API working in Code 2021.1.1
 
-API NOT WORKING in Code 2021.1.2 and 2021.1.3
+API NOT WORKING in Code 2021.1.2 and 2021.1.3!
 
 # Welcome to The Future of Cloud Architecture!
 
-You can also create resources in Azure from the OmniVerse!  
-This extension gives you the ability to create and model your environment and then create it in your Azure Cloud!
+You can also create resources in Azure from the OmniVerse! 
+This extension gives you the ability to create and model your environment in a metaverse and then create it in your Azure Cloud!
 
-Review Templates, Architectures, Design Patterns and create them in your real cloud from the Onmiverse environment.  
+Review Templates, Architectures, Design Patterns and then create them for real in your cloud directly from the Onmiverse environment.  
 
 This feature is an alpha and not ready for general use.
 Load the Template view to check it out!
