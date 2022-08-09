@@ -3,20 +3,20 @@
 version = "1.0.0"
 
 # The title and description fields are primarily for displaying extension info in UI
-title = "CloudArchitect.LIVE - Azure Cloud Explorer"
+title = "CloudArchitect.LIVE - Cloud Explorer (Azure edition)"
 description="A scene authoring tool to visualize your Azure Infrastructure in your own private Onmiverse!"
 
 # Path (relative to the root) or content of readme markdown file for UI.
 readme  = "docs/README.md"
 
 # URL of the extension source repository.
-repository = ""
+repository = "https://github.com/CloudArchitectLive/AzureCloudExplorer"
 
 # One of categories for UI.
 category = "Cloud"
 
 # Keywords for the extension
-keywords = ["Azure", "CloudArchitect.live", "VR", "scene authoring tools"]
+keywords = ["Azure", "CloudArchitect.live", "Cloud Explorer (Azure)", "scene authoring tools"]
 
 # Use omni.ui to build simple UI
 [dependencies]
@@ -30,6 +30,6 @@ requirements = [
      "azure-mgmt-core"
 ]
 
-# Main python module this extension provides, it will be publicly available as "import cloud.architect.live".
+# Main python module this extension provides, it will be publicly available as "import cloud.explorer.azure".
 [[python.module]]
-name = "cloud.architect.live"
+name = "cloud.explorer.azure"

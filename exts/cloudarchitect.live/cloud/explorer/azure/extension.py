@@ -31,11 +31,11 @@ class AzureDigitalTwinExtension(omni.ext.IExt):
     # ext_id is current extension id. It can be used with extension manager to query additional information, like where
     # this extension is located on filesystem.
 
-    WINDOW_NAME = "Azure Cloud Digital Twin"
+    WINDOW_NAME = "Cloud Explorer (Azure)"
     MENU_PATH = f"Window/{WINDOW_NAME}"
 
     def on_startup(self, ext_id):
-        carb.log_info(f"[Endiverse.azure.twin]] AzureDigitalTwinExtension startup")
+        carb.log_info(f"[cloud.explorer.azure]] Cloud Explorer startup")
 
         Model = SubscriptionModel(company)
         RGModel = ResourceGroupModel(company)
@@ -55,7 +55,7 @@ class AzureDigitalTwinExtension(omni.ext.IExt):
         ui.Workspace.show_window(AzureDigitalTwinExtension.WINDOW_NAME)
 
     def on_shutdown(self):
-        carb.log_info(f"[Endiverse.azure.twin]] AzureDigitalTwinExtension shutdown")
+        carb.log_info(f"[cloud.explorer.azure]] Cloud Explorer shutdown")
         
         self._menu = None
         if self._window:

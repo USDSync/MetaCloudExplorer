@@ -1,8 +1,8 @@
 # # Import the needed credential and management objects from the libraries.
 
 
-from azure.mgmt.resource import ResourceManagementClient
-from azure.identity import AzureCliCredential
+#from azure.mgmt.resource import ResourceManagementClient
+#from azure.identity import AzureCliCredential
 # import os
 
 # # Acquire a credential object using CLI-based authentication.

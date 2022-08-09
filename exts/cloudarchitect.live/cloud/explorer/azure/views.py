@@ -27,7 +27,7 @@ class MainView(ui.Window):
 
     def __init__(self, submodel: SubscriptionModel, rgmodel: ResourceGroupModel, rsmodel: ResourceModel, root_path):
 
-        self._window = ui.Window("Azure Cloud Digital Twin", width=800, height=600, dockPreference=ui.DockPreference.RIGHT_TOP)
+        self._window = ui.Window("Cloud Explorer (Azure)", width=800, height=600, dockPreference=ui.DockPreference.RIGHT_TOP)
         self._window.visible = True
         self._groundPlaneAdded = False
         self._company_model = ComboBoxModel("Company1", "SolidCloud")
@@ -38,31 +38,30 @@ class MainView(ui.Window):
         
         with self._window.frame:
             with ui.VStack(height=150):
-                ui.Label("Azure Cloud Digital Twin", style={"color": 0xFF008976, "font_size":36}, alignment=ui.Alignment.CENTER, height=0)
-                ui.Button("Connect", clicked_fn=lambda: load_account_info(self))
+                ui.Label("Cloud Explorer (Azure)", style={"color": 0xFF008976, "font_size":36}, alignment=ui.Alignment.CENTER, height=0)
                 ui.Line(style={"color": 0xff00b976}, height=20)
 
                 with ui.HStack(style=button_styles):
-                    ui.Button("Load Subscriptions", clicked_fn=lambda: load_subscriptions(self), name="subs", height=14)
-                    ui.Button("Load Resource Groups", clicked_fn=lambda: load_resource_groups(self), name="rg", height=14)
-                    ui.Button("Load All Resources", clicked_fn=lambda: load_all_resources(self), name="rs", height=14)
+                    ui.Button("Load Subscriptions", clicked_fn=lambda: load_subscriptions(self), name="subs", height=15)
+                    ui.Button("Load Resource Groups", clicked_fn=lambda: load_resource_groups(self), name="rg", height=15)
+                    ui.Button("Load All Resources", clicked_fn=lambda: load_all_resources(self), name="rs", height=15)
 
                 with ui.HStack():
-                    ui.Button("Network View", clicked_fn=lambda: on_network(), height=10)
-                    ui.Button("Resource View", clicked_fn=lambda: on_resource(), height=10)
-                    ui.Button("Cost View", clicked_fn=lambda: on_cost(), height=10)
+                    ui.Button("Network View", clicked_fn=lambda: on_network(), height=15)
+                    ui.Button("Resource View", clicked_fn=lambda: on_resource(), height=15)
+                    ui.Button("Cost View", clicked_fn=lambda: on_cost(), height=15)
 
                 ui.Line(style={"color": 0xff00b976}, height=20)
 
                 with ui.HStack():
-                    ui.Button("Clear Stage", clicked_fn=lambda: clear_stage(), height=10)
-                    ui.Button("Add Ground", clicked_fn=lambda: create_ground_plane(), height=10)
-                    ui.Button("Create Resources", clicked_fn=lambda: test(), height=10)
+                    ui.Button("Clear Stage", clicked_fn=lambda: clear_stage(), height=15)
+                    ui.Button("Add Ground", clicked_fn=lambda: create_ground_plane(), height=15)
+                    ui.Button("Create Resources", clicked_fn=lambda: test(), height=15)
                
                 with ui.HStack():
-                    ui.Button("Group By Type", clicked_fn=lambda: on_group(), height=10)
-                    ui.Button("Group By Region", clicked_fn=lambda: on_group(), height=10)
-                    ui.Button("Group By Group", clicked_fn=lambda: on_group(), height=10)
+                    ui.Button("Group By Type", clicked_fn=lambda: on_group(), height=15)
+                    ui.Button("Group By Region", clicked_fn=lambda: on_group(), height=15)
+                    ui.Button("Group By Group", clicked_fn=lambda: on_group(), height=15)
 
                 ui.Line(style={"color": 0xff00b976}, height=20)
 
@@ -100,6 +99,7 @@ class MainView(ui.Window):
                         self._client = ui.StringField()
                         ui.Label("Client Secret")
                         self._secret = ui.StringField()
+                        ui.Button("Connect", clicked_fn=lambda: load_account_info(self))
 
                 def load_account_info():
                     print("HI")
