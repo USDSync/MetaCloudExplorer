@@ -1,5 +1,5 @@
 # Cloud Explorer (Azure edition)
-# NVIDIA Onmiverse Extension Scene Authoring Tool
+# NVIDIA Onmiverse Extension, A Scene Authoring Tool
 
 CloudArchitect.live
 (In Alpha Development phase)
