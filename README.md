@@ -4,6 +4,9 @@
 CloudArchitect.live
 (In Alpha Development phase)
 
+![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/meta_cloud_explorer.png)
+
+
 Quickly connect to your Cloud Infrastructure and visualize it in the Omniverse!
 This extension generates digital models of your Cloud Infrastructure that can be used to gain insights to drive better infrastructure, optimized resources, reduced costs, and breakthrough customer experiences.
 
