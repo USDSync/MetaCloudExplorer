@@ -74,9 +74,9 @@ class MainView(ui.Window):
                     ui.Button("Code", clicked_fn=lambda: on_code(), height=15)
                     ui.Button("Help", clicked_fn=lambda: on_help(), height=15)
 
-                with ui.CollapsableFrame("Data Files", name="files"):
+                with ui.CollapsableFrame("Offline Data Files", name="files"):
                     with ui.VStack():
-                        ui.Label("Subs file path:", height=10, width=120)             
+                        ui.Label("Subscriptions file path:", height=10, width=120)             
                         with ui.HStack():
                             self.sub_field = ui.StringField(height=10)
                             self.sub_field.enabled = False
@@ -84,7 +84,7 @@ class MainView(ui.Window):
                             submodel.csv_field_model = self.sub_field.model
                             ui.Button("Load", width=40, clicked_fn=lambda: submodel.select_file())
                         
-                        ui.Label("RG  file path:", height=10, width=120)             
+                        ui.Label("Resource Groups file path:", height=10, width=120)             
                         with ui.HStack():
                             self.rg_field = ui.StringField(height=10)
                             self.rg_field.enabled = False
@@ -92,7 +92,7 @@ class MainView(ui.Window):
                             rgmodel.csv_field_model = self.rg_field.model
                             ui.Button("Load", width=40,clicked_fn=lambda: rgmodel.select_file())
                 
-                        ui.Label("Resources file path:", height=10, width=120)             
+                        ui.Label("All Resources file path:", height=10, width=120)             
                         with ui.HStack():
                             self.rs_field = ui.StringField(height=10)
                             self.rs_field.enabled = False
