@@ -1,4 +1,4 @@
-# Meta Cloud Explorer (Azure edition)
+# Meta Cloud Explorer (Azure)
 # NVIDIA Onmiverse Extension, a Scene Authoring Tool
 
 CloudArchitect.live
