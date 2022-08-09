@@ -1,11 +1,13 @@
-# Cloud Explorer (Azure edition)
-# NVIDIA Onmiverse Extension, A Scene Authoring Tool
+# Meta Cloud Explorer (Azure edition)
+# NVIDIA Onmiverse Extension, a Scene Authoring Tool
 
 CloudArchitect.live
 (In Alpha Development phase)
 
-Quickly connect to your Azure Cloud Infrastructure and visualize it in the Omniverse!
-This extension generates digital models of your Azure Cloud Infrastructure that can be used to gain insights to drive better infrastructure, optimized resources, reduced costs, and breakthrough customer experiences.
+Quickly connect to your Cloud Infrastructure and visualize it in the Omniverse!
+This extension generates digital models of your Cloud Infrastructure that can be used to gain insights to drive better infrastructure, optimized resources, reduced costs, and breakthrough customer experiences.
+
+*Only works with Microsoft Azure Cloud currently*
 
 # Enable the extension
 
@@ -60,3 +62,10 @@ Load the Template view to check it out!
 
 The roadmap is long, but full of amazing potential!
 
+# Development Roadmap
+
+Azure - In development
+AWS - future
+GCP - future
+Others...
+Terraform integration
