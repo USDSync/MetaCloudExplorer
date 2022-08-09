@@ -47,6 +47,18 @@ class MainView(ui.Window):
                     ui.Button("Load All Resources", clicked_fn=lambda: load_all_resources(self), name="rs", height=15)
 
                 with ui.HStack():
+                    ui.Button("Clear Stage", clicked_fn=lambda: clear_stage(), height=15)
+                    ui.Button("Add Ground", clicked_fn=lambda: create_ground_plane(), height=15)
+                    ui.Button("Create Resources", clicked_fn=lambda: test(), height=15)
+
+                ui.Line(style={"color": 0xff00b976}, height=20)
+               
+                with ui.HStack():
+                    ui.Button("Group By Type", clicked_fn=lambda: on_group(), height=15)
+                    ui.Button("Group By Region", clicked_fn=lambda: on_group(), height=15)
+                    ui.Button("Group By Group", clicked_fn=lambda: on_group(), height=15)
+
+                with ui.HStack():
                     ui.Button("Network View", clicked_fn=lambda: on_network(), height=15)
                     ui.Button("Resource View", clicked_fn=lambda: on_resource(), height=15)
                     ui.Button("Cost View", clicked_fn=lambda: on_cost(), height=15)
@@ -54,16 +66,9 @@ class MainView(ui.Window):
                 ui.Line(style={"color": 0xff00b976}, height=20)
 
                 with ui.HStack():
-                    ui.Button("Clear Stage", clicked_fn=lambda: clear_stage(), height=15)
-                    ui.Button("Add Ground", clicked_fn=lambda: create_ground_plane(), height=15)
-                    ui.Button("Create Resources", clicked_fn=lambda: test(), height=15)
-               
-                with ui.HStack():
-                    ui.Button("Group By Type", clicked_fn=lambda: on_group(), height=15)
-                    ui.Button("Group By Region", clicked_fn=lambda: on_group(), height=15)
-                    ui.Button("Group By Group", clicked_fn=lambda: on_group(), height=15)
-
-                ui.Line(style={"color": 0xff00b976}, height=20)
+                    ui.Button("Docs", clicked_fn=lambda: on_docs(), height=15)
+                    ui.Button("Code", clicked_fn=lambda: on_code(), height=15)
+                    ui.Button("Help", clicked_fn=lambda: on_help(), height=15)
 
                 # with ui.CollapsableFrame("Data Files", name="files"):
                 #     with ui.VStack():
