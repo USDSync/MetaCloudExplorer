@@ -42,12 +42,15 @@ API working in Code 2021.1.1
 
 API NOT WORKING in Code 2021.1.2 and 2021.1.3
 
-# Welcome to The Future of Azure Cloud Architecture
+# Welcome to The Future of Cloud Architecture!
 
-You can also create resources in Azure from the OmniVerse!  This extension gives you the ability to create and model your environment and then create it in your Azure Cloud!
+You can also create resources in Azure from the OmniVerse!  
+This extension gives you the ability to create and model your environment and then create it in your Azure Cloud!
 
 Review Templates, Architectures, Design Patterns and create them in your real cloud from the Onmiverse environment.  
 
 This feature is an alpha and not ready for general use.
 Load the Architect view to check it out!
+
+The roadmap is long, but full of amazing potential!
 
