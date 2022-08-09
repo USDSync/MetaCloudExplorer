@@ -21,7 +21,8 @@ from omni.ui import color as cl
 from .resource_map import shape_usda_name
 
 CURRENT_PATH = Path(__file__).parent
-DATA_PATH = CURRENT_PATH.parent.parent.parent.joinpath("data\export")
+DATA_PATH = CURRENT_PATH.parent.parent.parent.parent.joinpath("data\export")
+
 
 class ResourceModel():
     def __init__(self, company):

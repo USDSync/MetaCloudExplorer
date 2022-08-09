@@ -18,12 +18,11 @@ from omni.ui import scene as sc
 from omni.ui import color as cl
 
 from .resource_map import shape_usda_name
-from .data_model import DataModelFactory
 
 CURRENT_PATH = Path(__file__).parent
-DATA_PATH = CURRENT_PATH.parent.parent.parent.joinpath("data\export")
+DATA_PATH = CURRENT_PATH.parent.parent.parent.parent.joinpath("data\export")
 
-class SubscriptionModel():
+class ResourceGroupModel():
     def __init__(self, company):
         
         #root prim paths
@@ -31,19 +30,14 @@ class SubscriptionModel():
         self.root_path = '/World'
         self.aad_layer_root_path = '/AAD'
         self.sub_layer_root_path = '/SUB'
+        self.rg_layer_root_path = '/RG'
         
         # stage_unit defines the number of unit per meter
         self.stage_unit_per_meter = 1
 
-        #self.dataFactory = DataModelFactory(DATA_PATH, company)
-
         # Default CSV Path (sample file deployed with extension)
-        #self.csv_file_path = DATA_PATH.joinpath(company + '_Subs.csv')
-        
-        # path to basic shape
-        #self.aad_shape_file_path = "omniverse://localhost/Resources/AzureAAD_1_1.usda"
-        #self.sub_shape_file_path = "omniverse://localhost/Resources/Subscriptions_1_3.usda"
-        
+        self.csv_file_path = DATA_PATH.joinpath(company + '_Groups.csv')
+
         # Scale factor so that the shapes are well spaced
         self.scale_factor = 1.0
 
@@ -72,44 +66,6 @@ class SubscriptionModel():
         light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
         light_prim.CreateIntensityAttr(2500.0)
 
-        #Add AAD Instance
-         # root prim
-        cluster_prim_path = self.root_path                  
-        cluster_prim = stage.GetPrimAtPath(cluster_prim_path)
-
-        # create the prim if it does not exist
-        if not cluster_prim.IsValid():
-            UsdGeom.Xform.Define(stage, cluster_prim_path)
-            
-        shape_prim_path = cluster_prim_path + '/AAD_' + self.company
-
-        # Create prim to add the reference to.
-        ref_shape = stage.OverridePrim(shape_prim_path)
-
-        # Add the reference
-        ref_shape.GetReferences().AddReference(shape_usda_name["AAD"])
-                        
-        # Get mesh from shape instance
-        next_shape = UsdGeom.Mesh.Get(stage, shape_prim_path)
-
-        # Set location at home point
-        next_shape.AddTranslateOp().Set(
-            Gf.Vec3f(
-                self.scale_factor*0, 
-                self.scale_factor*0,
-                self.scale_factor*0))
-
-         # Label
-        with sc.Transform(look_at=sc.Transform.LookAt.CAMERA):
-            with sc.Transform(scale_to=sc.Space.SCREEN):
-            # Move it 5 points more to the top in the screen space
-                with sc.Transform(transform=sc.Matrix44.get_translation_matrix(0, 0, 0)):
-                    sc.Label("Test", alignment=ui.Alignment.CENTER_BOTTOM)
-
-        #load the sub data
-        #self.dataFactory.loaddata()
-        #print(self.dataFactory.group_count_by_location())
-
         # check that CSV exists
         if os.path.exists(self.csv_file_path):
             # Read CSV file
@@ -121,14 +77,13 @@ class SubscriptionModel():
                 #   Don't read more than the max number of elements
                 #   Create the shape with the appropriate color at each coordinate
                 for row in itertools.islice(csv_reader, 1, self.max_elements):
-                    id = row[0]
-                    name = row[1]
-                    desc = row[2]
-                    parent = row[3]
-                    count = row[4]
-                    x = float(row[5])
-                    y = float(row[6])
-                    z = float(row[7])
+                    name = row[0]
+                    subs = row[1]
+                    location = row[2]
+                    count = row[3]
+                    x = float(row[4])
+                    y = float(row[5])
+                    z = float(row[6])
                     
                     if (name == "Total"):
                         continue;
@@ -141,15 +96,22 @@ class SubscriptionModel():
                     if not cluster_prim.IsValid():
                         UsdGeom.Xform.Define(stage, cluster_prim_path)
                         
-                    shape_prim_path = cluster_prim_path + '/SUB_' + name
+                    name = name.replace(" ", "_")
+                    name = name.replace("/", "_")
+                    name = name.replace("-", "_")
+
+                    shape_prim_path = cluster_prim_path + self.rg_layer_root_path + '_' + name + '_' + str(i)
                     shape_prim_path = shape_prim_path.replace(" ", "_")
                     shape_prim_path = shape_prim_path.replace(".", "_")
+                    shape_prim_path = shape_prim_path.replace("-", "_")
+
+                    print(shape_prim_path)
 
                     # Create prim to add the reference to.
-                    ref_shape = stage.DefinePrim(shape_prim_path)
+                    ref_shape = stage.OverridePrim(shape_prim_path)
 
                     # Add the reference
-                    ref_shape.GetReferences().AddReference(str(self.sub_shape_file_path))
+                    ref_shape.GetReferences().AddReference(shape_usda_name["Resource Group"])
                                     
                     # Get mesh from shape instance
                     next_shape = UsdGeom.Mesh.Get(stage, shape_prim_path)
@@ -160,6 +122,8 @@ class SubscriptionModel():
                             self.scale_factor*x, 
                             self.scale_factor*y,
                             self.scale_factor*z))
+
+                    i = i+1
 
                     # Set Color
                    #next_shape.GetDisplayColorAttr().Set(

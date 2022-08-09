@@ -35,11 +35,10 @@ class MainView(ui.Window):
         self._window = ui.Window("Meta Cloud Explorer (Azure)", width=800, height=600, dockPreference=ui.DockPreference.RIGHT_TOP)
         self._window.visible = True
         self._groundPlaneAdded = False
-        self._company_model = ComboBoxModel("Company1", "SolidCloud")
+        #self._company_model = ComboBoxModel("Company1", "SolidCloud")
 
         self._usd_context = omni.usd.get_context()
         self.root_path = root_path
-        submodel.csv_field_model = None
         
         with self._window.frame:
             with ui.VStack(height=150):
@@ -115,9 +114,18 @@ class MainView(ui.Window):
         # Function Definitions
         #___________________________________________________________________________________________________
 
-                def load_account_info():
+                def on_docs():
                     print("HI")
-                
+
+                def on_code():
+                    print("HI")
+
+                def on_help():
+                    print("HI")
+
+                def load_account_info(self):
+                    print("HI")
+
                 def on_resource():
                      stage_ref = self._usd_context.get_stage()
 
@@ -206,24 +214,7 @@ class MainView(ui.Window):
                         
                         xform_op_tranlsate.Set(Gf.Vec3d([(2 * random.random() - 1) * 200 for _ in range(3)]))
 
-                        # cube_prim = stage.GetPrimAtPath("/World/Cube")
-                        # xform = UsdGeom.Xformable(cube_prim)
-                        # transform = xform.AddTransformOp()
-                        # mat = Gf.Matrix4d()
-                        # mat.SetTranslateOnly(Gf.Vec3d(10.0,1.0,1.0))
-                        # mat.SetRotateOnly(Gf.Rotation(Gf.Vec3d(0,1,0), 290))
-                        # transform.Set(mat)
-                        # stage_ref = Usd.Stage.Open(path + 'cube.usda')
-
-                        # # Get a reference to the Xform instance as well as a generic Prim instance
-                        # prim = stage_ref.GetPrimAtPath('/Cube-01')
-
-                        # print(prim.GetName()) # Prints "sphere"
-                        # print(prim.GetPrimPath()) # Prints "/sphere"
-
-                        # path = "objects"
-                        # stage = Usd.Stage.CreateNew(path + 'cube.usd')
-
+                    #get the total count    
                     rgcount = counter
 
                     # Print out the stage
@@ -244,53 +235,6 @@ class MainView(ui.Window):
                     ground_prim = stage.GetPrimAtPath('/GroundPlane')
                     if (ground_prim.IsValid()):
                         stage.RemovePrim('/GroundPlane')                    
-
-                def load_aad_prim(name):
-                    stage_ref = self._usd_context.get_stage() 
-                    path = "/World/{}".format(name)
-                    prim = stage_ref.DefinePrim(path)
-                    prim.GetReferences().AddReference("omniverse://localhost/Resources/AzureAAD_1.1.usd")
-                    
-                    #xform_op_tranlsate = UsdGeom.XformOp(prim.GetAttribute("xformOp:translate"))
-                    #xform_op_tranlsate.Set(Gf.Vec3d([(2 * random.random() - 1) * 200 for _ in range(3)]))
-
-                def load_sql_prim(name):
-                    stage_ref = self._usd_context.get_stage() 
-                    path = "/World/{}".format(name)
-                    prim = stage_ref.DefinePrim(path)
-                    prim.GetReferences().AddReference("omniverse://localhost/Resources/SQLServer_6.0.usd")
-                    
-                    #xform_op_tranlsate = UsdGeom.XformOp(prim.GetAttribute("xformOp:translate"))
-                    #xform_op_tranlsate.Set(Gf.Vec3d([(2 * random.random() - 1) * 200 for _ in range(3)]))
-
-                def load_app_prim(name):
-                    stage_ref = self._usd_context.get_stage() 
-                    path = "/World/{}".format(name)
-                    prim = stage_ref.DefinePrim(path)
-                    prim.GetReferences().AddReference("omniverse://localhost/Resources/AppServices_1.2.usd")
-                    
-
-                def load_rg_prim(name):
-                    stage_ref = self._usd_context.get_stage() 
-                    path = "/World/{}".format(name)
-                    prim = stage_ref.DefinePrim(path)
-                    prim.GetReferences().AddReference("omniverse://localhost/Resources/ResourceGroups_1.2.usd")
-
-                    #xform_op_tranlsate = UsdGeom.XformOp(prim.GetAttribute("xformOp:translate"))
-                    #xform_op_tranlsate.Set(Gf.Vec3d([(2 * random.random() - 1) * 200 for _ in range(3)]))
-
-                def load_stg_prim(name):
-                    stage_ref = self._usd_context.get_stage() 
-                    path = "/World/{}".format(name)
-                    prim = stage_ref.DefinePrim(path)
-                    prim.GetReferences().AddReference("omniverse://localhost/Resources/StorageAccounts_2.8.usd")
-
-                def load_sub_prim(name):
-                    stage_ref = self._usd_context.get_stage() 
-                    path = "/World/{}".format(name)
-                    prim = stage_ref.DefinePrim(path)
-                    prim.GetReferences().AddReference("omniverse://localhost/Resources/Subscriptions_1.3.usd")
-
 
 
                 #Create the Ground

@@ -1,19 +1,18 @@
 [package]
-# Semantic Versionning is used: https://semver.org/
-version = "1.0.0"
-
-# The title and description fields are primarily for displaying extension info in UI
-title = "CloudArchitect.LIVE - Meta Cloud Explorer (Azure edition)"
+title = "Meta Cloud Explorer (Azure edition)"
 description="A scene authoring tool to help visualize your Azure Infrastructure in your own private Onmiverse!"
+version = "1.0.0"
+category = "Simulation"
+authors = ["CloudArchitect.live"]
+#preview_image = "data/inspector_full.png"
+icon = "data/resources/meta_cloud_explorer.png"
 
 # Path (relative to the root) or content of readme markdown file for UI.
 readme  = "docs/README.md"
+changelog = "docs/CHANGELOG.md"
 
 # URL of the extension source repository.
-repository = "https://github.com/CloudArchitectLive/AzureCloudExplorer"
-
-# One of categories for UI.
-category = "Cloud"
+repository = "https://github.com/CloudArchitectLive/MetaCloudExplorer"
 
 # Keywords for the extension
 keywords = ["Azure", "CloudArchitect.live", "Meta Cloud Explorer (Azure)", "scene authoring tools"]
@@ -30,6 +29,6 @@ requirements = [
      "azure-mgmt-core"
 ]
 
-# Main python module this extension provides, it will be publicly available as "import cloud.explorer.azure".
+# Main python module this extension provides, it will be publicly available as "import meta.cloud.explorer.azure".
 [[python.module]]
-name = "cloud.explorer.azure"
+name = "meta.cloud.explorer.azure"

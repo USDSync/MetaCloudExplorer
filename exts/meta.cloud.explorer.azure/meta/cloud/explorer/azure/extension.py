@@ -16,46 +16,52 @@ import omni.kit.pipapi
 sys.path.append("D:/python37/lib/site-packages")
 #print(sys.modules.keys())
 
-omni.kit.pipapi.install("azure-identity", module="azure-identity", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
-omni.kit.pipapi.install("azure-mgmt-resource", module="azure-mgmt-resource", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
+#omni.kit.pipapi.install("azure-identity", module="azure-identity", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
+#omni.kit.pipapi.install("azure-mgmt-resource", module="azure-mgmt-resource", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
 
 company = "Company1"
 
-from azure.mgmt.resource import ResourceManagementClient
-from azure.identity import AzureCliCredential
+#from azure.mgmt.resource import ResourceManagementClient
+#from azure.identity import AzureCliCredential
 
 # Any class derived from `omni.ext.IExt` in top level module (defined in `python.modules` of `extension.toml`)
 # will be instantiated when extension gets enabled and `on_startup(ext_id)` will be called.
 # Later when extension gets disabled on_shutdown() is called
-class AzureDigitalTwinExtension(omni.ext.IExt):
+class MetaCloudExplorerAzure(omni.ext.IExt):
     # ext_id is current extension id. It can be used with extension manager to query additional information, like where
     # this extension is located on filesystem.
 
-    WINDOW_NAME = "Cloud Explorer (Azure)"
+    WINDOW_NAME = "Meta Cloud Explorer (Azure)"
     MENU_PATH = f"Window/{WINDOW_NAME}"
 
     def on_startup(self, ext_id):
-        carb.log_info(f"[cloud.explorer.azure]] Cloud Explorer startup")
+        carb.log_info(f"[meta.cloud.explorer.azure]] Meta Cloud Explorer startup")
 
         Model = SubscriptionModel(company)
+        carb.log_info(f"[meta.cloud.explorer.azure]] After SubscriptionModel")
         RGModel = ResourceGroupModel(company)
+        carb.log_info(f"[meta.cloud.explorer.azure]] After ResourceGroupModel")
         RSModel = ResourceModel(company)
+
         self._window = MainView(Model, RGModel, RSModel, '/World')
 
-        ui.Workspace.set_show_window_fn(AzureDigitalTwinExtension.WINDOW_NAME, partial(self.show_window, None))
+        carb.log_info(f"[meta.cloud.explorer.azure]] After ResourceModel")
+
+        ui.Workspace.set_show_window_fn(MetaCloudExplorerAzure.WINDOW_NAME, partial(self.show_window, None))
 
         # Put the new menu
         editor_menu = omni.kit.ui.get_editor_menu()
         if editor_menu:
             self._menu = editor_menu.add_item(
-                AzureDigitalTwinExtension.MENU_PATH, self.show_window, toggle=True, value=True
+                MetaCloudExplorerAzure.MENU_PATH, self.show_window, toggle=True, value=True
             )
 
         # Show the window. It will call `self.show_window`
-        ui.Workspace.show_window(AzureDigitalTwinExtension.WINDOW_NAME)
+        ui.Workspace.show_window(MetaCloudExplorerAzure.WINDOW_NAME)
+        carb.log_info(f"[meta.cloud.explorer.azure]] After Show Window")
 
     def on_shutdown(self):
-        carb.log_info(f"[cloud.explorer.azure]] Cloud Explorer shutdown")
+        carb.log_info(f"[meta.cloud.explorer.azure]] Meta Cloud Explorer shutdown")
         
         self._menu = None
         if self._window:
@@ -63,14 +69,14 @@ class AzureDigitalTwinExtension(omni.ext.IExt):
             self._window = None
 
         # Deregister the function that shows the window from omni.ui
-        ui.Workspace.set_show_window_fn(AzureDigitalTwinExtension.WINDOW_NAME, None)
+        ui.Workspace.set_show_window_fn(MetaCloudExplorerAzure.WINDOW_NAME, None)
 
 
     def _set_menu(self, value):
         """Set the menu to create this window on and off"""
         editor_menu = omni.kit.ui.get_editor_menu()
         if editor_menu:
-            editor_menu.set_value(AzureDigitalTwinExtension.MENU_PATH, value)
+            editor_menu.set_value(MetaCloudExplorerAzure.MENU_PATH, value)
 
     async def _destroy_window_async(self):
         # wait one frame, this is due to the one frame defer
