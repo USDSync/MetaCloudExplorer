@@ -11,7 +11,7 @@ Look for "cloud.explorer.azure" extension in extension manager and enable it.
 
 Alternatively, you can launch your app from console with this folder added to search path and your extension enabled, e.g.:
 
-> app\omni.code.bat --ext-folder exts --enable endiverse.cloud.architect
+> app\omni.code.bat --ext-folder exts --enable cloud.explorer.azure
 
 # Azure API App Link Setup
 
