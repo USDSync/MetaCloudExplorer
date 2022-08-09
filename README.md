@@ -1,5 +1,7 @@
 # Cloud Explorer (Azure edition)
-# CloudArchitect.live
+# Nvidia Onmiverse Extension Scene Authoring Tool
+
+CloudArchitect.live
 (In Alpha Development phase)
 
 Quickly connect to your Azure Cloud Infrastructure and visualize it in the Omniverse!
