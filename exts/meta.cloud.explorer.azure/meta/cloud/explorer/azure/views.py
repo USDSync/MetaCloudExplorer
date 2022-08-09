@@ -115,16 +115,17 @@ class MainView(ui.Window):
         #___________________________________________________________________________________________________
 
                 def on_docs():
-                    print("HI")
+                    webbrowser.open_new("https://github.com/CloudArchitectLive/MetaCloudExplorer/wiki")
 
                 def on_code():
-                    print("HI")
+                    webbrowser.open_new("http://metacloudexplorer.com")
 
                 def on_help():
-                    print("HI")
+                    webbrowser.open_new("https://github.com/CloudArchitectLive/MetaCloudExplorer/issues")
 
                 def load_account_info(self):
-                    print("HI")
+                    print("Connect to Azure API")
+                    #todo
 
                 def on_resource():
                      stage_ref = self._usd_context.get_stage()
