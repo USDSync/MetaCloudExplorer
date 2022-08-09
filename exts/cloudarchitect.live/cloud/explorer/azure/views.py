@@ -8,6 +8,7 @@ from .combo_box_model import ComboBoxModel
 from .style import button_styles
 
 import sys
+import webbrowser
 #from turtle import width
 import omni.ext
 import omni.ui as ui
@@ -25,9 +26,13 @@ import random
 class MainView(ui.Window):
     """The class that represents the window"""
 
+    #___________________________________________________________________________________________________
+    # UI Definitions
+    #___________________________________________________________________________________________________
+
     def __init__(self, submodel: SubscriptionModel, rgmodel: ResourceGroupModel, rsmodel: ResourceModel, root_path):
 
-        self._window = ui.Window("Cloud Explorer (Azure)", width=800, height=600, dockPreference=ui.DockPreference.RIGHT_TOP)
+        self._window = ui.Window("Meta Cloud Explorer (Azure)", width=800, height=600, dockPreference=ui.DockPreference.RIGHT_TOP)
         self._window.visible = True
         self._groundPlaneAdded = False
         self._company_model = ComboBoxModel("Company1", "SolidCloud")
@@ -38,7 +43,7 @@ class MainView(ui.Window):
         
         with self._window.frame:
             with ui.VStack(height=150):
-                ui.Label("Cloud Explorer (Azure)", style={"color": 0xFF008976, "font_size":36}, alignment=ui.Alignment.CENTER, height=0)
+                ui.Label("Meta Cloud Explorer (Azure)", style={"color": 0xFF008976, "font_size":36}, alignment=ui.Alignment.CENTER, height=0)
                 ui.Line(style={"color": 0xff00b976}, height=20)
 
                 with ui.HStack(style=button_styles):
@@ -105,6 +110,10 @@ class MainView(ui.Window):
                         ui.Label("Client Secret")
                         self._secret = ui.StringField()
                         ui.Button("Connect", clicked_fn=lambda: load_account_info(self))
+
+        #___________________________________________________________________________________________________
+        # Function Definitions
+        #___________________________________________________________________________________________________
 
                 def load_account_info():
                     print("HI")

@@ -3,8 +3,8 @@
 version = "1.0.0"
 
 # The title and description fields are primarily for displaying extension info in UI
-title = "CloudArchitect.LIVE - Cloud Explorer (Azure edition)"
-description="A scene authoring tool to visualize your Azure Infrastructure in your own private Onmiverse!"
+title = "CloudArchitect.LIVE - Meta Cloud Explorer (Azure edition)"
+description="A scene authoring tool to help visualize your Azure Infrastructure in your own private Onmiverse!"
 
 # Path (relative to the root) or content of readme markdown file for UI.
 readme  = "docs/README.md"
@@ -16,7 +16,7 @@ repository = "https://github.com/CloudArchitectLive/AzureCloudExplorer"
 category = "Cloud"
 
 # Keywords for the extension
-keywords = ["Azure", "CloudArchitect.live", "Cloud Explorer (Azure)", "scene authoring tools"]
+keywords = ["Azure", "CloudArchitect.live", "Meta Cloud Explorer (Azure)", "scene authoring tools"]
 
 # Use omni.ui to build simple UI
 [dependencies]

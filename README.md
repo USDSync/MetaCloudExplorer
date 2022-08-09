@@ -17,8 +17,7 @@ Alternatively, you can launch your app from console with this folder added to se
 
 # Azure API App Link Setup
 
-This extenstion lets you easily load and explore a representation of your Cloud Infrastructure as a Digital Twin in the Omniverse. This extension can connect to the Azure Resource Manager API to access your Azure Infrastructure.
-A read-only account can be utilized to ensure security.
+This extension lets you easily load and explore a representation of your Cloud Infrastructure as a Digital Twin in the Omniverse. This extension can connect to the Azure Resource Manager API to access your Azure Infrastructure. A read-only account can be utilized to ensure infrastructure security.  * Write-options are also avaialable, see Template View.
 
 Steps to Connect:
 1. Create an Azure AAD Application to act as a Service principal to read your Azure resources.
@@ -27,6 +26,13 @@ Steps to Connect:
 4. Add the Application as a Reader Role in each of the subscriptions you want to model.
 5. Enter the Tenant ID, Client Id and Client Secret into the extension connection.
 6. Connect and Explore your Cloud Infrastructure in the Omniverse!
+
+# Azure 3D Objects
+
+The Azure 3D Icon set is a derivative work, created by several artists to help bring the needed visual context into the Meta Cloud Explorer.  The application code includes an Object Resource Map that maps Azure Objects to their corresponding 3D objects.  By default these can use Cubes or other primitive shapes.  see: cloudarchitect.live/cloud/explorer/azure/resource_map.py  
+
+* The icon set is not yet publicly available pending permission copyright from Microsoft.
+
 
 # Disconnected mode
 
@@ -50,7 +56,7 @@ This extension gives you the ability to create and model your environment and th
 Review Templates, Architectures, Design Patterns and create them in your real cloud from the Onmiverse environment.  
 
 This feature is an alpha and not ready for general use.
-Load the Architect view to check it out!
+Load the Template view to check it out!
 
 The roadmap is long, but full of amazing potential!
 
