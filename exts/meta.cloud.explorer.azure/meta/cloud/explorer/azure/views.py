@@ -74,31 +74,32 @@ class MainView(ui.Window):
                     ui.Button("Code", clicked_fn=lambda: on_code(), height=15)
                     ui.Button("Help", clicked_fn=lambda: on_help(), height=15)
 
-                # with ui.CollapsableFrame("Data Files", name="files"):
-                #     with ui.VStack():
-                #         ui.Label("Subs file path:", height=10, width=120)             
-                #         with ui.HStack():
-                #             self.sub_field = ui.StringField(height=10)
-                #             self.sub_field.enabled = False
-                #             self.sub_field.model.set_value(str(submodel.csv_file_path))
-                #             submodel.csv_field_model = self.sub_field.model
-                #             ui.Button("Load", width=40, clicked_fn=lambda: submodel.select_file())
+                with ui.CollapsableFrame("Data Files", name="files"):
+                    with ui.VStack():
+                        ui.Label("Subs file path:", height=10, width=120)             
+                        with ui.HStack():
+                            self.sub_field = ui.StringField(height=10)
+                            self.sub_field.enabled = False
+                            self.sub_field.model.set_value(str(submodel.csv_file_path))
+                            submodel.csv_field_model = self.sub_field.model
+                            ui.Button("Load", width=40, clicked_fn=lambda: submodel.select_file())
                         
-                #         ui.Label("RG  file path:", height=10, width=120)             
-                #         with ui.HStack():
-                #             self.rg_field = ui.StringField(height=10)
-                #             self.rg_field.enabled = False
-                #             self.rg_field.model.set_value(str(rgmodel.csv_file_path))
-                #             rgmodel.csv_field_model = self.rg_field.model
-                #             ui.Button("Load", width=40,clicked_fn=lambda: rgmodel.select_file())
+                        ui.Label("RG  file path:", height=10, width=120)             
+                        with ui.HStack():
+                            self.rg_field = ui.StringField(height=10)
+                            self.rg_field.enabled = False
+                            self.rg_field.model.set_value(str(rgmodel.csv_file_path))
+                            rgmodel.csv_field_model = self.rg_field.model
+                            ui.Button("Load", width=40,clicked_fn=lambda: rgmodel.select_file())
                 
-                #         ui.Label("Resources file path:", height=10, width=120)             
-                #         with ui.HStack():
-                #             self.rs_field = ui.StringField(height=10)
-                #             self.rs_field.enabled = False
-                #             self.rs_field.model.set_value(str(rsmodel.csv_file_path))
-                #             rsmodel.csv_field_model = self.rs_field.model
-                #             ui.Button("Load", width=40,clicked_fn=lambda: rsmodel.select_file())
+                        ui.Label("Resources file path:", height=10, width=120)             
+                        with ui.HStack():
+                            self.rs_field = ui.StringField(height=10)
+                            self.rs_field.enabled = False
+                            self.rs_field.model.set_value(str(rsmodel.csv_file_path))
+                            rsmodel.csv_field_model = self.rs_field.model
+                            ui.Button("Load", width=40,clicked_fn=lambda: rsmodel.select_file())
+                    ui.Button("Import Data Files", clicked_fn=lambda: load_account_info(self))
             
                 with ui.CollapsableFrame("Connection", name="group"):
                     with ui.VStack():
@@ -108,7 +109,7 @@ class MainView(ui.Window):
                         self._client = ui.StringField()
                         ui.Label("Client Secret")
                         self._secret = ui.StringField()
-                        ui.Button("Connect", clicked_fn=lambda: load_account_info(self))
+                        ui.Button("Connect to Azure", clicked_fn=lambda: load_account_info(self))
 
         #___________________________________________________________________________________________________
         # Function Definitions

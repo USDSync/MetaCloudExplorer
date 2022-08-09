@@ -1,6 +1,6 @@
 [package]
-title = "Meta Cloud Explorer (Azure edition)"
-description="A scene authoring tool to help visualize your Azure Infrastructure in your own private Onmiverse!"
+title = "Meta Cloud Explorer (Azure)"
+description="An Omniverse scene authoring tool to help visualize your Azure Infrastructure in your own private Metaverse!"
 version = "1.0.0"
 category = "Simulation"
 authors = ["CloudArchitect.live"]
