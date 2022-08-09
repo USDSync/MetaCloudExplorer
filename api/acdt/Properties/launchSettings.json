@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "acdt": {
+      "commandName": "Project",
+      "commandLineArgs": "F:\\Source\\Github\\AzureCloudDigitalTwin\\exts\\endiverse.azure.twin\\data\\import\\Company1_RG.csv F:\\Source\\Github\\AzureCloudDigitalTwin\\exts\\endiverse.azure.twin\\data\\import\\Company1_All.csv"
+    }
+  }
+}

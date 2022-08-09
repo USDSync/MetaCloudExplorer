@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "acdt", "acdt.csproj", "{0C8B9B21-6B17-418D-94E4-8A8000F6E8E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C8B9B21-6B17-418D-94E4-8A8000F6E8E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C8B9B21-6B17-418D-94E4-8A8000F6E8E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C8B9B21-6B17-418D-94E4-8A8000F6E8E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C8B9B21-6B17-418D-94E4-8A8000F6E8E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3422882D-E62F-4BFD-B1BA-CD8843C2C81E}
+	EndGlobalSection
+EndGlobal

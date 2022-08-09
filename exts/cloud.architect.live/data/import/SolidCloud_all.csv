@@ -1,0 +1,80 @@
+﻿NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION
+077fe40b-7c8e-45bd-8bc1-025708876c87-dashboard (cryptobabies-api Dashboard),Shared dashboard,cryptobabies,West US 2,Azure Solid Cloud
+ASP-CryptoBabiesProd-9280,App Service plan,cryptobabiesprod,West US 3,BOTLAB.X
+ASP-EndiVerse-a9fd,App Service plan,endiverse,West US 3,Azure Solid Cloud
+ASP-MyBusyBrush-b45f,App Service plan,mybusybrush,West US 2,Azure Solid Cloud
+bitzbot,Azure Bot,nftbot-resources,Global,BOTLAB.X
+bot-secrets-4cdetj,Key vault,nftbot-dev,East US,BOTLAB.X
+bot-secrets-vk7lxh,Key vault,nftbot-resources,West US 3,BOTLAB.X
+bot-secrets-whpjw4,Key vault,cryptobabiesprod,West US 3,BOTLAB.X
+botlabstorage,Storage account,nftbot-resources,West US 3,BOTLAB.X
+cf442821-7f9f-4846-9dc4-6bccd4d861db-dashboard (nftbotweb Dashboard),Shared dashboard,nftbot-resources,West US 2,BOTLAB.X
+cloudprojects,Storage account,solidcloud,West US,Solid Cloud Sponsored
+cryptobabies,Azure Bot,cryptobabiesprod,Global,BOTLAB.X
+CryptoBabies,Managed Identity,cryptobabiesprod,West US 3,BOTLAB.X
+cryptobabies,SignalR,cryptobabiesprod,West US 2,BOTLAB.X
+cryptobabies,SQL server,cryptobabiesprod,West US 2,BOTLAB.X
+cryptobabies (cryptobabies/cryptobabies),SQL database,cryptobabiesprod,West US 2,BOTLAB.X
+cryptobabies,Storage account,cryptobabiesprod,West US 2,BOTLAB.X
+CryptoBabies,Application Insights,cryptobabiesprod,West US 3,BOTLAB.X
+cryptobabies,App Service,cryptobabies,West US 2,Azure Solid Cloud
+cryptobabies,Container registry,containers,West US 2,Azure Solid Cloud
+cryptobabies-api,App Service,cryptobabies,West US 2,Azure Solid Cloud
+cryptobabies-api,Application Insights,cryptobabies,West US 2,Azure Solid Cloud
+cryptobabies-app,App Service,cryptobabiesprod,West US 3,BOTLAB.X
+cryptobabies-bot,App Service,cryptobabiesprod,West US 3,BOTLAB.X
+cryptobabies-meta,App Service,cryptobabiesprod,West US 3,BOTLAB.X
+cryptobabies1954785880,Application Insights,cryptobabies,West US 3,Azure Solid Cloud
+cryptobabies3236856211,Key vault,cryptobabies,West US 3,Azure Solid Cloud
+cs4100300008e99fab9,Storage account,cloud-shell-storage-westus,West US,Azure Solid Cloud
+db-m6g2pf3tx5vaa (sql-server-m6g2pf3tx5vaa/db-m6g2pf3tx5vaa),SQL database,mrg-nmm-20220527104325,West US,Solid Cloud Sponsored
+DefaultWorkspace-79578656-b8cc-4f0f-af93-8fabe7398ea7-EA,Log Analytics workspace,defaultresourcegroup-ea,East Asia,BOTLAB.X
+DefaultWorkspace-79578656-b8cc-4f0f-af93-8fabe7398ea7-USW3,Log Analytics workspace,defaultresourcegroup-usw3,West US 3,BOTLAB.X
+DefaultWorkspace-9af72be6-0c53-464c-aa30-0834b42c0d94-USW3,Log Analytics workspace,defaultresourcegroup-usw3,West US 3,Azure Solid Cloud
+DefaultWorkspace-9af72be6-0c53-464c-aa30-0834b42c0d94-WUS,Log Analytics workspace,defaultresourcegroup-wus,West US,Azure Solid Cloud
+DefaultWorkspace-9af72be6-0c53-464c-aa30-0834b42c0d94-WUS2,Log Analytics workspace,defaultresourcegroup-wus2,West US 2,Azure Solid Cloud
+endiverse.com,DNS zone,endiverse-dns,Global,Azure Solid Cloud
+escrowcontract.com,DNS zone,escrowcontract,Global,Solid Cloud Sponsored
+kv-m6g2pf3tx5vaa,Key vault,mrg-nmm-20220527104325,West US,Solid Cloud Sponsored
+language-bottest,Language,nftbot-resources,West US 2,BOTLAB.X
+mcsdstorage,Storage account,solidcloud,West US 2,Solid Cloud Sponsored
+mybusybrush,Storage account,mybusybrush,West US,Azure Solid Cloud
+mybusybrush,App Service,mybusybrush,West US 2,Azure Solid Cloud
+mybusybrush.com,DNS zone,mybusybrush,Global,Azure Solid Cloud
+NerdioManagerMSP,Managed application,nmmrgmao,West US,Solid Cloud Sponsored
+NetworkWatcher_japaneast,Network Watcher,networkwatcherrg,Japan East,Azure Solid Cloud
+NetworkWatcher_koreacentral,Network Watcher,networkwatcherrg,Korea Central,Azure Solid Cloud
+NetworkWatcher_westus,Network Watcher,networkwatcherrg,West US,Azure Solid Cloud
+NetworkWatcher_westus3,Network Watcher,networkwatcherrg,West US 3,Azure Solid Cloud
+nft-bot-demo,Web App Bot,nftbotdemo,Global,Azure Solid Cloud
+nft-bot-demo,App Service,nftbotdemo,West US 3,Azure Solid Cloud
+nft.bot,DNS zone,nftbot-resources,Global,BOTLAB.X
+nftbot,Azure Cosmos DB account,nftbot-demo,West US 3,BOTLAB.X
+nftbot,Azure Bot,nftbot-resources,Global,BOTLAB.X
+nftbot,SQL server,nftbot-resources,West US 2,BOTLAB.X
+nftbot-asp-dev,App Service plan,nftbot-dev,East Asia,BOTLAB.X
+nftbot-dev,Azure Bot,nftbot-dev,Global,BOTLAB.X
+nftbot-dev,App Service,nftbot-dev,East Asia,BOTLAB.X
+nftbot-dev,Application Insights,nftbot-dev,East Asia,BOTLAB.X
+nftbot-luis,Language understanding,nftbot-resources,West US,BOTLAB.X
+nftbotdemo,App Service,nftbotdemo,West US 3,Azure Solid Cloud
+nftbotdemo,Application Insights,nftbotdemo,West US 3,Azure Solid Cloud
+nftbotweb,Application Insights,nftbot-resources,West US 2,BOTLAB.X
+portalvhdslqyyx49rhsj1d,Storage account (classic),default-storage-westus,West US,Azure Solid Cloud
+prediction,Language understanding,nftbot-resources,West US 2,BOTLAB.X
+scdevstg4,Storage account,solidclouddata,West US 2,Azure Solid Cloud
+SecurityCenterFree(DefaultWorkspace-9af72be6-0c53-464c-aa30-0834b42c0d94-USW3),Solution,defaultresourcegroup-usw3,West US 3,Azure Solid Cloud
+SecurityCenterFree(DefaultWorkspace-9af72be6-0c53-464c-aa30-0834b42c0d94-WUS),Solution,defaultresourcegroup-wus,West US,Azure Solid Cloud
+SecurityCenterFree(DefaultWorkspace-9af72be6-0c53-464c-aa30-0834b42c0d94-WUS2),Solution,defaultresourcegroup-wus2,West US 2,Azure Solid Cloud
+solidcloud,Azure DevOps organization,solidcloud,North Central US,Solid Cloud Sponsored
+solidcloud,Storage account (classic),default-storage-westus,West US,Azure Solid Cloud
+solidcloudbackup,Recovery Services vault,solidclouddata,West US,Azure Solid Cloud
+solidclouddata,Storage account,solidcloud,West US 2,Solid Cloud Sponsored
+solidcloudvault,Key vault,solidclouddata,West US 2,Azure Solid Cloud
+sql-server-m6g2pf3tx5vaa,SQL server,mrg-nmm-20220527104325,West US,Solid Cloud Sponsored
+testsearchnft,Search service,nftbot-resources,West US 2,BOTLAB.X
+web-admin-portal-insights-m6g2pf3tx5vaa,Application Insights,mrg-nmm-20220527104325,West US,Solid Cloud Sponsored
+web-admin-portal-m6g2pf3tx5vaa,App Service,mrg-nmm-20220527104325,West US,Solid Cloud Sponsored
+web-admin-portal-plan-m6g2pf3tx5vaa,App Service plan,mrg-nmm-20220527104325,West US,Solid Cloud Sponsored
+YourComputerVault,Key vault,yourcomputer,West US 3,Azure Solid Cloud
+zapbbxnas,Storage account,backups,West US,Solid Cloud Sponsored

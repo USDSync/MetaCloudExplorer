@@ -1,0 +1,30 @@
+NAME,SUBSCRIPTION,LOCATION
+Backups,Solid Cloud Sponsored,West US
+cloud-shell-storage-westus,Azure Solid Cloud,West US
+containers,Azure Solid Cloud,West US 2
+CryptoBabies,Azure Solid Cloud,West US 3
+CryptoBabiesProd,BOTLAB.X,West US 3
+Default-Storage-WestUS,Azure Solid Cloud,West US
+Default-Web-WestUS,Azure Solid Cloud,West US
+DefaultResourceGroup-EA,BOTLAB.X,East Asia
+DefaultResourceGroup-USW3,BOTLAB.X,West US 3
+DefaultResourceGroup-USW3,Azure Solid Cloud,West US 3
+DefaultResourceGroup-WUS,Azure Solid Cloud,West US
+DefaultResourceGroup-WUS2,Azure Solid Cloud,West US 2
+EndiVerse,Azure Solid Cloud,West US 3
+EndiVerse-DNS,Azure Solid Cloud,West US 3
+EscrowContract,Solid Cloud Sponsored,East US
+Marketplace-CE1904AED45643F883B4F8E709F1E647,Azure Solid Cloud,North Central US
+mrg-nmm-20220527104325,Solid Cloud Sponsored,West US
+MyBusyBrush,Azure Solid Cloud,East US
+NetworkWatcherRG,Azure Solid Cloud,Japan East
+nftbot-demo,BOTLAB.X,West US 3
+nftbot-dev,BOTLAB.X,East US
+nftbot-resources,BOTLAB.X,West US 3
+nftbotdemo,Azure Solid Cloud,West US 3
+NMMRGMAO,Solid Cloud Sponsored,West US
+PythonAzureExample-rg-dac,Azure Solid Cloud,Central US
+ResourceMoverRG-westus3-westus2-eus2,Azure Solid Cloud,East US 2
+SolidCloud,Solid Cloud Sponsored,West US
+solidclouddata,Azure Solid Cloud,West US
+yourcomputer,Azure Solid Cloud,West US 3

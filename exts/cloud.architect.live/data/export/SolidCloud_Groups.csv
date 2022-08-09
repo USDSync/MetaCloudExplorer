@@ -1,0 +1,10 @@
+Name,Subscription,Location,ResourceCount,x,y,z
+nftbot-resources,BOTLAB.X,West US 3,12,3,0,0
+nftbot-dev,BOTLAB.X,East US,5,5.5,0,0
+containers,Azure Solid Cloud,West US 2,1,8,0,0
+cloud-shell-storage-westus,Azure Solid Cloud,West US,1,10.5,0,0
+mrg-nmm-20220527104325,Solid Cloud Sponsored,West US,6,13,0,0
+nftbotdemo,Azure Solid Cloud,West US 3,4,15.5,0,0
+nftbot-demo,BOTLAB.X,West US 3,1,18,0,0
+solidclouddata,Azure Solid Cloud,West US,3,0,4,0
+yourcomputer,Azure Solid Cloud,West US 3,1,2.5,4,0

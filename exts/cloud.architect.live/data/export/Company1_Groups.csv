@@ -1,0 +1,85 @@
+Name,Subscription,Location,ResourceCount,x,y,z
+dashboards,CashApp Dev/Test,Central US,5,3,0,0
+dashboards,DataApp Dev/Test,West US 2,5,5.5,0,0
+fa-dev-api,DataApp Dev/Test,Central US,27,8,0,0
+fa-uat-test,DataApp Dev/Test,Central US,10,10.5,0,0
+fa-qa-api,DataApp Dev/Test,Central US,15,13,0,0
+fa-uat-api,DataApp Dev/Test,Central US,12,15.5,0,0
+Company1-cnx-erptk,DataApp Dev/Test,West US 2,21,18,0,0
+Company1-cnx-oracle,DataApp Dev/Test,East US,5,0,4,0
+devops,CashApp Dev/Test,West Central US,69,2.5,4,0
+la-platform-orchestrator,CashApp Dev/Test,West US 2,4,5,4,0
+la-platform-orchestrator,DataApp Dev/Test,West US 2,4,7.5,4,0
+fa-dev-infrastructure,DataApp Dev/Test,Central US,44,10,4,0
+fa-dev-logic,DataApp Dev/Test,Central US,6,12.5,4,0
+fa-qa-logic,DataApp Dev/Test,Central US,6,15,4,0
+fa-uat-logic,DataApp Dev/Test,Central US,6,17.5,4,0
+ky-hilton-wf,DataApp Dev/Test,Central US,7,20,4,0
+Company1-cnx-dynamics,DataApp Dev/Test,West US,34,0,8,0
+Company1-cnx-infor,DataApp Dev/Test,West Central US,7,2.5,8,0
+pbi-deployment-rg,DataApp Dev/Test,West US,9,5,8,0
+usdt-manage-shared-centralus-rg-001,DevOps Dev/Test,Central US,10,7.5,8,0
+fa-dev-data,DataApp Dev/Test,West US 2,37,10,8,0
+wingtip-sql-mt-bbfa1,DataApp Dev/Test,Central US,9,12.5,8,0
+fa-qa-sftp-rg-001,DataApp Dev/Test,Central US,10,15,8,0
+ca-qa,CashApp Dev/Test,West US 2,2,17.5,8,0
+ca-test,CashApp Dev/Test,West US 2,2,20,8,0
+ca-uat,CashApp Dev/Test,West US 2,2,0,12,0
+ca-node-test,CashApp Dev/Test,West US 2,1,2.5,12,0
+ca-dev,CashApp Dev/Test,West US 2,5,5,12,0
+sf-data-hf,CashApp Dev/Test,West US 2,2,7.5,12,0
+sf-data-uat,CashApp Dev/Test,West US 2,6,10,12,0
+usdt-aks-devops-centralus-rg-01,DevOps Dev/Test,Central US,10,12.5,12,0
+usdt-aks-shared-centralus-rg-01,DevOps Dev/Test,Central US,6,15,12,0
+cloud-shell-storage-eastus,CashApp Dev/Test,East US,2,17.5,12,0
+cloud-shell-storage-westus,CashApp Dev/Test,West US,4,20,12,0
+cloud-shell-storage-westus,DataApp Dev/Test,West US,4,0,16,0
+cloud-shell-storage-southcentralus,CashApp Dev/Test,South Central US,1,2.5,16,0
+kygold,Dynamics Dev/Test,West US,25,5,16,0
+Company1-gold,Dynamics Dev/Test,West US,25,7.5,16,0
+deploy-bot,CashApp Dev/Test,West Central US,9,10,16,0
+kydev,Dynamics Dev/Test,West US,13,12.5,16,0
+kytest,Dynamics Dev/Test,West US,13,15,16,0
+devops-build,DataApp Dev/Test,Central US,8,17.5,16,0
+devops-gavin,CashApp Dev/Test,West US,8,20,16,0
+ml-testing,DevOps Dev/Test,West US 2,5,0,20,0
+devops-nabil,CashApp Dev/Test,West Europe,1,2.5,20,0
+devops-images,CashApp Dev/Test,West US 2,6,5,20,0
+devops-images-test,CashApp Dev/Test,West US 2,1,7.5,20,0
+splunk_logging,DataApp Dev/Test,West Central US,2,10,20,0
+fa-qa-data,DataApp Dev/Test,Central US,27,12.5,20,0
+fa-uat-data,DataApp Dev/Test,Central US,27,15,20,0
+fa-tenable-scanner,CashApp Dev/Test,West US 2,9,17.5,20,0
+fa-contracts-dev,CashApp Dev/Test,West US 2,1,20,20,0
+fa-dev-security,DataApp Dev/Test,Central US,1,0,24,0
+fa-dev-sftp,DataApp Dev/Test,Central US,7,2.5,24,0
+fa-dev-sftp-admin,DataApp Dev/Test,Central US,7,5,24,0
+fa-dev-sftp-v2,DataApp Dev/Test,Central US,7,7.5,24,0
+fa-devops-bot,CashApp Dev/Test,West US,6,10,24,0
+fa-qa-infrastructure,DataApp Dev/Test,Central US,5,12.5,24,0
+fa-uat-infrastructure,DataApp Dev/Test,Central US,4,15,24,0
+fa-qa-test,DataApp Dev/Test,Central US,8,17.5,24,0
+fa-qa-security,DataApp Dev/Test,Central US,1,20,24,0
+fa-qa-sftp,DataApp Dev/Test,Central US,7,0,28,0
+fa-uat-security,DataApp Dev/Test,Central US,1,2.5,28,0
+fa-uat-sftp,DataApp Dev/Test,Central US,7,5,28,0
+terraform-test,DevOps Dev/Test,West US 3,1,7.5,28,0
+fa-dev-sample-sb-conn,CashApp Dev/Test,Central US,3,10,28,0
+fa-dev-logging,DataApp Dev/Test,Central US,1,12.5,28,0
+fa_it_asset_dash_rg,CashApp Dev/Test,West US,1,15,28,0
+fa-docker,DataApp Dev/Test,West US 2,1,17.5,28,0
+reporttest,DataApp Dev/Test,West US 2,1,20,28,0
+sf-data-dev,CashApp Dev/Test,West Central US,1,0,32,0
+isms-resources,CashApp Dev/Test,East US,1,2.5,32,0
+kapp-integration-dev,CashApp Dev/Test,West US 2,9,5,32,0
+kapp-integration-qa,CashApp Dev/Test,West US 2,9,7.5,32,0
+kyr-api-dev,DataApp Dev/Test,West US 2,1,10,32,0
+Company1-cnx-erp-sap,DataApp Dev/Test,West US,10,12.5,32,0
+Company1-cnx-erp-toolkit,DataApp Dev/Test,West US,7,15,32,0
+Company1-cnx-monitor-log,DataApp Dev/Test,West US,2,17.5,32,0
+Company1-test,Dynamics Dev/Test,West US,13,20,32,0
+Company1-dev,Dynamics Dev/Test,West US,13,0,36,0
+usdt-aks-devops-centralus-oidc-issuer,DevOps Dev/Test,Central US,1,2.5,36,0
+streamset-demo-rg,DataApp Dev/Test,West US,6,5,36,0
+project-development,DataApp Dev/Test,West US 2,1,7.5,36,0
+usdt-logging-shared-centralus-rg-001,DevOps Dev/Test,Central US,7,10,36,0

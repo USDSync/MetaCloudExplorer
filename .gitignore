@@ -1,0 +1,16 @@
+# all folders starting with _ are local
+_*/
+
+.DS_Store
+**/.vscode/ipch
+
+# byte-compiled python files
+*.py[cod]
+
+/.vs
+
+/app
+api/acdt/bin/Debug/
+api/acdt/obj/
+api/acdt/.vs/
+venv/
