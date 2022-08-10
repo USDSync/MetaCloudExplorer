@@ -32,9 +32,9 @@ class OfflineDataManager():
     #Resource Groups File Import
     #NAME,SUBSCRIPTION,LOCATION
     def load_rg_file(self):
-        if os.path.exists(self.rg_csv_file_path):
+        if os.path.exists(self._rg_csv_file_path):
             # Read CSV file
-            with open(self.rg_csv_file_path, newline='') as csvfile:
+            with open(self._rg_csv_file_path, newline='') as csvfile:
                 reader = csv.DictReader(csvfile, delimiter=',')
                 for row in reader:
                     name = row["NAME"]
@@ -48,9 +48,9 @@ class OfflineDataManager():
     #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION
     def load_res_file(self):
          # check that CSV exists
-        if os.path.exists(self.rs_csv_file_path):
+        if os.path.exists(self._rs_csv_file_path):
             # Read CSV file
-            with open(self.rs_csv_file_path, encoding='utf-8-sig') as file:
+            with open(self._rs_csv_file_path, encoding='utf-8-sig') as file:
                 reader = csv.DictReader(file, delimiter=',')
                 for row in reader:
                     name = row["NAME"]
