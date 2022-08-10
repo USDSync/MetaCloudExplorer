@@ -1,68 +1,138 @@
-#todo
+import omni.kit.pipapi
+import os
+import json
+from datetime import datetime
 
-                # #Load From Azure API
-                # def load_azaure_resources(self):
-                    
-                #     #Get the stage
-                #     stage = self._usd_context.get_stage()
-                    
-                #     #save the value state
-                #     #create_ground_plane(stage, "ground", 100, "Z", location=Gf.Vec3f(0,0,0) )
+omni.kit.pipapi.install("azure-identity", module="azure-identity", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
+omni.kit.pipapi.install("azure-mgmt-resource", module="azure-mgmt-resource", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
 
-                #     # Acquire a credential object
-                #     #credential = ClientSecretCredential(self._tenant.model.as_string, self._client.model.as_string, self._secret.model.as_string)
+from azure.mgmt.resource import ResourceManagementClient
+from azure.identity import AzureCliCredential
+from azure.mgmt import resource, subscription
 
-                #     authority = 'https://login.microsoftonline.com'
+WEST_US = "westus"
+GROUP_NAME = "meta-cloud-explorer-test"
 
-                #     # Retrieve subscription ID from environment variable.
-                #     subscription_id = os.environ["AZURE_SUBSCRIPTION_ID"]
+# Manage resources and resource groups - create, update and delete a resource group,
+# deploy a solution into a resource group, export an ARM template. Create, read, update
+# and delete a resource
+#
+# This script expects that the following environment vars are set:
+#
+# AZURE_TENANT_ID: with your Azure Active Directory tenant id or domain
+# AZURE_CLIENT_ID: with your Azure Active Directory Application Client ID
+# AZURE_CLIENT_SECRET: with your Azure Active Directory Application Secret
+# AZURE_SUBSCRIPTION_ID: with your Azure Subscription Id
+#
 
-                #     # Obtain the management object for resources.
-                #     #resource_client = ResourceManagementClient(credential, subscription_id)
+def get_tenants(sub_client):
+    tenants = sub_client.tenants
+    print('api_version: ' + tenants.api_version)
+    for tenant in tenants.list():
+        print(tenant.__dict__.keys())
 
-                #     #rg_groups = resource_client.resource_groups.list()
-                
-                #     pos=0
-                #     pos2=0
-                #     counter=0
-                #     path ="../Objects/"
-                #     #for item in rg_groups:
-                #     for i in range(30):
 
-                #         #print(item.name)
-                #         pos+=50
-                #         pos2-=50
-                #         counter+=1
-                #         path = "/World/rg{}".format(counter)
-                #         prim = stage.DefinePrim(path, 'Cube')
-                #         #prim.SetCustomDataByKey("location", item.location)
-                #         #prim.SetCustomDataByKey("rgname", item.name)
-                #         #prim.SetCustomDataByKey("id", item.id)
-                #         #prim.GetReferences().AddReference(r"omniverse://localhost/Projects/test/ControlUnit.usd")
+def run_example():
+    """Resource Group management example."""
+    #
+    # Create the Resource Manager Client with an Application (service principal) token provider
+    #
+    subscription_id = os.environ.get("AZURE_SUBSCRIPTION_ID", None) # your Azure Subscription Id
 
-                #         # Don't forget to provide the data type on this line. Your example was missing it.
-                #         #prim.CreateAttribute('size', Sdf.ValueTypeNames.Double).Set(25)
+    credentials = DefaultAzureCredential()
 
-                #         xformable = UsdGeom.Xformable(prim)
-                #         for name in prim.GetPropertyNames():
-                #             if name == "xformOp:transform":
-                #                 prim.RemoveProperty(name)
+    client = ResourceManagementClient(credentials, subscription_id)
 
-                #         if "xformOp:translate" in prim.GetPropertyNames():
-                #             xform_op_tranlsate = UsdGeom.XformOp(prim.GetAttribute("xformOp:translate"))
-                #         else:
-                #             xform_op_tranlsate = xformable.AddXformOp(UsdGeom.XformOp.TypeTranslate, UsdGeom.XformOp.PrecisionDouble, "")
-                #         xformable.SetXformOpOrder([xform_op_tranlsate])
-                        
-                #         xform_op_tranlsate.Set(Gf.Vec3d([(2 * random.random() - 1) * 200 for _ in range(3)]))
+    #
+    # Managing resource groups
+    #
+    resource_group_params = {"location": "westus"}
 
-                #     #get the total count    
-                #     rgcount = counter
+    # List Resource Groups
+    print("List Resource Groups")
+    for item in client.resource_groups.list():
+        print_item(item)
 
-                #     # Print out the stage
-                #     print("The Layer\n\n")
-                #     print(stage.GetRootLayer().ExportToString())
-                #     print("\n\nThe result of Composition \n\n")
-                #     print(stage.Flatten().ExportToString())
-                #     print("\n\n")
+    # Create Resource group
+    print("Create Resource Group")
+    print_item(
+        client.resource_groups.create_or_update(
+            GROUP_NAME, resource_group_params)
+    )
 
+    # Modify the Resource group
+    print("Modify Resource Group")
+    resource_group_params.update(tags={"hello": "world"})
+    print_item(
+        client.resource_groups.update(
+            GROUP_NAME, resource_group_params)
+    )
+
+    # Create a Key Vault in the Resource Group
+    print("Create a Key Vault via a Generic Resource Put")
+    key_vault_params = {
+        "location": "westus",
+        "properties": {
+            "sku": {"family": "A", "name": "standard"},
+            "tenantId": os.environ["AZURE_TENANT_ID"],
+            "accessPolicies": [],
+            "enabledForDeployment": True,
+            "enabledForTemplateDeployment": True,
+            "enabledForDiskEncryption": True
+        },
+    }
+    client.resources.begin_create_or_update(
+        resource_group_name=GROUP_NAME,
+        resource_provider_namespace="Microsoft.KeyVault",
+        parent_resource_path="",
+        resource_type="vaults",
+        # Suffix random string to make vault name unique
+        resource_name="azureSampleVault" + datetime.utcnow().strftime("-%H%M%S"),
+        api_version="2019-09-01",
+        parameters=key_vault_params
+    ).result()
+
+    # List Resources within the group
+    print("List all of the resources within the group")
+    for item in client.resources.list_by_resource_group(GROUP_NAME):
+        print_item(item)
+
+    # Export the Resource group template
+    print("Export Resource Group Template")
+    BODY = {
+      'resources': ['*']
+    }
+    print(
+        json.dumps(
+            client.resource_groups.begin_export_template(
+                GROUP_NAME, BODY).result().template, indent=4
+        )
+    )
+    print("\n\n")
+
+    # Delete Resource group and everything in it
+    print("Delete Resource Group")
+    delete_async_operation = client.resource_groups.begin_delete(GROUP_NAME)
+    delete_async_operation.wait()
+    print("\nDeleted: {}".format(GROUP_NAME))
+
+
+def print_item(group):
+    """Print a ResourceGroup instance."""
+    print("\tName: {}".format(group.name))
+    print("\tId: {}".format(group.id))
+    print("\tLocation: {}".format(group.location))
+    print("\tTags: {}".format(group.tags))
+    print_properties(group.properties)
+
+
+def print_properties(props):
+    """Print a ResourceGroup properties instance."""
+    if props and props.provisioning_state:
+        print("\tProperties:")
+        print("\t\tProvisioning State: {}".format(props.provisioning_state))
+    print("\n\n")
+
+
+if __name__ == "__main__":
+    run_example()

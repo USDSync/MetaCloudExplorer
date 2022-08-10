@@ -155,20 +155,24 @@ class MainView(ui.Window):
             with ui.VStack(height=0):
                 self._build_header()
                 self._build_commands()
-                self._build_import()
                 self._build_connection()
+                self._build_import()
 
+    #Pieces of UI Elements
     def _build_header(self):
         """Build the widgets of the "Source" group"""
         with ui.VStack():
             ui.Label("Meta Cloud Explorer (Azure)", style={"color": 0xFF008976, "font_size":36}, alignment=ui.Alignment.CENTER, height=0)
             ui.Line(style={"color": 0xff00b976}, height=20)
+            with ui.HStack():
+                ui.Label("Status: No Data", height=10, name="Status", alignment=ui.Alignment.RIGHT)
 
     def _build_commands(self):
         """Build the widgets of the "Commands" group"""
-        with ui.CollapsableFrame("Commands", name="group"):
+        with ui.CollapsableFrame("Explorer Commands", name="group"):
             with ui.VStack(height=0, spacing=SPACING):
                 with ui.HStack(style=button_styles):
+                    ui.Image()
                     ui.Button("Load Subscriptions", clicked_fn=lambda: self.load_subscriptions(self), name="subs", height=15)
                     ui.Button("Load Resource Groups", clicked_fn=lambda: self.load_resource_groups(self), name="rg", height=15)
                     ui.Button("Load All Resources", clicked_fn=lambda: self.load_all_resources(self), name="rs", height=15)
@@ -177,7 +181,7 @@ class MainView(ui.Window):
                     ui.Button("Add Ground", clicked_fn=lambda: self.create_ground_plane(self), height=15)
 
     def _build_import(self):
-        with ui.CollapsableFrame("Import Files", name="group", collapsed=True):
+        with ui.CollapsableFrame("Import Offline Files", name="group", collapsed=True):
             with ui.VStack():
                 ui.Label("Sub file path:", height=10, width=120)             
                 with ui.HStack(height=20):           
@@ -207,7 +211,7 @@ class MainView(ui.Window):
 
 
     def _build_connection(self):
-        with ui.CollapsableFrame("Connection", name="group", collapsed=True):
+        with ui.CollapsableFrame("Azure API Connection", name="group", collapsed=True):
             with ui.VStack():
                 ui.Label("Tenant Id")
                 self._tenant = ui.StringField()
