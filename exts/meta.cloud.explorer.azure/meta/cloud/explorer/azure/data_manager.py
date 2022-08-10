@@ -13,6 +13,17 @@
 # now connected, user can load different sets of resources and view then in different ways.
 
 
+class DataManager():
+    def __init__(self):
+
+        #datasets
+        self._groups = {}
+        self._resources = {}        
+
+        #aggregated data
+        self._subscription_count = {}
+        self._location_count = {}
+        self._group_count = {}
 
 
 

@@ -8,7 +8,7 @@ omni.kit.pipapi.install("azure-mgmt-resource", module="azure-mgmt-resource", ign
 
 from azure.mgmt.resource import ResourceManagementClient
 from azure.identity import AzureCliCredential
-from azure.mgmt import resource, subscription
+from azure.mgmt.resource import resource, subscription
 
 WEST_US = "westus"
 GROUP_NAME = "meta-cloud-explorer-test"

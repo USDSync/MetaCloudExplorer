@@ -6,6 +6,7 @@ from pathlib import Path
 # external python lib
 import csv
 import itertools
+from .data_manager import DataManager
 
 
 #This class is designed to import data from 3 input files 
@@ -28,7 +29,8 @@ class OfflineDataManager():
         self._subscriptions = {}
         self._locations = {}
         self._groupcount = {}
-
+        
+        self._dataManager = DataManager()
 
     #Load all the data
     def loadFiles(self):
@@ -75,31 +77,30 @@ class OfflineDataManager():
 
     def process_data(self):
         #aggregate subscription, resources count
-        print("Processing Subscriptions")
+        print("Processing Data...")
+
         for key in self._resources:
             obj = self._resources[key]
-            if obj["subscription"] not in self._subscriptions.keys():
-                self._subscriptions[obj["subscription"]] = 1
-            else:
-                self._subscriptions[obj["subscription"]] = self._subscriptions[obj["subscription"]] + 1
 
-        #aggregate location, resources count
-        print("Processing Locations")
-        for key in self._resources:
-            obj = self._locations[key]
-            if obj["location"] not in self._subscriptions.keys():
-                self._locations[obj["location"]] = 1
+            if obj["subscription"] not in self._dataManager._subscription_count.keys():
+                self._dataManager._subscription_count[obj["subscription"]] = 1
             else:
-                self._locations[obj["location"]] = self._locations[obj["location"]] + 1
+                self._dataManager._subscription_count[obj["subscription"]] = self._dataManager._subscription_count[obj["subscription"]] + 1
+            
+            if obj["location"] not in self._dataManager._location_count.keys():
+                self._dataManager._location_count[obj["location"]] = 1
+            else:
+                self._dataManager._location_count[obj["location"]] = self._dataManager._location_count[obj["location"]] + 1
 
-        #aggregate groups, resources count
-        print("Processing Groups")
-        for key in self._resources:
-            obj = self._groupcount[key]
-            if obj["location"] not in self._subscriptions.keys():
-                self._groupcount[obj["group"]] = 1
+            obj = self._resources[key]
+            if obj["group"] not in self._dataManager._group_count.keys():
+                self._dataManager._group_count[obj["group"]] = 1
             else:
-                self._groupcount[obj["group"]] = self._groupcount[obj["group"]] + 1
+                self._dataManager._group_count[obj["group"]] = self._dataManager._group_count[obj["group"]] + 1
+
+        print("Groups: " + str(len(self._dataManager._group_count)))
+        print("Locations: " + str(len(self._dataManager._location_count)))
+        print("Subs: " + str(len(self._dataManager._subscription_count)))
 
     # Handles the click of the Load button
     def select_file(self, fileType: str):
