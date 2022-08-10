@@ -18,9 +18,6 @@ sys.path.append("D:/python37/lib/site-packages")
 
 #omni.kit.pipapi.install("azure-identity", module="azure-identity", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
 #omni.kit.pipapi.install("azure-mgmt-resource", module="azure-mgmt-resource", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
-
-company = "Company1"
-
 #from azure.mgmt.resource import ResourceManagementClient
 #from azure.identity import AzureCliCredential
 
@@ -35,18 +32,8 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
     MENU_PATH = f"Window/{WINDOW_NAME}"
 
     def on_startup(self, ext_id):
-        carb.log_info(f"[meta.cloud.explorer.azure]] Meta Cloud Explorer startup")
 
-        Model = SubscriptionModel(company)
-        carb.log_info(f"[meta.cloud.explorer.azure]] After SubscriptionModel")
-        RGModel = ResourceGroupModel(company)
-        carb.log_info(f"[meta.cloud.explorer.azure]] After ResourceGroupModel")
-        RSModel = ResourceModel(company)
-
-        self._window = MainView(Model, RGModel, RSModel, '/World')
-
-        carb.log_info(f"[meta.cloud.explorer.azure]] After ResourceModel")
-
+        # The ability to show up the window if the system requires it. We use it in QuickLayout.
         ui.Workspace.set_show_window_fn(MetaCloudExplorerAzure.WINDOW_NAME, partial(self.show_window, None))
 
         # Put the new menu
@@ -58,13 +45,11 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
 
         # Show the window. It will call `self.show_window`
         ui.Workspace.show_window(MetaCloudExplorerAzure.WINDOW_NAME)
-        carb.log_info(f"[meta.cloud.explorer.azure]] After Show Window")
 
     def on_shutdown(self):
-        carb.log_info(f"[meta.cloud.explorer.azure]] Meta Cloud Explorer shutdown")
-        
+        carb.log_info(f"[meta.cloud.explorer.azure]] Meta Cloud Explorer shutdown")     
         self._menu = None
-        if self._window:
+        if self._window is not None:
             self._window.destroy()
             self._window = None
 
@@ -82,7 +67,7 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
         # wait one frame, this is due to the one frame defer
         # in Window::_moveToMainOSWindow()
         await omni.kit.app.get_app().next_update_async()
-        if self._window:
+        if self._window is not None:
             self._window.destroy()
             self._window = None
 
@@ -96,7 +81,7 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
 
     def show_window(self, menu, value):
         if value:
-            self._window = MainView(SubscriptionModel(company), ResourceGroupModel(company), ResourceModel(company), '/World')
+            self._window = MainView(MetaCloudExplorerAzure.WINDOW_NAME, width=600, height=500)
             self._window.set_visibility_changed_fn(self._visiblity_changed_fn)
-        elif self._window:
+        elif self._window is not None:
             self._window.visible = False

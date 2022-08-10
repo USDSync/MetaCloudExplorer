@@ -20,6 +20,9 @@ keywords = ["Azure", "CloudArchitect.live", "Meta Cloud Explorer (Azure)", "scen
 # Use omni.ui to build simple UI
 [dependencies]
 "omni.kit.uiapp" = {}
+"omni.ui" = {}
+"omni.usd" = {}
+"omni.kit.menu.utils" = {}
 
 [python.pipapi]
 requirements = [
