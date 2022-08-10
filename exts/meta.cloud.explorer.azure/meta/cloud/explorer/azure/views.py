@@ -177,7 +177,7 @@ class MainView(ui.Window):
                     ui.Button("Add Ground", clicked_fn=lambda: self.create_ground_plane(self), height=15)
 
     def _build_import(self):
-        with ui.CollapsableFrame("Import Files", name="group"):
+        with ui.CollapsableFrame("Import Files", name="group", collapsed=True):
             with ui.VStack():
                 ui.Label("Sub file path:", height=10, width=120)             
                 with ui.HStack(height=20):           
