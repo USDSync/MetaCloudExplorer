@@ -22,9 +22,9 @@ import omni.kit.commands
 import omni.kit.pipapi
 from pxr import Sdf, Usd, Gf, UsdGeom
 import omni
-from .utils import get_selection
+from .omni_utils import get_selection
 from .combo_box_model import ComboBoxModel
-from .utils import duplicate_prims
+from .omni_utils import duplicate_prims
 from .stage_manager import StageManager
 
 import random

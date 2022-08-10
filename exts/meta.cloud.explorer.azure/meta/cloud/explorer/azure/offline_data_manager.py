@@ -95,6 +95,7 @@ class OfflineDataManager():
             else:
                 self._dataManager._group_count[obj["group"]] = self._dataManager._group_count[obj["group"]] + 1
 
+        #output aggregation results to console
         print("Groups: " + str(len(self._dataManager._group_count)))
         print("Locations: " + str(len(self._dataManager._location_count)))
         print("Subs: " + str(len(self._dataManager._subscription_count)))

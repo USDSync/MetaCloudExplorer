@@ -8,6 +8,7 @@
 #
 __all__ = ["get_selection", "duplicate_prims"]
 
+from re import I
 from typing import List
 import omni.usd
 import omni.kit.commands
@@ -77,3 +78,4 @@ def duplicate_prims(transforms: List = [], prim_names: List[str] = [], target_pa
 
             # Move
             omni.kit.commands.execute("TransformPrim", path=path_to, new_transform_matrix=matrix)
+

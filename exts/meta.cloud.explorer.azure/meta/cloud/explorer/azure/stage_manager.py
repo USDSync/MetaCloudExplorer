@@ -140,7 +140,7 @@ class StageManager():
             # Get mesh from shape instance
             next_shape = UsdGeom.Mesh.Get(stage, shape_prim_path)
 
-            # Set location
+            # Set location, where do we put them ??  they no longer have coordinates from c# input, need to implement this
             next_shape.AddTranslateOp().Set(
                 Gf.Vec3f(
                     self.scale_factor*x, 
