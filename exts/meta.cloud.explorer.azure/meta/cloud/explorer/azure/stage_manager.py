@@ -151,12 +151,14 @@ class StageManager():
             #next_shape.GetDisplayColorAttr().Set(
             #     category_colors[int(cluster) % self.max_num_clusters])                  
 
-
     def ShowGroups():
         print ("subs")
 
     def ShowLocations():
-        print ("subs")
+        print ("locations")
 
     def ShowAllResources():
-        print ("subs")
+        #place resources on resource group specific planes.  or the same plane with bounding boxes...
+        print ("all")
+
+

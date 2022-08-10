@@ -26,5 +26,30 @@ class DataManager():
         self._group_count = {}
 
 
+    #Aggregate subscription, resources counts to DataManager Dictionaries
+    def process_data(self):  
+        print("Processing CSV Data...")
 
+        for key in self._dataManager._resources:
+            obj = self._dataManager._resources[key]
+
+            if obj["subscription"] not in self._dataManager._subscription_count.keys():
+                self._dataManager._subscription_count[obj["subscription"]] = 1
+            else:
+                self._dataManager._subscription_count[obj["subscription"]] = self._dataManager._subscription_count[obj["subscription"]] + 1
+            
+            if obj["location"] not in self._dataManager._location_count.keys():
+                self._dataManager._location_count[obj["location"]] = 1
+            else:
+                self._dataManager._location_count[obj["location"]] = self._dataManager._location_count[obj["location"]] + 1
+
+            if obj["group"] not in self._dataManager._group_count.keys():
+                self._dataManager._group_count[obj["group"]] = 1
+            else:
+                self._dataManager._group_count[obj["group"]] = self._dataManager._group_count[obj["group"]] + 1
+
+        #output aggregation results to console
+        print("Groups: " + str(len(self._dataManager._group_count)))
+        print("Locations: " + str(len(self._dataManager._location_count)))
+        print("Subs: " + str(len(self._dataManager._subscription_count)))
 

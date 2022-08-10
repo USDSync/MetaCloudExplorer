@@ -20,23 +20,14 @@ class OfflineDataManager():
 
         self._rg_csv_file_path = ""
         self._rs_csv_file_path = ""
-
-        #datasets
-        self._groups = {}
-        self._resources = {}        
-
-        #aggregated data
-        self._subscriptions = {}
-        self._locations = {}
-        self._groupcount = {}
-        
+       
         self._dataManager = DataManager()
 
-    #Load all the data
+    #Load all the data from CSV files and process it
     def loadFiles(self):
         self.load_rg_file()
         self.load_res_file()
-        self.process_data()
+        self._dataManager.process_data()
 
     #Resource Groups File Import
     #NAME,SUBSCRIPTION,LOCATION
@@ -51,7 +42,7 @@ class OfflineDataManager():
                     location = row["LOCATION"]
 
                     grp = {name:{"name":name, "subs": subs, "location":location}}
-                    self._groups.update(grp)               
+                    self._dataManager._groups.update(grp)               
 
     #Resources File Import
     #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION
@@ -68,39 +59,13 @@ class OfflineDataManager():
                     location = row["LOCATION"]
                     subscription = row["SUBSCRIPTION"]
 
-                    self._resources[name] = {"name":name, "type": type, "group": group, "location":location, "subscription":subscription}
+                    self._dataManager._resources[name] = {"name":name, "type": type, "group": group, "location":location, "subscription":subscription}
                 
                 print("Updated dictionary is: ", self._resources)
 
-    def process_data(self):
-        #aggregate subscription, resources count
-        print("Processing Data...")
+   
 
-        for key in self._resources:
-            obj = self._resources[key]
-
-            if obj["subscription"] not in self._dataManager._subscription_count.keys():
-                self._dataManager._subscription_count[obj["subscription"]] = 1
-            else:
-                self._dataManager._subscription_count[obj["subscription"]] = self._dataManager._subscription_count[obj["subscription"]] + 1
-            
-            if obj["location"] not in self._dataManager._location_count.keys():
-                self._dataManager._location_count[obj["location"]] = 1
-            else:
-                self._dataManager._location_count[obj["location"]] = self._dataManager._location_count[obj["location"]] + 1
-
-            obj = self._resources[key]
-            if obj["group"] not in self._dataManager._group_count.keys():
-                self._dataManager._group_count[obj["group"]] = 1
-            else:
-                self._dataManager._group_count[obj["group"]] = self._dataManager._group_count[obj["group"]] + 1
-
-        #output aggregation results to console
-        print("Groups: " + str(len(self._dataManager._group_count)))
-        print("Locations: " + str(len(self._dataManager._location_count)))
-        print("Subs: " + str(len(self._dataManager._subscription_count)))
-
-    # Handles the click of the Load button
+    # Handles the click of the Load button for file selection dialog
     def select_file(self, fileType: str):
         self.file_importer = get_file_importer()
 
@@ -137,7 +102,7 @@ class OfflineDataManager():
         else:
             fullpath = filename
 
-        self.rg_csv_file_path = fullpath
+        self._rg_csv_file_path = fullpath
         self.rg_csv_field_model.set_value(str(fullpath))
 
     # Handles the click of the open button within the file importer dialog
@@ -155,7 +120,7 @@ class OfflineDataManager():
         else:
             fullpath = filename
 
-        self.rs_csv_file_path = fullpath
+        self._rs_csv_file_path = fullpath
         self.rs_csv_field_model.set_value(str(fullpath))
 
     # Handles the filtering of files within the file importer dialog
