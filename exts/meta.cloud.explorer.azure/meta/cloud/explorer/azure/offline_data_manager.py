@@ -38,7 +38,6 @@ class OfflineDataManager():
         self.load_res_file()
         self.process_data()
 
-
     #Resource Groups File Import
     #NAME,SUBSCRIPTION,LOCATION
     def load_rg_file(self):
@@ -53,7 +52,6 @@ class OfflineDataManager():
 
                     grp = {name:{"name":name, "subs": subs, "location":location}}
                     self._groups.update(grp)               
-
 
     #Resources File Import
     #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION
@@ -73,7 +71,6 @@ class OfflineDataManager():
                     self._resources[name] = {"name":name, "type": type, "group": group, "location":location, "subscription":subscription}
                 
                 print("Updated dictionary is: ", self._resources)
-
 
     def process_data(self):
         #aggregate subscription, resources count

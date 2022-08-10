@@ -25,6 +25,7 @@ import omni
 from .utils import get_selection
 from .combo_box_model import ComboBoxModel
 from .utils import duplicate_prims
+from .stage_manager import StageManager
 
 import random
 LABEL_WIDTH = 120
@@ -37,8 +38,11 @@ class MainView(ui.Window):
 
         super().__init__(title, **kwargs)
 
-        #UI Models
+        #Helper Class instances
+        self._stageManager = StageManager()
         self._dataManager = OfflineDataManager()
+
+        #UI Models
         self._dataManager.sub_field_model = None
         self._dataManager.res_field_model = None
         self._dataManager.rg_field_model = None
@@ -112,13 +116,16 @@ class MainView(ui.Window):
         self._groundPlaneAdded = True
 
     def load_subscriptions(self):
-        self._sub_model.generate()
+        self._stageManager.ShowSubscriptions()
 
     def load_resource_groups(self):
-        self._rg_model.generate()
+        self._stageManager.ShowGroups()
+
+    def load_locations(self):
+        self._stageManager.ShowLocations()
 
     def load_all_resources(self):
-        self._rs_model.generate()
+        self._stageManager.ShowAllResources()
 
     # Clear the stage
     def clear_stage(self):
@@ -136,9 +143,6 @@ class MainView(ui.Window):
         self._window = None
         self._usd_context = None
 
-    def import_data_files(self):
-        print("Load the CSV files")
-        #todo
 
     #___________________________________________________________________________________________________
     # Window UI Definitions
@@ -150,6 +154,9 @@ class MainView(ui.Window):
             with ui.VStack(height=0):
                 self._build_header()
                 self._build_commands()
+                self._build_groups()
+                self._build_views()
+                self._build_help()
                 self._build_connection()
                 self._build_import()
 
