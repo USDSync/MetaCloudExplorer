@@ -172,7 +172,6 @@ class MainView(ui.Window):
         with ui.CollapsableFrame("Explorer Commands", name="group"):
             with ui.VStack(height=0, spacing=SPACING):
                 with ui.HStack(style=button_styles):
-                    ui.Image()
                     ui.Button("Load Subscriptions", clicked_fn=lambda: self.load_subscriptions(self), name="subs", height=15)
                     ui.Button("Load Resource Groups", clicked_fn=lambda: self.load_resource_groups(self), name="rg", height=15)
                     ui.Button("Load All Resources", clicked_fn=lambda: self.load_all_resources(self), name="rs", height=15)
@@ -183,14 +182,6 @@ class MainView(ui.Window):
     def _build_import(self):
         with ui.CollapsableFrame("Import Offline Files", name="group", collapsed=True):
             with ui.VStack():
-                ui.Label("Sub file path:", height=10, width=120)             
-                with ui.HStack(height=20):           
-                    self.csv_field = ui.StringField(height=10)
-                    self.csv_field.enabled = True
-                    self.csv_field.model.set_value(str(self._dataManager._sub_csv_file_path))
-                    self._dataManager.sub_csv_field_model = self.csv_field.model
-                    ui.Button("Load", width=40, clicked_fn=lambda: self._dataManager.select_file("sub"))
-
                 ui.Label("Resource Groups file path:", height=10, width=120)             
                 with ui.HStack():                   
                     self._rg_data_import_field = ui.StringField(height=10)
@@ -207,7 +198,7 @@ class MainView(ui.Window):
                     self._dataManager.rs_csv_field_model = self._rs_data_import_field.model
                     ui.Button("Load", width=40, clicked_fn=lambda: self._dataManager.select_file("res"))
 
-                ui.Button("Import Data Files", clicked_fn=lambda: self._dataManager.loadFiles(self))            
+                ui.Button("Import Data Files", clicked_fn=lambda: self._dataManager.loadFiles())            
 
 
     def _build_connection(self):
