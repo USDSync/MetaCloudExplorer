@@ -12,4 +12,4 @@
 # The islands will be 2d planes in 3d space, big enough to accomidate the resources in said group.
 
 # the more resources the bigger the island.
-#we can then postion the islands in movel ways for exploration
+#we can then postion the islands in novel ways for exploration
