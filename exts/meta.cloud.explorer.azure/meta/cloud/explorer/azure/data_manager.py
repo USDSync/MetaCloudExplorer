@@ -30,26 +30,26 @@ class DataManager():
     def process_data(self):  
         print("Processing CSV Data...")
 
-        for key in self._dataManager._resources:
-            obj = self._dataManager._resources[key]
+        for key in self._resources:
+            obj = self._resources[key]
 
-            if obj["subscription"] not in self._dataManager._subscription_count.keys():
-                self._dataManager._subscription_count[obj["subscription"]] = 1
+            if obj["subscription"] not in self._subscription_count.keys():
+                self._subscription_count[obj["subscription"]] = 1
             else:
-                self._dataManager._subscription_count[obj["subscription"]] = self._dataManager._subscription_count[obj["subscription"]] + 1
+                self._subscription_count[obj["subscription"]] = self._subscription_count[obj["subscription"]] + 1
             
-            if obj["location"] not in self._dataManager._location_count.keys():
-                self._dataManager._location_count[obj["location"]] = 1
+            if obj["location"] not in self._location_count.keys():
+                self._location_count[obj["location"]] = 1
             else:
-                self._dataManager._location_count[obj["location"]] = self._dataManager._location_count[obj["location"]] + 1
+                self._location_count[obj["location"]] = self._location_count[obj["location"]] + 1
 
-            if obj["group"] not in self._dataManager._group_count.keys():
-                self._dataManager._group_count[obj["group"]] = 1
+            if obj["group"] not in self._group_count.keys():
+                self._group_count[obj["group"]] = 1
             else:
-                self._dataManager._group_count[obj["group"]] = self._dataManager._group_count[obj["group"]] + 1
+                self._group_count[obj["group"]] = self._group_count[obj["group"]] + 1
 
         #output aggregation results to console
-        print("Groups: " + str(len(self._dataManager._group_count)))
-        print("Locations: " + str(len(self._dataManager._location_count)))
-        print("Subs: " + str(len(self._dataManager._subscription_count)))
+        print("Groups: " + str(len(self._group_count)))
+        print("Locations: " + str(len(self._location_count)))
+        print("Subs: " + str(len(self._subscription_count)))
 

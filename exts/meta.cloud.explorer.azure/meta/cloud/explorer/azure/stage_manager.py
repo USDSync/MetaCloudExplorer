@@ -27,6 +27,7 @@ from pxr import Gf, UsdGeom, UsdLux
 import omni.client
 import omni.kit.app
 import omni.ui as ui
+from  .prim_utils import create_plane
 
 from omni.kit.window.file_importer import get_file_importer
 from omni.ui import scene as sc
@@ -34,6 +35,11 @@ from omni.ui import color as cl
 
 from .resource_map import shape_usda_name
 from .data_manager import DataManager
+from .math_utils import calcPlaneSizeForGroup
+
+# This Manager is responsible for drawing the stage based on the ViewType
+# It will start from scratch and create the Ground plane and groups on the plane
+# It will render the resources in each group in individual planes
 
 class StageManager():
     def __init__(self):
@@ -59,52 +65,86 @@ class StageManager():
         #Is this creating a new instance?  need a singleton....  where do I get it ?  need to pass it in? we'll see
         self._dataManager = DataManager()
 
-    def ShowSubscriptions(self):
-        
-        # Clear the stage
-        stage = omni.usd.get_context().get_stage()
-        root_prim = stage.GetPrimAtPath(self.root_path)
+    
+    #Intialize the Stage
+    def InitStage(self):
+        self._stage = omni.usd.get_context().get_stage()
+        root_prim = self._stage.GetPrimAtPath(self.root_path)
         
         #  set the up axis
-        UsdGeom.SetStageUpAxis(stage, UsdGeom.Tokens.z)
+        UsdGeom.SetStageUpAxis(self._stage, UsdGeom.Tokens.z)
 
         #  set the unit of the world
-        UsdGeom.SetStageMetersPerUnit(stage, self.stage_unit_per_meter)
-        stage.SetDefaultPrim(root_prim)
+        UsdGeom.SetStageMetersPerUnit(self._stage, self.stage_unit_per_meter)
+        self._stage.SetDefaultPrim(root_prim)
 
         # add a light
         light_prim_path = self.root_path + '/DistantLight'
-        light_prim = UsdLux.DistantLight.Define(stage, light_prim_path)
+        light_prim = UsdLux.DistantLight.Define(self._stage, light_prim_path)
         light_prim.CreateAngleAttr(0.53)
         light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
         light_prim.CreateIntensityAttr(2500.0)
 
-        #Add AAD Instance
-         # root prim
+
+    #Show the Stage based on the View.
+    def ShowStage(self, viewType: str):
+        self.InitStage()
+
+        if viewType == "ByGroup":
+            print("show by group")
+
+        if viewType == "ByLocation":
+            print("show by group")
+
+        if viewType == "BySubscription":
+            print("show by group")            
+        
+
+    #Draw a GroundPlane for the Resources to sit on.
+    def DrawStage(self, Size: int, Location: Gf.Vec3f):
+
+        #working on this
+        size = Size #calcPlaneSizeForGroup(1)
+        create_plane(self, "Stage", 500, Gf.Vec3f(0,0,0))
+
+
+
+
+
+    #Add AAD Instance
+    def ShowAAD(self, Name: str, Location: Gf.Vec3f):
+        print("Show AAD")
+
+        # root prim
         cluster_prim_path = self.root_path                  
-        cluster_prim = stage.GetPrimAtPath(cluster_prim_path)
+        cluster_prim = self._stage.GetPrimAtPath(cluster_prim_path)
 
         # create the prim if it does not exist
         if not cluster_prim.IsValid():
-            UsdGeom.Xform.Define(stage, cluster_prim_path)
+            UsdGeom.Xform.Define(self._stage, cluster_prim_path)
             
-        shape_prim_path = cluster_prim_path + '/AAD'
+        shape_prim_path = cluster_prim_path + '/AAD_' + Name
 
         # Create prim to add the reference to.
-        ref_shape = stage.OverridePrim(shape_prim_path)
+        ref_shape = self._stage.OverridePrim(shape_prim_path)
 
         # Add the reference
         ref_shape.GetReferences().AddReference(shape_usda_name["AAD"])
                         
         # Get mesh from shape instance
-        next_shape = UsdGeom.Mesh.Get(stage, shape_prim_path)
+        next_shape = UsdGeom.Mesh.Get(self._stage, shape_prim_path)
 
         # Set location at home point
-        next_shape.AddTranslateOp().Set(
-            Gf.Vec3f(
-                self.scale_factor*0, 
-                self.scale_factor*0,
-                self.scale_factor*0))
+        next_shape.AddTranslateOp().Set(Location)
+            # Gf.Vec3f(
+            #     self.scale_factor*0, 
+            #     self.scale_factor*0,
+            #     self.scale_factor*0))
+
+
+    def ShowSubscriptions(self):
+        #HOW BIG OF A STAGE DO WE NEED?  LETS CALCULATE
+
 
         # TEST Label
         #with sc.Transform(look_at=sc.Transform.LookAt.CAMERA):

@@ -60,10 +60,7 @@ class OfflineDataManager():
                     subscription = row["SUBSCRIPTION"]
 
                     self._dataManager._resources[name] = {"name":name, "type": type, "group": group, "location":location, "subscription":subscription}
-                
-                print("Updated dictionary is: ", self._resources)
-
-   
+                  
 
     # Handles the click of the Load button for file selection dialog
     def select_file(self, fileType: str):

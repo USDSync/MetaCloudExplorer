@@ -178,6 +178,7 @@ class MainView(ui.Window):
                 with ui.HStack():
                     ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), height=15)
                     ui.Button("Add Ground Plane", clicked_fn=lambda: self.create_ground_plane(), height=15)
+            ui.Line(style={"color": 0xff00b976}, height=20)
 
     def _build_import(self):
         with ui.CollapsableFrame("Import Offline Files", name="group", collapsed=True):
