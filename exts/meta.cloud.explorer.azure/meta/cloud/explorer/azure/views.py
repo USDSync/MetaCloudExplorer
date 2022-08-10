@@ -37,11 +37,6 @@ class MainView(ui.Window):
 
         super().__init__(title, **kwargs)
 
-        #ToDepricate
-        self._rs_model = ResourceModel("Company1")
-        self._rg_model = ResourceGroupModel("Company1")
-        self._sub_model = SubscriptionModel("Company1")
-
         #UI Models
         self._dataManager = OfflineDataManager()
         self._dataManager.sub_field_model = None

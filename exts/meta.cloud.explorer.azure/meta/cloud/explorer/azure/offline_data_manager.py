@@ -68,32 +68,38 @@ class OfflineDataManager():
                     location = row["LOCATION"]
                     subscription = row["SUBSCRIPTION"]
 
-                    res = {name:{"name":name, "type": type, "group": group, "location":location, "subscription":subscription}}
-                    self._resources.update(res)               
+                    self._resources[name] = {"name":name, "type": type, "group": group, "location":location, "subscription":subscription}
                 
                 print("Updated dictionary is: ", self._resources)
 
 
     def process_data(self):
         #aggregate subscription, resources count
-        for key, val in self._resources:
-            if val["subscription"] not in self._subscriptions.keys():
-                self._subscriptions[val["subscription"]] = 1
+        print("Processing Subscriptions")
+        for key in self._resources:
+            obj = self._resources[key]
+            if obj["subscription"] not in self._subscriptions.keys():
+                self._subscriptions[obj["subscription"]] = 1
             else:
-                self._subscriptions[val["subscription"]] = self._subscriptions[val["subscription"]] + 1
+                self._subscriptions[obj["subscription"]] = self._subscriptions[obj["subscription"]] + 1
 
         #aggregate location, resources count
-        for item in self._resources:
-            if item.location not in self._locations:
-                self._locations[item.location] = 1
-            else: 
-                self._locations[item.location] = self._locations[item.location] + 1
-
-        for item in self._resources:
-            if item.group not in self._groupcount:
-                self._groupcount[item.group] = 1
+        print("Processing Locations")
+        for key in self._resources:
+            obj = self._locations[key]
+            if obj["location"] not in self._subscriptions.keys():
+                self._locations[obj["location"]] = 1
             else:
-                self._groupcount[item.group] = self._groupcount[item.group] + 1
+                self._locations[obj["location"]] = self._locations[obj["location"]] + 1
+
+        #aggregate groups, resources count
+        print("Processing Groups")
+        for key in self._resources:
+            obj = self._groupcount[key]
+            if obj["location"] not in self._subscriptions.keys():
+                self._groupcount[obj["group"]] = 1
+            else:
+                self._groupcount[obj["group"]] = self._groupcount[obj["group"]] + 1
 
     # Handles the click of the Load button
     def select_file(self, fileType: str):
