@@ -28,7 +28,7 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
     # ext_id is current extension id. It can be used with extension manager to query additional information, like where
     # this extension is located on filesystem.
 
-    WINDOW_NAME = "Meta Cloud Explorer (Azure)"
+    WINDOW_NAME = "Meta Cloud Explorer"
     MENU_PATH = f"Window/{WINDOW_NAME}"
 
     def on_startup(self, ext_id):

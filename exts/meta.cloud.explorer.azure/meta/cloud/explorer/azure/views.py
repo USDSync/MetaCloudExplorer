@@ -167,12 +167,12 @@ class MainView(ui.Window):
         with ui.CollapsableFrame("Explorer Commands", name="group"):
             with ui.VStack(height=0, spacing=SPACING):
                 with ui.HStack(style=button_styles):
-                    ui.Button("Load Subscriptions", clicked_fn=lambda: self.load_subscriptions(self), name="subs", height=15)
-                    ui.Button("Load Resource Groups", clicked_fn=lambda: self.load_resource_groups(self), name="rg", height=15)
-                    ui.Button("Load All Resources", clicked_fn=lambda: self.load_all_resources(self), name="rs", height=15)
+                    ui.Button("Show Subscriptions", clicked_fn=lambda: self.load_subscriptions(self), name="subs", height=15)
+                    ui.Button("Show Resource Groups", clicked_fn=lambda: self.load_resource_groups(self), name="rg", height=15)
+                    ui.Button("Show All Resources", clicked_fn=lambda: self.load_all_resources(self), name="rs", height=15)
                 with ui.HStack():
-                    ui.Button("Clear Stage", clicked_fn=lambda: self.clear_stage(self), height=15)
-                    ui.Button("Add Ground", clicked_fn=lambda: self.create_ground_plane(self), height=15)
+                    ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(self), height=15)
+                    ui.Button("Add Ground Plane", clicked_fn=lambda: self.create_ground_plane(self), height=15)
 
     def _build_import(self):
         with ui.CollapsableFrame("Import Offline Files", name="group", collapsed=True):
