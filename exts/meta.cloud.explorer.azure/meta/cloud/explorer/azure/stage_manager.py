@@ -61,10 +61,7 @@ class StageManager():
         # limit the number of rows read
         self.max_elements = 5000
         
-        #  max number of different color clusters
-        self.max_num_clusters = 10
-
-        self.x_threshold = 300
+        self.x_threshold = 60
     
     #Intialize the Stage
     def InitStage(self):
@@ -83,7 +80,7 @@ class StageManager():
         light_prim = UsdLux.DistantLight.Define(self._stage, light_prim_path)
         light_prim.CreateAngleAttr(0.53)
         light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
-        light_prim.CreateIntensityAttr(2500.0)
+        light_prim.CreateIntensityAttr(3000.0)
 
 
     #Show the Stage based on the View.
@@ -95,28 +92,41 @@ class StageManager():
         x=0.0
         y=0.0
         z=0.0
+        padding=2
 
         if viewType == "ByGroup":
             for group in self._dataManager._group_count:
                 stagesize = calcPlaneSizeForGroup(self._dataManager._group_count[group])
-                grp = cleanup_prim_path(group)
+                grp = cleanup_prim_path(self, Name=group)
 
                 #Create the Stages
+                stagesize = calcPlaneSizeForGroup(self._dataManager._group_count[group])
+                print("Drawing " + str(stagesize) + " sized prim: " + group + " " + str(x) + ":" + str(y) +":"  + str(z))
                 self.DrawStage(Name="/RG/" + grp, Size=stagesize, Location=Gf.Vec3f(x,y,z))
 
                 #Depenmding on the size of the last stage, shift our position to accomidate the next one
                 if (x > self.x_threshold):
                     x =0
-                    y = y + (stagesize * stagesize) + 2.0
-                    
-                x = x + (stagesize * stagesize) + 2.0
+                    y = y + (stagesize) + padding
+
+                x = x + (stagesize) + padding
+
 
         if viewType == "ByLocation":
-            print("show by group")
+            for loc in self._dataManager._location_count:
+                pass
 
-        if viewType == "BySubscription":
-            print("show by group")            
+        if viewType == "ByType":
+            pass
         
+        if viewType == "ByNetwork":
+            pass
+
+        if viewType == "ByCost":
+            pass
+
+        if viewType == "Template":
+            pass
 
     #Draw a GroundPlane for the Resources to sit on.
     def DrawStage(self, Name: str, Size: int, Location: Gf.Vec3f):

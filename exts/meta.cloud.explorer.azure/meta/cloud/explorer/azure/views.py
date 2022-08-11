@@ -8,7 +8,7 @@ from .rs_models import ResourceModel
 from .combo_box_model import ComboBoxModel
 from .style_button import button_styles
 from .style_meta import meta_window_style
-from .offline_data_manager import OfflineDataManager
+from .offline_data_manager import DataManager
 
 import sys
 import webbrowser
@@ -40,12 +40,17 @@ class MainView(ui.Window):
 
         #Helper Class instances
         self._stageManager = StageManager()
-        self._dataManager = OfflineDataManager()
+        self._dataManager = DataManager()
 
         #UI Models
         self._dataManager.sub_field_model = None
         self._dataManager.res_field_model = None
         self._dataManager.rg_field_model = None
+        self._options_model_x_max = ui.SimpleIntModel()
+        self._options_model_y_max = ui.SimpleIntModel()
+        self._options_model_z_max = ui.SimpleIntModel()
+        self._options_model_scale = ui.SimpleIntModel()
+
         self._data_mode_model = ComboBoxModel("Live API", "Offline data")
 
         #Defaults
@@ -164,9 +169,11 @@ class MainView(ui.Window):
     def _build_header(self):
         """Build the widgets of the "Source" group"""
         with ui.VStack():
-            ui.Label("Meta Cloud Explorer (Azure)", style={"color": 0xFF008976, "font_size":36}, alignment=ui.Alignment.CENTER, height=0)
+            ui.Label("Meta Cloud Explorer (Azure)", style={"color": 0xFF008976, "font_size":36}, alignment=ui.Alignment.LEFT, height=0)
+            ui.Label("An Omniverse Scene Authoring extension", height=10, name="TItle", alignment=ui.Alignment.LEFT)
             ui.Line(style={"color": 0xff00b976}, height=20)
             with ui.HStack():
+                ui.StringField(model=self._source_prim_model)
                 ui.Label("Status: No Data", height=10, name="Status", alignment=ui.Alignment.RIGHT)
 
     def _build_commands(self):
@@ -174,10 +181,11 @@ class MainView(ui.Window):
         with ui.CollapsableFrame("Explorer Commands", name="group"):
             with ui.VStack(height=0, spacing=SPACING):
                 with ui.HStack(style=button_styles):
-                    ui.Button("Load Resources to Stage", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15)
+                    ui.Button("Load Resources to Stage", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15, width=100)
                 with ui.HStack():
                     ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), height=15)
                     ui.Button("Add Ground Plane", clicked_fn=lambda: self.create_ground_plane(), height=15)
+                ui.Line(style={"color": 0xff00b976}, height=20)
 
     def _build_import(self):
         with ui.CollapsableFrame("Import Offline Files", name="group", collapsed=True):
@@ -198,11 +206,10 @@ class MainView(ui.Window):
                     self._dataManager.rs_csv_field_model = self._rs_data_import_field.model
                     ui.Button("Load", width=40, clicked_fn=lambda: self._dataManager.select_file("res"))
 
-                ui.Button("Import Data Files", clicked_fn=lambda: self._dataManager.loadFiles())            
-
+                ui.Button("Import Data Files", clicked_fn=lambda: self._dataManager.load_csv_files())            
 
     def _build_connection(self):
-        with ui.CollapsableFrame("Azure API Connection", name="group", collapsed=True):
+        with ui.CollapsableFrame("Live Connection", name="group", collapsed=True):
             with ui.VStack():
                 ui.Label("Tenant Id")
                 self._tenant = ui.StringField()
@@ -210,21 +217,36 @@ class MainView(ui.Window):
                 self._client = ui.StringField()
                 ui.Label("Client Secret")
                 self._secret = ui.StringField()
-                ui.Button("Connect to Azure", clicked_fn=lambda: self.load_account_info(self))
+                ui.Button("Connect to Azure", clicked_fn=lambda: self._dataManager.load_from_api())
+
+    def _build_options(self):
+        with ui.CollapsableFrame("Live Connection", name="group", collapsed=True):
+            with ui.VStack():
+                with ui.HStack():
+                    ui.Label("X-Axis Max", name="attribute_name", width=self.label_width)
+                    ui.IntDrag(model=self._options_model_x_max, min=1, max=100)
+
+                with ui.HStack():
+                    ui.Label("Y-Axis Max", name="attribute_name", width=self.label_width)
+                    ui.IntDrag(model=self._options_model_y_max, min=1, max=100)
+
+                with ui.HStack():
+                    ui.Label("Z-Axis Max", name="attribute_name", width=self.label_width)
+                    ui.IntDrag(model=self._options_model_z_max, min=1, max=100)                   
 
     def _build_groups(self):
         with ui.VStack():
+            ui.Label("Views")
             with ui.HStack():
-                ui.Button("Group By Type", clicked_fn=lambda: self.on_group(), height=15)
-                ui.Button("Group By Region", clicked_fn=lambda: self.on_group(), height=15)
-                ui.Button("Group By Group", clicked_fn=lambda: self.on_group(), height=15)
+                ui.Button("Type View", clicked_fn=lambda: self.load_stage("ByType"), height=15)
+                ui.Button("Location View", clicked_fn=lambda: self.load_stage("ByLocation"), height=15)
+                ui.Button("Group View", clicked_fn=lambda: self.load_stage("ByGroup"), height=15)
 
-                
     def _build_views(self):
         with ui.HStack():
-            ui.Button("Network View", clicked_fn=lambda: self.on_network(), height=15)
-            ui.Button("Resource View", clicked_fn=lambda: self.on_resource(), height=15)
-            ui.Button("Cost View", clicked_fn=lambda: self.on_cost(), height=15)
+            ui.Button("Network View", clicked_fn=lambda: self.load_stage("ByNetwork"), height=15)
+            ui.Button("Cost View", clicked_fn=lambda: self.load_stage("ByCost"), height=15)
+            ui.Button("Template View", clicked_fn=lambda: self.load_stage("Template"), height=15)
 
     def _build_help(self):
         ui.Line(style={"color": 0xff00b976}, height=20)

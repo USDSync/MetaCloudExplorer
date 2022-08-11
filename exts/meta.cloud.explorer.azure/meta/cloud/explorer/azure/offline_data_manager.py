@@ -18,8 +18,8 @@ class OfflineDataManager():
         # limit the number of rows read
         self.max_elements = 5000
 
-        self._rg_csv_file_path = ""
-        self._rs_csv_file_path = ""
+        self._rg_csv_file_path = "F:/Source/Github/mce/MetaCloudExplorer/exts/meta.cloud.explorer.azure/data/import/SolidCloud_RG.csv"
+        self._rs_csv_file_path = "F:/Source/Github/mce/MetaCloudExplorer/exts/meta.cloud.explorer.azure/data/import/SolidCloud_all.csv"
        
         self._dataManager = DataManager.instance() # Get A Singleton instance
 
