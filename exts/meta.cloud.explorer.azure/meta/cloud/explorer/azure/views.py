@@ -104,19 +104,6 @@ class MainView(ui.Window):
     def on_group():
         print("On Group")
 
-    def create_ground_plane(self):
-        #if (self._groundPlaneAdded == False):
-        stage_ref = omni.usd.get_context().get_stage()
-
-        omni.kit.commands.execute('AddGroundPlaneCommand',
-        stage=stage_ref,
-        planePath='/GroundPlane',
-        axis="Z",
-        size=2500.0,
-        position=Gf.Vec3f(0,0,0),
-        color=Gf.Vec3f(0.5, 0.5, 0.5))
-        self._groundPlaneAdded = True
-
     def load_stage(self, viewType: str):
         self._stageManager.ShowStage(viewType)
 
@@ -139,6 +126,10 @@ class MainView(ui.Window):
         ground_prim = stage.GetPrimAtPath('/GroundPlane')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/GroundPlane')                    
+
+        ground_prim = stage.GetPrimAtPath('/ResourceGroups')
+        if (ground_prim.IsValid()):
+            stage.RemovePrim('/ResourceGroups')
 
     def destroy(self):
         self._window.destroy()
@@ -175,10 +166,8 @@ class MainView(ui.Window):
         with ui.CollapsableFrame("Explorer Commands", name="group"):
             with ui.VStack(height=0, spacing=SPACING):
                 with ui.HStack(style=button_styles):
-                    ui.Button("Load Resources to Stage", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15, width=200, alignment=ui.Alignment.CENTER)
-                with ui.HStack():
-                    ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), height=15)
-                    ui.Button("Add Ground Plane", clicked_fn=lambda: self.create_ground_plane(), height=15)
+                    ui.Button("Load Resources to Stage", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15, width=200)
+                    ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), name="clear", height=15, width=200)
 
     def _build_import(self):
         with ui.CollapsableFrame("Import Offline Files", name="group", collapsed=True):

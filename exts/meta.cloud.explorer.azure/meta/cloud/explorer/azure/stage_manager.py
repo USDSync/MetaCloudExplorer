@@ -51,9 +51,12 @@ class StageManager():
         #root prim paths
         self.root_path = '/World'
         self.aad_layer_root_path = '/AAD'
-        self.sub_layer_root_path = '/SUB'
-        self.res_layer_root_path = '/RES'
+        self.sub_layer_root_path = '/Subscriptions'
+        self.res_layer_root_path = '/Resource_Groups'
         
+        #tracking where we put stuff so we dont have to calculate it again.
+        self._stage_matrix = {}
+
         # stage_unit defines the number of unit per meter
         self.stage_unit_per_meter = 1
                
@@ -64,6 +67,8 @@ class StageManager():
         self.max_elements = 5000
         
         self.x_threshold = 60
+        self.x_extent = 0
+        self.y_extent = 0
     
     #Intialize the Stage
     def InitStage(self):
@@ -94,25 +99,36 @@ class StageManager():
         x=0.0
         y=0.0
         z=0.0
-        padding=2
+        xpadding=3
+        ypadding=10
+        previous_stage_size = 0
+        previous_x = 0
 
         if viewType == "ByGroup":
             for group in self._dataStore._group_count:
                 stagesize = calcPlaneSizeForGroup(self._dataStore._group_count[group])
                 grp = cleanup_prim_path(self, Name=group)
 
-                #Create the Stages
-                stagesize = calcPlaneSizeForGroup(self._dataStore._group_count[group])
-                print("Drawing " + str(stagesize) + " sized prim: " + group + " " + str(x) + ":" + str(y) +":"  + str(z))
-                self.DrawStage(Name="/RG/" + grp, Size=stagesize, Location=Gf.Vec3f(x,y,z))
-
-                #Depenmding on the size of the last stage, shift our position to accomidate the next one
+                #Figure out where to put it
                 if (x > self.x_threshold):
                     x =0
-                    y = y + (stagesize) + padding
+                    y = y + (stagesize) + ypadding
+                    if y > self.y_extent: self.y_extent = y
+                else:
+                    x = (previous_x + previous_stage_size) + (stagesize*2 + 1)
+                    if x > self.x_extent: self.x_extent = x
 
-                x = x + (stagesize) + padding
+                #Create the Stages
+                print("Drawing " + str(stagesize) + " sized prim: " + group + " " + str(x) + ":" + str(y) +":"  + str(z))
+                self.DrawStage(Name=self.res_layer_root_path + "/" + grp, Size=stagesize, Location=Gf.Vec3f(x,y,z))
 
+                #record the size and postion for the next stage
+                previous_stage_size = stagesize
+                previous_x = x
+
+                self._stage_matrix[group] = {"name": group, "size": stagesize, "x": x, "y": y, "z": z }
+
+            self.DrawGround()
 
         if viewType == "ByLocation":
             for loc in self._dataStore._location_count:
@@ -132,13 +148,17 @@ class StageManager():
 
     #Draw a GroundPlane for the Resources to sit on.
     def DrawStage(self, Name: str, Size: int, Location: Gf.Vec3f):
-
         create_plane(self, Name, Size, Location)
 
 
+    def DrawGround(self):
+        root_prim = self._stage.GetPrimAtPath(self.root_path)
 
-
-
+        if root_prim is not None:
+            if self.x_extent > self.y_extent: # Which Extent is larger?
+                create_plane(self, Name="/GroundPlane", Size=(self.x_extent + 10), Location=Gf.Vec3f(-10,-10,-1))
+            else: 
+                create_plane(self, Name="/GroundPlane", Size=(self.y_extent + 10), Location=Gf.Vec3f(-10,-10,-1))
 
     #Add AAD Instance
     def ShowAAD(self, Name: str, Location: Gf.Vec3f):

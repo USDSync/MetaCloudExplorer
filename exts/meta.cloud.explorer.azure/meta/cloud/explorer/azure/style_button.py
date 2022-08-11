@@ -24,12 +24,12 @@ button_styles = {
         "background_color": 0xFFFAB26D,
         "background_gradient_color": 0xFFFF7E09
     },
-    "Button::rg": {
+    "Button::clear": {
         "background_color": 0xFFFF7E09,
         "background_gradient_color": 0xFFFAB26D,
         "border_color": 0xFFFD761D,
     },
-    "Button.Label::rg": {
+    "Button.Label::clear": {
         "color": 0xFFFFFFFF,
     },
     "Button::rs": {
