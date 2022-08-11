@@ -9,6 +9,7 @@ from .combo_box_model import ComboBoxModel
 from .style_button import button_styles
 from .style_meta import meta_window_style
 from .data_manager import DataManager
+from .data_store import DataStore
 
 import sys
 import webbrowser
@@ -41,14 +42,13 @@ class MainView(ui.Window):
         #Helper Class instances
         self._stageManager = StageManager()
         self._dataManager = DataManager.instance()
+        self._dataStore = DataStore.instance()
 
         #UI Models
         self._options_model_x_max = ui.SimpleIntModel()
         self._options_model_y_max = ui.SimpleIntModel()
         self._options_model_z_max = ui.SimpleIntModel()
         self._options_model_scale = ui.SimpleIntModel()
-
-        self._data_mode_model = ComboBoxModel("Live API", "Offline data")
 
         #Defaults
         self._groundPlaneAdded = False
@@ -187,16 +187,16 @@ class MainView(ui.Window):
                 with ui.HStack():                   
                     self._rg_data_import_field = ui.StringField(height=10)
                     self._rg_data_import_field.enabled = True
-                    self._rg_data_import_field.model.set_value(str(self._dataManager._rg_csv_file_path))
-                    self._dataManager._offlineDataManager._rg_csv_field_model = self._rg_data_import_field.model
+                    self._rg_data_import_field.model.set_value(str(self._dataStore._rg_csv_file_path))
+                    self._dataStore._rg_csv_field_model = self._rg_data_import_field.model
                     ui.Button("Load", width=40, clicked_fn=lambda: self._dataManager.select_file("rg"))
             
                 ui.Label("All Resources file path:", height=10, width=120)             
                 with ui.HStack():
                     self._rs_data_import_field = ui.StringField(height=10)
                     self._rs_data_import_field.enabled = True
-                    self._rs_data_import_field.model.set_value(str(self._dataManager._rs_csv_file_path))
-                    self._dataManager._offlineDataManager._rs_csv_field_model = self._rs_data_import_field.model
+                    self._rs_data_import_field.model.set_value(str(self._dataStore._rs_csv_file_path))
+                    self._dataStore._rs_csv_field_model = self._rs_data_import_field.model
                     ui.Button("Load", width=40, clicked_fn=lambda: self._dataManager.select_file("res"))
 
                 ui.Button("Import Data Files", clicked_fn=lambda: self._dataManager.load_csv_files())            

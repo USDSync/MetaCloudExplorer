@@ -28,10 +28,9 @@ class DataManager:
 
     def load_csv_files(self):
         self._sourceOfData = "Offline Data"
-        self._offlineDataManager._rg_csv_file_path = self._rg_csv_file_path
-        self._offlineDataManager._rs_csv_file_path = self._rs_csv_file_path
         self._offlineDataManager.loadFiles()
         self.process_data()
+
 
     def load_from_api(self):
         self._sourceOfData = "Live Azure API"
@@ -70,11 +69,12 @@ class DataManager:
             else:
                 self._dataStore._group_count[obj["group"]] = self._dataStore._group_count[obj["group"]] + 1
 
+
             #Count per Tags
-            if obj["tag"] not in self._dataStore._tag_count.keys():
-                self._dataStore._tag_count[obj["tag"]] = 1
-            else:
-                self._dataStore._tag_count[obj["tag"]] = self._dataStore._tag_count[obj["tag"]] + 1
+            #if obj["tag"] not in self._dataStore._tag_count.keys():
+            #    self._dataStore._tag_count[obj["tag"]] = 1
+            #else:
+            #    self._dataStore._tag_count[obj["tag"]] = self._dataStore._tag_count[obj["tag"]] + 1
 
 
         #output aggregation results to console

@@ -16,12 +16,9 @@ class CSVDataManager():
     def __init__(self):
         
         self._dataStore = DataStore.instance() # Get A Singleton instance, store data here
+       
         # limit the number of rows read
         self.max_elements = 5000
-
-        self._rg_csv_file_path = ""
-        self._rs_csv_file_path = ""
-
        
     #Load all the data from CSV files and process it
     def loadFiles(self):
@@ -31,9 +28,10 @@ class CSVDataManager():
     #Resource Groups File Import
     #NAME,SUBSCRIPTION,LOCATION
     def load_rg_file(self):
-        if os.path.exists(self._rg_csv_file_path):
+        if os.path.exists(self._dataStore._rg_csv_file_path):
             # Read CSV file
-            with open(self._rg_csv_file_path, newline='') as csvfile:
+            i=1
+            with open(self._dataStore._rg_csv_file_path, newline='') as csvfile:
                 reader = csv.DictReader(csvfile, delimiter=',')
                 for row in reader:
                     name = row["NAME"]
@@ -42,14 +40,17 @@ class CSVDataManager():
 
                     grp = {name:{"name":name, "subs": subs, "location":location}}
                     self._dataStore._groups.update(grp)               
+                    i=i+1
+                    if i > self.max_elements: return
 
     #Resources File Import
     #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION
     def load_res_file(self):
          # check that CSV exists
-        if os.path.exists(self._rs_csv_file_path):
+        if os.path.exists(self._dataStore._rs_csv_file_path):
             # Read CSV file
-            with open(self._rs_csv_file_path, encoding='utf-8-sig') as file:
+            i=1
+            with open(self._dataStore._rs_csv_file_path, encoding='utf-8-sig') as file:
                 reader = csv.DictReader(file, delimiter=',')
                 for row in reader:
                     name = row["NAME"]
@@ -59,6 +60,9 @@ class CSVDataManager():
                     subscription = row["SUBSCRIPTION"]
 
                     self._dataStore._resources[name] = {"name":name, "type": type, "group": group, "location":location, "subscription":subscription}
+
+                    i=i+1
+                    if i > self.max_elements: return
                   
 
     # Handles the click of the Load button for file selection dialog
@@ -98,7 +102,7 @@ class CSVDataManager():
         else:
             fullpath = filename
 
-        self._rg_csv_file_path = fullpath      
+        self._dataStore._rg_csv_file_path = fullpath      
         self._dataStore._rg_csv_field_model.set_value(str(fullpath))
 
 
@@ -117,7 +121,7 @@ class CSVDataManager():
         else:
             fullpath = filename
 
-        self._rs_csv_file_path = fullpath
+        self._dataStore._rs_csv_file_path = fullpath
         self._dataStore._rs_csv_field_model.set_value(str(fullpath))
 
     # Handles the filtering of files within the file importer dialog

@@ -4,7 +4,7 @@ from .Singleton import Singleton
 class DataStore():
     def __init__(self):
 
-            #NAME,SUBSCRIPTION,LOCATION
+        #NAME,SUBSCRIPTION,LOCATION
         self._groups = {}
 
         #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION
@@ -17,6 +17,8 @@ class DataStore():
         self._type_count = {}
         self._tag_count = {}
 
+        self._rg_csv_file_path = ""
+        self._rs_csv_file_path = ""
         self._rg_csv_field_model = ""
         self._rs_csv_field_model = ""
 

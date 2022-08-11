@@ -37,6 +37,7 @@ from omni.ui import color as cl
 from .resource_map import shape_usda_name
 from .math_utils import calcPlaneSizeForGroup
 from .data_manager import DataManager
+from .data_store import DataStore
 
 # The Stage Manager is responsible for drawing the stage based on the ViewType
 # It will start from scratch and create the Ground plane and groups on the plane
@@ -45,6 +46,7 @@ class StageManager():
     def __init__(self):
 
         self._dataManager = DataManager.instance() # Get A Singleton instance
+        self._dataStore = DataStore.instance() # Get A Singleton instance
 
         #root prim paths
         self.root_path = '/World'
@@ -95,12 +97,12 @@ class StageManager():
         padding=2
 
         if viewType == "ByGroup":
-            for group in self._dataManager._group_count:
-                stagesize = calcPlaneSizeForGroup(self._dataManager._group_count[group])
+            for group in self._dataStore._group_count:
+                stagesize = calcPlaneSizeForGroup(self._dataStore._group_count[group])
                 grp = cleanup_prim_path(self, Name=group)
 
                 #Create the Stages
-                stagesize = calcPlaneSizeForGroup(self._dataManager._group_count[group])
+                stagesize = calcPlaneSizeForGroup(self._dataStore._group_count[group])
                 print("Drawing " + str(stagesize) + " sized prim: " + group + " " + str(x) + ":" + str(y) +":"  + str(z))
                 self.DrawStage(Name="/RG/" + grp, Size=stagesize, Location=Gf.Vec3f(x,y,z))
 
@@ -113,7 +115,7 @@ class StageManager():
 
 
         if viewType == "ByLocation":
-            for loc in self._dataManager._location_count:
+            for loc in self._dataStore._location_count:
                 pass
 
         if viewType == "ByType":
