@@ -13,8 +13,17 @@ def create_plane(self, Name :str, Size: int, Location: Gf.Vec3f):
 
     omni.kit.commands.execute('AddGroundPlaneCommand',
     stage=stage_ref,
-    planePath='/Plane/' + Name,
+    planePath=Name,
     axis="Z",
     size=Size,
     position=Location,
     color=Gf.Vec3f(0.5, 0.5, 0.5))
+
+def cleanup_prim_path(self, Name: str):
+    nme = Name.replace("-", "_")
+    nme = nme.replace(" ", "_")
+    nme = nme.replace("/", "_")
+    nme = nme.replace(".", "_")
+    nme = nme.replace(":", "_")
+    nme = nme.replace(";", "_")
+    return nme

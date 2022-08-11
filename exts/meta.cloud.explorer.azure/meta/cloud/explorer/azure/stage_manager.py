@@ -28,6 +28,7 @@ import omni.client
 import omni.kit.app
 import omni.ui as ui
 from  .prim_utils import create_plane
+from  .prim_utils import cleanup_prim_path
 
 from omni.kit.window.file_importer import get_file_importer
 from omni.ui import scene as sc
@@ -63,6 +64,7 @@ class StageManager():
         #  max number of different color clusters
         self.max_num_clusters = 10
 
+        self.x_threshold = 300
     
     #Intialize the Stage
     def InitStage(self):
@@ -97,12 +99,17 @@ class StageManager():
         if viewType == "ByGroup":
             for group in self._dataManager._group_count:
                 stagesize = calcPlaneSizeForGroup(self._dataManager._group_count[group])
+                grp = cleanup_prim_path(group)
 
                 #Create the Stages
-                self.DrawStage(Name=group, Size=stagesize, Location=Gf.Vec3f(x,y,z))
+                self.DrawStage(Name="/RG/" + grp, Size=stagesize, Location=Gf.Vec3f(x,y,z))
 
                 #Depenmding on the size of the last stage, shift our position to accomidate the next one
-                x = x + 10
+                if (x > self.x_threshold):
+                    x =0
+                    y = y + (stagesize * stagesize) + 2.0
+                    
+                x = x + (stagesize * stagesize) + 2.0
 
         if viewType == "ByLocation":
             print("show by group")
