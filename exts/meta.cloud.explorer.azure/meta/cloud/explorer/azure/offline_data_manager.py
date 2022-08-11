@@ -21,7 +21,7 @@ class OfflineDataManager():
         self._rg_csv_file_path = ""
         self._rs_csv_file_path = ""
        
-        self._dataManager = DataManager()
+        self._dataManager = DataManager.instance() # Get A Singleton instance
 
     #Load all the data from CSV files and process it
     def loadFiles(self):

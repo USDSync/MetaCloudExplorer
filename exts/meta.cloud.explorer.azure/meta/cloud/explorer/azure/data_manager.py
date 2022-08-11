@@ -1,6 +1,5 @@
 # This class manages both the offline data and online data 
-
-
+from .Singleton import Singleton
 
 # User either connects to Azure with connection info 
 # OR User can import data from data files 
@@ -12,9 +11,10 @@
 # and give the user some basic info to show the connection / import worked.
 # now connected, user can load different sets of resources and view then in different ways.
 
-
-class DataManager():
+@Singleton
+class DataManager:
     def __init__(self):
+        print("DataManager Created.")
 
         #datasets
         self._groups = {}
@@ -25,6 +25,24 @@ class DataManager():
         self._location_count = {}
         self._group_count = {}
 
+    def instance(self):
+        """
+        Returns the singleton instance. Upon its first call, it creates a
+        new instance of the decorated class and calls its `__init__` method.
+        On all subsequent calls, the already created instance is returned.
+
+        """
+        try:
+            return self._instance
+        except AttributeError:
+            self._instance = self._decorated()
+            return self._instance
+
+    def __call__(self):
+        raise TypeError('Singletons must be accessed through `instance()`.')
+
+    def __instancecheck__(self, inst):
+        return isinstance(inst, self._decorated)
 
     #Aggregate subscription, resources counts to DataManager Dictionaries
     def process_data(self):  

@@ -34,15 +34,16 @@ from omni.ui import scene as sc
 from omni.ui import color as cl
 
 from .resource_map import shape_usda_name
-from .data_manager import DataManager
 from .math_utils import calcPlaneSizeForGroup
+from .data_manager import DataManager
 
-# This Manager is responsible for drawing the stage based on the ViewType
+# The Stage Manager is responsible for drawing the stage based on the ViewType
 # It will start from scratch and create the Ground plane and groups on the plane
-# It will render the resources in each group in individual planes
-
+# It will render the resources in each group on individual planes
 class StageManager():
     def __init__(self):
+
+        self._dataManager = DataManager.instance() # Get A Singleton instance
 
         #root prim paths
         self.root_path = '/World'
@@ -55,15 +56,12 @@ class StageManager():
                
         # Scale factor so that the shapes are well spaced
         self.scale_factor = 1.0
-
+      
         # limit the number of rows read
         self.max_elements = 5000
         
         #  max number of different color clusters
         self.max_num_clusters = 10
-
-        #Is this creating a new instance?  need a singleton....  where do I get it ?  need to pass it in? we'll see
-        self._dataManager = DataManager()
 
     
     #Intialize the Stage
@@ -90,8 +88,21 @@ class StageManager():
     def ShowStage(self, viewType: str):
         self.InitStage()
 
+        #Cycle through the groups creating planes for each of them
+        #Track plane positioning in some map for resource placement later..
+        x=0.0
+        y=0.0
+        z=0.0
+
         if viewType == "ByGroup":
-            print("show by group")
+            for group in self._dataManager._group_count:
+                stagesize = calcPlaneSizeForGroup(self._dataManager._group_count[group])
+
+                #Create the Stages
+                self.DrawStage(Name=group, Size=stagesize, Location=Gf.Vec3f(x,y,z))
+
+                #Depenmding on the size of the last stage, shift our position to accomidate the next one
+                x = x + 10
 
         if viewType == "ByLocation":
             print("show by group")
@@ -101,11 +112,10 @@ class StageManager():
         
 
     #Draw a GroundPlane for the Resources to sit on.
-    def DrawStage(self, Size: int, Location: Gf.Vec3f):
+    def DrawStage(self, Name: str, Size: int, Location: Gf.Vec3f):
 
-        #working on this
-        size = Size #calcPlaneSizeForGroup(1)
-        create_plane(self, "Stage", 500, Gf.Vec3f(0,0,0))
+        create_plane(self, Name, Size, Location)
+
 
 
 
