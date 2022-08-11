@@ -8,7 +8,7 @@ from .rs_models import ResourceModel
 from .combo_box_model import ComboBoxModel
 from .style_button import button_styles
 from .style_meta import meta_window_style
-from .offline_data_manager import DataManager
+from .data_manager import DataManager
 
 import sys
 import webbrowser
@@ -40,12 +40,9 @@ class MainView(ui.Window):
 
         #Helper Class instances
         self._stageManager = StageManager()
-        self._dataManager = DataManager()
+        self._dataManager = DataManager.instance()
 
         #UI Models
-        self._dataManager.sub_field_model = None
-        self._dataManager.res_field_model = None
-        self._dataManager.rg_field_model = None
         self._options_model_x_max = ui.SimpleIntModel()
         self._options_model_y_max = ui.SimpleIntModel()
         self._options_model_z_max = ui.SimpleIntModel()
@@ -172,20 +169,16 @@ class MainView(ui.Window):
             ui.Label("Meta Cloud Explorer (Azure)", style={"color": 0xFF008976, "font_size":36}, alignment=ui.Alignment.LEFT, height=0)
             ui.Label("An Omniverse Scene Authoring extension", height=10, name="TItle", alignment=ui.Alignment.LEFT)
             ui.Line(style={"color": 0xff00b976}, height=20)
-            with ui.HStack():
-                ui.StringField(model=self._source_prim_model)
-                ui.Label("Status: No Data", height=10, name="Status", alignment=ui.Alignment.RIGHT)
 
     def _build_commands(self):
         """Build the widgets of the "Commands" group"""
         with ui.CollapsableFrame("Explorer Commands", name="group"):
             with ui.VStack(height=0, spacing=SPACING):
                 with ui.HStack(style=button_styles):
-                    ui.Button("Load Resources to Stage", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15, width=100)
+                    ui.Button("Load Resources to Stage", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15, width=200, alignment=ui.Alignment.CENTER)
                 with ui.HStack():
                     ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), height=15)
                     ui.Button("Add Ground Plane", clicked_fn=lambda: self.create_ground_plane(), height=15)
-                ui.Line(style={"color": 0xff00b976}, height=20)
 
     def _build_import(self):
         with ui.CollapsableFrame("Import Offline Files", name="group", collapsed=True):
@@ -195,7 +188,7 @@ class MainView(ui.Window):
                     self._rg_data_import_field = ui.StringField(height=10)
                     self._rg_data_import_field.enabled = True
                     self._rg_data_import_field.model.set_value(str(self._dataManager._rg_csv_file_path))
-                    self._dataManager.rg_csv_field_model = self._rg_data_import_field.model
+                    self._dataManager._offlineDataManager._rg_csv_field_model = self._rg_data_import_field.model
                     ui.Button("Load", width=40, clicked_fn=lambda: self._dataManager.select_file("rg"))
             
                 ui.Label("All Resources file path:", height=10, width=120)             
@@ -203,7 +196,7 @@ class MainView(ui.Window):
                     self._rs_data_import_field = ui.StringField(height=10)
                     self._rs_data_import_field.enabled = True
                     self._rs_data_import_field.model.set_value(str(self._dataManager._rs_csv_file_path))
-                    self._dataManager.rs_csv_field_model = self._rs_data_import_field.model
+                    self._dataManager._offlineDataManager._rs_csv_field_model = self._rs_data_import_field.model
                     ui.Button("Load", width=40, clicked_fn=lambda: self._dataManager.select_file("res"))
 
                 ui.Button("Import Data Files", clicked_fn=lambda: self._dataManager.load_csv_files())            

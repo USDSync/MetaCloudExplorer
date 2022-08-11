@@ -3,12 +3,14 @@ import os
 import json
 from datetime import datetime
 
-omni.kit.pipapi.install("azure-identity", module="azure-identity", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
-omni.kit.pipapi.install("azure-mgmt-resource", module="azure-mgmt-resource", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
+# omni.kit.pipapi.install("azure-identity", module="azure-identity", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
+# omni.kit.pipapi.install("azure-mgmt-resource", module="azure-mgmt-resource", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
 
 from azure.mgmt.resource import ResourceManagementClient
 from azure.identity import AzureCliCredential
-from azure.mgmt.resource import resource, subscription
+#from azure.mgmt.resource import resource, subscription
+from .data_store import DataStore
+
 
 WEST_US = "westus"
 GROUP_NAME = "meta-cloud-explorer-test"
@@ -26,17 +28,27 @@ GROUP_NAME = "meta-cloud-explorer-test"
 #
 
 class OnlineDataManager():
-    def __init__(self, title: str, delegate=None, **kwargs):
-        pass
-
+    def __init__(self):
+        
         def load_data():
-            pass
+            self._dataStore = DataStore.instance() # Get A Singleton instance, store data here
+            
 
     def get_tenants(sub_client):
         tenants = sub_client.tenants
         print('api_version: ' + tenants.api_version)
         for tenant in tenants.list():
             print(tenant.__dict__.keys())
+
+    def load_data():
+        pass
+
+    def load_resources():
+        pass
+
+    def load_subscriptions():
+        pass
+
 
 
     def run_example():

@@ -1,8 +1,8 @@
 # This class manages both the offline data and online data 
 from .Singleton import Singleton
-
-from .offline_data_manager import OfflineDataManager
-from .azure_resource_manager import OnlineDataManager
+from .csv_data_manager import CSVDataManager
+#from .azure_data_manager import OnlineDataManager
+from .data_store import DataStore
 
 # User either connects to Azure with connection info 
 # OR User can import data from data files 
@@ -18,75 +18,71 @@ from .azure_resource_manager import OnlineDataManager
 class DataManager:
     def __init__(self):
         print("DataManager Created.")
+        self._dataStore = DataStore.instance()
+        self._offlineDataManager = CSVDataManager()
+        #self._onlineDataManager = OnlineDataManager()
 
-        #NAME,SUBSCRIPTION,LOCATION
-        self._groups = {}
+        self._rg_csv_file_path = ""
+        self._rs_csv_file_path = ""
 
-        #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION
-        self._resources = {}        
 
-        #aggregated data
-        self._subscription_count = {}
-        self._location_count = {}
-        self._group_count = {}
-        self._type_count = {}
-        self._tag_count = {}
-
-        self._offlineDataManager = OfflineDataManager()
-        self._onlineDataManager = OnlineDataManager()
-
-        self._sourceOfData = None
-        
     def load_csv_files(self):
+        self._sourceOfData = "Offline Data"
+        self._offlineDataManager._rg_csv_file_path = self._rg_csv_file_path
+        self._offlineDataManager._rs_csv_file_path = self._rs_csv_file_path
         self._offlineDataManager.loadFiles()
+        self.process_data()
 
     def load_from_api(self):
-        self._onlineDataManager.loadData()
+        self._sourceOfData = "Live Azure API"
+        #self._onlineDataManager.loadData()
+        #self.process_data()
+
 
     #Aggregate subscription, resources counts to DataManager Dictionaries
     def process_data(self):  
         print("Processing CSV Data...")
 
-        for key in self._resources:
-            obj = self._resources[key]
+        for key in self._dataStore._resources:
+            obj = self._dataStore._resources[key]
 
             #Count per Sub
-            if obj["subscription"] not in self._subscription_count.keys():
-                self._subscription_count[obj["subscription"]] = 1
+            if obj["subscription"] not in self._dataStore._subscription_count.keys():
+                self._dataStore._subscription_count[obj["subscription"]] = 1
             else:
-                self._subscription_count[obj["subscription"]] = self._subscription_count[obj["subscription"]] + 1
+                self._dataStore._subscription_count[obj["subscription"]] = self._dataStore._subscription_count[obj["subscription"]] + 1
             
             #Count per Location
-            if obj["location"] not in self._location_count.keys():
-                self._location_count[obj["location"]] = 1
+            if obj["location"] not in self._dataStore._location_count.keys():
+                self._dataStore._location_count[obj["location"]] = 1
             else:
-                self._location_count[obj["location"]] = self._location_count[obj["location"]] + 1
+                self._dataStore._location_count[obj["location"]] = self._dataStore._location_count[obj["location"]] + 1
 
             #Count per Type
-            if obj["type"] not in self._type_count.keys():
-                self._type_count[obj["type"]] = 1
+            if obj["type"] not in self._dataStore._type_count.keys():
+                self._dataStore._type_count[obj["type"]] = 1
             else:
-                self._type_count[obj["type"]] = self._type_count[obj["type"]] + 1
+                self._dataStore._type_count[obj["type"]] = self._dataStore._type_count[obj["type"]] + 1
 
             #Count per Group
-            if obj["group"] not in self._group_count.keys():
-                self._group_count[obj["group"]] = 1
+            if obj["group"] not in self._dataStore._group_count.keys():
+                self._dataStore._group_count[obj["group"]] = 1
             else:
-                self._group_count[obj["group"]] = self._group_count[obj["group"]] + 1
+                self._dataStore._group_count[obj["group"]] = self._dataStore._group_count[obj["group"]] + 1
 
             #Count per Tags
-            if obj["tag"] not in self._tag_count.keys():
-                self._tag_count[obj["tag"]] = 1
+            if obj["tag"] not in self._dataStore._tag_count.keys():
+                self._dataStore._tag_count[obj["tag"]] = 1
             else:
-                self._tag_count[obj["tag"]] = self._tag_count[obj["tag"]] + 1
-
+                self._dataStore._tag_count[obj["tag"]] = self._dataStore._tag_count[obj["tag"]] + 1
 
 
         #output aggregation results to console
-        print("Groups: " + str(len(self._group_count)))
-        print("Locations: " + str(len(self._location_count)))
-        print("Subs: " + str(len(self._subscription_count)))
+        print("Data loaded from Files...")
 
+    #passthrough to csv manager
+    def select_file(self, fileType: str):
+        self._offlineDataManager.select_file(fileType=fileType)
 
 #-- SINGLETON SUPPORT
 
