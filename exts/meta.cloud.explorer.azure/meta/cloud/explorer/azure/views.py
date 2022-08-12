@@ -78,13 +78,13 @@ class MainView(ui.Window):
     # Function Definitions
     #___________________________________________________________________________________________________
 
-    def on_docs():
+    def on_docs(self):
         webbrowser.open_new("https://github.com/CloudArchitectLive/MetaCloudExplorer/wiki")
 
-    def on_code():
+    def on_code(self):
         webbrowser.open_new("http://metacloudexplorer.com")
 
-    def on_help():
+    def on_help(self):
         webbrowser.open_new("https://github.com/CloudArchitectLive/MetaCloudExplorer/issues")
 
     def load_account_info(self):
@@ -153,21 +153,21 @@ class MainView(ui.Window):
         """Build the widgets of the "Source" group"""
         with ui.ZStack():
             #Background
-            ui.Image("omniverse://localhost/Resources/images/meta_cloud_explorer.png", height=220)
+            ui.Image("omniverse://localhost/Resources/images/meta_cloud_explorer_800.png")
 
             #Foreground
             with ui.VStack():
-                ui.Spacer(height=30)
+                ui.Spacer(height=10)
                 ui.Label("Meta Cloud Explorer", style={"color": 0xFFFFFFFF, "font_size":36}, alignment=ui.Alignment.CENTER, height=0)
 
             with ui.VStack(height=0, spacing=SPACING):
-                ui.Spacer(height=150)
+                ui.Spacer(height=50)
                 with ui.HStack(style=button_styles):
-                    ui.Button("Load Resources to Stage", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15, width=250, alignment=ui.Alignment.LEFT)
-                    ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), name="clear", height=15, width=250, alignment=ui.Alignment.RIGHT)
+                    ui.Button("Load Resources to Stage", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15)
+                    ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), name="rs", height=15)
 
             with ui.VStack(height=0, spacing=SPACING):
-                ui.Spacer(height=200)
+                ui.Spacer(height=125)
                 with ui.HStack():
                     ui.Button("Type View", clicked_fn=lambda: self.load_stage("ByType"), height=15)
                     ui.Button("Location View", clicked_fn=lambda: self.load_stage("ByLocation"), height=15)

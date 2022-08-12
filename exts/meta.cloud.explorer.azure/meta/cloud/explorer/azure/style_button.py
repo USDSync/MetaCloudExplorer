@@ -5,8 +5,8 @@ button_styles = {
     "Button": {
         "border_width": 0.5,
         "border_radius": 0.0,
-        "margin": 5.0,
-        "padding": 5.0
+        "margin": 4.0,
+        "padding": 4.0
     },
     "Button::subs": {
         "background_color": 0xFFFF7E09,
