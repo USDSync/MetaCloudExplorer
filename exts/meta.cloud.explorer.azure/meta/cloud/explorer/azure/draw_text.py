@@ -8,8 +8,6 @@ import __main__
 from System.Drawing import Graphics, Bitmap
 from System.Drawing import Rectangle, GraphicsUnit
 from System.Drawing.Imaging import ColorMatrix, ImageAttributes
-
-
 from System.Windows.Forms import PictureBox, PictureBoxSizeMode
 
 
