@@ -99,7 +99,7 @@ class StageManager():
         x=0.0
         y=0.0
         z=0.0
-        xpadding=3
+        xpadding=10
         ypadding=10
         previous_stage_size = 0
         previous_x = 0
@@ -112,7 +112,7 @@ class StageManager():
                 #Figure out where to put it
                 if (x > self.x_threshold):
                     x =0
-                    y = y + (stagesize) + ypadding
+                    y = y + (stagesize*2) + ypadding
                     if y > self.y_extent: self.y_extent = y
                 else:
                     x = (previous_x + previous_stage_size) + (stagesize*2 + 1)

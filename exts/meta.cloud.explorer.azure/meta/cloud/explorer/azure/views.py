@@ -3,9 +3,6 @@ from ctypes import alignment
 from omni.ui.workspace_utils import TOP
 
 #  import from other extension py
-from .sub_models import SubscriptionModel
-from .rg_models import ResourceGroupModel
-from .rs_models import ResourceModel
 from .combo_box_model import ComboBoxModel
 from .style_button import button_styles
 from .style_meta import meta_window_style
@@ -129,9 +126,9 @@ class MainView(ui.Window):
         if (ground_prim.IsValid()):
             stage.RemovePrim('/GroundPlane')                    
 
-        ground_prim = stage.GetPrimAtPath('/ResourceGroups')
+        ground_prim = stage.GetPrimAtPath('/Resource_Groups')
         if (ground_prim.IsValid()):
-            stage.RemovePrim('/ResourceGroups')
+            stage.RemovePrim('/Resource_Groups')
 
     def destroy(self):
         self._window.destroy()
@@ -148,9 +145,6 @@ class MainView(ui.Window):
         with ui.ScrollingFrame():
             with ui.VStack(height=0):
                 self._build_new_header()
-                #self._build_groups()
-                #self._build_views()
-                #self._build_help()
                 self._build_connection()
                 self._build_import()
 
@@ -237,7 +231,7 @@ class MainView(ui.Window):
                 ui.Button("Connect to Azure", clicked_fn=lambda: self._dataManager.load_from_api())
 
     def _build_options(self):
-        with ui.CollapsableFrame("Live Connection", name="group", collapsed=True):
+        with ui.CollapsableFrame("Composition", name="group", collapsed=True):
             with ui.VStack():
                 with ui.HStack():
                     ui.Label("X-Axis Max", name="attribute_name", width=self.label_width)
