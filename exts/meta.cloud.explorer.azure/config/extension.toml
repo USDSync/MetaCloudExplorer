@@ -2,7 +2,7 @@
 title = "Meta Cloud Explorer (Azure)"
 description="An Omniverse scene authoring tool to help visualize your Azure Infrastructure in your own private Metaverse!"
 version = "1.0.0"
-category = "Simulation"
+category = "Other"
 authors = ["CloudArchitect.live"]
 #preview_image = "data/inspector_full.png"
 icon = "data/resources/meta_cloud_explorer.png"
@@ -20,6 +20,11 @@ keywords = ["Azure", "CloudArchitect.live", "Meta Cloud Explorer (Azure)", "scen
 # Use omni.ui to build simple UI
 [dependencies]
 "omni.kit.uiapp" = {}
+"omni.ui" = {}
+"omni.usd" = {}
+"omni.kit.menu.utils" = {}
+"omni.kit.window.filepicker" = {}
+"omni.kit.window.file_importer" = {}
 
 [python.pipapi]
 requirements = [
