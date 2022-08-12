@@ -110,13 +110,14 @@ class StageManager():
                 grp = cleanup_prim_path(self, Name=group)
 
                 #Figure out where to put it
-                if (x > self.x_threshold):
-                    x =0
+                if (x > self.x_threshold): #have we passed the X threshold?
+                    x =0 # reset x, incerement y
                     y = y + (stagesize*2) + ypadding
-                    if y > self.y_extent: self.y_extent = y
-                else:
-                    x = (previous_x + previous_stage_size) + (stagesize*2 + 1)
-                    if x > self.x_extent: self.x_extent = x
+                    if y > self.y_extent: self.y_extent = y #track the highest y
+
+                else: #Keep going on X
+                    x = (previous_x + previous_stage_size) + (stagesize*2 + 1) #where to put the new stage
+                    if x > self.x_extent: self.x_extent = x #track the highest x extent
 
                 #Create the Stages
                 print("Drawing " + str(stagesize) + " sized prim: " + group + " " + str(x) + ":" + str(y) +":"  + str(z))
@@ -128,7 +129,12 @@ class StageManager():
 
                 self._stage_matrix[group] = {"name": group, "size": stagesize, "x": x, "y": y, "z": z }
 
-            self.DrawGround()
+            #self.DrawGround()
+
+            #Draw the Prims on the Stage
+
+
+
 
         if viewType == "ByLocation":
             for loc in self._dataStore._location_count:

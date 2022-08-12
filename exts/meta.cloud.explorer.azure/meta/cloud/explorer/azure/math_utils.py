@@ -17,3 +17,7 @@ def calcPlaneSizeForGroup(resourceCount: int):
         if resourceCount > 0 and resourceCount <= i:
             return math.sqrt(i)*2
 
+
+def calcPrimPosition(resourceCount: int): 
+    pass
+
