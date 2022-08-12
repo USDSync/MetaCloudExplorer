@@ -1,4 +1,5 @@
 #  import from omniverse
+from ctypes import alignment
 from omni.ui.workspace_utils import TOP
 
 #  import from other extension py
@@ -23,6 +24,7 @@ import omni.kit.commands
 import omni.kit.pipapi
 from pxr import Sdf, Usd, Gf, UsdGeom
 import omni
+from pathlib import Path
 from .omni_utils import get_selection
 from .combo_box_model import ComboBoxModel
 from .omni_utils import duplicate_prims
@@ -145,13 +147,46 @@ class MainView(ui.Window):
         """The method that is called to build all the UI once the window is visible."""
         with ui.ScrollingFrame():
             with ui.VStack(height=0):
-                self._build_header()
-                self._build_commands()
-                self._build_groups()
-                self._build_views()
-                self._build_help()
+                self._build_new_header()
+                #self._build_groups()
+                #self._build_views()
+                #self._build_help()
                 self._build_connection()
                 self._build_import()
+
+    #Pieces of UI Elements
+    def _build_new_header(self):
+        """Build the widgets of the "Source" group"""
+        with ui.ZStack():
+            #Background
+            ui.Image("omniverse://localhost/Resources/images/meta_cloud_explorer.png", height=220)
+
+            #Foreground
+            with ui.VStack():
+                ui.Spacer(height=30)
+                ui.Label("Meta Cloud Explorer", style={"color": 0xFFFFFFFF, "font_size":36}, alignment=ui.Alignment.CENTER, height=0)
+
+            with ui.VStack(height=0, spacing=SPACING):
+                ui.Spacer(height=150)
+                with ui.HStack(style=button_styles):
+                    ui.Button("Load Resources to Stage", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15, width=250, alignment=ui.Alignment.LEFT)
+                    ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), name="clear", height=15, width=250, alignment=ui.Alignment.RIGHT)
+
+            with ui.VStack(height=0, spacing=SPACING):
+                ui.Spacer(height=200)
+                with ui.HStack():
+                    ui.Button("Type View", clicked_fn=lambda: self.load_stage("ByType"), height=15)
+                    ui.Button("Location View", clicked_fn=lambda: self.load_stage("ByLocation"), height=15)
+                    ui.Button("Group View", clicked_fn=lambda: self.load_stage("ByGroup"), height=15)
+                with ui.HStack():
+                    ui.Button("Network View", clicked_fn=lambda: self.load_stage("ByNetwork"), height=15)
+                    ui.Button("Cost View", clicked_fn=lambda: self.load_stage("ByCost"), height=15)
+                    ui.Button("Template View", clicked_fn=lambda: self.load_stage("Template"), height=15)
+                with ui.HStack():
+                    ui.Button("Docs", clicked_fn=lambda: self.on_docs(), height=15)
+                    ui.Button("Code", clicked_fn=lambda: self.on_code(), height=15)
+                    ui.Button("Help", clicked_fn=lambda: self.on_help(), height=15)           
+
 
     #Pieces of UI Elements
     def _build_header(self):
@@ -166,8 +201,8 @@ class MainView(ui.Window):
         with ui.CollapsableFrame("Explorer Commands", name="group"):
             with ui.VStack(height=0, spacing=SPACING):
                 with ui.HStack(style=button_styles):
-                    ui.Button("Load Resources to Stage", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15, width=200)
-                    ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), name="clear", height=15, width=200)
+                    ui.Button("Load Resources to Stage", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15, width=250, alignment=ui.Alignment.CENTER)
+                    ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), name="clear", height=15, width=250, alignment=ui.Alignment.CENTER)
 
     def _build_import(self):
         with ui.CollapsableFrame("Import Offline Files", name="group", collapsed=True):
