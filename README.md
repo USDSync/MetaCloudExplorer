@@ -4,7 +4,7 @@
 CloudArchitect.live
 (In Alpha Development phase)
 
-![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/meta_cloud_explorer.png)
+![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/meta_cloud_explorer_800.png)
 
 
 Quickly connect to your Cloud Infrastructure and visualize it in the Omniverse!*
@@ -55,7 +55,7 @@ API working in Code 2021.1.1
 
 API NOT WORKING in Code 2021.1.2 and 2021.1.3!
 
-# Welcome to The Future of Cloud Architecture!
+# Welcome to The Future!
 
 You can also create resources in Azure from the OmniVerse! 
 This extension gives you the ability to create and model your environment in a metaverse and then create it in your Azure Cloud!
@@ -73,4 +73,4 @@ Azure - In development
 AWS - future
 GCP - future
 Others...
-Terraform integration
+Terraform, bicep integration
