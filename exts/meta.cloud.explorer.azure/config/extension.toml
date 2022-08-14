@@ -31,7 +31,8 @@ requirements = [
      "pandas",
      "numpy",
      "azure-mgmt-resource",
-     "azure-mgmt-core"
+     "azure-identity",
+     "typing-extensions"
 ]
 
 # Main python module this extension provides, it will be publicly available as "import meta.cloud.explorer.azure".
