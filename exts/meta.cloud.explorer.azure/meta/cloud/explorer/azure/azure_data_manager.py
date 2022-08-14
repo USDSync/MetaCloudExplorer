@@ -13,7 +13,9 @@ print(sys.modules.keys())
 from azure.mgmt.resource import ResourceManagementClient
 from azure.identity import AzureCliCredential
 from .data_store import DataStore
-
+from azure.mgmt.resource import ResourceManagementClient
+from azure.identity import ClientSecretCredential
+import os
 
 WEST_US = "westus"
 GROUP_NAME = "meta-cloud-explorer-test"
@@ -34,6 +36,20 @@ class OnlineDataManager():
     def __init__(self):
         
         self._dataStore = DataStore.instance() # Get A Singleton instance, store data here
+
+        # Acquire a credential object using CLI-based authentication.
+        token_credential = ClientSecretCredential(self._dataStore._azure_tenant_id, self._dataStore._azure_client_id, self._dataStore._azure_client_secret)
+
+        # Retrieve subscription ID from environment variable.
+        subscription_id = os.environ["AZURE_SUBSCRIPTION_ID"]
+
+        # Obtain the management object for resources.
+        resource_client = ResourceManagementClient(token_credential, subscription_id)
+
+        rg_groups = resource_client.resource_groups.list()
+
+        for item in rg_groups:
+            print(item)
 
             
     def get_tenants(sub_client):
