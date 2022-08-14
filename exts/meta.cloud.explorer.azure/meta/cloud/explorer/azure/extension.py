@@ -9,17 +9,15 @@ import omni.kit.ui
 import omni.ui as ui
 import omni.kit.pipapi
 
-omni.kit.pipapi.install("azure-identity", module="azure-identity", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
-omni.kit.pipapi.install("azure-mgmt-resource", module="azure-mgmt-resource", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
-
-#omni.kit.pipapi.install("pandas", module="pandas", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
-sys.path.append("D:/python37/lib/site-packages")
-print(sys.modules.keys())
-
 #omni.kit.pipapi.install("azure-identity", module="azure-identity", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
 #omni.kit.pipapi.install("azure-mgmt-resource", module="azure-mgmt-resource", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
-#from azure.mgmt.resource import ResourceManagementClient
-#from azure.identity import AzureCliCredential
+
+#omni.kit.pipapi.install("pandas", module="pandas", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
+#sys.path.append("D:/python37/lib/site-packages")
+#print(sys.modules.keys())
+
+from azure.mgmt.resource import ResourceManagementClient
+from azure.identity import AzureCliCredential
 
 # Any class derived from `omni.ext.IExt` in top level module (defined in `python.modules` of `extension.toml`)
 # will be instantiated when extension gets enabled and `on_startup(ext_id)` will be called.
@@ -55,7 +53,6 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
 
         # Deregister the function that shows the window from omni.ui
         ui.Workspace.set_show_window_fn(MetaCloudExplorerAzure.WINDOW_NAME, None)
-
 
     def _set_menu(self, value):
         """Set the menu to create this window on and off"""

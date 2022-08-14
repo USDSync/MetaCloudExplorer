@@ -5,19 +5,20 @@
 
 import math
 
-__all__ = ["calcPlaneSizeForGroup"]
+__all__ = ["calcPlaneSizeForGroup", "calcPrimPlacementOnPlane"]
 
 from re import I
 from typing import List
 
-def calcPlaneSizeForGroup(resourceCount: int): 
+# Calculate the size of the Group Plane to create
+def calcPlaneSizeForGroup(scaleFactor:float, resourceCount: int): 
 
     # 1-16 squared, return the square root, this is the size of the space needed
     for i in [1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256]:
         if resourceCount > 0 and resourceCount <= i:
-            return math.sqrt(i)*2
+            return int(math.sqrt(i)*scaleFactor)
 
 
-def calcPrimPosition(resourceCount: int): 
-    pass
+# Calculates where to put a prim on a plane
+#def calcPrimPlacementOnPlane(x:int, y:int, z:int, stage_size: int, parent_path: str, prim_number int ): 
 
