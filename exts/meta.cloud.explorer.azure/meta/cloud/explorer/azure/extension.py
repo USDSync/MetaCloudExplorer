@@ -44,6 +44,14 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
         # Show the window. It will call `self.show_window`
         ui.Workspace.show_window(MetaCloudExplorerAzure.WINDOW_NAME)
 
+        # # show the window in the usual way if the stage is loaded
+        # if self.stage:
+        #     self._window.deferred_dock_in("Property")
+        # else:
+        #     # otherwise, show the window after the stage is loaded
+        #     self._setup_window_task = asyncio.ensure_future(self._dock_window())
+
+
     def on_shutdown(self):
         carb.log_info(f"[meta.cloud.explorer.azure]] Meta Cloud Explorer shutdown")     
         self._menu = None
@@ -68,6 +76,27 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
             self._window.destroy()
             self._window = None
 
+    async def _dock_window(self):
+        property_win = None
+
+        frames = 3
+        while frames > 0:
+            if not property_win:
+                property_win = ui.Workspace.get_window("Property")
+            if property_win:
+                break  # early out
+
+            frames = frames - 1
+            await omni.kit.app.get_app().next_update_async()
+
+        # Dock to Property window after 5 frames. It's enough for window to appear.
+        for _ in range(5):
+            await omni.kit.app.get_app().next_update_async()
+
+        if property_win:
+            self._window.deferred_dock_in("Property")
+        self._setup_window_task = None
+        
     def _visiblity_changed_fn(self, visible):
         # Called when the user pressed "X"
         self._set_menu(visible)

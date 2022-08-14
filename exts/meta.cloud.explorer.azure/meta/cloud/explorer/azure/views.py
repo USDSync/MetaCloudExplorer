@@ -45,17 +45,20 @@ class MainView(ui.Window):
         self._dataStore = DataStore.instance()
 
         #UI Models
-        self._options_model_x_max = ui.SimpleIntModel()
-        self._options_model_y_max = ui.SimpleIntModel()
-        self._options_model_z_max = ui.SimpleIntModel()
-        self._options_model_x_pad = ui.SimpleIntModel()
-        self._options_model_y_pad = ui.SimpleIntModel()
-        self._options_model_z_pad = ui.SimpleIntModel()
-        self._options_model_scale = ui.SimpleIntModel()
+        self._options_count_models = [ui.SimpleIntModel(), ui.SimpleIntModel(), ui.SimpleIntModel()]
+        self._options_dist_models = [ui.SimpleFloatModel(), ui.SimpleFloatModel(), ui.SimpleFloatModel()]
+        self._object_scale_model = ui.SimpleFloatModel()
 
         #Defaults
-        self._groundPlaneAdded = False
         self._root_path = "/World"
+        self._object_scale_model.as_float = 10.0
+        self._options_count_models[0].as_int = 50
+        self._options_count_models[1].as_int = 1
+        self._options_count_models[2].as_int = 1
+        self._options_dist_models[0].as_float = 200
+        self._options_dist_models[1].as_float = 200
+        self._options_dist_models[2].as_float = 200
+
 
         # Apply the style to all the widgets of this window
         self.frame.style = meta_window_style
@@ -63,6 +66,9 @@ class MainView(ui.Window):
         # Set the function that is called to build widgets when the window is visible
         self.frame.set_build_fn(self._build_fn)
 
+    def destroy(self):
+        super().destroy() 
+        self._usd_context = None
         
     @property
     def label_width(self):
@@ -140,14 +146,6 @@ class MainView(ui.Window):
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Looks')
 
-    def destroy(self):
-        super().destroy() 
-        if self._window is not None:      
-            self._window.destroy()
-            self._window = None
-
-        self._usd_context = None
-
     #___________________________________________________________________________________________________
     # Window UI Definitions
     #___________________________________________________________________________________________________
@@ -158,6 +156,9 @@ class MainView(ui.Window):
             with ui.VStack(height=0):
                 self._build_new_header()
                 self._build_options()
+                self._build_axis(0, "Groups on X Axis")
+                self._build_axis(1, "Groups on Y Axis")
+                self._build_axis(2, "Groups on Z Axis")
                 self._build_connection()
                 self._build_import()
 
@@ -166,22 +167,22 @@ class MainView(ui.Window):
         """Build the widgets of the "Source" group"""
         with ui.ZStack():
             #Background
-            ui.Image(style={'image_url': "omniverse://localhost/Resources/images/meta_cloud_explorer_800.png", 'fill_policy': ui.FillPolicy.PRESERVE_ASPECT_CROP, 'alignment': ui.Alignment.CENTER})
+            ui.Image(style={'image_url': "omniverse://localhost/Resources/images/meta_cloud_explorer_800.png", 'fill_policy': ui.FillPolicy.PRESERVE_ASPECT_CROP, 'alignment': ui.Alignment.CENTER_BOTTOM, 'fill_policy':ui.FillPolicy.PRESERVE_ASPECT_CROP})
             
             #Foreground
             with ui.VStack():
-                ui.Spacer(height=10)
-                ui.Label("Meta Cloud Explorer", style={"color": 0xFFFFFFFF, "font_size":36}, alignment=ui.Alignment.CENTER, height=0)
+                ui.Spacer(height=5)
+                ui.Label("Meta Cloud Explorer", style={"color": 0xA21F1FFF, "font_size":36}, alignment=ui.Alignment.CENTER, height=0)
                 ui.Label("Cloud Infrastructure Scene Authoring Extension", style={"color": 0xFFFFFFFF, "font_size":18}, alignment=ui.Alignment.CENTER, height=0)
 
             with ui.VStack(height=0, spacing=SPACING):
-                ui.Spacer(height=50)
+                ui.Spacer(height=80)
                 with ui.HStack(style=button_styles):
                     ui.Button("Load Resources to Stage", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15)
                     ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), name="rs", height=15)
 
             with ui.VStack(height=0, spacing=SPACING):
-                ui.Spacer(height=125)
+                ui.Spacer(height=120)
                 with ui.HStack():
                     ui.Button("Type View", clicked_fn=lambda: self.load_stage("ByType"), height=15)
                     ui.Button("Location View", clicked_fn=lambda: self.load_stage("ByLocation"), height=15)
@@ -236,83 +237,62 @@ class MainView(ui.Window):
     def _build_connection(self):
         with ui.CollapsableFrame("Live Connection", name="group", collapsed=True):
             with ui.VStack():
-                ui.Label("Tenant Id")
+                ui.Label("Tenant Id",width=self.label_width)
                 self._tenant_import_field = ui.StringField(height=15)
                 self._tenant_import_field.enabled = True
                 self._tenant_import_field.model.set_value(str(self._dataStore._azure_tenant_id))
                 self._dataStore._azure_tenant_id_model = self._tenant_import_field.model
-                ui.Label("Client Id")
+                ui.Label("Client Id",width=self.label_width)
                 self._client_import_field = ui.StringField(height=15)
                 self._client_import_field.enabled = True
                 self._client_import_field.model.set_value(str(self._dataStore._azure_client_id))
                 self._dataStore._azure_client_id_model = self._client_import_field.model
-                ui.Label("Client Secret")
-                self._client_secret_field = ui.StringField(height=15)
+                ui.Label("Subscription Id",width=self.label_width)
+                self._subscription_id_field = ui.StringField(height=15, password_mode=True)
+                self._subscription_id_field.enabled = True
+                self._subscription_id_field.model.set_value(str(self._dataStore._azure_subscription_id))
+                self._dataStore._azure_subscription_id_model = self._subscription_id_field.model
+                ui.Label("Client Secret",width=self.label_width)
+                self._client_secret_field = ui.StringField(height=15, password_mode=True)
                 self._client_secret_field.enabled = True
                 self._client_secret_field.model.set_value(str(self._dataStore._azure_client_secret))
                 self._dataStore._azure_client_secret_model = self._client_secret_field.model
                 ui.Button("Connect to Azure", clicked_fn=lambda: self._dataManager.load_from_api())
 
+    def _build_axis(self, axis_id, axis_name):
+        """Build the widgets of the "X" or "Y" or "Z" group"""
+        with ui.CollapsableFrame(axis_name, name="group"):
+            with ui.VStack(height=0, spacing=SPACING):
+                with ui.HStack():
+                    ui.Label("Group Count", name="attribute_name", width=self.label_width)
+                    ui.IntDrag(model=self._options_count_models[axis_id], min=1, max=100)
+
+                with ui.HStack():
+                    ui.Label("Distance", name="attribute_name", width=self.label_width)
+                    ui.FloatDrag(self._options_dist_models[axis_id], min=0, max=10000)
+
     def _build_options(self):
+        style = {
+            "": {"background_color": 0x0, "image_url": f"{self._extension_path}/icons/radio_off.svg"},
+            ":checked": {"image_url": f"{self._extension_path}/icons/radio_on.svg"},
+        }
+        collection = ui.RadioCollection()
+
         with ui.CollapsableFrame("Composition", name="group", collapsed=True):
             with ui.VStack():
                 with ui.VStack():
                     with ui.HStack():
-                        ui.Label("X-Axis Max Extent", name="attribute_name", width=150)                   
-                        self._x_max_field = ui.IntDrag(model=self._options_model_x_max, min=1, max=100, width=self.label_width)
-                        self._x_max_field.enabled = True
-                        self._x_max_field.model.set_value(str(self._dataStore._composition_x_max))
-                        self._dataStore._composition_x_max_model = self._x_max_field.model
-                with ui.VStack():
-                    with ui.HStack():    
-                        ui.Label("X-Axis Max Extent", name="attribute_name", width=150)                   
-                        self._y_max_field = ui.IntDrag(model=self._options_model_y_max, min=1, max=100, width=300)
-                        self._y_max_field.enabled = True
-                        self._y_max_field.model.set_value(str(self._dataStore._composition_y_max))
-                        self._dataStore._composition_y_max_model = self._y_max_field.model
-                with ui.VStack():
-                    with ui.HStack():                    
-                        ui.Label("Z-Axis Max Extent", name="attribute_name", width=150)                   
-                        self._z_max_field = ui.IntDrag(model=self._options_model_z_max, min=1, max=100, width=300)
-                        self._z_max_field.enabled = True
-                        self._z_max_field.model.set_value(str(self._dataStore._composition_z_max))
-                        self._dataStore._composition_z_max_model = self._z_max_field.model
+                        ui.Label("Scale Factor", name="attribute_name", width=self.label_width)                   
+                        ui.IntDrag(model=self._object_scale_model, min=1, max=100)
+            
+            with ui.VStack():
+                with ui.HStack(style=style):
+                    ui.RadioButton(radio_collection=collection, width=30, height=30)
+                    ui.Label(f"Render on Grid", name="text")
+                    ui.RadioButton(radio_collection=collection, width=30, height=30)
+                    ui.Label(f"Render on Islands", name="text")
 
-                with ui.VStack():
-                    with ui.HStack():                    
-                        ui.Label("X-Axis Padding", name="attribute_name", width=150)
-                        self._x_pad_field = ui.IntDrag(model=self._options_model_x_pad, min=1, max=100, width=300)
-                        self._x_pad_field.enabled = True
-                        self._x_pad_field.model.set_value(str(self._dataStore._composition_x_pad))
-                        self._dataStore._composition_x_pad_model = self._x_pad_field.model
-                with ui.VStack():
-                    with ui.HStack():                    
-                        ui.Label("Y-Axis Padding", name="attribute_name", width=150)
-                        self._y_pad_field = ui.IntDrag(model=self._options_model_y_pad, min=1, max=100, width=300)
-                        self._y_pad_field.enabled = True
-                        self._y_pad_field.model.set_value(str(self._dataStore._composition_y_pad))
-                        self._dataStore._composition_y_pad_model = self._y_pad_field.model
-                with ui.VStack():
-                    with ui.HStack():                    
-                        ui.Label("Z-Axis Padding", name="attribute_name", width=150)
-                        self._z_pad_field = ui.IntDrag(model=self._options_model_z_pad, min=1, max=100, width=300)
-                        self._z_pad_field.enabled = True
-                        self._z_pad_field.model.set_value(str(self._dataStore._composition_z_pad))
-                        self._dataStore._composition_z_pad_model = self._z_pad_field.model
-
-    def _build_groups(self):
-        with ui.VStack():
-            ui.Label("Views")
-            with ui.HStack():
-                ui.Button("Type View", clicked_fn=lambda: self.load_stage("ByType"), height=15)
-                ui.Button("Location View", clicked_fn=lambda: self.load_stage("ByLocation"), height=15)
-                ui.Button("Group View", clicked_fn=lambda: self.load_stage("ByGroup"), height=15)
-
-    def _build_views(self):
-        with ui.HStack():
-            ui.Button("Network View", clicked_fn=lambda: self.load_stage("ByNetwork"), height=15)
-            ui.Button("Cost View", clicked_fn=lambda: self.load_stage("ByCost"), height=15)
-            ui.Button("Template View", clicked_fn=lambda: self.load_stage("Template"), height=15)
+                ui.IntSlider(collection.model, min=0, max=1)
 
     def _build_help(self):
         ui.Line(style={"color": 0xff00b976}, height=20)
@@ -323,3 +303,5 @@ class MainView(ui.Window):
                 ui.Button("Code", clicked_fn=lambda: self.on_code(), height=15)
                 ui.Button("Help", clicked_fn=lambda: self.on_help(), height=15)           
                     
+
+

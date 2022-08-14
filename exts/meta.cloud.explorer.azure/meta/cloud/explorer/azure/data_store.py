@@ -31,6 +31,8 @@ class DataStore():
         self._azure_client_id_model = ""
         self._azure_client_secret = ""
         self._azure_client_secret_model = ""
+        self._azure_subscription_id = ""
+        self._azure_subscription_id_model = ""
 
         #composition options
         self._composition_x_max = 0
@@ -60,13 +62,17 @@ class DataStore():
             settings.set("/persistent/exts/meta.cloud.explorer.azure/azure_tenant_id", self._azure_tenant_id)
         if self._azure_client_id != "":
             settings.set("/persistent/exts/meta.cloud.explorer.azure/azure_client_id", self._azure_client_id)
-    
+        if self._azure_subscription_id != "":
+            settings.set("/persistent/exts/meta.cloud.explorer.azure/azure_subscription_id", self._azure_subscription_id)
+
+
     def Load_Config_Data(self):
         settings = carb.settings.get_settings()
         self._rg_csv_file_path = settings.get("/persistent/exts/meta.cloud.explorer.azure/rg_csv_file_path")
         self._rs_csv_file_path = settings.get("/persistent/exts/meta.cloud.explorer.azure/rs_csv_file_path")
-        self._azure_client_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_tenant_id")
-        self._azure_tenant_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_client_id")
+        self._azure_tenant_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_tenant_id")
+        self._azure_client_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_client_id")
+        self._azure_subscription_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_subscription_id")
 
 #-- SINGLETON SUPPORT
 
