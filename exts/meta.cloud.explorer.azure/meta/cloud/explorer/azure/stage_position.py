@@ -20,7 +20,7 @@ def scatterWithPlaneSize(
     randomization: List[float], 
     id_count: int = 1, 
     seed: Optional[int] = None,
-    scaleFactor=float=1.0
+    scaleFactor:float=1.0
 ):
     """
     Returns generator with pairs containing transform matrices and ids to
