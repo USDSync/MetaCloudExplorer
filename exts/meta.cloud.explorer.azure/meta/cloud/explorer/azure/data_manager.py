@@ -1,7 +1,7 @@
 # This class manages both the offline data and online data 
 from .Singleton import Singleton
 from .csv_data_manager import CSVDataManager
-#from .azure_data_manager import OnlineDataManager
+from .azure_data_manager import AzureDataManager
 from .data_store import DataStore
 
 # User either connects to Azure with connection info 
@@ -20,27 +20,31 @@ class DataManager:
         print("DataManager Created.")
         self._dataStore = DataStore.instance()
         self._offlineDataManager = CSVDataManager()
-        #self._onlineDataManager = OnlineDataManager()
-
-        self._rg_csv_file_path = ""
-        self._rs_csv_file_path = ""
-
+        self._onlineDataManager = AzureDataManager()
+        self._dataStore.Load_Config_Data()
 
     def load_csv_files(self):
         self._sourceOfData = "Offline Data"
+        self._dataStore.Save_Config_Data()
         self._offlineDataManager.loadFiles()
         self.process_data()
 
 
     def load_from_api(self):
         self._sourceOfData = "Live Azure API"
-        #self._onlineDataManager.loadData()
-        #self.process_data()
+        self._dataStore.Save_Config_Data()
+        
+        #Load data from Cloud API
+        self._onlineDataManager.load_data()
+
+        #Aggregate the info
+        self.process_data()
+
 
 
     #Aggregate subscription, resources counts to DataManager Dictionaries
     def process_data(self):  
-        print("Processing CSV Data...")
+        print("Processing Data...")
 
         for key in self._dataStore._resources:
             obj = self._dataStore._resources[key]
