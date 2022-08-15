@@ -16,7 +16,7 @@ def calcPlaneSizeForGroup(scaleFactor:float, resourceCount: int):
     # 1-16 squared, return the square root, this is the size of the space needed
     for i in [1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256]:
         if resourceCount > 0 and resourceCount <= i:
-            return int(math.sqrt(i)*scaleFactor)
+            return float((math.sqrt(i)*100)*scaleFactor)
 
 
 # Calculates where to put a prim on a plane

@@ -16,12 +16,9 @@ def create_plane(self,Path:str, Name :str, Size: int, Location: Gf.Vec3f, Color:
 
     stage_ref = omni.usd.get_context().get_stage()  
     #plane = stage_ref.GetPrimAtPath(Path)
-    
-
     #Set the size
     #sizeAttr_ref = plane.CreateAttribute('size', Sdf.ValueTypeNames.Double )
     #sizeAttr_ref.Set(50)
-
     
     #obj = stage.GetPrimAtPath(path + "/cube") # note the extra /cube
     #sizeAttr_ref = obj.CreateAttribute('size', Sdf.ValueTypeNames.Double )

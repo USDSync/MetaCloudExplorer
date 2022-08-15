@@ -1,10 +1,13 @@
 import carb
 from .Singleton import Singleton
+import omni.ui as ui
+from .combo_box_model import ComboBoxModel
 
 @Singleton
 class DataStore():
     def __init__(self):
 
+        print("DataStore initialized")
         #NAME,SUBSCRIPTION,LOCATION
         self._groups = {}
 
@@ -35,20 +38,19 @@ class DataStore():
         self._azure_subscription_id_model = ""
 
         #composition options
-        self._composition_x_max = 0
-        self._composition_y_max = 0
-        self._composition_z_max = 0
-        self._composition_x_pad = 0
-        self._composition_y_pad = 0
-        self._composition_z_pad = 0
-        self._composition_scale = 0
-        self._composition_x_max_model = ""
-        self._composition_y_max_model = ""
-        self._composition_z_max_model = ""
-        self._composition_x_pad_model = ""
-        self._composition_y_pad_model = ""
-        self._composition_z_pad_model = ""
-        self._composition_scale_model = ""
+        self._primary_axis_model = ComboBoxModel("X", "Y", "Z") # track which Axis is up
+        self._composition_scale_model = ui.SimpleFloatModel()
+        self._options_count_models = [ui.SimpleIntModel(), ui.SimpleIntModel(), ui.SimpleIntModel()]
+        self._options_dist_models = [ui.SimpleFloatModel(), ui.SimpleFloatModel(), ui.SimpleFloatModel()]
+        self._options_random_models = [ui.SimpleFloatModel(), ui.SimpleFloatModel(), ui.SimpleFloatModel()]
+
+        self._composition_scale_model.as_float = 1.0
+        self._options_count_models[0].as_int = 10
+        self._options_count_models[1].as_int = 10
+        self._options_count_models[2].as_int = 10
+        self._options_dist_models[0].as_float = 500
+        self._options_dist_models[1].as_float = 500
+        self._options_dist_models[2].as_float = 500
 
         self.Load_Config_Data()
 

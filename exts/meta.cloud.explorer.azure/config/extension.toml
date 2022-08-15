@@ -2,7 +2,7 @@
 title = "Meta Cloud Explorer (Azure)"
 description="An Omniverse scene authoring tool to help visualize your Azure Infrastructure in your own private Metaverse!"
 version = "1.0.0"
-category = "Other"
+category = "Browsers"
 authors = ["CloudArchitect.live"]
 #preview_image = "data/inspector_full.png"
 icon = "data/resources/meta_cloud_explorer.png"

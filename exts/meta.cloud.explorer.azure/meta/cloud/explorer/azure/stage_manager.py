@@ -43,7 +43,8 @@ from .resource_map import shape_usda_name
 from .math_utils import calcPlaneSizeForGroup
 from .data_manager import DataManager
 from .data_store import DataStore
-from .stage_position import postioner
+from .stage_position import scatterWithPlaneSize
+from .stage_creator import create_prims
 
 
 CURRENT_PATH = Path(__file__).parent
@@ -121,47 +122,77 @@ class StageManager():
         previous_y = 0
 
         if viewType == "ByGroup":
-            for group in self._dataStore._group_count:
-                stagesize = calcPlaneSizeForGroup(self.scale_factor, self._dataStore._group_count[group])
-                grp = cleanup_prim_path(self, Name=group)
+            
+                #Calc Plane sizes based on items in group
+                sizes = []
+                groups = []
+
+                gpz = self._dataStore._group_count.copy()
+                for grp in gpz:
+                    sizes.append(calcPlaneSizeForGroup(scaleFactor=self._dataStore._composition_scale_model.as_float, resourceCount=self._dataStore._group_count.get(grp)))
+                    grp = cleanup_prim_path(self, grp)
+                    groups.append(grp)
+
+                #Use NVIDIAs Scatter algorytm to 
+                transforms = scatterWithPlaneSize(
+                    count=[m.as_int for m in self._dataStore._options_count_models],
+                    distance=[m.as_float for m in self._dataStore._options_dist_models],
+                    sizes=sizes,
+                    randomization=[m.as_float for m in self._dataStore._options_random_models],
+                    id_count=len(self._dataStore._group_count),
+                    seed=0,
+                    scaleFactor=self._dataStore._composition_scale_model.as_float
+                )
+                    
+
+                if (len(groups)) >0 :
+
+                    #Create new prims and then transform them
+                    create_prims(
+                        transforms=transforms,
+                        prim_names=groups,
+                        parent_path=str(self.res_layer_root_path),
+                        up_axis=self._dataStore._primary_axis_model.get_current_item().as_string,
+                        plane_size=sizes
+                    )
 
                 # transforms = positioner(
                 #     count=
 
                 # )
 
-                #Figure out where to put it x,y
-                if (x > self.x_threshold): #have we passed the X threshold?
-                    x =0 # reset x, incerement y
-                    y = y + (stagesize*2) + ypadding
-                    if y > self.y_extent: self.y_extent = y #track the highest y
-                else: #Keep going on X
-                    x = (previous_x + previous_stage_size*self.scale_factor) + (stagesize*self.scale_factor + 1) #where to put the new stage
-                    if x > self.x_extent: self.x_extent = x #track the highest x extent
+                # #Figure out where to put it x,y
+                # if (x > self.x_threshold): #have we passed the X threshold?
+                #     x =0 # reset x, incerement y
+                #     y = y + (stagesize*2) + ypadding
+                #     if y > self.y_extent: self.y_extent = y #track the highest y
+                # else: #Keep going on X
+                #     x = (previous_x + previous_stage_size*self.scale_factor) + (stagesize*self.scale_factor + 1) #where to put the new stage
+                #     if x > self.x_extent: self.x_extent = x #track the highest x extent
 
-                #Figure out where to put it y,z
-                if (y > self.y_threshold):
-                    y =0 # reset y, incerement z
-                    z = z + (stagesize*2) + zpadding
-                    if z > self.z_extent: self.z_extent = z #track the highest z
-                else:  #Keep going on Y
-                    y = (previous_y + previous_stage_size*self.scale_factor) + (stagesize*self.scale_factor + 1) #where to put the new stage
-                    if y > self.y_extent: self.y_extent = y #track the highest x extent
+                # #Figure out where to put it y,z
+                # if (y > self.y_threshold):
+                #     y =0 # reset y, incerement z
+                #     z = z + (stagesize*2) + zpadding
+                #     if z > self.z_extent: self.z_extent = z #track the highest z
+                # else:  #Keep going on Y
+                #     y = (previous_y + previous_stage_size*self.scale_factor) + (stagesize*self.scale_factor + 1) #where to put the new stage
+                #     if y > self.y_extent: self.y_extent = y #track the highest x extent
 
 
-                #Create the Stages
-                prim_path = str(self.res_layer_root_path.AppendPath(grp))
-                print("Drawing " + str(stagesize*self.scale_factor) + " sized prim: " + prim_path + " @" + str(x) + ":" + str(y) +":"  + str(z))
-                self.DrawStage(Path=prim_path,Name=grp, Size=(stagesize*self.scale_factor), Location=Gf.Vec3f(x,y,z), Color=Gf.Vec3f(0,255,0))
+                # #Create the Stages
+                # prim_path = str(self.res_layer_root_path.AppendPath(grp))
+                # print("Drawing " + str(stagesize*self.scale_factor) + " sized prim: " + prim_path + " @" + str(x) + ":" + str(y) +":"  + str(z))
+                # self.DrawStage(Path=prim_path,Name=grp, Size=(stagesize*self.scale_factor), Location=Gf.Vec3f(x,y,z), Color=Gf.Vec3f(0,255,0))
 
-                #record the size and postion for the next stage
-                previous_stage_size = stagesize
-                previous_x = x
-                previous_y = y
+                # #record the size and postion for the next stage
+                # previous_stage_size = stagesize
+                # previous_x = x
+                # previous_y = y
 
                 #self.DrawLabelOnStage(prim_path, grp, stagesize, 44, "left", "black" )
 
-                self._stage_matrix[group] = {"name": group, "size": stagesize, "x": x, "y": y, "z": z }
+                #self._stage_matrix[group] = {"name": group, "size": stagesize, "x": x, "y": y, "z": z }
 
             #self.DrawGround()
 
