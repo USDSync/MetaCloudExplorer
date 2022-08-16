@@ -1,4 +1,4 @@
-__all__ = ["create_plane"]
+__all__ = ["create_plane", "get_font_size_from_length"]
 
 import omni.usd
 import omni.kit.commands
@@ -46,3 +46,22 @@ def cleanup_prim_path(self, Name: str):
 
 
 
+def get_font_size_from_length(nameLength:int):
+    if (nameLength < 10):
+        font_size = 70
+    elif (nameLength < 15):
+        font_size = 50
+    elif (nameLength < 20):
+        font_size = 40                    
+    elif (nameLength < 30):
+        font_size = 30
+    elif (nameLength < 50):
+        font_size = 20
+    elif (nameLength < 60):
+        font_size = 20
+    elif (nameLength < 70):
+        font_size = 20
+    elif (nameLength < 80):
+        font_size = 10
+
+    return font_size

@@ -37,7 +37,7 @@ def create_prims(up_axis:str, plane_size:List[float], transforms: List = [], pri
 
         if (i >= len(prim_names)): continue
         path = Sdf.Path(parent_path).AppendPath(prim_names[i])
-        print(str(i) + " adding " + str(plane_size[i]) + " plane:" + str(path) + " " + " @ " + str(matrix[1]))
+        print(str(i) + " adding plane:" + str(path) + " " + str(plane_size[i]) +  " @ " + str(matrix[1]))
 
         omni.kit.commands.execute('AddGroundPlaneCommand',
         stage=stage_ref,
@@ -45,16 +45,16 @@ def create_prims(up_axis:str, plane_size:List[float], transforms: List = [], pri
         axis=up_axis,
         size=plane_size[i],
         position=matrix[1],
-        color=Gf.Vec3f(0,255,0))
+        color=Gf.Vec3f(0,0,0))
 
         #Add a UV
-        plane_prim = omni.usd.get_context().get_stage().GetPrimAtPath(path)
-        mesh = UsdGeom.Mesh(plane_prim)
-        uv_primvar = mesh.CreatePrimvar("st",
-            Sdf.ValueTypeNames.TexCoord2fArray,
-            UsdGeom.Tokens.varying
-        )
-        uv_primvar.Set([(0,0), (0,1), (1,1), (1,0)])
+        # plane_prim = omni.usd.get_context().get_stage().GetPrimAtPath(path)
+        # mesh = UsdGeom.Mesh(plane_prim)
+        # uv_primvar = mesh.CreatePrimvar("st",
+        #     Sdf.ValueTypeNames.TexCoord2fArray,
+        #     UsdGeom.Tokens.varying
+        # )
+        # uv_primvar.Set([(0,0), (0,1), (1,1), (1,0)])
 
 
 

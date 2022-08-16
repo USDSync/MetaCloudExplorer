@@ -28,7 +28,7 @@ def scatterWithPlaneSize(
 
     ### Arguments:
 
-        `count: List[int]`
+        `count: List[int]`ce1dcf85-c041-4bb9-8275-4b96e70252a2
             Number of matrices to generage per axis
 
         `distance: List[float]`
@@ -51,19 +51,19 @@ def scatterWithPlaneSize(
         if (sizes[i]>250):
             x = (i - 0.5 * (count[0] - 1)) * (distance[0]*scaleFactor) + (sizes[i]*2)
         else:
-            x = (i - 0.5 * (count[0] - 1)) * (distance[0]*scaleFactor) - (sizes[i]*2)
+            x = (i - 0.5 * (count[0] - 1)) * (distance[0]*scaleFactor) + (sizes[i]*2)
 
         for j in range(count[1]):
             if (sizes[i]>250):
                 y = (j - 0.5 * (count[1] - 1)) * (distance[1]*scaleFactor) + (sizes[i]*2)
             else:
-                y = (j - 0.5 * (count[1] - 1)) * (distance[1]*scaleFactor) - (sizes[i]*2)
+                y = (j - 0.5 * (count[1] - 1)) * (distance[1]*scaleFactor) + (sizes[i]*2)
 
             for k in range(count[2]):
                 if (sizes[i]>250):
                     z = (k - 0.5 * (count[2] - 1)) * (distance[2]*scaleFactor) + (sizes[i]*2)
                 else:
-                    z = (k - 0.5 * (count[2] - 1)) * (distance[2]*scaleFactor) - (sizes[i]*2)
+                    z = (k - 0.5 * (count[2] - 1)) * (distance[2]*scaleFactor) + (sizes[i]*2)
 
                 result = Gf.Vec3d(x,y,z)
 

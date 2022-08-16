@@ -15,7 +15,11 @@
 #we can then postion the islands in novel ways for exploration
 # Model related
 # Python built-in
+from textwrap import fill
+import time
+from cgitb import text
 import os.path
+from unicodedata import name
 import carb
 from pathlib import Path
 # external python lib
@@ -29,11 +33,17 @@ import omni.kit.app
 import omni.ui as ui
 import omni.usd
 import omni.kit.commands
+import shutil
+import os
+import asyncio
 
 from .pillow_text import create_image_with_text
+from .pillow_text import draw_text_on_image_at_position
 
 from  .prim_utils import create_plane
 from  .prim_utils import cleanup_prim_path
+from  .prim_utils import get_font_size_from_length
+
 
 from omni.kit.window.file_importer import get_file_importer
 from omni.ui import scene as sc
@@ -103,29 +113,20 @@ class StageManager():
         light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
         light_prim.CreateIntensityAttr(3000.0)
 
-
-    #Invoked from UI - Show the Stage based on the View.
+    #Invoked from UI - Show the Stages based on the View.
     def ShowStage(self, viewType: str):
         self.InitStage()
 
         #Cycle through the groups creating planes for each of them
         #Track plane positioning in some map for resource placement later..
-        x=0.0
-        y=0.0
-        z=0.0
-
-        xpadding=10
-        ypadding=10
-        zpadding=10
-        previous_stage_size = 0
-        previous_x = 0
-        previous_y = 0
-
         if viewType == "ByGroup":
             
                 #Calc Plane sizes based on items in group
                 sizes = []
                 groups = []
+
+                if len(self._dataStore._group_count) == 0:
+                    self._dataManager.refresh_data()
 
                 gpz = self._dataStore._group_count.copy()
                 for grp in gpz:
@@ -143,7 +144,6 @@ class StageManager():
                     seed=0,
                     scaleFactor=self._dataStore._composition_scale_model.as_float
                 )
-                    
 
                 if (len(groups)) >0 :
 
@@ -155,55 +155,256 @@ class StageManager():
                         up_axis=self._dataStore._primary_axis_model.get_current_item().as_string,
                         plane_size=sizes
                     )
+               
+                #Create shaders for each plane
+                for g in groups:
+                    i=0
+                    prim_path = self.res_layer_root_path.AppendPath(g)
 
-                # transforms = positioner(
-                #     count=
+                    #Select a Plane
+                    omni.kit.commands.execute('SelectPrims',
+                        old_selected_paths=[''],
+                        new_selected_paths=[str(prim_path)],
+                        expand_in_stage=True)
 
-                # )
+                    print("Creating Shader: " + str(prim_path))
 
-                # #Figure out where to put it x,y
-                # if (x > self.x_threshold): #have we passed the X threshold?
-                #     x =0 # reset x, incerement y
-                #     y = y + (stagesize*2) + ypadding
-                #     if y > self.y_extent: self.y_extent = y #track the highest y
-                # else: #Keep going on X
-                #     x = (previous_x + previous_stage_size*self.scale_factor) + (stagesize*self.scale_factor + 1) #where to put the new stage
-                #     if x > self.x_extent: self.x_extent = x #track the highest x extent
+                    #Create a Shader for the plane
+                    omni.kit.commands.execute('CreateAndBindMdlMaterialFromLibrary',
+                        mdl_name='OmniPBR.mdl',
+                        mtl_name='OmniPBR',
+                        prim_name=g,
+                        mtl_created_list=None,
+                        bind_selected_prims=True)
 
-                # #Figure out where to put it y,z
-                # if (y > self.y_threshold):
-                #     y =0 # reset y, incerement z
-                #     z = z + (stagesize*2) + zpadding
-                #     if z > self.z_extent: self.z_extent = z #track the highest z
-                # else:  #Keep going on Y
-                #     y = (previous_y + previous_stage_size*self.scale_factor) + (stagesize*self.scale_factor + 1) #where to put the new stage
-                #     if y > self.y_extent: self.y_extent = y #track the highest x extent
+                #Draw shaders on the stages
+                self.LabelLabels(viewType)
+
+        if viewType == "ByLocation":
+            for loc in self._dataStore._location_count:
+                pass
+
+        if viewType == "ByType":
+            pass
+        
+        if viewType == "ByNetwork":
+            pass
+
+        if viewType == "ByCost":
+            pass
+
+        if viewType == "Template":
+            pass
+
+    #Load Stage Mesh Images to Shaders
+    def LabelLabels(self, viewType: str):
+
+        #Calc Plane sizes based on items in group
+        sizes = []
+        groups = []
+
+        gpz = self._dataStore._group_count.copy()
+        for grp in gpz:
+            sizes.append(calcPlaneSizeForGroup(scaleFactor=self._dataStore._composition_scale_model.as_float, resourceCount=self._dataStore._group_count.get(grp)))
+            grp = cleanup_prim_path(self, grp)
+            groups.append(grp)
+
+        #Create shaders for each plane
+        for g in groups:
+            i=0
+            prim_path = self.res_layer_root_path.AppendPath(g)
+            
+            #MAKE A TEMP COPY OF THE BASE IMAGE TEXTURE SO THAT WE CAN DRAW TEXT ON THE COPY
+            src_file = DATA_PATH.joinpath("tron_grid.png")
+            output_file = DATA_PATH.joinpath(g + ".png")
+            shutil.copyfile(src_file, output_file)
+
+            font_size = get_font_size_from_length(len(g))
+
+            draw_text_on_image_at_position(
+                input_image_path=output_file,
+                output_image_path=output_file, 
+                textToDraw=g, 
+                x=50, y=400, fillColor="Yellow", fontSize=font_size )
+
+            #Get Stage
+            stage = omni.usd.get_context().get_stage()
+
+            #Find the /Looks root
+            curr_prim = stage.GetPrimAtPath("/")
+            looks_path = ""
+            for prim in Usd.PrimRange(curr_prim):
+
+                if prim.GetPath() == "/Looks":
+                    looks_path = "/Looks"
+                    continue
+                elif prim.GetPath() == "/World/Looks":
+                    looks_path = "/World/Looks"
+                    continue
+
+            print("Looks root is: " +looks_path)
+            #Get the Shader and set the image property
+            shader_path = Sdf.Path(looks_path)
+            shader_path = Sdf.Path(shader_path.AppendPath(g))
+            shader_path = Sdf.Path(shader_path.AppendPath("Shader"))
+
+            #select the shader
+            selection = omni.usd.get_context().get_selection()
+            selection.set_selected_prim_paths([str(shader_path)], False)         
+
+            #Get the Shader
+            shader_prim = stage.GetPrimAtPath(str(shader_path))
+
+            # print("Shader Attributes:-----" + str(shader_path))
+            # print(shader_prim.GetAttributes())
+
+            try:
+                shader_prim.CreateAttribute("inputs:diffuse_texture", Sdf.ValueTypeNames.Asset)
+                                    
+                omni.kit.commands.execute('ChangeProperty',
+                    prop_path=Sdf.Path(shader_path).AppendPath('.inputs:diffuse_texture'),
+                    value=str(output_file), prev=str(output_file))
+            except:
+                #Do it again!
+                omni.kit.commands.execute('ChangeProperty',
+                prop_path=Sdf.Path(shader_path).AppendPath('.inputs:diffuse_texture'),
+                value=str(output_file),prev=str(output_file))
+
+            
+            #shader_prim.GetAttribute("inputs:diffuse_texture").Set(base_image, )
+
+            #props_path = Sdf.Path(shader_path).AppendPath(".inputs:diffuse_texture")
+            #print("Setting Shader property: " + str(props_path) + " " + str(output_file))
+            #omni.kit.commands.execute('ChangeProperty', prop_path=props_path, value=str(output_file),  prev=str(output_file))
+
+        #f:\source\github\mce\metacloudexplorer\exts\meta.cloud.explorer.azure\meta\cloud\explorer\azure\temp\backups.png
+
+            # stage = omni.usd.get_context().get_stage()
+
+            # if shader_prim is not None:
+            #     print("Setting shader image: " + str(shader_path) + " " + str(output_file))
+            #     shader_prim.CreateAttribute("inputs:diffuse_texture", Sdf.ValueTypeNames.Asset).Set(str(output_file))
+            # else:
+            #     print("Can't get prim " + str(shader_path))
+            
 
 
-                # #Create the Stages
-                # prim_path = str(self.res_layer_root_path.AppendPath(grp))
-                # print("Drawing " + str(stagesize*self.scale_factor) + " sized prim: " + prim_path + " @" + str(x) + ":" + str(y) +":"  + str(z))
-                # self.DrawStage(Path=prim_path,Name=grp, Size=(stagesize*self.scale_factor), Location=Gf.Vec3f(x,y,z), Color=Gf.Vec3f(0,255,0))
+    async def draw_label_on_stage_async(self, prim_path: str, prim_name: str, stageSize:int, fontSize:int, align:str, color:str):
+        #Use the Pillow text library to create an image with the text on it, sized right for the prim stage
+        #This will be displayed by the stage prim shader, once we create and set it.
+        #create_image_with_text("temp\\output2.jpg", "Mmmuuuurrrrrrrrrr", 10,525,575,575,"white", "left", "black")
 
-                # #record the size and postion for the next stage
-                # previous_stage_size = stagesize
-                # previous_x = x
-                # previous_y = y
+        #For Ref, set above
+        #CURRENT_PATH = Path(__file__).parent
+        #DATA_PATH = CURRENT_PATH.joinpath("temp")
 
-                #self.DrawLabelOnStage(prim_path, grp, stagesize, 44, "left", "black" )
+     
+        #Select the Plane
+        omni.kit.commands.execute('SelectPrims',
+            old_selected_paths=[''],
+            new_selected_paths=[prim_path],
+            expand_in_stage=True)
 
-                #self._stage_matrix[group] = {"name": group, "size": stagesize, "x": x, "y": y, "z": z }
+        print("Creating Shader: " + prim_name)
 
-            #self.DrawGround()
+        #Create a Shader
+        omni.kit.commands.execute('CreateAndBindMdlMaterialFromLibrary',
+            mdl_name='OmniPBR.mdl',
+            mtl_name='OmniPBR',
+            prim_name=prim_name,
+            mtl_created_list=None,
+            bind_selected_prims=True)
+        
+        await omni.kit.app.get_app().next_update_async()
 
-            #TODO
-            #Draw all the Prims on the Stage
-            #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION
+        #Get the Shader and set the image property
+        shader_path = Sdf.Path("/World/Looks")
+        shader_path = shader_path.AppendPath(prim_name)
+        shader_path = shader_path.AppendPath("Shader")
 
-            #for group in self._dataStore._groups:
-                #for resource in self._dataStore._resources:
-                    #if group["NAME"] == resource["RESOURCE GROUP"]:
-                        #pass
+        #select the shader
+        selection = omni.usd.get_context().get_selection()
+        selection.set_selected_prim_paths([str(shader_path)], False)
+
+        #Get the Shader
+        for i in range(100000):
+            while True:
+                try:
+                    print(str(i) + " - Get Stage and shader " + str(prim_path))
+                    await omni.kit.app.get_app().next_update_async()
+                    stage = omni.usd.get_context().get_stage()
+                    shader_prim = stage.GetPrimAtPath(str(prim_path))
+                except:
+                    print("No Shader yet " + str(prim_path))
+                    await omni.kit.app.get_app().next_update_async()
+                    continue
+                break
+
+        if shader_prim is not None:
+            print("Setting shader image: " + str(shader_path) + " " + str(output_file))
+            shader_prim.CreateAttribute("inputs:diffuse_texture", Sdf.ValueTypeNames.Asset).Set(str(output_file))
+        else:
+            print("Can't get prim " + str(shader_path))
+
+
+    #Draw a GroundPlane for the Resources to sit on.
+    def DrawStage(self, Path:str, Name: str, Size: int, Location: Gf.Vec3f, Color:Gf.Vec3d):      
+        create_plane(self,Path, Name, Size, Location, Color)
+
+
+    #load the resource prims to the stages
+    def LoadResources(self, viewType: str):
+
+        if viewType == "ByGroup": 
+            
+            groups = self._dataStore._group_count.copy()
+            if (len(groups) >0):
+                stage =  omni.usd.get_context().get_stage()
+
+                #Get Group Prim to place resources on 
+                for group in groups:
+                    
+                    #Cleanup the group name for a prim path
+                    group_prim_path = self.res_layer_root_path.AppendPath(cleanup_prim_path(self, group))
+
+                    #Get the Group Prim
+                    group_prim_path = stage.GetPrimAtPath(str(group_prim_path))
+
+                    if (group_prim_path is not None):
+                        
+                        prim_cnt = 1
+
+                        #Lets get the resources to place
+                        for resource in self._dataStore._resources:
+                            if (self._dataStore._resources["group"] == group):
+
+                                #Cleanup Resource Name
+                                resName = cleanup_prim_path(self, self._dataStore._resources["name"])
+
+                                #Place a new Prim in position X,Y,Z with A = Axis up                           
+                                shape_prim_path = Sdf.Path(group_prim_path).AppendPath(resName)
+
+                                # Create prim to add the reference to.
+                                ref_shape = stage.DefinePrim(shape_prim_path)
+
+                                # Add the reference
+                                ref_shape.GetReferences().AddReference(shape_usda_name[self._dataStore._resources["type"]])
+                                                
+                                # Get mesh from shape instance
+                                next_shape = UsdGeom.Mesh.Get(stage, shape_prim_path)
+
+                                # Set location
+                                # next_shape.AddTranslateOp().Set(
+                                #     Gf.Vec3f(
+                                #         self.scale_factor*x, 
+                                #         self.scale_factor*y,
+                                #         self.scale_factor*z))
+
+
+
+
+
+
 
 
         if viewType == "ByLocation":
@@ -223,57 +424,7 @@ class StageManager():
             pass
 
 
-    
-    def DrawLabelOnStage(self, prim_path: str, prim_name: str, stageSize:int, fontSize:int, align:str, color:str):
-        #Use the Pillow text library to create an image with the text on it, sized right for the prim stage
-        #This will be displayed by the stage prim shader, once we create and set it.
-        #create_image_with_text("temp\\output2.jpg", "Mmmuuuurrrrrrrrrr", 10,525,575,575,"white", "left", "black")
 
-        output_file = DATA_PATH. joinpath(prim_name + ".png")   
-        create_image_with_text(output_file, prim_name, int(10),int(10),(stageSize*10), (stageSize*10),"white", "left", "black", "temp\\airstrike.ttf", 44 )
-       
-        #Select the Plane
-        omni.kit.commands.execute('SelectPrims',
-            old_selected_paths=[''],
-            new_selected_paths=[prim_path],
-            expand_in_stage=True)
-
-        omni.kit.commands.execute('CreateAndBindMdlMaterialFromLibrary',
-            mdl_name='OmniPBR.mdl',
-            mtl_name='OmniPBR',
-            prim_name=prim_name,
-            mtl_created_list=None,
-            bind_selected_prims=True)
-
-        #Get the Shader and set the image property
-        shader_path = self.root_path.AppendPath("Looks")
-        shader_path = shader_path.AppendPath(prim_name)
-        shader_path = shader_path.AppendPath("Shader")
-
-        stage = omni.usd.get_context().get_stage()
-
-        image_path = "C:\\tmp\\cryptobabies.png"
-
-        shader = stage.GetPrimAtPath(str(shader_path))
-        print(shader.GetAttributes())
-
-        shader.GetAttribute("inputs:diffuse_texture").Set(str(image_path))
-        print(shader.GetAttribute("inputs:diffuse_texture"))
-
-        #img_file = output_file._str
-        #attr = shader.CreateAttribute(shader_path.pathString, "inputs:diffuse_texture")
-        #attr.Set(img_file)
-    
-        # omni.kit.commands.execute('ChangeProperty',
-	    #     prop_path=Sdf.Path('/World/Looks/cryptobabies/Shader.inputs:diffuse_texture'),
-	    #     value=Sdf.AssetPath('F:/Source/Github/mce/MetaCloudExplorer/exts/meta.cloud.explorer.azure/meta/cloud/explorer/azure/temp/cryptobabies.png'),
-	    #     prev=None)
-
-
-    #Draw a GroundPlane for the Resources to sit on.
-    def DrawStage(self, Path:str, Name: str, Size: int, Location: Gf.Vec3f, Color:Gf.Vec3d):
-        
-        create_plane(self,Path, Name, Size, Location, Color)
 
 
     def Draw_Prims(self):
@@ -383,3 +534,4 @@ class StageManager():
         print ("all")
 
 
+    

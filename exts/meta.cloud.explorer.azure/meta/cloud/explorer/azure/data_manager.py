@@ -22,16 +22,16 @@ class DataManager:
         self._offlineDataManager = CSVDataManager()
         self._onlineDataManager = AzureDataManager()
         self._dataStore.Load_Config_Data()
+        self.refresh_data()
 
     def load_csv_files(self):
-        self._sourceOfData = "Offline Data"
+        self._dataStore._sourceOfData = "OfflineData"
         self._dataStore.Save_Config_Data()
         self._offlineDataManager.loadFiles()
         self.process_data()
 
-
     def load_from_api(self):
-        self._sourceOfData = "Live Azure API"
+        self._dataStore._sourceOfData = "LiveAzureAPI"
         self._dataStore.Save_Config_Data()
         
         #Load data from Cloud API
@@ -40,7 +40,13 @@ class DataManager:
         #Aggregate the info
         self.process_data()
 
-
+    def refresh_data(self):
+        if self._dataStore._sourceOfData =="OfflineData":
+            self.load_csv_files()
+            print("CSV Data Refreshed.")
+        elif self._dataStore._sourceOfData == "LiveAzureAPI":
+            self.load_from_api()
+            print("Live Data Refreshed.")
 
     #Aggregate subscription, resources counts to DataManager Dictionaries
     def process_data(self):  

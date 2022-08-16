@@ -100,16 +100,29 @@ class MainView(ui.Window):
     def on_group():
         print("On Group")
 
+
+    #Load a fresh stage
     def load_stage(self, viewType: str):
+        self.clear_stage()
         self._stageManager.ShowStage(viewType)
 
+    #load the resource onto the stage
+    def load_resources(self, viewType: str):
+        self._stageManager.LoadResources(viewType)
+
+    #GROUP VIEW
     def load_resource_groups(self):
+        
         self._stageManager.ShowGroups()
 
+    #LOCATION VIEW
     def load_locations(self):
+        
         self._stageManager.ShowLocations()
 
+    #ALL RESOURCES
     def load_all_resources(self):
+        
         self._stageManager.ShowAllResources()
 
     # Clear the stage
@@ -174,21 +187,21 @@ class MainView(ui.Window):
                 ui.Label("Cloud Infrastructure Scene Authoring Extension", style={"color": 0xFFFFFFFF, "font_size":18}, alignment=ui.Alignment.CENTER, height=0)
 
             with ui.VStack(height=0, spacing=SPACING):
-                ui.Spacer(height=80)
+                ui.Spacer(height=125)
                 with ui.HStack(style=button_styles):
-                    ui.Button("Load Resources to Stage", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15)
-                    ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), name="rs", height=15)
-
+                    ui.Button("Load Groups", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15)
+                    ui.Button("Show Resources", clicked_fn=lambda: self.load_resources("ByGroup"), name="clr", height=15)
+                    ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), name="clr", height=15)
             with ui.VStack(height=0, spacing=SPACING):
-                ui.Spacer(height=120)
+                ui.Spacer(height=160)
                 with ui.HStack():
                     ui.Button("Type View", clicked_fn=lambda: self.load_stage("ByType"), height=15)
                     ui.Button("Location View", clicked_fn=lambda: self.load_stage("ByLocation"), height=15)
                     ui.Button("Group View", clicked_fn=lambda: self.load_stage("ByGroup"), height=15)
-                with ui.HStack():
-                    ui.Button("Network View", clicked_fn=lambda: self.load_stage("ByNetwork"), height=15)
-                    ui.Button("Cost View", clicked_fn=lambda: self.load_stage("ByCost"), height=15)
-                    ui.Button("Template View", clicked_fn=lambda: self.load_stage("Template"), height=15)
+                # with ui.HStack():
+                #     ui.Button("Network View", clicked_fn=lambda: self.load_stage("ByNetwork"), height=15)
+                #     ui.Button("Cost View", clicked_fn=lambda: self.load_stage("ByCost"), height=15)
+                #     ui.Button("Template View", clicked_fn=lambda: self.load_stage("Template"), height=15)
                 with ui.HStack():
                     ui.Button("Docs", clicked_fn=lambda: self.on_docs(), height=15)
                     ui.Button("Code", clicked_fn=lambda: self.on_code(), height=15)
@@ -202,14 +215,6 @@ class MainView(ui.Window):
             ui.Label("Meta Cloud Explorer (Azure)", style={"color": 0xFF008976, "font_size":36}, alignment=ui.Alignment.LEFT, height=0)
             ui.Label("An Omniverse Scene Authoring extension", height=10, name="TItle", alignment=ui.Alignment.LEFT)
             ui.Line(style={"color": 0xff00b976}, height=20)
-
-    def _build_commands(self):
-        """Build the widgets of the "Commands" group"""
-        with ui.CollapsableFrame("Explorer Commands", name="group"):
-            with ui.VStack(height=0, spacing=SPACING):
-                with ui.HStack(style=button_styles):
-                    ui.Button("Load Resources to Stage", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15, width=250, alignment=ui.Alignment.CENTER)
-                    ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), name="clear", height=15, width=250, alignment=ui.Alignment.CENTER)
 
     def _build_import(self):
         with ui.CollapsableFrame("Import Offline Files", name="group", collapsed=True):
