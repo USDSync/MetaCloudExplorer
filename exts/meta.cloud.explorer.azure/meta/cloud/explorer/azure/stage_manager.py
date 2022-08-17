@@ -69,23 +69,25 @@ class StageManager():
         self._dataManager = DataManager.instance() # Get A Singleton instance
         self._dataStore = DataStore.instance() # Get A Singleton instance
 
+        #Track the Groups and Resources so we can selectively add/remove them
+        self._group_prims = {}
+        self._resource_prims = {}
+
         #root prim paths
         self.root_path = Sdf.Path('/World')
         self.aad_layer_root_path = Sdf.Path(self.root_path.AppendPath('AAD'))
-        self.sub_layer_root_path = Sdf.Path(self.root_path.AppendPath('Subscriptions'))
-        self.res_layer_root_path = Sdf.Path(self.root_path.AppendPath('Resource_Groups'))
+        self.sub_layer_root_path = Sdf.Path(self.root_path.AppendPath('Subs'))
+        self.res_layer_root_path = Sdf.Path(self.root_path.AppendPath('RG'))
         
-        #tracking where we put stuff so we dont have to calculate it again.
-        self._stage_matrix = {}
-
         # stage_unit defines the number of unit per meter
         self.stage_unit_per_meter = 1
                
         # Scale factor so that the shapes are well spaced
-        self.scale_factor = 10.0
+        self.scale_factor = self._dataStore._composition_scale_model.as_float
       
         # limit the number of rows read
         self.max_elements = 5000
+        self.base_prim_size = 100
         
         self.x_threshold = 5000
         self.y_threshold = 5000
@@ -134,7 +136,7 @@ class StageManager():
                     grp = cleanup_prim_path(self, grp)
                     groups.append(grp)
 
-                #Use NVIDIAs Scatter algorytm to 
+                #Use Customized Scatter algorythm to position varying sized planes
                 transforms = scatterWithPlaneSize(
                     count=[m.as_int for m in self._dataStore._options_count_models],
                     distance=[m.as_float for m in self._dataStore._options_dist_models],
@@ -178,7 +180,7 @@ class StageManager():
                         bind_selected_prims=True)
 
                 #Draw shaders on the stages
-                #self.LabelLabels(viewType)
+                self.LabelLabels(viewType)
 
         if viewType == "ByLocation":
             for loc in self._dataStore._location_count:
@@ -215,7 +217,7 @@ class StageManager():
             prim_path = self.res_layer_root_path.AppendPath(g)
             
             #MAKE A TEMP COPY OF THE BASE IMAGE TEXTURE SO THAT WE CAN DRAW TEXT ON THE COPY
-            src_file = DATA_PATH.joinpath("tron_grid.png")
+            src_file = DATA_PATH.joinpath("tron_grid_test.png")
             output_file = DATA_PATH.joinpath(g + ".png")
             shutil.copyfile(src_file, output_file)
 
@@ -225,7 +227,7 @@ class StageManager():
                 input_image_path=output_file,
                 output_image_path=output_file, 
                 textToDraw=g, 
-                x=50, y=400, fillColor="Yellow", fontSize=font_size )
+                x=200, y=1750, fillColor="Yellow", fontSize=font_size )
 
             #Get Stage
             stage = omni.usd.get_context().get_stage()
@@ -308,42 +310,105 @@ class StageManager():
                     group_prim_path = self.res_layer_root_path.AppendPath(cleanup_prim_path(self, group))
 
                     #Get the Group Prim
-                    group_prim_path = stage.GetPrimAtPath(str(group_prim_path))
-
+                    group_prim = stage.GetPrimAtPath(str(group_prim_path))
                     resCount = groups[group]
+                    #stageSize = calcPlaneSizeForGroup()
+                    #scaleFactor=self._dataStore._composition_scale_model.as_float, resourceCount=self._dataStore._group_count.get(grp)))
 
-                    #Calculate the positions to place x resources on this group plane
-
-
-
+                    
+                    #TODO #Calculate the positions to place x resources on this group plane
+                    i=0
                     if (group_prim_path is not None):
                         
                         #Lets get the resources to place
-                        for resource in self._dataStore._resources:
-                            if (self._dataStore._resources["group"] == group):
+                        for k, v in self._dataStore._resources.items():
+                            if (v["group"] == group):
+
+                                i=i+1
 
                                 #Cleanup Resource Name
-                                resName = cleanup_prim_path(self, self._dataStore._resources["name"])
+                                resName = cleanup_prim_path(self, k)
 
+                                prim_len = len(str(group_prim_path)) + len(resName)
+                                if (prim_len) > 70:
+                                    diff = prim_len - 70 # say its 89..  this gives 5 
+                                    trim = len(resName) - diff 
+                                    resName = resName[:trim] #trim off that 5
 
+                                resName=cleanup_prim_path(self, resName)
+                                print("Creating new prim: " + resName)
+                                
                                 #Place a new Prim in position X,Y,Z with A = Axis up                           
-                                shape_prim_path = Sdf.Path(group_prim_path).AppendPath(resName)
+                                shape_prim_path = group_prim_path.AppendPath(resName)
 
                                 # Create prim to add the reference to.
-                                ref_shape = stage.DefinePrim(shape_prim_path)
+                                prim = stage.DefinePrim(shape_prim_path)
 
                                 # Add the reference
-                                ref_shape.GetReferences().AddReference(shape_usda_name[self._dataStore._resources["type"]])
-                                                
-                                # Get mesh from shape instance
-                                next_shape = UsdGeom.Mesh.Get(stage, shape_prim_path)
+                                shape_to_render = shape_usda_name[v["type"]]
+                                prim.GetReferences().AddReference(shape_to_render)
 
-                                #Set location
-                                next_shape.AddTranslateOp().Set(
-                                    Gf.Vec3f(
-                                        self.scale_factor*x, 
-                                        self.scale_factor*y,
-                                        self.scale_factor*z))
+                                #TODO Still need to calc the x,y offsets for xx items on the parent plane
+                                # and which way it up ?
+
+                                print("Placing prim: " + v["type"] + " " + shape_to_render + " | " + str(shape_prim_path) + " @ " + "0,0,0")
+
+                                xformable = UsdGeom.Xformable(prim)
+
+                                #Change Position
+                                self.change_prim_position(xformable, Gf.Vec3f(0,0,0))
+                                
+                                #moved to function
+                                # 
+                                # for name in prim.GetPropertyNames():
+                                #     if name == "xformOp:transform":
+                                #         prim.RemoveProperty(name)
+
+                                # if "xformOp:translate" in prim.GetPropertyNames():
+                                #     xform_op_tranlsate = UsdGeom.XformOp(prim.GetAttribute("xformOp:translate"))
+                                # else:
+                                #     xform_op_tranlsate = xformable.AddXformOp(UsdGeom.XformOp.TypeTranslate, UsdGeom.XformOp.PrecisionDouble, "")
+                                # xformable.SetXformOpOrder([xform_op_tranlsate])
+                                                                
+                                # xform_op_tranlsate.Set(Gf.Vec3d(0,0,0))
+
+                                #Change Scale
+                                bps = self.base_prim_size
+                                self.change_prim_position(xformable, Gf.Vec3f(bps,bps,bps))
+
+                                # Moved to function
+                                # for name in prim.GetPropertyNames():
+                                #     if name == "xformOp:scale":
+                                #         prim.RemoveProperty(name)
+
+                                # if "xformOp:scale" in prim.GetPropertyNames():
+                                #     xform_op_scale = UsdGeom.XformOp(prim.GetAttribute("xformOp:scale"))
+                                # else:
+                                #     xform_op_scale = xformable.AddXformOp(UsdGeom.XformOp.TypeScale, UsdGeom.XformOp.PrecisionDouble, "")
+                                
+                                # xformable.SetXformOpOrder([xform_op_scale])
+
+                                #Remove Shader
+                                if "Shader.inputs:diffuse_texture" in prim.GetPropertyNames():
+
+                                    for name in prim.GetPropertyNames():
+                                        if name == "xformOp:scale":
+                                            prim.RemoveProperty(name)
+
+                                
+                                                                
+                                #xform_op_tranlsate.Set(Gf.Vec3d(100,100,100))
+
+                                                                
+                                #Remove existing transforms and set location
+                                # next_shape.AddTranslateOp().Set(
+                                #     Gf.Vec3f(
+                                #         self.scale_factor*0, 
+                                #         self.scale_factor*0,
+                                #         self.scale_factor*0))
+                                
+                                #if i>10:
+                                #    continue
 
 
 
@@ -368,7 +433,44 @@ class StageManager():
         if viewType == "Template":
             pass
 
+    #Change Position of a prim within its parents coordinates
+    def change_prim_position(self, prim:str, location:Gf.Vec3f):      
+        
+        #remove the transform
+        xformable = UsdGeom.Xformable(prim)
+        for name in prim.GetPropertyNames():
+            if name == "xformOp:transform":
+                prim.RemoveProperty(name)
 
+        #Add new translate
+        if "xformOp:translate" in prim.GetPropertyNames():
+            xform_op_tranlsate = UsdGeom.XformOp(prim.GetAttribute("xformOp:translate"))
+        else:
+            xform_op_tranlsate = xformable.AddXformOp(UsdGeom.XformOp.TypeTranslate, UsdGeom.XformOp.PrecisionDouble, "")
+        xformable.SetXformOpOrder([xform_op_tranlsate])
+                                        
+        xform_op_tranlsate.Set(location)        
+
+    #Change the size of the prim
+    def change_prim_size(prim:str, scaleVector: Gf.Vec3f):
+       
+        xformable = UsdGeom.Xformable(prim)
+        
+        #Change Scale
+        for name in prim.GetPropertyNames():
+            if name == "xformOp:scale":
+                prim.RemoveProperty(name)
+
+        if "xformOp:scale" in prim.GetPropertyNames():
+            xform_op_scale = UsdGeom.XformOp(prim.GetAttribute("xformOp:scale"))
+        else:
+            xform_op_scale = xformable.AddXformOp(UsdGeom.XformOp.TypeScale, UsdGeom.XformOp.PrecisionDouble, "")
+        
+        xformable.SetXformOpOrder([xform_op_scale])
+        xform_op_scale.Set(scaleVector)
+
+    def remove_parent_shader():
+        pass
 
 
 

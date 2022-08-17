@@ -1,11 +1,3 @@
-# Copyright (c) 2022, NVIDIA CORPORATION.  All rights reserved.
-#
-# NVIDIA CORPORATION and its licensors retain all intellectual property
-# and proprietary rights in and to this software, related documentation
-# and any modifications thereto.  Any use, reproduction, disclosure or
-# distribution of this software and related documentation without an express
-# license agreement from NVIDIA CORPORATION is strictly prohibited.
-#
 __all__ = ["scatterWithPlaneSize"]
 
 from typing import List, Optional
@@ -68,3 +60,22 @@ def scatterWithPlaneSize(
                 result = Gf.Vec3d(x,y,z)
 
                 yield (result)
+
+
+
+def position_resource_on_target(
+    planeSize: float,
+    resourceNumber: int,
+):
+#     pass
+
+    if (planeSize == 100.0):
+        pass
+
+
+
+#Given a plane of xxx size
+#calculate the x,y,z,up postion of resource #X 
+#to place on the surface of the plane
+#return the x,y,x to place
+

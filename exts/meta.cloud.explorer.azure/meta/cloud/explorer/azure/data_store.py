@@ -21,8 +21,15 @@ class DataStore():
         self._type_count = {}
         self._tag_count = {}
 
+        self._subscription_cost = {}
+        self._location_cost = {}
+        self._group_cost = {}
+        self._type_cost = {}
+        self._tag_cost = {}
+
         #track where the data last came from 
         self._sourceOfData = ""
+        self._showCostData = False
 
         #Variables for files to import
         self._rg_csv_file_path = ""
@@ -54,7 +61,9 @@ class DataStore():
         self._options_dist_models[0].as_float = 500
         self._options_dist_models[1].as_float = 500
         self._options_dist_models[2].as_float = 500
-
+        self._options_random_models[0].as_float = 1.0
+        self._options_random_models[1].as_float = 1.0
+        self._options_random_models[2].as_float = 1.0
         self.Load_Config_Data()
 
     def Save_Config_Data(self):

@@ -1,29 +1,40 @@
 import glob
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageDraw
 import requests
 import io
+import os.path
+
+#W, H = (300,200)
+#msg = "hello"
+#draw.text(((W-w)/2,(H-h)/2), msg, fill="black")
+#im.save("hello.png", "PNG")
 
 def draw_text_on_image_at_position(
     input_image_path:str, 
     output_image_path:str, 
     textToDraw:str, 
+    costToDraw:str,
     x:int, y:int,
     fillColor:str, fontSize:int):    
 
+    #bail if file exists
+    #if os.path.exists(output_image_path):
+    #   return
+
     image = Image.open(input_image_path)
-
     image = image.rotate(270, expand=1)
-
     draw = ImageDraw.Draw(image)
-    
+    w, h = draw.textsize(textToDraw)
+
     font1 = "https://github.com/googlefonts/Arimo/raw/main/fonts/ttf/Arimo-Regular.ttf"
-    truetype_url = 'https://github.com/googlefonts/roboto/blob/main/src/hinted/Roboto-Black.ttf?raw=true'
     font = load_font_from_uri(fontSize, font1)
 
-
     draw.text((x, y), textToDraw, font_size=fontSize, font=font, fill=fillColor)
-    image = image.rotate(-270, expand=1)
 
+    if costToDraw != "":
+        draw.text((x+w, y), textToDraw, font_size=fontSize, font=font, fill="red")
+
+    image = image.rotate(-270, expand=1)
     image.save(output_image_path)
 
 

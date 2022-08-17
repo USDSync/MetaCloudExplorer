@@ -44,7 +44,7 @@ class CSVDataManager():
                     if i > self.max_elements: return
 
     #Resources File Import
-    #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION
+    #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION, LMCOST
     def load_res_file(self):
          # check that CSV exists
         if os.path.exists(self._dataStore._rs_csv_file_path):
@@ -58,8 +58,9 @@ class CSVDataManager():
                     group = row["RESOURCE GROUP"]
                     location = row["LOCATION"]
                     subscription = row["SUBSCRIPTION"]
+                    lmcost = row["LMCOST"]
 
-                    self._dataStore._resources[name] = {"name":name, "type": type, "group": group, "location":location, "subscription":subscription}
+                    self._dataStore._resources[name] = {"name":name, "type": type, "group": group, "location":location, "subscription":subscription, "lmcost": lmcost}
 
                     i=i+1
                     if i > self.max_elements: return

@@ -55,9 +55,12 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
     def on_shutdown(self):
         carb.log_info(f"[meta.cloud.explorer.azure]] Meta Cloud Explorer shutdown")     
         self._menu = None
-        if self._window is not None:
-            self._window.destroy()
-            self._window = None
+        try:
+            if self._window is not None:
+                self._window.destroy()
+                self._window = None
+        except:
+            pass
 
         # Deregister the function that shows the window from omni.ui
         ui.Workspace.set_show_window_fn(MetaCloudExplorerAzure.WINDOW_NAME, None)

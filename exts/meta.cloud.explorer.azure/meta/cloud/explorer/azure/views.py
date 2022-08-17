@@ -183,27 +183,27 @@ class MainView(ui.Window):
             #Foreground
             with ui.VStack():
                 ui.Spacer(height=5)
-                ui.Label("Meta Cloud Explorer", style={"color": 0xA21F1FFF, "font_size":36}, alignment=ui.Alignment.CENTER, height=0)
-                ui.Label("Cloud Infrastructure Scene Authoring Extension", style={"color": 0xFFFFFFFF, "font_size":18}, alignment=ui.Alignment.CENTER, height=0)
+                ui.Label("Meta Cloud Explorer", style={"color": cl("#ffcc33"), "font_size":36}, alignment=ui.Alignment.CENTER, height=0)
+                ui.Label("Cloud Infrastructure Scene Authoring Extension", style={"color": cl("#33FFCC"), "font_size":18}, alignment=ui.Alignment.CENTER, height=0)
 
             with ui.VStack(height=0, spacing=SPACING):
-                ui.Spacer(height=125)
+                ui.Spacer(height=70)
                 with ui.HStack(style=button_styles):
                     ui.Button("Load Groups", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15)
-                    ui.Button("Show Resources", clicked_fn=lambda: self.load_resources("ByGroup"), name="clr", height=15)
+                    ui.Button("Show/Hide Resources", clicked_fn=lambda: self.load_resources("ByGroup"), name="clr", height=15)
                     ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), name="clr", height=15)
             with ui.VStack(height=0, spacing=SPACING):
-                ui.Spacer(height=160)
+                ui.Spacer(height=100)
                 with ui.HStack():
                     ui.Button("Type View", clicked_fn=lambda: self.load_stage("ByType"), height=15)
                     ui.Button("Location View", clicked_fn=lambda: self.load_stage("ByLocation"), height=15)
                     ui.Button("Group View", clicked_fn=lambda: self.load_stage("ByGroup"), height=15)
             with ui.VStack(height=0, spacing=SPACING):
-                ui.Spacer(height=195)
+                ui.Spacer(height=130)
                 with ui.HStack():
                     ui.Button("View All Types", clicked_fn=lambda: self.load_stage("AllTypes"), height=15)
                     ui.Button("View Templates", clicked_fn=lambda: self.load_stage("Templates"), height=15)
-                    ui.Button("View Network", clicked_fn=lambda: self.load_stage("Network"), height=15)
+                    ui.Button("Show/Hide Costs", clicked_fn=lambda: self.load_stage("Network"), height=15)
                 # with ui.HStack():
                 #     ui.Button("Network View", clicked_fn=lambda: self.load_stage("ByNetwork"), height=15)
                 #     ui.Button("Cost View", clicked_fn=lambda: self.load_stage("ByCost"), height=15)
@@ -244,29 +244,40 @@ class MainView(ui.Window):
                 ui.Button("Import Data Files", clicked_fn=lambda: self._dataManager.load_csv_files())            
 
     def _build_connection(self):
-        with ui.CollapsableFrame("Live Connection", name="group", collapsed=True):
+        with ui.CollapsableFrame("Cloud Connectors", name="group", collapsed=True):
             with ui.VStack():
-                ui.Label("Tenant Id",width=self.label_width)
-                self._tenant_import_field = ui.StringField(height=15)
-                self._tenant_import_field.enabled = True
-                self._tenant_import_field.model.set_value(str(self._dataStore._azure_tenant_id))
-                self._dataStore._azure_tenant_id_model = self._tenant_import_field.model
-                ui.Label("Client Id",width=self.label_width)
-                self._client_import_field = ui.StringField(height=15)
-                self._client_import_field.enabled = True
-                self._client_import_field.model.set_value(str(self._dataStore._azure_client_id))
-                self._dataStore._azure_client_id_model = self._client_import_field.model
-                ui.Label("Subscription Id",width=self.label_width)
-                self._subscription_id_field = ui.StringField(height=15)
-                self._subscription_id_field.enabled = True
-                self._subscription_id_field.model.set_value(str(self._dataStore._azure_subscription_id))
-                self._dataStore._azure_subscription_id_model = self._subscription_id_field.model
-                ui.Label("Client Secret",width=self.label_width)
-                self._client_secret_field = ui.StringField(height=15, password_mode=True)
-                self._client_secret_field.enabled = True
-                self._client_secret_field.model.set_value(str(self._dataStore._azure_client_secret))
-                self._dataStore._azure_client_secret_model = self._client_secret_field.model
-                ui.Button("Connect to Azure", clicked_fn=lambda: self._dataManager.load_from_api())
+                with ui.CollapsableFrame("Azure API Connection", name="group", collapsed=True):
+                    with ui.VStack():
+                        ui.Label("Tenant Id",width=self.label_width)
+                        self._tenant_import_field = ui.StringField(height=15)
+                        self._tenant_import_field.enabled = True
+                        self._tenant_import_field.model.set_value(str(self._dataStore._azure_tenant_id))
+                        self._dataStore._azure_tenant_id_model = self._tenant_import_field.model
+                        ui.Label("Client Id",width=self.label_width)
+                        self._client_import_field = ui.StringField(height=15)
+                        self._client_import_field.enabled = True
+                        self._client_import_field.model.set_value(str(self._dataStore._azure_client_id))
+                        self._dataStore._azure_client_id_model = self._client_import_field.model
+                        ui.Label("Subscription Id",width=self.label_width)
+                        self._subscription_id_field = ui.StringField(height=15)
+                        self._subscription_id_field.enabled = True
+                        self._subscription_id_field.model.set_value(str(self._dataStore._azure_subscription_id))
+                        self._dataStore._azure_subscription_id_model = self._subscription_id_field.model
+                        ui.Label("Client Secret",width=self.label_width)
+                        self._client_secret_field = ui.StringField(height=15, password_mode=True)
+                        self._client_secret_field.enabled = True
+                        self._client_secret_field.model.set_value(str(self._dataStore._azure_client_secret))
+                        self._dataStore._azure_client_secret_model = self._client_secret_field.model
+                        ui.Button("Connect to Azure", clicked_fn=lambda: self._dataManager.load_from_api())
+                with ui.CollapsableFrame("AWS API Connection", name="group", collapsed=True):
+                    with ui.VStack():
+                        ui.Label("COMING SOON!",width=self.label_width)
+                        #ui.Button("Connect to AWS", clicked_fn=lambda: self._dataManager.load_from_api())
+                with ui.CollapsableFrame("GCP API Connection", name="group", collapsed=True):
+                    with ui.VStack():
+                        ui.Label("COMING SOON!",width=self.label_width)
+                        #ui.Button("Connect to AWS", clicked_fn=lambda: self._dataManager.load_from_api())
+
 
     def _build_axis(self, axis_id, axis_name):
         """Build the widgets of the "X" or "Y" or "Z" group"""
@@ -274,12 +285,13 @@ class MainView(ui.Window):
             with ui.VStack(height=0, spacing=SPACING):
                 with ui.HStack():
                     ui.Label("Group Count", name="attribute_name", width=self.label_width)
-                    ui.IntDrag(model=self._dataStore._options_count_models[axis_id], min=1, max=100)
-
+                    ui.IntDrag(model=self._dataStore._options_count_models[axis_id], min=1, max=500)
                 with ui.HStack():
                     ui.Label("Distance", name="attribute_name", width=self.label_width)
-                    ui.FloatDrag(self._dataStore._options_dist_models[axis_id], min=250, max=1000)
-
+                    ui.FloatDrag(self._dataStore._options_dist_models[axis_id], min=250, max=5000)
+                with ui.HStack():
+                    ui.Label("Randomness", name="attribute_name", width=self.label_width)
+                    ui.FloatDrag(self._dataStore._options_random_models[axis_id], min=1.0, max=10.0)
 
     def _build_options(self):
         with ui.CollapsableFrame("Composition", name="group", collapsed=True):

@@ -42,26 +42,33 @@ def cleanup_prim_path(self, Name: str):
     nme = nme.replace(".", "_")
     nme = nme.replace(":", "_")
     nme = nme.replace(";", "_")
+    nme = nme.replace("(", "_")
+    nme = nme.replace(")", "_")
+
+    #if it starts with a number add a _
+    if nme[0].isnumeric():
+        nme = "_" + nme
+
     return nme
 
 
 
 def get_font_size_from_length(nameLength:int):
     if (nameLength < 10):
-        font_size = 70
+        font_size = 160
     elif (nameLength < 15):
-        font_size = 50
+        font_size = 140
     elif (nameLength < 20):
-        font_size = 40                    
+        font_size = 120                   
     elif (nameLength < 30):
-        font_size = 30
+        font_size = 100
     elif (nameLength < 50):
-        font_size = 20
+        font_size = 80
     elif (nameLength < 60):
-        font_size = 20
+        font_size = 70
     elif (nameLength < 70):
-        font_size = 20
+        font_size = 60
     elif (nameLength < 80):
-        font_size = 10
+        font_size = 44
 
     return font_size

@@ -55,6 +55,7 @@ class DataManager:
         for key in self._dataStore._resources:
             obj = self._dataStore._resources[key]
 
+            ### AGGREGATE COUNTS
             #Count per Sub
             if obj["subscription"] not in self._dataStore._subscription_count.keys():
                 self._dataStore._subscription_count[obj["subscription"]] = 1
@@ -79,16 +80,42 @@ class DataManager:
             else:
                 self._dataStore._group_count[obj["group"]] = self._dataStore._group_count[obj["group"]] + 1
 
-
             #Count per Tags
             #if obj["tag"] not in self._dataStore._tag_count.keys():
             #    self._dataStore._tag_count[obj["tag"]] = 1
             #else:
             #    self._dataStore._tag_count[obj["tag"]] = self._dataStore._tag_count[obj["tag"]] + 1
 
+            ### AGGREGATE COSTS
+            #Cost per Sub
+            if obj["subscription"] not in self._dataStore._subscription_cost.keys():
+                self._dataStore._subscription_cost[obj["subscription"]] = float(obj["lmcost"])
+            else:
+                self._dataStore._subscription_cost[obj["subscription"]] = float(self._dataStore._subscription_cost[obj["subscription"]]) + float(obj["lmcost"])
+            
+            #Cost per Location
+            if obj["location"] not in self._dataStore._location_cost.keys():
+                self._dataStore._location_cost[obj["location"]] = float(obj["lmcost"])
+            else:
+                self._dataStore._location_cost[obj["location"]] = float(self._dataStore._location_cost[obj["location"]]) + float(obj["lmcost"])
+            
+            #Cost per Type
+            if obj["type"] not in self._dataStore._type_cost.keys():
+                self._dataStore._type_cost[obj["type"]] = float(obj["lmcost"])
+            else:
+                self._dataStore._type_cost[obj["type"]] = float(self._dataStore._type_cost[obj["type"]]) + float(obj["lmcost"])
+
+            #Cost per Group
+            if obj["group"] not in self._dataStore._group_cost.keys():
+                self._dataStore._group_cost[obj["group"]] = float(obj["lmcost"])
+            else:
+                self._dataStore._group_cost[obj["group"]] =float(self._dataStore._group_cost[obj["group"]]) + float(obj["lmcost"])
+
 
         #output aggregation results to console
-        print("Data loaded from Files...")
+        print("Data loading complete..")
+        print(str(len(self._dataStore._resources)) + " Resources loaded from " + self._dataStore._sourceOfData)
+        print(str(len(self._dataStore._groups)) + " Groups loaded from " + self._dataStore._sourceOfData)
 
     #passthrough to csv manager
     def select_file(self, fileType: str):
