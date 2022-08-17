@@ -198,6 +198,12 @@ class MainView(ui.Window):
                     ui.Button("Type View", clicked_fn=lambda: self.load_stage("ByType"), height=15)
                     ui.Button("Location View", clicked_fn=lambda: self.load_stage("ByLocation"), height=15)
                     ui.Button("Group View", clicked_fn=lambda: self.load_stage("ByGroup"), height=15)
+            with ui.VStack(height=0, spacing=SPACING):
+                ui.Spacer(height=195)
+                with ui.HStack():
+                    ui.Button("View All Types", clicked_fn=lambda: self.load_stage("AllTypes"), height=15)
+                    ui.Button("View Templates", clicked_fn=lambda: self.load_stage("Templates"), height=15)
+                    ui.Button("View Network", clicked_fn=lambda: self.load_stage("Network"), height=15)
                 # with ui.HStack():
                 #     ui.Button("Network View", clicked_fn=lambda: self.load_stage("ByNetwork"), height=15)
                 #     ui.Button("Cost View", clicked_fn=lambda: self.load_stage("ByCost"), height=15)

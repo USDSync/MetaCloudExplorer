@@ -49,7 +49,7 @@ from omni.kit.window.file_importer import get_file_importer
 from omni.ui import scene as sc
 from omni.ui import color as cl
 
-from .resource_map import shape_usda_name
+from .azure_resource_map import shape_usda_name
 from .math_utils import calcPlaneSizeForGroup
 from .data_manager import DataManager
 from .data_store import DataStore
@@ -178,7 +178,7 @@ class StageManager():
                         bind_selected_prims=True)
 
                 #Draw shaders on the stages
-                self.LabelLabels(viewType)
+                #self.LabelLabels(viewType)
 
         if viewType == "ByLocation":
             for loc in self._dataStore._location_count:
@@ -287,66 +287,6 @@ class StageManager():
             # else:
             #     print("Can't get prim " + str(shader_path))
             
-
-
-    async def draw_label_on_stage_async(self, prim_path: str, prim_name: str, stageSize:int, fontSize:int, align:str, color:str):
-        #Use the Pillow text library to create an image with the text on it, sized right for the prim stage
-        #This will be displayed by the stage prim shader, once we create and set it.
-        #create_image_with_text("temp\\output2.jpg", "Mmmuuuurrrrrrrrrr", 10,525,575,575,"white", "left", "black")
-
-        #For Ref, set above
-        #CURRENT_PATH = Path(__file__).parent
-        #DATA_PATH = CURRENT_PATH.joinpath("temp")
-
-     
-        #Select the Plane
-        omni.kit.commands.execute('SelectPrims',
-            old_selected_paths=[''],
-            new_selected_paths=[prim_path],
-            expand_in_stage=True)
-
-        print("Creating Shader: " + prim_name)
-
-        #Create a Shader
-        omni.kit.commands.execute('CreateAndBindMdlMaterialFromLibrary',
-            mdl_name='OmniPBR.mdl',
-            mtl_name='OmniPBR',
-            prim_name=prim_name,
-            mtl_created_list=None,
-            bind_selected_prims=True)
-        
-        await omni.kit.app.get_app().next_update_async()
-
-        #Get the Shader and set the image property
-        shader_path = Sdf.Path("/World/Looks")
-        shader_path = shader_path.AppendPath(prim_name)
-        shader_path = shader_path.AppendPath("Shader")
-
-        #select the shader
-        selection = omni.usd.get_context().get_selection()
-        selection.set_selected_prim_paths([str(shader_path)], False)
-
-        #Get the Shader
-        for i in range(100000):
-            while True:
-                try:
-                    print(str(i) + " - Get Stage and shader " + str(prim_path))
-                    await omni.kit.app.get_app().next_update_async()
-                    stage = omni.usd.get_context().get_stage()
-                    shader_prim = stage.GetPrimAtPath(str(prim_path))
-                except:
-                    print("No Shader yet " + str(prim_path))
-                    await omni.kit.app.get_app().next_update_async()
-                    continue
-                break
-
-        if shader_prim is not None:
-            print("Setting shader image: " + str(shader_path) + " " + str(output_file))
-            shader_prim.CreateAttribute("inputs:diffuse_texture", Sdf.ValueTypeNames.Asset).Set(str(output_file))
-        else:
-            print("Can't get prim " + str(shader_path))
-
-
     #Draw a GroundPlane for the Resources to sit on.
     def DrawStage(self, Path:str, Name: str, Size: int, Location: Gf.Vec3f, Color:Gf.Vec3d):      
         create_plane(self,Path, Name, Size, Location, Color)
@@ -370,16 +310,21 @@ class StageManager():
                     #Get the Group Prim
                     group_prim_path = stage.GetPrimAtPath(str(group_prim_path))
 
+                    resCount = groups[group]
+
+                    #Calculate the positions to place x resources on this group plane
+
+
+
                     if (group_prim_path is not None):
                         
-                        prim_cnt = 1
-
                         #Lets get the resources to place
                         for resource in self._dataStore._resources:
                             if (self._dataStore._resources["group"] == group):
 
                                 #Cleanup Resource Name
                                 resName = cleanup_prim_path(self, self._dataStore._resources["name"])
+
 
                                 #Place a new Prim in position X,Y,Z with A = Axis up                           
                                 shape_prim_path = Sdf.Path(group_prim_path).AppendPath(resName)
@@ -393,12 +338,12 @@ class StageManager():
                                 # Get mesh from shape instance
                                 next_shape = UsdGeom.Mesh.Get(stage, shape_prim_path)
 
-                                # Set location
-                                # next_shape.AddTranslateOp().Set(
-                                #     Gf.Vec3f(
-                                #         self.scale_factor*x, 
-                                #         self.scale_factor*y,
-                                #         self.scale_factor*z))
+                                #Set location
+                                next_shape.AddTranslateOp().Set(
+                                    Gf.Vec3f(
+                                        self.scale_factor*x, 
+                                        self.scale_factor*y,
+                                        self.scale_factor*z))
 
 
 
@@ -427,52 +372,52 @@ class StageManager():
 
 
 
-    def Draw_Prims(self):
+    #def Draw_Prims(self):
         #TODO Salvage any of this
         # Iterate over each row in the CSV file
                 #   Skip the header row
                 #   Don't read more than the max number of elements
                 #   Create the shape with the appropriate color at each coordinate
-                for row in itertools.islice(csv_reader, 1, self.max_elements):
-                    id = row[0]
-                    name = row[1]
-                    subs = row[2]
-                    location = row[3]
-                    count = row[4]
-                    x = float(row[5])
-                    y = float(row[6])
-                    z = float(row[7])
+                # for row in itertools.islice(csv_reader, 1, self.max_elements):
+                #     id = row[0]
+                #     name = row[1]
+                #     subs = row[2]
+                #     location = row[3]
+                #     count = row[4]
+                #     x = float(row[5])
+                #     y = float(row[6])
+                #     z = float(row[7])
                     
-                    if (name == "Total"):
-                        continue;
+                #     if (name == "Total"):
+                #         continue;
 
-                    # root prim
-                    cluster_prim_path = self.root_path                  
-                    cluster_prim = stage.GetPrimAtPath(cluster_prim_path)
+                #     # root prim
+                #     cluster_prim_path = self.root_path                  
+                #     cluster_prim = stage.GetPrimAtPath(cluster_prim_path)
 
-                    # create the prim if it does not exist
-                    if not cluster_prim.IsValid():
-                        UsdGeom.Xform.Define(stage, cluster_prim_path)
+                #     # create the prim if it does not exist
+                #     if not cluster_prim.IsValid():
+                #         UsdGeom.Xform.Define(stage, cluster_prim_path)
                         
-                    shape_prim_path = cluster_prim_path + self.rg_layer_root_path + name
-                    shape_prim_path = shape_prim_path.replace(" ", "_")
-                    shape_prim_path = shape_prim_path.replace(".", "_")
+                #     shape_prim_path = cluster_prim_path + self.rg_layer_root_path + name
+                #     shape_prim_path = shape_prim_path.replace(" ", "_")
+                #     shape_prim_path = shape_prim_path.replace(".", "_")
 
-                    # Create prim to add the reference to.
-                    ref_shape = stage.DefinePrim(shape_prim_path)
+                #     # Create prim to add the reference to.
+                #     ref_shape = stage.DefinePrim(shape_prim_path)
 
-                    # Add the reference
-                    ref_shape.GetReferences().AddReference(str(self.rg_shape_file_path))
+                #     # Add the reference
+                #     ref_shape.GetReferences().AddReference(str(self.rg_shape_file_path))
                                     
-                    # Get mesh from shape instance
-                    next_shape = UsdGeom.Mesh.Get(stage, shape_prim_path)
+                #     # Get mesh from shape instance
+                #     next_shape = UsdGeom.Mesh.Get(stage, shape_prim_path)
 
-                    # Set location
-                    next_shape.AddTranslateOp().Set(
-                        Gf.Vec3f(
-                            self.scale_factor*x, 
-                            self.scale_factor*y,
-                            self.scale_factor*z))
+                #     # Set location
+                #     next_shape.AddTranslateOp().Set(
+                #         Gf.Vec3f(
+                #             self.scale_factor*x, 
+                #             self.scale_factor*y,
+                #             self.scale_factor*z))
 
                     # Set Color
                    #next_shape.GetDisplayColorAttr().Set(
