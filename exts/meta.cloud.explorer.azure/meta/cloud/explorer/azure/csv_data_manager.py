@@ -7,7 +7,7 @@ from pathlib import Path
 import csv
 import itertools
 from .data_store import DataStore
-
+from .prim_utils import cleanup_prim_path
 
 #This class is designed to import data from 3 input files 
 #This file acts like a data provider for the data_manager
@@ -31,7 +31,7 @@ class CSVDataManager():
         if os.path.exists(self._dataStore._rg_csv_file_path):
             # Read CSV file
             i=1
-            with open(self._dataStore._rg_csv_file_path, newline='') as csvfile:
+            with open(self._dataStore._rg_csv_file_path, encoding='utf-8-sig', newline='') as csvfile:
                 reader = csv.DictReader(csvfile, delimiter=',')
                 for row in reader:
                     name = row["NAME"]
@@ -59,6 +59,9 @@ class CSVDataManager():
                     location = row["LOCATION"]
                     subscription = row["SUBSCRIPTION"]
                     lmcost = row["LMCOST"]
+
+                    #fix spacing, control chars early
+                    name = cleanup_prim_path(self, Name=name)
 
                     self._dataStore._resources[name] = {"name":name, "type": type, "group": group, "location":location, "subscription":subscription, "lmcost": lmcost}
 

@@ -35,7 +35,10 @@ class DataManager:
         self._dataStore.Save_Config_Data()
         
         #Load data from Cloud API
+        self._onlineDataManager.connect()
         self._onlineDataManager.load_data()
+
+        
 
         #Aggregate the info
         self.process_data()
@@ -110,6 +113,8 @@ class DataManager:
                 self._dataStore._group_cost[obj["group"]] = float(obj["lmcost"])
             else:
                 self._dataStore._group_cost[obj["group"]] =float(self._dataStore._group_cost[obj["group"]]) + float(obj["lmcost"])
+
+
 
 
         #output aggregation results to console

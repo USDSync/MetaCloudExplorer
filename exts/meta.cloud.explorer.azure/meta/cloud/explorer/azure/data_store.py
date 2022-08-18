@@ -48,6 +48,7 @@ class DataStore():
         self._azure_subscription_id_model = ""
 
         #composition options
+        self._show_costs_model = ui.SimpleBoolModel(False)
         self._primary_axis_model = ComboBoxModel("Z", "X", "Y") # track which Axis is up
         self._composition_scale_model = ui.SimpleFloatModel()
         self._options_count_models = [ui.SimpleIntModel(), ui.SimpleIntModel(), ui.SimpleIntModel()]

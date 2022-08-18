@@ -21,18 +21,22 @@ def draw_text_on_image_at_position(
     #if os.path.exists(output_image_path):
     #   return
 
-    image = Image.open(input_image_path)
-    image = image.rotate(270, expand=1)
-    draw = ImageDraw.Draw(image)
-    w, h = draw.textsize(textToDraw)
-
     font1 = "https://github.com/googlefonts/Arimo/raw/main/fonts/ttf/Arimo-Regular.ttf"
     font = load_font_from_uri(fontSize, font1)
 
-    draw.text((x, y), textToDraw, font_size=fontSize, font=font, fill=fillColor)
+    image = Image.open(input_image_path)
+    image = image.rotate(270, expand=1)
+    draw = ImageDraw.Draw(image)
+    textW, textH = draw.textsize(textToDraw, font) # how big is out text
+    costW, costH = draw.textsize(costToDraw, font) # how big is out text
+
+
+    draw.text((x, y), textToDraw, font_size=fontSize,anchor="ls", font=font, fill=fillColor)
 
     if costToDraw != "":
-        draw.text((x+w, y), textToDraw, font_size=fontSize, font=font, fill="red")
+        xx = (2084 - (costW +300))
+        costToDraw = str(costToDraw) + " /mo"
+        draw.text((xx,y), costToDraw, font_size=(fontSize-40), anchor="ls", font=font, fill="red")
 
     image = image.rotate(-270, expand=1)
     image.save(output_image_path)
@@ -48,7 +52,7 @@ def create_image_with_text(output_image_path:str, textToDraw:str, x:int, y:int, 
     font = load_font_from_uri(fontSize, font1)
 
     #font = ImageFont.truetype(fontPath, layout_engine=ImageFont.LAYOUT_BASIC, size=fontSize)
-    draw.text((x, y), textToDraw, font=font, align=alignment, fill=fillColor)
+    draw.text((x, y), textToDraw, font=font, anchor="ls", fill=fillColor)
     image.save(output_image_path)
 
 
@@ -94,6 +98,13 @@ def draw_text_90_into(text: str, into, at):
 
 if __name__ == "__main__":
     #create_image_with_text("temp\\output2.jpg", "Mmmuuuurrrrrrrrrr", 10.0,525,575,575,"white", "left", "black", "temp\\airstrike.ttf", 44)
-    draw_text_on_image_at_position("temp\\tron_grid.png", "temp\\grid_test.png", "defaultresourcegroup_ea", 25,420, "yellow", 36)
+    draw_text_on_image_at_position("temp\\tron_grid_test.png", "temp\\output_test.png", "defaultresourcegroup_ea","$299.00", 200,1800, "yellow", 110)
 
 #'https://github.com/googlefonts/roboto/blob/main/src/hinted/Roboto-Black.ttf?raw=true'
+    # input_image_path:str, 
+    # output_image_path:str, 
+    # textToDraw:str, 
+    # costToDraw:str,
+    # x:int, y:int,
+    # fillColor:str, fontSize:int):    
+
