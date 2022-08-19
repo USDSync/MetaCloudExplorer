@@ -1,0 +1,69 @@
+﻿NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION,LMCOST
+A,AAD,AAD,West US,Test,49.47
+B,Resource_Group,Resource_Group,West US,Test,49.47
+C,Storage_account,Storage_account,West US,Test,49.47
+D,App_Service,App_Service,West US,Test,49.47
+E,Subscription,Subscription,West US,Test,49.47
+F,API_Connection,API_Connection,West US,Test,49.47
+G,API_Management_service,API_Management_service,West US,Test,99.95
+H,App_Configuration,App_Configuration,West US,Test,49.47
+I,App_Service_plan,App_Service_plan,West US,Test,49.47
+J,Application_Insights,Application_Insights,WestUS,Test,135.15
+K,Application_gateway,Application_gateway,WestUS,Test,138
+L,Automation_Account,Automation_Account,WestUS,Test,99
+M,Availability_test,Availability_test,WestUS,Test,135.15
+N,Azure_Cosmos_DB_API_for_MongoDB_account,Azure_Cosmos_DB_API_for_MongoDB_account,WestUS,Test,55
+O,Azure_Cosmos_DB_account,Azure_Cosmos_DB_account,WestUS,Test,5
+P,Azure_Data_Explorer_Cluster,Azure_Data_Explorer_Cluster,WestUS,Test,5
+Q,Azure_DevOps_organization,Azure_DevOps_organization,WestUS,Test,5
+R,Azure_Machine_Learning,Azure_Machine_Learning,WestUS,Test,5
+S,Azure_Workbook,Azure_Workbook,WestUS,Test,5
+T,Bastion,Bastion,WestUS,Test,5
+U,Cognitive_Service,Cognitive_Service,WestUS,Test,5
+V,Container_registry,Container_registry,WestUS,Test,50
+W,Data_Lake_Analytics,Data_Lake_Analytics,WestUS,Test,50
+X,Data_Lake_Storage_Gen1,Data_Lake_Storage_Gen1,WestUS,Test,50
+Y,Data_factory_(V2),Data_factory_(V2),WestUS,Test,50
+Z,Disk,Disk,WestUS,Test,225
+A1,DNS_Zone,DNS_Zone,WestUS,Test,0
+A2,Event_Grid_System_Topic,Event_Grid_System_Topic,WestUS,Test,15
+A3,Event_Hubs_Namespace,Event_Hubs_Namespace,WestUS,Test,0
+A4,Firewall_Policy,Firewall_Policy,WestUS,Test,0
+A5,Firewall,Firewall,WestUS,Test,0
+A6,Function_App,Function_App,WestUS,Test,0
+A7,Image,Image,WestUS,Test,20
+A8,Key_vault,Key_vault,WestUS,Test,20
+A9,Kubernetes_service,Kubernetes_service,WestUS,Test,20
+A10,Language_understanding,Language_understanding,WestUS,Test,20
+A11,Load_balancer,Load_balancer,WestUS,Test,20
+A12,Log_Analytics_query_pack,Log_Analytics_query_pack,WestUS,Test,20
+A13,Log_Analytics_workspace,Log_Analytics_workspace,WestUS,Test,20
+A14,Logic_App_(Standard),Logic_App_(Standard),WestUS,Test,44
+A15,Logic_app,Logic_app,WestUS,Test,23
+A16,Logic_apps_custom_connector,Logic_apps_custom_connector,WestUS,Test,23
+A17,Managed_Identity,Managed_Identity,WestUS,Test,0
+A18,Network_Interface,Network_Interface,WestUS,Test,0
+A19,Network_Watcher,Network_Watcher,WestUS,Test,0
+A20,Network_security_group,Network_security_group,WestUS,Test,0
+A21,Power_BI_Embedded,Power_BI_Embedded,WestUS,Test,0
+A22,Private_DNS_zone,Private_DNS_zone,WestUS,Test,0
+A23,Private_endpoint,Private_endpoint,WestUS,Test,0
+A24,Public_IP_address,Public_IP_address,WestUS,Test,0
+A25,Recovery_Services_vault,Recovery_Services_vault,WestUS,Test,0
+A26,Restore_Point_Collection,Restore_Point_Collection,WestUS,Test,0
+A27,Runbook,Runbook,WestUS,Test,0
+A28,SQL_database,SQL_database,WestUS,Test,33
+A29,SQL_elastic_pool,SQL_elastic_pool,WestUS,Test,55
+A30,SQL_server,SQL_server,WestUS,Test,0
+A31,SQL_virtual_machine,SQL_virtual_machine,WestUS,Test,0
+A32,Search_service,Search_service,WestUS,Test,20
+A33,Service_Bus_Namespace,Service_Bus_Namespace,WestUS,Test,0
+A34,Service_Fabric_cluster,Service_Fabric_cluster,WestUS,Test,0
+A35,Shared_dashboard,Shared_dashboard,WestUS,Test,0
+A36,Snapshot,Snapshot,WestUS,Test,111
+A37,Solution,Solution,WestUS,Test,67
+A38,Traffic_Manager_profile,Traffic_Manager_profile,WestUS,Test,35
+A39,Virtual_machine_scale_set,Virtual_machine_scale_set,WestUS,Test,66
+A40,Virtual_machine,Virtual_machine,WestUS,Test,40
+A41,Virtual_network,Virtual_network,WestUS,Test,40
+A42,Web_App_Bot,Web_App_Bot,WestUS,Test,40

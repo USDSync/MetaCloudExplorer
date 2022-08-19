@@ -34,9 +34,9 @@ def draw_text_on_image_at_position(
     draw.text((x, y), textToDraw, font_size=fontSize,anchor="ls", font=font, fill=fillColor)
 
     if costToDraw != "":
-        xx = (2084 - (costW +300))
+        xx = (2084 - (costW +350))
         costToDraw = str(costToDraw) + " /mo"
-        draw.text((xx,y), costToDraw, font_size=(fontSize-40), anchor="ls", font=font, fill="red")
+        draw.text((xx,y), costToDraw, font_size=(fontSize-50), anchor="ls", font=font, fill="red")
 
     image = image.rotate(-270, expand=1)
     image.save(output_image_path)

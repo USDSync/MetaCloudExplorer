@@ -6,7 +6,8 @@ button_styles = {
         "border_width": 0.5,
         "border_radius": 0.0,
         "margin": 4.0,
-        "padding": 4.0
+        "padding": 4.0,
+        "font_size" : 24
     },
     "Button::subs": {
         "background_color": 0xFFFF7E09,
@@ -15,6 +16,7 @@ button_styles = {
     },
     "Button.Label::subs": {
         "color": 0xFFFFFFFF,
+        "font_size" : 20
     },
     "Button::subs:hovered": {
         "background_color": 0xFFFF6E00,
@@ -31,6 +33,7 @@ button_styles = {
     },
     "Button.Label::clear": {
         "color": 0xFFFFFFFF,
+        "font_size" : 20
     },
     "Button::rs": {
         "background_color": 0xFFFF7E09,
@@ -49,14 +52,16 @@ button_styles = {
     },
     "Button.Label::rs": {
         "color": 0xFFFFFFFF,
+        "font_size" : 20
     },
         "Button::clr": {
-        "background_color": 0xFFFF7E09,
+        "background_color": 0xEE7070,
         "background_gradient_color": 0xFFFAB26D,
         "border_color": 0xFFFD761D,
     },
     "Button.Label::clr": {
         "color": 0xFFFFFFFF,
+        "font_size" : 20
     },
     "Button::clr:hovered": {
         "background_color": 0xFFFF6E00,

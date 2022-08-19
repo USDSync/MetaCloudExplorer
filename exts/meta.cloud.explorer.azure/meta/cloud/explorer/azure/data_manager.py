@@ -25,29 +25,50 @@ class DataManager:
         self.refresh_data()
 
     def load_csv_files(self):
-        self._dataStore._sourceOfData = "OfflineData"
+        #self._dataStore._groups.clear()
+        #self._dataStore._resources.clear()
+        self._dataStore._source_of_data = "OfflineData"
         self._dataStore.Save_Config_Data()
         self._offlineDataManager.loadFiles()
         self.process_data()
 
     def load_from_api(self):
-        self._dataStore._sourceOfData = "LiveAzureAPI"
+        #self._dataStore._groups.clear()
+        #self._dataStore._resources.clear()
+        self._dataStore._source_of_data = "LiveAzureAPI"
         self._dataStore.Save_Config_Data()
         
         #Load data from Cloud API
         self._onlineDataManager.connect()
         self._onlineDataManager.load_data()
 
-        
-
         #Aggregate the info
         self.process_data()
 
+    def wipe_data(self):
+        self._dataStore._groups.clear()
+        self._dataStore._resources.clear()
+
+        self._dataStore._subscription_count = {}
+        self._dataStore._location_count = {}
+        self._dataStore._group_count = {}
+        self._dataStore._type_count = {}
+        self._dataStore._tag_count = {}
+
+        self._dataStore._subscription_cost = {}
+        self._dataStore._location_cost = {}
+        self._dataStore._group_cost = {}
+        self._dataStore._type_cost = {}
+        self._dataStore._tag_cost = {}
+
+        
+        print("Data Cleared.")
+
     def refresh_data(self):
-        if self._dataStore._sourceOfData =="OfflineData":
+        if self._dataStore._source_of_data =="OfflineData":
             self.load_csv_files()
             print("CSV Data Refreshed.")
-        elif self._dataStore._sourceOfData == "LiveAzureAPI":
+        elif self._dataStore._source_of_data == "LiveAzureAPI":
             self.load_from_api()
             print("Live Data Refreshed.")
 
@@ -119,12 +140,13 @@ class DataManager:
 
         #output aggregation results to console
         print("Data loading complete..")
-        print(str(len(self._dataStore._resources)) + " Resources loaded from " + self._dataStore._sourceOfData)
-        print(str(len(self._dataStore._groups)) + " Groups loaded from " + self._dataStore._sourceOfData)
+        print(str(len(self._dataStore._resources)) + " Resources loaded from " + self._dataStore._source_of_data)
+        print(str(len(self._dataStore._groups)) + " Groups loaded from " + self._dataStore._source_of_data)
 
     #passthrough to csv manager
     def select_file(self, fileType: str):
         self._offlineDataManager.select_file(fileType=fileType)
+        
 
 #-- SINGLETON SUPPORT
 

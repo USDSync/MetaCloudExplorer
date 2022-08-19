@@ -21,6 +21,28 @@ def calcPrimPlacementOnPlane(stageClass: int, stageSize: float, position: int, s
         pass
 
 
+def create_shaders(base_path:str, prim_name:str ):
+
+    prim_path = Sdf.Path(base_path)
+    prim_path = prim_path.AppendPath("CollisionMesh")
+
+
+    #Select the Collision Mesh
+    omni.kit.commands.execute('SelectPrims',
+        old_selected_paths=[''],
+        new_selected_paths=[str(prim_path)],
+        expand_in_stage=True)
+
+    #print("Creating Shader: " + str(prim_path))
+
+    #Create a Shader for the Mesh
+    omni.kit.commands.execute('CreateAndBindMdlMaterialFromLibrary',
+        mdl_name='OmniPBR.mdl',
+        mtl_name='OmniPBR',
+        prim_name=g,
+        mtl_created_list=None,
+        bind_selected_prims=True)
+
 
 #Creates a plane of a certain size in a specific location
 def create_plane(self,Path:str, Name :str, Size: int, Location: Gf.Vec3f, Color:Gf.Vec3f):
@@ -37,6 +59,7 @@ def create_plane(self,Path:str, Name :str, Size: int, Location: Gf.Vec3f, Color:
 
 
 def cleanup_prim_path(self, Name: str):
+    #print("cleanup: " + Name)
     nme = Name.replace("-", "_")
     nme = nme.replace(" ", "_")
     nme = nme.replace("/", "_")
@@ -50,6 +73,7 @@ def cleanup_prim_path(self, Name: str):
     if nme[0].isnumeric():
         nme = "_" + nme
 
+    #print("cleanup res: " + nme)
     return nme
 
 def get_font_size_from_length(nameLength:int):

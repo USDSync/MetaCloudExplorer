@@ -28,14 +28,18 @@ class DataStore():
         self._tag_cost = {}
 
         #track where the data last came from 
-        self._sourceOfData = ""
-        self._showCostData = False
+        self._source_of_data = ""
+        self._show_cost_data = False
+        self._use_symmetric_planes = False
+
 
         #Variables for files to import
         self._rg_csv_file_path = ""
-        self._rs_csv_file_path = ""
         self._rg_csv_field_model = ""
+        self._rs_csv_file_path = ""        
         self._rs_csv_field_model = ""
+        self._bg_file_path = ""        
+        self._bg_field_model = ""
 
         #azure connection info
         self._azure_tenant_id = ""
@@ -49,6 +53,7 @@ class DataStore():
 
         #composition options
         self._show_costs_model = ui.SimpleBoolModel(False)
+        self._symmetric_planes_model = ui.SimpleBoolModel(False)
         self._primary_axis_model = ComboBoxModel("Z", "X", "Y") # track which Axis is up
         self._composition_scale_model = ui.SimpleFloatModel()
         self._options_count_models = [ui.SimpleIntModel(), ui.SimpleIntModel(), ui.SimpleIntModel()]
@@ -56,12 +61,12 @@ class DataStore():
         self._options_random_models = [ui.SimpleFloatModel(), ui.SimpleFloatModel(), ui.SimpleFloatModel()]
 
         self._composition_scale_model.as_float = 1.0
-        self._options_count_models[0].as_int = 5
-        self._options_count_models[1].as_int = 5
+        self._options_count_models[0].as_int = 10
+        self._options_count_models[1].as_int = 10
         self._options_count_models[2].as_int = 1
-        self._options_dist_models[0].as_float = 500
-        self._options_dist_models[1].as_float = 500
-        self._options_dist_models[2].as_float = 500
+        self._options_dist_models[0].as_float = 750
+        self._options_dist_models[1].as_float = 750
+        self._options_dist_models[2].as_float = 750
         self._options_random_models[0].as_float = 1.0
         self._options_random_models[1].as_float = 1.0
         self._options_random_models[2].as_float = 1.0
@@ -79,10 +84,11 @@ class DataStore():
             settings.set("/persistent/exts/meta.cloud.explorer.azure/azure_client_id", self._azure_client_id)
         if self._azure_subscription_id != "":
             settings.set("/persistent/exts/meta.cloud.explorer.azure/azure_subscription_id", self._azure_subscription_id)
-        if self._sourceOfData != "":
-            settings.set("/persistent/exts/meta.cloud.explorer.azure/last_data_source", self._sourceOfData)
-
-
+        if self._source_of_data != "":
+            settings.set("/persistent/exts/meta.cloud.explorer.azure/last_data_source", self._source_of_data)
+        if self._bg_file_path != "":
+            settings.set("/persistent/exts/meta.cloud.explorer.azure/bg_file_path", self._bg_file_path)
+                        
     def Load_Config_Data(self):
         settings = carb.settings.get_settings()
         self._rg_csv_file_path = settings.get("/persistent/exts/meta.cloud.explorer.azure/rg_csv_file_path")
@@ -90,7 +96,8 @@ class DataStore():
         self._azure_tenant_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_tenant_id")
         self._azure_client_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_client_id")
         self._azure_subscription_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_subscription_id")
-        self._sourceOfData = settings.get("/persistent/exts/meta.cloud.explorer.azure/last_data_source")
+        self._source_of_data = settings.get("/persistent/exts/meta.cloud.explorer.azure/last_data_source")
+        self._bg_file_path = settings.get("/persistent/exts/meta.cloud.explorer.azure/bg_file_path")
 
 #-- SINGLETON SUPPORT
 

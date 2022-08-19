@@ -22,6 +22,7 @@ class CSVDataManager():
        
     #Load all the data from CSV files and process it
     def loadFiles(self):
+        
         self.load_rg_file()
         self.load_res_file()
 
@@ -91,6 +92,16 @@ class CSVDataManager():
                 file_filter_handler=self._on_filter_item
                 )                
 
+        if fileType == "bg":
+            self.file_importer.show_window(
+                title="Select a png image file",
+                import_button_label="Select",
+                import_handler=self._on_click_bg_open,
+                file_extension_types=[(".png", "PNG Files (*.png)")],
+                file_filter_handler=self._on_filter_item
+                )                
+
+
     # Handles the click of the open button within the file importer dialog
     def _on_click_rg_open(self, filename: str, dirname: str, selections):
         
@@ -127,6 +138,26 @@ class CSVDataManager():
 
         self._dataStore._rs_csv_file_path = fullpath
         self._dataStore._rs_csv_field_model.set_value(str(fullpath))
+
+
+    # Handles the click of the open button within the file importer dialog
+    def _on_click_bg_open(self, filename: str, dirname: str, selections):
+        
+        # File name should not be empty.
+        filename = filename.strip()
+        if not filename:
+            carb.log_warn(f"Filename must be provided.")
+            return
+
+        # create the full path to csv file
+        if dirname:
+            fullpath = f"{dirname}/{filename}"
+        else:
+            fullpath = filename
+
+        self._dataStore._bg_file_path = fullpath
+        self._dataStore._bg_field_model.set_value(str(fullpath))
+        self._dataStore.Save_Config_Data()
 
     # Handles the filtering of files within the file importer dialog
     def _on_filter_item(self, filename: str, filter_postfix: str, filter_ext: str) -> bool:
