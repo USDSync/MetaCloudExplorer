@@ -1,4 +1,4 @@
-# Meta Cloud Explorer (Azure)
+# Meta Cloud Explorer
 # NVIDIA Onmiverse Extension, a Scene Authoring Tool
 
 CloudArchitect.live
@@ -12,6 +12,7 @@ Quickly connect to your Cloud Infrastructure and visualize it in the Omniverse!*
 This extension generates digital models of your Cloud Infrastructure that can be used to gain insights to drive better infrastructure, optimized resources, reduced costs, and breakthrough customer experiences.
 
 **Only works with Microsoft Azure Cloud currently*
+AWS, GCP planned on roadmap.
 
 # Enable the extension
 
@@ -56,6 +57,8 @@ API working in Code 2021.1.1
 API NOT WORKING in Code 2021.1.2 and 2021.1.3!
 
 # Welcome to The Future!
+
+Not quite the future yet, but this is the beginning of a new way to gain insight to your cloud infrastructure.
 
 You can also create resources in Azure from the OmniVerse! 
 This extension gives you the ability to create and model your environment in a metaverse and then create it in your Azure Cloud!

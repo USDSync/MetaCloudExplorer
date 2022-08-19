@@ -12,6 +12,7 @@ from .data_manager import DataManager
 from .data_store import DataStore
 
 import sys
+import asyncio
 import webbrowser
 #from turtle import width
 import omni.ext
@@ -28,6 +29,7 @@ from .omni_utils import get_selection
 from .combo_box_model import ComboBoxModel
 from .omni_utils import duplicate_prims
 from .stage_manager import StageManager
+from .import_fbx import convert_asset_to_usd
 
 
 import random
@@ -82,7 +84,36 @@ class MainView(ui.Window):
         webbrowser.open_new("http://metacloudexplorer.com")
 
     def on_help(self):
-        webbrowser.open_new("https://github.com/CloudArchitectLive/MetaCloudExplorer/issues")
+        #webbrowser.open_new("https://github.com/CloudArchitectLive/MetaCloudExplorer/issues")
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/API-management-services.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/API-management-services.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/app-service-plan.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/app-service-plan.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/application-insights.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/application-insights.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/automation-accounts.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/automation-accounts.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/azure-data-explorer-clusters.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/azure-data-explorer-cluster"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/azure-devops.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/azure-devops.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/azure-workbook.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/azure-workbook.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/container-registries.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/container-registries.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/data-factory.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/data-factory.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/data-lake-storage-gen1.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/data-lake-storage-gen1.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/event-grid-topics.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/event-grid-topics.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/events-hub.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/events-hub.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/function-apps.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/function-apps.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/image.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/image.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/kubernetess-services.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/kubernetess-services.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/load-balancer.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/load-balancer.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/logic-apps.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/logic-apps.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/network-interface.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/network-interface.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/network-security-groups.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/network-security-groups.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/network-watcher.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/network-watcher.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/public-ip-adresses.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/public-ip-adresses.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/recovery-service-vault.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/recovery-service-vault.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/search-services.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/search-services.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/service-bus.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/service-bus.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/service-fabric-clusters.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/service-fabric-clusters.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/solution.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/solution.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/sql-virtual-machine.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/sql-virtual-machine.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/traffic-manager-profiles.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/converted_fbx/traffic-manager-profiles.usd"))
+
 
     def load_account_info(self):
         print("Connect to Azure API")
@@ -100,16 +131,29 @@ class MainView(ui.Window):
     def on_group():
         print("On Group")
 
+
+    #Load a fresh stage
     def load_stage(self, viewType: str):
+        self.clear_stage()
         self._stageManager.ShowStage(viewType)
 
+    #load the resource onto the stage
+    def load_resources(self, viewType: str):
+        self._stageManager.LoadResources(viewType)
+
+    #GROUP VIEW
     def load_resource_groups(self):
+        
         self._stageManager.ShowGroups()
 
+    #LOCATION VIEW
     def load_locations(self):
+        
         self._stageManager.ShowLocations()
 
+    #ALL RESOURCES
     def load_all_resources(self):
+        
         self._stageManager.ShowAllResources()
 
     # Clear the stage
@@ -170,25 +214,31 @@ class MainView(ui.Window):
             #Foreground
             with ui.VStack():
                 ui.Spacer(height=5)
-                ui.Label("Meta Cloud Explorer", style={"color": 0xA21F1FFF, "font_size":36}, alignment=ui.Alignment.CENTER, height=0)
-                ui.Label("Cloud Infrastructure Scene Authoring Extension", style={"color": 0xFFFFFFFF, "font_size":18}, alignment=ui.Alignment.CENTER, height=0)
+                ui.Label("Meta Cloud Explorer", style={"color": cl("#ffcc33"), "font_size":36}, alignment=ui.Alignment.CENTER, height=0)
+                ui.Label("Cloud Infrastructure Scene Authoring Extension", style={"color": cl("#33FFCC"), "font_size":18}, alignment=ui.Alignment.CENTER, height=0)
 
             with ui.VStack(height=0, spacing=SPACING):
-                ui.Spacer(height=80)
+                ui.Spacer(height=70)
                 with ui.HStack(style=button_styles):
-                    ui.Button("Load Resources to Stage", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15)
-                    ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), name="rs", height=15)
-
+                    ui.Button("Load Groups", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15)
+                    ui.Button("Show/Hide Resources", clicked_fn=lambda: self.load_resources("ByGroup"), name="clr", height=15)
+                    ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), name="clr", height=15)
             with ui.VStack(height=0, spacing=SPACING):
-                ui.Spacer(height=120)
+                ui.Spacer(height=100)
                 with ui.HStack():
                     ui.Button("Type View", clicked_fn=lambda: self.load_stage("ByType"), height=15)
                     ui.Button("Location View", clicked_fn=lambda: self.load_stage("ByLocation"), height=15)
                     ui.Button("Group View", clicked_fn=lambda: self.load_stage("ByGroup"), height=15)
+            with ui.VStack(height=0, spacing=SPACING):
+                ui.Spacer(height=130)
                 with ui.HStack():
-                    ui.Button("Network View", clicked_fn=lambda: self.load_stage("ByNetwork"), height=15)
-                    ui.Button("Cost View", clicked_fn=lambda: self.load_stage("ByCost"), height=15)
-                    ui.Button("Template View", clicked_fn=lambda: self.load_stage("Template"), height=15)
+                    ui.Button("View All Types", clicked_fn=lambda: self.load_stage("AllTypes"), height=15)
+                    ui.Button("View Templates", clicked_fn=lambda: self.load_stage("Templates"), height=15)
+                    ui.Button("Show/Hide Costs", clicked_fn=lambda: self.load_stage("Network"), height=15)
+                # with ui.HStack():
+                #     ui.Button("Network View", clicked_fn=lambda: self.load_stage("ByNetwork"), height=15)
+                #     ui.Button("Cost View", clicked_fn=lambda: self.load_stage("ByCost"), height=15)
+                #     ui.Button("Template View", clicked_fn=lambda: self.load_stage("Template"), height=15)
                 with ui.HStack():
                     ui.Button("Docs", clicked_fn=lambda: self.on_docs(), height=15)
                     ui.Button("Code", clicked_fn=lambda: self.on_code(), height=15)
@@ -202,14 +252,6 @@ class MainView(ui.Window):
             ui.Label("Meta Cloud Explorer (Azure)", style={"color": 0xFF008976, "font_size":36}, alignment=ui.Alignment.LEFT, height=0)
             ui.Label("An Omniverse Scene Authoring extension", height=10, name="TItle", alignment=ui.Alignment.LEFT)
             ui.Line(style={"color": 0xff00b976}, height=20)
-
-    def _build_commands(self):
-        """Build the widgets of the "Commands" group"""
-        with ui.CollapsableFrame("Explorer Commands", name="group"):
-            with ui.VStack(height=0, spacing=SPACING):
-                with ui.HStack(style=button_styles):
-                    ui.Button("Load Resources to Stage", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=15, width=250, alignment=ui.Alignment.CENTER)
-                    ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), name="clear", height=15, width=250, alignment=ui.Alignment.CENTER)
 
     def _build_import(self):
         with ui.CollapsableFrame("Import Offline Files", name="group", collapsed=True):
@@ -233,29 +275,40 @@ class MainView(ui.Window):
                 ui.Button("Import Data Files", clicked_fn=lambda: self._dataManager.load_csv_files())            
 
     def _build_connection(self):
-        with ui.CollapsableFrame("Live Connection", name="group", collapsed=True):
+        with ui.CollapsableFrame("Cloud Connectors", name="group", collapsed=True):
             with ui.VStack():
-                ui.Label("Tenant Id",width=self.label_width)
-                self._tenant_import_field = ui.StringField(height=15)
-                self._tenant_import_field.enabled = True
-                self._tenant_import_field.model.set_value(str(self._dataStore._azure_tenant_id))
-                self._dataStore._azure_tenant_id_model = self._tenant_import_field.model
-                ui.Label("Client Id",width=self.label_width)
-                self._client_import_field = ui.StringField(height=15)
-                self._client_import_field.enabled = True
-                self._client_import_field.model.set_value(str(self._dataStore._azure_client_id))
-                self._dataStore._azure_client_id_model = self._client_import_field.model
-                ui.Label("Subscription Id",width=self.label_width)
-                self._subscription_id_field = ui.StringField(height=15)
-                self._subscription_id_field.enabled = True
-                self._subscription_id_field.model.set_value(str(self._dataStore._azure_subscription_id))
-                self._dataStore._azure_subscription_id_model = self._subscription_id_field.model
-                ui.Label("Client Secret",width=self.label_width)
-                self._client_secret_field = ui.StringField(height=15, password_mode=True)
-                self._client_secret_field.enabled = True
-                self._client_secret_field.model.set_value(str(self._dataStore._azure_client_secret))
-                self._dataStore._azure_client_secret_model = self._client_secret_field.model
-                ui.Button("Connect to Azure", clicked_fn=lambda: self._dataManager.load_from_api())
+                with ui.CollapsableFrame("Azure API Connection", name="group", collapsed=True):
+                    with ui.VStack():
+                        ui.Label("Tenant Id",width=self.label_width)
+                        self._tenant_import_field = ui.StringField(height=15)
+                        self._tenant_import_field.enabled = True
+                        self._tenant_import_field.model.set_value(str(self._dataStore._azure_tenant_id))
+                        self._dataStore._azure_tenant_id_model = self._tenant_import_field.model
+                        ui.Label("Client Id",width=self.label_width)
+                        self._client_import_field = ui.StringField(height=15)
+                        self._client_import_field.enabled = True
+                        self._client_import_field.model.set_value(str(self._dataStore._azure_client_id))
+                        self._dataStore._azure_client_id_model = self._client_import_field.model
+                        ui.Label("Subscription Id",width=self.label_width)
+                        self._subscription_id_field = ui.StringField(height=15)
+                        self._subscription_id_field.enabled = True
+                        self._subscription_id_field.model.set_value(str(self._dataStore._azure_subscription_id))
+                        self._dataStore._azure_subscription_id_model = self._subscription_id_field.model
+                        ui.Label("Client Secret",width=self.label_width)
+                        self._client_secret_field = ui.StringField(height=15, password_mode=True)
+                        self._client_secret_field.enabled = True
+                        self._client_secret_field.model.set_value(str(self._dataStore._azure_client_secret))
+                        self._dataStore._azure_client_secret_model = self._client_secret_field.model
+                        ui.Button("Connect to Azure", clicked_fn=lambda: self._dataManager.load_from_api())
+                with ui.CollapsableFrame("AWS API Connection", name="group", collapsed=True):
+                    with ui.VStack():
+                        ui.Label("COMING SOON!",width=self.label_width)
+                        #ui.Button("Connect to AWS", clicked_fn=lambda: self._dataManager.load_from_api())
+                with ui.CollapsableFrame("GCP API Connection", name="group", collapsed=True):
+                    with ui.VStack():
+                        ui.Label("COMING SOON!",width=self.label_width)
+                        #ui.Button("Connect to AWS", clicked_fn=lambda: self._dataManager.load_from_api())
+
 
     def _build_axis(self, axis_id, axis_name):
         """Build the widgets of the "X" or "Y" or "Z" group"""
@@ -263,22 +316,26 @@ class MainView(ui.Window):
             with ui.VStack(height=0, spacing=SPACING):
                 with ui.HStack():
                     ui.Label("Group Count", name="attribute_name", width=self.label_width)
-                    ui.IntDrag(model=self._dataStore._options_count_models[axis_id], min=1, max=100)
-
+                    ui.IntDrag(model=self._dataStore._options_count_models[axis_id], min=1, max=500)
                 with ui.HStack():
                     ui.Label("Distance", name="attribute_name", width=self.label_width)
-                    ui.FloatDrag(self._dataStore._options_dist_models[axis_id], min=250, max=1000)
-
+                    ui.FloatDrag(self._dataStore._options_dist_models[axis_id], min=250, max=5000)
+                with ui.HStack():
+                    ui.Label("Randomness", name="attribute_name", width=self.label_width)
+                    ui.FloatDrag(self._dataStore._options_random_models[axis_id], min=1.0, max=10.0)
 
     def _build_options(self):
         with ui.CollapsableFrame("Composition", name="group", collapsed=True):
-            with ui.VStack():
-                with ui.HStack(height=15):
+            with ui.VStack(height=0, spacing=SPACING):
+                with ui.HStack():
                     #self._dataStore._composition_scale_model = self._build_gradient_float_slider("Scale Factor", default_value=10, min=1, max=100)
                     ui.Label("Object Scale", name="attribute_name", width=self.label_width, min=1, max=100)
                     ui.FloatDrag(self._dataStore._composition_scale_model, min=1, max=100)
                     ui.Label("Up Axis", name="attribute_name", width=self.label_width)
-                    ui.ComboBox(self._dataStore._primary_axis_model)
+                    ui.ComboBox(self._dataStore._primary_axis_model)           
+                with ui.HStack():
+                    ui.Label("Show Costs $ ?", name="attribute_name", width=self.label_width)
+                    ui.CheckBox(self._dataStore._show_costs_model)
 
 
     def _build_help(self):

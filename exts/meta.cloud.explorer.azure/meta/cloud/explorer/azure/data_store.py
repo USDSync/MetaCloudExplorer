@@ -21,7 +21,17 @@ class DataStore():
         self._type_count = {}
         self._tag_count = {}
 
-        #Variables for giles to import
+        self._subscription_cost = {}
+        self._location_cost = {}
+        self._group_cost = {}
+        self._type_cost = {}
+        self._tag_cost = {}
+
+        #track where the data last came from 
+        self._sourceOfData = ""
+        self._showCostData = False
+
+        #Variables for files to import
         self._rg_csv_file_path = ""
         self._rs_csv_file_path = ""
         self._rg_csv_field_model = ""
@@ -38,20 +48,23 @@ class DataStore():
         self._azure_subscription_id_model = ""
 
         #composition options
-        self._primary_axis_model = ComboBoxModel("X", "Y", "Z") # track which Axis is up
+        self._show_costs_model = ui.SimpleBoolModel(False)
+        self._primary_axis_model = ComboBoxModel("Z", "X", "Y") # track which Axis is up
         self._composition_scale_model = ui.SimpleFloatModel()
         self._options_count_models = [ui.SimpleIntModel(), ui.SimpleIntModel(), ui.SimpleIntModel()]
         self._options_dist_models = [ui.SimpleFloatModel(), ui.SimpleFloatModel(), ui.SimpleFloatModel()]
         self._options_random_models = [ui.SimpleFloatModel(), ui.SimpleFloatModel(), ui.SimpleFloatModel()]
 
         self._composition_scale_model.as_float = 1.0
-        self._options_count_models[0].as_int = 10
-        self._options_count_models[1].as_int = 10
-        self._options_count_models[2].as_int = 10
+        self._options_count_models[0].as_int = 5
+        self._options_count_models[1].as_int = 5
+        self._options_count_models[2].as_int = 1
         self._options_dist_models[0].as_float = 500
         self._options_dist_models[1].as_float = 500
         self._options_dist_models[2].as_float = 500
-
+        self._options_random_models[0].as_float = 1.0
+        self._options_random_models[1].as_float = 1.0
+        self._options_random_models[2].as_float = 1.0
         self.Load_Config_Data()
 
     def Save_Config_Data(self):
@@ -66,6 +79,8 @@ class DataStore():
             settings.set("/persistent/exts/meta.cloud.explorer.azure/azure_client_id", self._azure_client_id)
         if self._azure_subscription_id != "":
             settings.set("/persistent/exts/meta.cloud.explorer.azure/azure_subscription_id", self._azure_subscription_id)
+        if self._sourceOfData != "":
+            settings.set("/persistent/exts/meta.cloud.explorer.azure/last_data_source", self._sourceOfData)
 
 
     def Load_Config_Data(self):
@@ -75,6 +90,7 @@ class DataStore():
         self._azure_tenant_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_tenant_id")
         self._azure_client_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_client_id")
         self._azure_subscription_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_subscription_id")
+        self._sourceOfData = settings.get("/persistent/exts/meta.cloud.explorer.azure/last_data_source")
 
 #-- SINGLETON SUPPORT
 

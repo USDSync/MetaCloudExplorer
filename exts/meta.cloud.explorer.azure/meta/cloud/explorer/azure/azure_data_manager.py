@@ -1,8 +1,10 @@
 import omni.kit.pipapi
+import carb
 import os
 import json
 import sys
 from datetime import datetime
+import omni.kit.notification_manager as nm
 
 omni.kit.pipapi.install("azure-identity", module="azure-identity", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
 omni.kit.pipapi.install("azure-mgmt-resource", module="azure-mgmt-resource", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
@@ -38,6 +40,35 @@ class AzureDataManager():
         for tenant in tenants.list():
             print(tenant.__dict__.keys())
 
+    #validate we can connect
+    def connect(self):
+        self.sendNotify("Connecting to Azure Tenant...")     
+        
+        #Get a token
+        self.get_token()
+
+        #Make a request
+        
+
+
+    def clicked_ok():
+        carb.log_info("User clicked ok")
+
+    def sendNotify(self, message:str, status:str):
+        
+        # https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.kit.notification_manager/docs/index.html?highlight=omni%20kit%20notification_manager#
+
+        import omni.kit.notification_manager as nm
+        ok_button = nm.NotificationButtonInfo("OK", on_complete=self.clicked_ok)
+
+        nm.post_notification(
+            message,
+            hide_after_timeout=False,
+            duration=0,
+            status=nm.NotificationStatus.WARNING,
+            button_infos=[ok_button, ok_button],
+        )        
+
     #Connect to API and load adata
     def load_data(self):
         self.save_connection_data()
@@ -45,13 +76,13 @@ class AzureDataManager():
         self.load_groups()
 
 
-    def save_connection_data():
+    def save_connection_data(self):
         pass
     
-    def load_resources():
+    def load_resources(self):
         pass
 
-    def load_groups():
+    def load_groups(self):
         pass
 
 

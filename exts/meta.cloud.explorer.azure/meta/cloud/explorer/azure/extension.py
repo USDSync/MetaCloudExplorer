@@ -13,7 +13,7 @@ import omni.kit.pipapi
 #omni.kit.pipapi.install("azure-mgmt-resource", module="azure-mgmt-resource", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
 
 #omni.kit.pipapi.install("pandas", module="pandas", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
-#sys.path.append("D:/python37/lib/site-packages")
+sys.path.append("D:/python37/lib/site-packages")
 #print(sys.modules.keys())
 
 from azure.mgmt.resource import ResourceManagementClient
@@ -55,9 +55,12 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
     def on_shutdown(self):
         carb.log_info(f"[meta.cloud.explorer.azure]] Meta Cloud Explorer shutdown")     
         self._menu = None
-        if self._window is not None:
-            self._window.destroy()
-            self._window = None
+        try:
+            if self._window is not None:
+                self._window.destroy()
+                self._window = None
+        except:
+            pass
 
         # Deregister the function that shows the window from omni.ui
         ui.Workspace.set_show_window_fn(MetaCloudExplorerAzure.WINDOW_NAME, None)

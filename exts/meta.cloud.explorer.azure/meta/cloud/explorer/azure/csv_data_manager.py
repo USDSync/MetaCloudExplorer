@@ -7,7 +7,7 @@ from pathlib import Path
 import csv
 import itertools
 from .data_store import DataStore
-
+from .prim_utils import cleanup_prim_path
 
 #This class is designed to import data from 3 input files 
 #This file acts like a data provider for the data_manager
@@ -31,7 +31,7 @@ class CSVDataManager():
         if os.path.exists(self._dataStore._rg_csv_file_path):
             # Read CSV file
             i=1
-            with open(self._dataStore._rg_csv_file_path, newline='') as csvfile:
+            with open(self._dataStore._rg_csv_file_path, encoding='utf-8-sig', newline='') as csvfile:
                 reader = csv.DictReader(csvfile, delimiter=',')
                 for row in reader:
                     name = row["NAME"]
@@ -44,7 +44,7 @@ class CSVDataManager():
                     if i > self.max_elements: return
 
     #Resources File Import
-    #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION
+    #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION, LMCOST
     def load_res_file(self):
          # check that CSV exists
         if os.path.exists(self._dataStore._rs_csv_file_path):
@@ -58,8 +58,12 @@ class CSVDataManager():
                     group = row["RESOURCE GROUP"]
                     location = row["LOCATION"]
                     subscription = row["SUBSCRIPTION"]
+                    lmcost = row["LMCOST"]
 
-                    self._dataStore._resources[name] = {"name":name, "type": type, "group": group, "location":location, "subscription":subscription}
+                    #fix spacing, control chars early
+                    name = cleanup_prim_path(self, Name=name)
+
+                    self._dataStore._resources[name] = {"name":name, "type": type, "group": group, "location":location, "subscription":subscription, "lmcost": lmcost}
 
                     i=i+1
                     if i > self.max_elements: return

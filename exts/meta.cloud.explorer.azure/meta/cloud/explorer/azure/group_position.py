@@ -1,11 +1,11 @@
-__all__ = ["scatterWithPlaneSize"]
+__all__ = ["getGroupingPositions"]
 
 from typing import List, Optional
 import random
 from pxr import Gf
 
 
-def scatterWithPlaneSize(
+def getGroupingPositions(
     count: List[int], 
     distance: List[float], 
     sizes: List[float],

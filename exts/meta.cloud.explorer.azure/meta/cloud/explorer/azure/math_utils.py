@@ -18,7 +18,3 @@ def calcPlaneSizeForGroup(scaleFactor:float, resourceCount: int):
         if resourceCount > 0 and resourceCount <= i:
             return float((math.sqrt(i)*100)*scaleFactor)
 
-
-# Calculates where to put a prim on a plane
-#def calcPrimPlacementOnPlane(x:int, y:int, z:int, stage_size: int, parent_path: str, prim_number int ): 
-

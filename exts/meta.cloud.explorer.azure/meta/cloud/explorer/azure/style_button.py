@@ -50,4 +50,21 @@ button_styles = {
     "Button.Label::rs": {
         "color": 0xFFFFFFFF,
     },
+        "Button::clr": {
+        "background_color": 0xFFFF7E09,
+        "background_gradient_color": 0xFFFAB26D,
+        "border_color": 0xFFFD761D,
+    },
+    "Button.Label::clr": {
+        "color": 0xFFFFFFFF,
+    },
+    "Button::clr:hovered": {
+        "background_color": 0xFFFF6E00,
+        "background_gradient_color": 0xFFFFAE5A
+    },
+    "Button::clr:pressed": {
+        "background_color": 0xFFFAB26D,
+        "background_gradient_color": 0xFFFF7E09
+    },
+
 }
