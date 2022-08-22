@@ -1,13 +1,13 @@
 ﻿NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION,LMCOST
-A,AAD,AAD,West US,Test,49.47
-B,Resource_Group,Resource_Group,West US,Test,49.47
-C,Storage_account,Storage_account,West US,Test,49.47
-D,App_Service,App_Service,West US,Test,49.47
-E,Subscription,Subscription,West US,Test,49.47
-F,API_Connection,API_Connection,West US,Test,49.47
-G,API_Management_service,API_Management_service,West US,Test,99.95
-H,App_Configuration,App_Configuration,West US,Test,49.47
-I,App_Service_plan,App_Service_plan,West US,Test,49.47
+A,AAD,AAD,WestUS,Test,49.47
+B,Resource_Group,Resource_Group,WestUS,Test,49.47
+C,Storage_account,Storage_account,WestUS,Test,49.47
+D,App_Service,App_Service,WestUS,Test,49.47
+E,Subscription,Subscription,WestUS,Test,49.47
+F,API_Connection,API_Connection,WestUS,Test,49.47
+G,API_Management_service,API_Management_service,WestUS,Test,99.95
+H,App_Configuration,App_Configuration,WestUS,Test,49.47
+I,App_Service_plan,App_Service_plan,WestUS,Test,49.47
 J,Application_Insights,Application_Insights,WestUS,Test,135.15
 K,Application_gateway,Application_gateway,WestUS,Test,138
 L,Automation_Account,Automation_Account,WestUS,Test,99

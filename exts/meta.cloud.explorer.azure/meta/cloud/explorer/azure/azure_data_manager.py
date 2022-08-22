@@ -42,7 +42,7 @@ class AzureDataManager():
 
     #validate we can connect
     def connect(self):
-        self.sendNotify("Connecting to Azure Tenant...", nm.NotificationStatus.WARNING)     
+        self.sendNotify("Connecting to Azure Tenant...", nm.NotificationStatus.INFO)     
         
         #Get a token
         self.get_token()

@@ -2,9 +2,10 @@ __all__ = ["create_plane", "get_font_size_from_length"]
 
 import omni.usd
 import omni.kit.commands
+import shutil
 from pxr import Sdf
 from pxr import Gf, UsdGeom, UsdLux
-
+from .pillow_text import draw_text_on_image_at_position
 
 
 
@@ -43,6 +44,18 @@ def create_shaders(base_path:str, prim_name:str ):
         mtl_created_list=None,
         bind_selected_prims=True)
 
+def draw_image(self, output_file:str, src_file:str, textToDraw:str, costToDraw:str):
+            
+    font_size = get_font_size_from_length(len(textToDraw))
+
+    draw_text_on_image_at_position(                
+        input_image_path=src_file,
+        output_image_path=output_file, 
+        textToDraw=str(textToDraw), 
+        costToDraw=str(costToDraw),
+        x=180, y=1875, fillColor="Yellow", font='https://github.com/googlefonts/roboto/blob/main/src/hinted/Roboto-Black.ttf?raw=true',
+        fontSize=font_size )
+
 
 #Creates a plane of a certain size in a specific location
 def create_plane(self,Path:str, Name :str, Size: int, Location: Gf.Vec3f, Color:Gf.Vec3f):
@@ -62,7 +75,7 @@ def cleanup_prim_path(self, Name: str):
     #print("cleanup: " + Name)
     nme = Name.replace("-", "_")
     nme = nme.replace(" ", "_")
-    nme = nme.replace("/", "_")
+    nme = nme.replace("/", "-") # these might need to go back if its a path
     nme = nme.replace(".", "_")
     nme = nme.replace(":", "_")
     nme = nme.replace(";", "_")
