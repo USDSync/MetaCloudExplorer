@@ -59,7 +59,7 @@ def draw_text_on_image_at_position(
 
     if makeFile:
 
-        print("File is old, refreshing Image " + str(output_image_path) + " with text: "  + textToDraw + " cst: " + costToDraw) 
+        print("Refreshing Image " + str(output_image_path) + " with text: "  + textToDraw + " cst: " + costToDraw) 
 
         font1 = font
         font = load_font_from_uri(fontSize, font1)

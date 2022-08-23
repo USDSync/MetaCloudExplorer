@@ -175,6 +175,9 @@ class DataManager:
                 rawCost = float(self._dataStore._subscription_cost[recText])
                 costToDraw = locale.currency(self._dataStore._subscription_cost[recText])
 
+                print ("RawCost: " + recText + " $" + str(rawCost))
+                print ("Cost: " + recText + " $" + str(costToDraw))
+
                 if rawCost < 500:
                     src_image = src_filel
                 if rawCost > 500 and rawCost < 1500:
@@ -188,7 +191,6 @@ class DataManager:
 
             draw_image(self, output_file=output_file, src_file=src_image, textToDraw=textToDraw, costToDraw="")
             draw_image(self, output_file=cost_output_file, src_file=src_image, textToDraw=textToDraw, costToDraw=costToDraw)
-
 
         #LOCATIONS
         #We need to create images for each group
@@ -209,7 +211,10 @@ class DataManager:
                 locale.setlocale( locale.LC_ALL, 'en_CA.UTF-8' )
                 rawCost = float(self._dataStore._location_cost[recText])
                 costToDraw = locale.currency(self._dataStore._location_cost[recText])      
-                
+
+                print ("RawCost: " + recText + " $" + str(rawCost))
+                print ("Cost: " + recText + " $" + str(costToDraw))
+
                 if rawCost < 500:
                     src_image = src_filel
                 if rawCost > 500 and rawCost < 1500:
@@ -237,8 +242,12 @@ class DataManager:
 
             try:
                 locale.setlocale( locale.LC_ALL, 'en_CA.UTF-8' )
-                rawCost = float(self._dataStore._group_cost[recText])
+                rawCost = float(self._dataStore._group_cost[rec])
                 costToDraw = locale.currency(self._dataStore._group_cost[recText])
+
+                print ("RawCost: " + recText + " $" + str(rawCost))
+                print ("Cost: " + recText + " $" + str(costToDraw))
+
                 if rawCost < 500:
                     src_image = src_filel
                 if rawCost > 500 and rawCost < 1500:
@@ -268,6 +277,8 @@ class DataManager:
                 locale.setlocale( locale.LC_ALL, 'en_CA.UTF-8' )
                 rawCost = float(self._dataStore._type_cost[recText])
                 costToDraw = locale.currency(self._dataStore._type_cost[recText])
+                print ("RawCost: " + recText + " $" + str(rawCost))
+                print ("Cost: " + recText + " $" + str(costToDraw))
                 if rawCost < 500:
                     src_image = src_filel
                 if rawCost > 500 and rawCost < 1500:
@@ -297,6 +308,10 @@ class DataManager:
                 locale.setlocale( locale.LC_ALL, 'en_CA.UTF-8' )
                 rawCost = float(self._dataStore._tag_cost[recText])
                 costToDraw = locale.currency(self._dataStore._tag_cost[recText])
+
+                print ("RawCost: " + recText + " $" + str(rawCost))
+                print ("Cost: " + recText + " $" + str(costToDraw))
+
                 if rawCost < 500:
                     src_image = src_filel
                 if rawCost > 500 and rawCost < 1500:
@@ -345,11 +360,11 @@ class DataManager:
             self._dataStore._type_cost[typeKey] = float(self._dataStore._type_cost[typeKey]) + float(obj["lmcost"])
 
         #Cost per Group
-        grpKey = obj["group"]
+        grpKey = cleanup_prim_path(self, obj["group"])
         if grpKey not in self._dataStore._group_cost.keys():
             self._dataStore._group_cost[grpKey] = float(obj["lmcost"])
         else:
-            self._dataStore._group_cost[grpKey] =float(self._dataStore._group_cost[grpKey]) + float(obj["lmcost"])
+            self._dataStore._group_cost[grpKey] = float(self._dataStore._group_cost[grpKey]) + float(obj["lmcost"])
 
         #your_dictionary = {'Australia':1780, 'England':6723, 'Tokyo': 1946}
 

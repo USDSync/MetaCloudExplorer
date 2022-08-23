@@ -551,12 +551,15 @@ class SubGrpView(GroupBase):
         #temp group list to prep for planes, adds to main aggregate
         gpz = self._dataStore._subscription_count.copy()
         for grp in gpz:
-            self._sizes.append(calcPlaneSizeForGroup(
-                scaleFactor=self._scale, 
-                resourceCount=self._dataStore._subscription_count.get(grp)
-            ))
+            size = calcPlaneSizeForGroup(
+                    scaleFactor=self._scale, 
+                    resourceCount=self._dataStore._subscription_count.get(grp)
+                )
+            self._sizes.append(
+                size
+            )
             grp = cleanup_prim_path(self, grp)
-            self._groups.append(grp)
+            self._groups.append({ "group":grp, "size":size })
 
     def calulateCosts(self):      
 
@@ -611,15 +614,17 @@ class LocGrpView(GroupBase):
 
         self.view_path = Sdf.Path(self.root_path.AppendPath('Loc'))
 
-        #temp group list to prep for planes, adds to main aggregate
         gpz = self._dataStore._location_count.copy()
         for grp in gpz:
-            self._sizes.append(calcPlaneSizeForGroup(
-                scaleFactor=self._scale, 
-                resourceCount=self._dataStore._location_count.get(grp)
-            ))
+            size = calcPlaneSizeForGroup(
+                    scaleFactor=self._scale, 
+                    resourceCount=self._dataStore._location_count.get(grp)
+                )
+            self._sizes.append(
+                size
+            )
             grp = cleanup_prim_path(self, grp)
-            self._groups.append(grp)
+            self._groups.append({ "group":grp, "size":size })
 
     def calulateCosts(self):      
 
@@ -677,12 +682,15 @@ class TypeGrpView(GroupBase):
         #temp group list to prep for planes, adds to main aggregate
         gpz = self._dataStore._type_count.copy()
         for grp in gpz:
-            self._sizes.append(calcPlaneSizeForGroup(
-                scaleFactor=self._scale, 
-                resourceCount=self._dataStore._type_count.get(grp)
-            ))
+            size = calcPlaneSizeForGroup(
+                    scaleFactor=self._scale, 
+                    resourceCount=self._dataStore._type_count.get(grp)
+                )
+            self._sizes.append(
+                size
+            )
             grp = cleanup_prim_path(self, grp)
-            self._groups.append(grp)
+            self._groups.append({ "group":grp, "size":size })
 
     def calulateCosts(self):      
 
@@ -740,12 +748,15 @@ class TypeTagView(GroupBase):
         #temp group list to prep for planes, adds to main aggregate
         gpz = self._dataStore._tag_count.copy()
         for grp in gpz:
-            self._sizes.append(calcPlaneSizeForGroup(
-                scaleFactor=self._scale, 
-                resourceCount=self._dataStore._tag_count.get(grp)
-            ))
+            size = calcPlaneSizeForGroup(
+                    scaleFactor=self._scale, 
+                    resourceCount=self._dataStore._tag_count.get(grp)
+                )
+            self._sizes.append(
+                size
+            )
             grp = cleanup_prim_path(self, grp)
-            self._groups.append(grp)
+            self._groups.append({ "group":grp, "size":size })
 
     def calulateCosts(self):      
 
