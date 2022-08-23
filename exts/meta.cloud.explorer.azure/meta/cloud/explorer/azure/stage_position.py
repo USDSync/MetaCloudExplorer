@@ -88,8 +88,3 @@ def position_resource_on_target(
         pass                
 
 
-#Given a plane of xxx size
-#calculate the x,y,z,up postion of resource #X 
-#to place on the surface of the plane
-#return the x,y,x to place
-

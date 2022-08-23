@@ -11,9 +11,6 @@ import os
 import asyncio
 import locale 
 
-from .pillow_text import create_image_with_text
-from .pillow_text import draw_text_on_image_at_position
-
 from  .prim_utils import create_plane
 from  .prim_utils import cleanup_prim_path
 from  .prim_utils import get_font_size_from_length
@@ -96,11 +93,22 @@ class GroupBase(ABC):
     def prepResources(self):      
         pass # Requires subclass implm
 
+    #Selcet the active group's prims
+    @abstractmethod
+    def selectGroupPrims(self):
+        pass
+
+
+    async def CreateGroups(self, basePath:Sdf.Path, upAxis:str, groups:list, transforms, sizes):
+        self.CreateGroups(self, basePath, upAxis, groups, transforms, sizes)
 
     #Depending on the Active View, "groups" will contain different aggreagetes.
     #This function creates the GroundPlane objects on the stage for each group
-    async def CreateGroups(self, basePath:Sdf.Path, upAxis:str, groups:list, transforms, sizes):
+    def CreateGroups(self, basePath:Sdf.Path, upAxis:str, groups:list, transforms, sizes):
         
+        #b = sorted(groups)
+        #print("Sorted keys",b)  
+
         if (len(groups)) >0 :
 
             #Create new prims and then transform them
@@ -114,31 +122,26 @@ class GroupBase(ABC):
 
             #Create shaders for each plane
             for g in groups:
-                await create_shaders(base_path=basePath.AppendPath(g), prim_name=g)
+                create_shaders(base_path=basePath.AppendPath(g["group"]), prim_name=g["group"])
 
             #Draw shaders on the stages
-            await self.AddPlaneLabelShaders(groups)
+            self.AddPlaneLabelShaders(groups)
 
-    async def AddPlaneLabelShaders(self, groups):
+
+
+    #Assign Images to the group Shaders
+    def AddPlaneLabelShaders(self, groups):
 
         #Images have been pre-made, jsut assign them
         for g in groups:     
-            clean = cleanup_prim_path(self, g)   
+            clean = cleanup_prim_path(self, g["group"])   
             
-            if self._showCosts == True:
-                output_file = DATA_PATH.joinpath(clean + "-cost.png")
-                file_exists = exists(output_file)
-
-                if not file_exists:
-                    draw_image(self, output_file=output_file, src_file=self._dataStore._bg_file_path , textToDraw=g, costToDraw=self._cost)
-
-            else:
-                #Dont show cost
-                output_file = DATA_PATH.joinpath(clean + ".png")
-                file_exists = exists(output_file)                
-                
-                if not file_exists:
-                    draw_image(self, output_file=output_file, src_file=self._dataStore._bg_file_path , textToDraw=g, costToDraw="")
+            #Dont show cost
+            output_file = DATA_PATH.joinpath(clean + ".png")
+            file_exists = exists(output_file)                
+            
+            if not file_exists:
+                draw_image(self, output_file=output_file, src_file=self._dataStore._bg_file_path , textToDraw=g, costToDraw="")
                 
             #Get Stage
             stage = omni.usd.get_context().get_stage()
@@ -188,7 +191,15 @@ class GroupBase(ABC):
 
     #Load the resources!
     def LoadResources(self, paths):
-        pass
+        
+        if len(paths) == 0:
+            pass
+        else:
+            pass
+
+
+
+
     #User passes in a list of selected paths 
     #TODO FIX THIS TO USE THE MAPS!!!  
     #Psuedo, using map
@@ -339,13 +350,77 @@ class GroupBase(ABC):
             scaleFactor=scale
         )
 
-        return transforms
+        return transforms 
 
 
-    def selectGroupPrims(self):
-        pass
- 
+    def show_hide_costs(self):
 
+        #Get Stage
+        stage = omni.usd.get_context().get_stage()
+
+        #Find the /Looks root
+        curr_prim = stage.GetPrimAtPath("/")
+        looks_path = ""
+        for prim in Usd.PrimRange(curr_prim):
+
+            if prim.GetPath() == "/Looks":
+                looks_path = "/Looks"
+                break
+            elif prim.GetPath() == "/World/Looks":
+                looks_path = "/World/Looks"
+                break
+
+            #print("Looks root is: " +looks_path)
+            #Get the Shader and set the image property
+            if (looks_path == ""):
+                looks_path = "/Looks"
+
+
+        #Flip the shader images on all group shader prims
+        for g in self._groups:     
+            clean = cleanup_prim_path(self, g["group"])   
+            
+            cost_file = DATA_PATH.joinpath(clean + "-cost.png")
+            file_exists = exists(cost_file)
+
+            if not file_exists:
+                draw_image(self, output_file=cost_file, src_file=self._dataStore._bg_file_path , textToDraw=g, costToDraw=self._cost)
+
+
+            output_file = DATA_PATH.joinpath(clean + ".png")
+            file_exists = exists(output_file)                
+                
+            if not file_exists:
+                draw_image(self, output_file=output_file, src_file=self._dataStore._bg_file_path , textToDraw=g, costToDraw="")               
+
+            #Get the Shaders
+            shader_path = Sdf.Path(looks_path)
+            shader_path = Sdf.Path(shader_path.AppendPath(clean))
+            shader_path = Sdf.Path(shader_path.AppendPath("Shader"))
+
+            #select the shader
+            selection = omni.usd.get_context().get_selection()
+            selection.set_selected_prim_paths([str(shader_path)], False)         
+
+            #Get the Shader
+            shader_prim = stage.GetPrimAtPath(str(shader_path))
+
+            # print("Shader Attributes:-----" + str(shader_path))
+            # print(shader_prim.GetAttributes())
+
+            try:                           
+                currentVal = shader_prim.GetAttribute("inputs:diffuse_texture").Get()
+
+                if str(currentVal).__contains__("-cost.png"):
+                    omni.kit.commands.execute('ChangeProperty',
+                        prop_path=Sdf.Path(shader_path).AppendPath('.inputs:diffuse_texture'),
+                        value=str(output_file), prev=str(cost_file))
+                else:
+                    omni.kit.commands.execute('ChangeProperty',
+                        prop_path=Sdf.Path(shader_path).AppendPath('.inputs:diffuse_texture'),
+                        value=str(cost_file), prev=str(output_file))
+            except:
+                pass
 
 # ABSTRACT CLASSES FOR EACH VIEWTYPE
 # IMPLEMENTS 
@@ -379,14 +454,13 @@ class AADGrpView(GroupBase):
 
 #Specific Handling for Resoruce Groups
 class ResGrpView(GroupBase):
-    def __init__(self, viewPath:str, scale:float, upAxis:str, shapeUpAxis:str, symPlanes:bool, showCosts:bool):
+    def __init__(self, viewPath:str, scale:float, upAxis:str, shapeUpAxis:str, symPlanes:bool):
         self._root_path = Sdf.Path(viewPath)
         self._scale = scale
         self._upAxis = upAxis
         self._shapeUpAxis = shapeUpAxis
         self._view_path = viewPath
         self._symPlanes = symPlanes
-        self._showCosts = showCosts
 
         super().__init__()
 
@@ -406,14 +480,15 @@ class ResGrpView(GroupBase):
         gpz = self._dataStore._group_count.copy()
 
         for grp in gpz:
-            self._sizes.append(
-                calcPlaneSizeForGroup(
+            size = calcPlaneSizeForGroup(
                     scaleFactor=self._scale, 
                     resourceCount=self._dataStore._group_count.get(grp)
                 )
+            self._sizes.append(
+                size
             )
             grp = cleanup_prim_path(self, grp)
-            self._groups.append(grp)
+            self._groups.append({ "group":grp, "size":size })
 
     #Abstract method to calc cost 
     def calulateCosts(self):      
@@ -422,7 +497,7 @@ class ResGrpView(GroupBase):
             #Get the cost by resource group
             locale.setlocale( locale.LC_ALL, 'en_CA.UTF-8' )
             try:
-                self._cost = str(locale.currency(self._dataStore._group_cost[g]))
+                self._cost = str(locale.currency(self._dataStore._group_cost[g["group"]]))
             except:
                 self._cost = "" # blank not 0, blank means dont show it at all     
 
@@ -431,15 +506,34 @@ class ResGrpView(GroupBase):
         pass # Requires subclass implm
 
 
+    def selectGroupPrims(self):
+        
+        self.paths = []
+
+        base = Sdf.Path("/RGrp")
+
+        for grp in self._dataStore._map_group.keys():
+            grp_path = base.AppendPath(cleanup_prim_path(self, grp))
+            self.paths.append(str(grp_path))
+
+        omni.kit.commands.execute('SelectPrimsCommand',
+            old_selected_paths=[],
+            new_selected_paths=self.paths,
+            expand_in_stage=True)
+
+
+
+
+
+
 class SubGrpView(GroupBase):
-    def __init__(self, viewPath:str, scale:float, upAxis:str, shapeUpAxis:str, symPlanes:bool, showCosts:bool):
+    def __init__(self, viewPath:str, scale:float, upAxis:str, shapeUpAxis:str, symPlanes:bool):
         self._root_path = Sdf.Path(viewPath)
         self._scale = scale
         self._upAxis = upAxis
         self._shapeUpAxis = shapeUpAxis
         self._view_path = viewPath
         self._symPlanes = symPlanes
-        self._showCosts = showCosts
 
         super().__init__()
 
@@ -479,15 +573,31 @@ class SubGrpView(GroupBase):
     def prepResources(self):      
         pass # Requires subclass implm
 
+    
+    def selectGroupPrims(self):
+        
+        self.paths = []
+
+        base = Sdf.Path("/Subs")
+
+        for grp in self._dataStore._map_subscription.keys():
+            grp_path = base.AppendPath(cleanup_prim_path(self, grp))
+            self.paths.append(str(grp_path))
+
+        omni.kit.commands.execute('SelectPrimsCommand',
+            old_selected_paths=[],
+            new_selected_paths=self.paths,
+            expand_in_stage=True)
+
+
 class LocGrpView(GroupBase):
-    def __init__(self, viewPath:str, scale:float, upAxis:str, shapeUpAxis:str, symPlanes:bool, showCosts:bool):
+    def __init__(self, viewPath:str, scale:float, upAxis:str, shapeUpAxis:str, symPlanes:bool):
         self._root_path = Sdf.Path(viewPath)
         self._scale = scale
         self._upAxis = upAxis
         self._shapeUpAxis = shapeUpAxis
         self._view_path = viewPath
         self._symPlanes = symPlanes
-        self._showCosts = showCosts
 
         super().__init__()
 
@@ -525,17 +635,31 @@ class LocGrpView(GroupBase):
 
     #Abstact to determine resources to show
     def prepResources(self):      
-        pass # Requires subclass implm
+        pass
+
+    def selectGroupPrims(self):
+        
+        self.paths = []
+
+        base = Sdf.Path("/Subs")
+
+        for grp in self._dataStore._map_location.keys():
+            grp_path = base.AppendPath(cleanup_prim_path(self, grp))
+            self.paths.append(str(grp_path))
+
+        omni.kit.commands.execute('SelectPrimsCommand',
+            old_selected_paths=[],
+            new_selected_paths=self.paths,
+            expand_in_stage=True)
 
 class TypeGrpView(GroupBase):
-    def __init__(self, viewPath:str, scale:float, upAxis:str, shapeUpAxis:str, symPlanes:bool, showCosts:bool):
+    def __init__(self, viewPath:str, scale:float, upAxis:str, shapeUpAxis:str, symPlanes:bool):
         self._root_path = Sdf.Path(viewPath)
         self._scale = scale
         self._upAxis = upAxis
         self._shapeUpAxis = shapeUpAxis
         self._view_path = viewPath
         self._symPlanes = symPlanes
-        self._showCosts = showCosts
 
         super().__init__()
 
@@ -576,15 +700,29 @@ class TypeGrpView(GroupBase):
     def prepResources(self):      
         pass # Requires subclass implm
 
+    def selectGroupPrims(self):
+        
+        self.paths = []
+
+        base = Sdf.Path("/Subs")
+
+        for grp in self._dataStore.map_group.keys():
+            grp_path = base.AppendPath(cleanup_prim_path(self, grp))
+            self.paths.append(str(grp_path))
+
+        omni.kit.commands.execute('SelectPrimsCommand',
+            old_selected_paths=[],
+            new_selected_paths=self.paths,
+            expand_in_stage=True)
+
 class TypeTagView(GroupBase):
-    def __init__(self, viewPath:str, scale:float, upAxis:str, shapeUpAxis:str, symPlanes:bool, showCosts:bool):
+    def __init__(self, viewPath:str, scale:float, upAxis:str, shapeUpAxis:str, symPlanes:bool):
         self._root_path = Sdf.Path(viewPath)
         self._scale = scale
         self._upAxis = upAxis
         self._shapeUpAxis = shapeUpAxis
         self._view_path = viewPath
         self._symPlanes = symPlanes
-        self._showCosts = showCosts
 
         super().__init__()
 
@@ -624,3 +762,18 @@ class TypeTagView(GroupBase):
     #Abstact to determine resources to show
     def prepResources(self):      
         pass # Requires subclass implm
+
+    def selectGroupPrims(self):
+        
+        self.paths = []
+
+        base = Sdf.Path("/Subs")
+
+        for grp in self._dataStore.map_tag.keys():
+            grp_path = base.AppendPath(cleanup_prim_path(self, grp))
+            self.paths.append(str(grp_path))
+
+        omni.kit.commands.execute('SelectPrimsCommand',
+            old_selected_paths=[],
+            new_selected_paths=self.paths,
+            expand_in_stage=True)

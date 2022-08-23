@@ -1,4 +1,5 @@
 # This class manages both the offline data and online data 
+from typing import Dict
 from .Singleton import Singleton
 from .csv_data_manager import CSVDataManager
 from .azure_data_manager import AzureDataManager
@@ -30,6 +31,7 @@ import locale
 
 CURRENT_PATH = Path(__file__).parent
 DATA_PATH = CURRENT_PATH.joinpath("temp")
+RES_PATH = CURRENT_PATH.parent.parent.parent.parent.joinpath("data\\resources")
 
 @Singleton
 class DataManager:
@@ -50,6 +52,7 @@ class DataManager:
         self._dataStore._source_of_data = "OfflineData"
         self._dataStore.Save_Config_Data()
         self._offlineDataManager.loadFiles()
+        #asyncio.ensure_future(self.process_data())
         self.process_data()
 
     def load_from_api(self):
@@ -63,6 +66,7 @@ class DataManager:
         self._onlineDataManager.load_data()
 
         #Aggregate the info
+        #asyncio.ensure_future(self.process_data())
         self.process_data()
 
     def wipe_data(self):
@@ -91,6 +95,9 @@ class DataManager:
             self.load_from_api()
             print("Live Data Refreshed.")
 
+    async def process_data(self):  
+        self.process_data()
+    
     #Aggregate subscription, resources counts to DataManager Dictionaries
     def process_data(self):  
         print("Processing Data...")
@@ -100,18 +107,22 @@ class DataManager:
             obj = self._dataStore._resources[key]
 
             ### AGGREGATE COUNTS
+            #await self.AggregateCounts(obj)
             self.AggregateCounts(obj)
 
             ### AGGREGATE COSTS
+            #await self.AggregateCosts(obj)
             self.AggregateCosts(obj)
             
             ### MAP RESOURCES TO AGGREGATES
             self.MapResourcesToGroups(obj)
+            #await self.MapResourcesToGroups(obj)
 
         self.ScoreCosts()
 
         #Pre-create images for the groups
-        asyncio.ensure_future(self.CreateImagesForGroups())
+        #await self.CreateImagesForGroups()
+        self.CreateImagesForGroups()
 
         #output aggregation results to console
         print("Data processing complete..")
@@ -119,177 +130,226 @@ class DataManager:
         print(str(len(self._dataStore._resources)) + " Resources loaded from " + self._dataStore._source_of_data)
         print(str(len(self._dataStore._groups)) + " Groups loaded from " + self._dataStore._source_of_data)
 
-    # async def image_tesk(self):
-    #     loop = self.get_or_create_eventloop()
-    #     response = loop.run_until_complete(await self.CreateImagesForGroups())
-    #     loop.close()
-    #     # assert your response
-
-    # def get_or_create_eventloop():
-    #     try:
-    #         return asyncio.get_event_loop()
-    #     except RuntimeError as ex:
-    #         if "There is no current event loop in thread" in str(ex):
-    #             loop = asyncio.new_event_loop()
-    #             asyncio.set_event_loop(loop)
-    #             return asyncio.get_event_loop()       
+    #Async Context
+    async def CreateImagesForGroups(self):
+        self.CreateImagesForGroups(self)
 
     #Create Images for all the maps
-    async def CreateImagesForGroups(self):
+    def CreateImagesForGroups(self):
 
         print("Processing images.")
 
         #go through all the maps and create images 
         #this will save a ton of time later 
-        src_file = self._dataStore._bg_file_path 
+        if self._dataStore._bgl_file_path is None:
+            return
+
+        if self._dataStore._bgm_file_path is None:
+            return
+
+        if self._dataStore._bgh_file_path is None:
+            return
+
+        src_filel = RES_PATH.joinpath(self._dataStore._bgl_file_path)
+        src_filem = RES_PATH.joinpath(self._dataStore._bgm_file_path)
+        src_fileh = RES_PATH.joinpath(self._dataStore._bgh_file_path)
+        src_image = src_filel
 
         #SUBSCRIPTIONS
         #We need to create images for each group
         for rec in self._dataStore._map_subscription:
 
-            #Let the Ui breathe ;)
-            await omni.kit.app.get_app().next_update_async()
+            recText = rec #Name of subscription
 
-            output_file = DATA_PATH.joinpath(rec + ".png")
-            cost_output_file = DATA_PATH.joinpath(rec + "-cost.png")
-            textToDraw = rec
+            #Let the Ui breathe ;)
+            #TODO async
+            #await omni.kit.app.get_app().next_update_async()
+            output_file = DATA_PATH.joinpath(recText + ".png")
+            cost_output_file = DATA_PATH.joinpath(recText + "-cost.png")
+            textToDraw = recText
             costToDraw =""
 
             #We dont care here if the user wants costs or not, we are pre-making images
             try:
                 locale.setlocale( locale.LC_ALL, 'en_CA.UTF-8' )
-                costToDraw = locale.currency(self._dataStore._subscription_cost[rec])
+                rawCost = float(self._dataStore._subscription_cost[recText])
+                costToDraw = locale.currency(self._dataStore._subscription_cost[recText])
+
+                if rawCost < 500:
+                    src_image = src_filel
+                if rawCost > 500 and rawCost < 1500:
+                    src_image = src_filem
+                if rawCost > 1500:
+                    src_image = src_fileh
             except:
                 costToDraw=""
 
-            draw_image(self, output_file=output_file, src_file=src_file, textToDraw=textToDraw, costToDraw="")
-            draw_image(self, output_file=output_file, src_file=src_file, textToDraw=textToDraw, costToDraw=costToDraw)
+            #todo change image based on score
+
+            draw_image(self, output_file=output_file, src_file=src_image, textToDraw=textToDraw, costToDraw="")
+            draw_image(self, output_file=cost_output_file, src_file=src_image, textToDraw=textToDraw, costToDraw=costToDraw)
 
 
         #LOCATIONS
         #We need to create images for each group
         for rec in self._dataStore._map_location:
 
+            recText = rec
             #Let the Ui breathe ;)
-            await omni.kit.app.get_app().next_update_async()
 
-            temp_file = rec + ".png"
+            #await omni.kit.app.get_app().next_update_async()
+
+            temp_file = recText + ".png"
             output_file = DATA_PATH.joinpath(temp_file)
-            cost_output_file = DATA_PATH.joinpath(rec + "-cost.png")
-            textToDraw = rec
+            cost_output_file = DATA_PATH.joinpath(recText + "-cost.png")
+            textToDraw = recText
             costToDraw =""
 
             try:
                 locale.setlocale( locale.LC_ALL, 'en_CA.UTF-8' )
-
-                costToDraw = locale.currency(self._dataStore._location_cost[rec])      
+                rawCost = float(self._dataStore._location_cost[recText])
+                costToDraw = locale.currency(self._dataStore._location_cost[recText])      
+                
+                if rawCost < 500:
+                    src_image = src_filel
+                if rawCost > 500 and rawCost < 1500:
+                    src_image = src_filem
+                if rawCost > 1500:
+                    src_image = src_fileh
             except:
                 costToDraw=""
 
-            draw_image(self, output_file=output_file, src_file=src_file, textToDraw=textToDraw, costToDraw="")
-            draw_image(self, output_file=cost_output_file, src_file=src_file, textToDraw=textToDraw, costToDraw=costToDraw)
-
+            draw_image(self, output_file=output_file, src_file=src_image, textToDraw=textToDraw, costToDraw="")
+            draw_image(self, output_file=cost_output_file, src_file=src_image, textToDraw=textToDraw, costToDraw=costToDraw)
 
         #RESOURCE GROUPS
         #We need to create images for each group
         for rec in self._dataStore._map_group:
 
+            recText = rec
             #Let the Ui breathe ;)
-            await omni.kit.app.get_app().next_update_async()
+            #await omni.kit.app.get_app().next_update_async()
 
-            output_file = DATA_PATH.joinpath(rec + ".png")
-            cost_output_file = DATA_PATH.joinpath(rec + "-cost.png")
-            textToDraw = rec
+            output_file = DATA_PATH.joinpath(recText + ".png")
+            cost_output_file = DATA_PATH.joinpath(recText + "-cost.png")
+            textToDraw = recText
             costToDraw =""
 
             try:
                 locale.setlocale( locale.LC_ALL, 'en_CA.UTF-8' )
-
-                costToDraw = locale.currency(self._dataStore._group_cost[rec])
+                rawCost = float(self._dataStore._group_cost[recText])
+                costToDraw = locale.currency(self._dataStore._group_cost[recText])
+                if rawCost < 500:
+                    src_image = src_filel
+                if rawCost > 500 and rawCost < 1500:
+                    src_image = src_filem
+                if rawCost > 1500:
+                    src_image = src_fileh                
             except:
                 costToDraw=""
 
-            draw_image(self, output_file=output_file, src_file=src_file, textToDraw=textToDraw, costToDraw="")
-            draw_image(self, output_file=cost_output_file, src_file=src_file, textToDraw=textToDraw, costToDraw=costToDraw)
+            draw_image(self, output_file=output_file, src_file=src_image, textToDraw=textToDraw, costToDraw="")
+            draw_image(self, output_file=cost_output_file, src_file=src_image, textToDraw=textToDraw, costToDraw=costToDraw)
 
         #TYPES
         #We need to create images for each group
         for rec in self._dataStore._map_type:
 
+            recText = rec
             #Let the Ui breathe ;)
-            await omni.kit.app.get_app().next_update_async()
+            #await omni.kit.app.get_app().next_update_async()
 
-            output_file = DATA_PATH.joinpath(rec + ".png")
-            cost_output_file = DATA_PATH.joinpath(rec + "-cost.png")
-            textToDraw = rec
+            output_file = DATA_PATH.joinpath(recText + ".png")
+            cost_output_file = DATA_PATH.joinpath(recText + "-cost.png")
+            textToDraw = recText
             costToDraw =""
 
             try:
                 locale.setlocale( locale.LC_ALL, 'en_CA.UTF-8' )
-
-                costToDraw = locale.currency(self._dataStore._type_cost[rec])
+                rawCost = float(self._dataStore._type_cost[recText])
+                costToDraw = locale.currency(self._dataStore._type_cost[recText])
+                if rawCost < 500:
+                    src_image = src_filel
+                if rawCost > 500 and rawCost < 1500:
+                    src_image = src_filem
+                if rawCost > 1500:
+                    src_image = src_fileh                
             except:
                 costToDraw=""
 
-            draw_image(self, output_file=output_file, src_file=src_file, textToDraw=textToDraw, costToDraw="")
-            draw_image(self, output_file=cost_output_file, src_file=src_file, textToDraw=textToDraw, costToDraw=costToDraw)
+            draw_image(self, output_file=output_file, src_file=src_image, textToDraw=textToDraw, costToDraw="")
+            draw_image(self, output_file=cost_output_file, src_file=src_image, textToDraw=textToDraw, costToDraw=costToDraw)
 
         #TAGS
         #We need to create images for each group
         for rec in self._dataStore._map_tag:
 
+            recText = rec
             #Let the Ui breathe ;)
-            await omni.kit.app.get_app().next_update_async()
+            #await omni.kit.app.get_app().next_update_async()
 
-            output_file = DATA_PATH.joinpath(rec + ".png")
-            cost_output_file = DATA_PATH.joinpath(rec + "-cost.png")
-            textToDraw = rec
+            output_file = DATA_PATH.joinpath(recText + ".png")
+            cost_output_file = DATA_PATH.joinpath(recText + "-cost.png")
+            textToDraw = recText
             costToDraw =""
 
             try:
                 locale.setlocale( locale.LC_ALL, 'en_CA.UTF-8' )
-
-                costToDraw = locale.currency(self._dataStore._tag_cost[rec])
+                rawCost = float(self._dataStore._tag_cost[recText])
+                costToDraw = locale.currency(self._dataStore._tag_cost[recText])
+                if rawCost < 500:
+                    src_image = src_filel
+                if rawCost > 500 and rawCost < 1500:
+                    src_image = src_filem
+                if rawCost > 1500:
+                    src_image = src_fileh                
 
             except:
                 costToDraw=""
 
-            draw_image(self, output_file=output_file, src_file=src_file, textToDraw=textToDraw, costToDraw="")
-            draw_image(self, output_file=cost_output_file, src_file=src_file, textToDraw=textToDraw, costToDraw=costToDraw)
+            draw_image(self, output_file=output_file, src_file=src_image, textToDraw=textToDraw, costToDraw="")
+            draw_image(self, output_file=cost_output_file, src_file=src_image, textToDraw=textToDraw, costToDraw=costToDraw)
 
         print("Processing images complete..")
 
     #Calculate the low, min, max, mean costs and score each group according to its peers
     def ScoreCosts(self):
         pass
-        
+
+    #Async context
+    async def AggregateCosts(self, obj):
+         self.AggregateCosts(obj)
 
     def AggregateCosts(self, obj):
 
         ### AGGREGATE COSTS
         #Cost per Sub
-        if obj["subscription"] not in self._dataStore._subscription_cost.keys():
-            self._dataStore._subscription_cost[obj["subscription"]] = float(obj["lmcost"])
+        subKey = cleanup_prim_path(self, obj["subscription"])
+        if subKey not in self._dataStore._subscription_cost.keys():
+            self._dataStore._subscription_cost[subKey] = float(obj["lmcost"])
         else:
-            self._dataStore._subscription_cost[obj["subscription"]] = float(self._dataStore._subscription_cost[obj["subscription"]]) + float(obj["lmcost"])
+            self._dataStore._subscription_cost[subKey] = float(self._dataStore._subscription_cost[subKey]) + float(obj["lmcost"])
         
         #Cost per Location
-        if obj["location"] not in self._dataStore._location_cost.keys():
-            self._dataStore._location_cost[obj["location"]] = float(obj["lmcost"])
+        locKey = cleanup_prim_path(self, obj["location"])
+        if locKey not in self._dataStore._location_cost.keys():
+            self._dataStore._location_cost[locKey] = float(obj["lmcost"])
         else:
-            self._dataStore._location_cost[obj["location"]] = float(self._dataStore._location_cost[obj["location"]]) + float(obj["lmcost"])
+            self._dataStore._location_cost[locKey] = float(self._dataStore._location_cost[locKey]) + float(obj["lmcost"])
         
         #Cost per Type
-        if obj["type"] not in self._dataStore._type_cost.keys():
-            self._dataStore._type_cost[obj["type"]] = float(obj["lmcost"])
+        typeKey = cleanup_prim_path(self, obj["type"])
+        if typeKey not in self._dataStore._type_cost.keys():
+            self._dataStore._type_cost[typeKey] = float(obj["lmcost"])
         else:
-            self._dataStore._type_cost[obj["type"]] = float(self._dataStore._type_cost[obj["type"]]) + float(obj["lmcost"])
+            self._dataStore._type_cost[typeKey] = float(self._dataStore._type_cost[typeKey]) + float(obj["lmcost"])
 
         #Cost per Group
-        if obj["group"] not in self._dataStore._group_cost.keys():
-            self._dataStore._group_cost[obj["group"]] = float(obj["lmcost"])
+        grpKey = obj["group"]
+        if grpKey not in self._dataStore._group_cost.keys():
+            self._dataStore._group_cost[grpKey] = float(obj["lmcost"])
         else:
-            self._dataStore._group_cost[obj["group"]] =float(self._dataStore._group_cost[obj["group"]]) + float(obj["lmcost"])
+            self._dataStore._group_cost[grpKey] =float(self._dataStore._group_cost[grpKey]) + float(obj["lmcost"])
 
         #your_dictionary = {'Australia':1780, 'England':6723, 'Tokyo': 1946}
 
@@ -300,36 +360,45 @@ class DataManager:
 
 
 
-
-
+    #Async Context
+    async def AggregateCounts(self, obj):
+        self.AggregateCounts(obj)
 
     def AggregateCounts(self, obj):
 
         ### AGGREGATE COUNTS
         #Count per Sub
-        if obj["subscription"] not in self._dataStore._subscription_count.keys():
-            self._dataStore._subscription_count[obj["subscription"]] = 1
+        subKey = cleanup_prim_path(self, obj["subscription"])
+        if subKey not in self._dataStore._subscription_count.keys():
+            self._dataStore._subscription_count[subKey] = 1
         else:
-            self._dataStore._subscription_count[obj["subscription"]] = self._dataStore._subscription_count[obj["subscription"]] + 1
+            self._dataStore._subscription_count[subKey] = self._dataStore._subscription_count[subKey] + 1
         
         #Count per Location
-        if obj["location"] not in self._dataStore._location_count.keys():
-            self._dataStore._location_count[obj["location"]] = 1
+        locKey = cleanup_prim_path(self, obj["location"])
+        if locKey not in self._dataStore._location_count.keys():
+            self._dataStore._location_count[locKey] = 1
         else:
-            self._dataStore._location_count[obj["location"]] = self._dataStore._location_count[obj["location"]] + 1
+            self._dataStore._location_count[locKey] = self._dataStore._location_count[locKey] + 1
 
         #Count per Type
-        if obj["type"] not in self._dataStore._type_count.keys():
-            self._dataStore._type_count[obj["type"]] = 1
+        typeKey = cleanup_prim_path(self, obj["type"])
+        if typeKey not in self._dataStore._type_count.keys():
+            self._dataStore._type_count[typeKey] = 1
         else:
-            self._dataStore._type_count[obj["type"]] = self._dataStore._type_count[obj["type"]] + 1
+            self._dataStore._type_count[typeKey] = self._dataStore._type_count[typeKey] + 1
 
         #Count per Group
-        if obj["group"] not in self._dataStore._group_count.keys():
-            self._dataStore._group_count[obj["group"]] = 1
+        grpKey = cleanup_prim_path(self, obj["group"])
+        if grpKey not in self._dataStore._group_count.keys():
+            self._dataStore._group_count[grpKey] = 1
         else:
-            self._dataStore._group_count[obj["group"]] = self._dataStore._group_count[obj["group"]] + 1
+            self._dataStore._group_count[grpKey] = self._dataStore._group_count[grpKey] + 1
 
+
+    #Async Context
+    async def MapResourcesToGroups(self, obj):
+        self.MapResourcesToGroups(obj)
 
     #Given a resource, Map it to all the groups it belongs to.
     def MapResourcesToGroups(self, obj):
@@ -339,48 +408,43 @@ class DataManager:
         shape_to_render = "omniverse://localhost/Resources/3dIcons/scene.usd"
 
         try:
+            resName = obj["name"]
             typeName = cleanup_prim_path(self,  obj["type"])
             shape_to_render = shape_usda_name[typeName]   
         except:
             print("No matching prim found - " + typeName)                                  
 
         # SUBSCRIPTION MAP
-        self.map_objects(typeName, "/Subs" ,shape_to_render, self._dataStore._map_subscription, obj, "subscription")
+        self.map_objects(resName, typeName, "/Subs" ,shape_to_render, self._dataStore._map_subscription, obj, "subscription")
 
         # GROUP MAP
-        self.map_objects(typeName, "/RGrp", shape_to_render, self._dataStore._map_group, obj, "group")
+        self.map_objects(resName, typeName, "/RGrp", shape_to_render, self._dataStore._map_group, obj, "group")
 
         # TYPE MAP
-        self.map_objects(typeName, "/Type", shape_to_render, self._dataStore._map_type, obj, "type")
+        self.map_objects(resName, typeName, "/Type", shape_to_render, self._dataStore._map_type, obj, "type")
 
         # LOCATION MAP
-        self.map_objects(typeName, "/Loc", shape_to_render, self._dataStore._map_location, obj, "location")
+        self.map_objects(resName, typeName, "/Loc", shape_to_render, self._dataStore._map_location, obj, "location")
 
         #TODO TAGMAP
         #self.map_objects(typeName, "/Tag", shape_to_render, self._dataStore._tag_map, obj, "tag")
 
 
     #Maps objects to create to each aggregate
-    def map_objects(self, typeName, root, shape, map, obj, field:str):
+    def map_objects(self, resName, typeName, root, shape, map, obj, field:str):
         
-        prim_path = cleanup_prim_path(self, Name=obj[field])
-        print(prim_path)
-        sub_prim_path = Sdf.Path(root)
-        sub_prim_path = Sdf.Path(sub_prim_path).AppendPath(prim_path)
-        flat_prim_path = cleanup_prim_path(self, str(sub_prim_path))
+        cleaned_group_name = cleanup_prim_path(self, Name=obj[field])
+        print(cleaned_group_name)
         
-        map_obj = {"type":typeName,"shape":shape}
+        map_obj = {"name": resName, "type":typeName, "shape":shape}
 
-        if obj[field] not in map.keys():
-            
+        if cleaned_group_name not in map.keys():
             #new map!
-            mapObj = { obj[field] : [ map_obj ] }
-            map[obj[field]] = { flat_prim_path : mapObj}
+            map[cleaned_group_name] = [map_obj]
         else:
             #get the map for this group, add this item
-            mapObj = map[obj[field]]
-            map[flat_prim_path] = mapObj
-        
+            mapObj = map[cleaned_group_name]
+            mapObj.append(map_obj)
 
 
     #passthrough to csv manager

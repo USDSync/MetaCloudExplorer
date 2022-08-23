@@ -38,8 +38,6 @@ import shutil
 import os
 import asyncio
 import omni.kit.notification_manager as nm
-from .pillow_text import create_image_with_text
-from .pillow_text import draw_text_on_image_at_position
 
 from  .prim_utils import create_plane
 from  .prim_utils import cleanup_prim_path
@@ -68,72 +66,15 @@ DATA_PATH = CURRENT_PATH.joinpath("temp")
 class StageManager():
     def __init__(self):
         #pass
-        #Subclasses for the different aggragation types
-        # self.AADView = AADGrpView()
-        # self.ResView = ResGrpView()
-        # self.SubView = SubGrpView()
-        # self.LocView = LocGrpView()
-        # self.TypeView = TypeGrpView()
-        # self.TagView = TypeTagView()
 
-        # #Default View is by resource group
-        # self.ActiveView = self.ResView
-   
         #moved to abstract base GroupBase
         self._dataManager = DataManager.instance() # Get A Singleton instance
         self._dataStore = DataStore.instance() # Get A Singleton instance
-
-        # # #Track the Groups and Resources so we can selectively add/remove them
-        # self._group_prims = {}
-        # self._resource_prims = {}
-
-        # #root prim paths
-        # self.root_path = Sdf.Path('/World')
-        # self.view_path = ""
-        # self.aad_layer_root_path = Sdf.Path(self.root_path.AppendPath('AAD'))
-        # self.sub_layer_root_path = Sdf.Path(self.root_path.AppendPath('Subs'))
-        # self.res_layer_root_path = Sdf.Path(self.root_path.AppendPath('RGrp'))
-        # self.loc_layer_root_path = Sdf.Path(self.root_path.AppendPath('Loc'))
-        # self.type_layer_root_path = Sdf.Path(self.root_path.AppendPath('Type'))
-        # self.cost_layer_root_path = Sdf.Path(self.root_path.AppendPath('Tag'))
-        
+       
         # # # stage_unit defines the number of unit per meter
         self.stage_unit_per_meter = 1
-               
-        # # # limit the number of rows read
-        # self.max_elements = 5000
-        # self.base_prim_size = 75
-        
-        # self.x_threshold = 5000
-        # self.y_threshold = 5000
-        # self.z_threshold = 5000
-        # self.x_extent = 0
-        # self.y_extent = 0
-        # self.z_extent = 0
-    
-    #Intialize the Stage
-    # def InitStage(self):
-    #     self._stage = omni.usd.get_context().get_stage()
-    #     root_prim = self._stage.GetPrimAtPath(self.root_path)
-        
-    #     #  set the up axis
-    #     UsdGeom.SetStageUpAxis(self._stage, UsdGeom.Tokens.z)
 
-    #     #  set the unit of the world
-    #     UsdGeom.SetStageMetersPerUnit(self._stage, self.stage_unit_per_meter)
-    #     self._stage.SetDefaultPrim(root_prim)
-
-    #     # add a light
-    #     light_prim_path = self.root_path.AppendPath('DomeLight')
-    #     light_prim = UsdLux.DistantLight.Define(self._stage, str(light_prim_path))
-    #     light_prim.CreateAngleAttr(0.53)
-    #     light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
-    #     light_prim.CreateIntensityAttr(500.0)
-
-    #Invoked from UI - Show the Stages based on the View.
-    def ShowStage(self, viewType: str):
-        
-        #Get Composition Options from UI
+               #Get Composition Options from UI
         try:
             self._scale = self._dataStore._composition_scale_model.as_float
         except:
@@ -151,35 +92,68 @@ class StageManager():
         except:
             self._use_symmetric_planes = False
         try:
-            self._show_cost_data =  self._dataStore._show_cost_data().as_bool
+            self._last_view_type =  self._dataStore._last_view_type().as_string
         except:
-            self._show_cost_data = False
+            self._last_view_type = "ByGroup"
      
         #Set a subclass to handle the View Creation    
+        if self._dataStore._last_view_type == "ByGroup":
+            #asyncio.ensure_future(self.sendNotify("Group View loaded...", nm.NotificationStatus.INFO))   
+            self.ActiveView = ResGrpView(viewPath="/RGrp", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
+            
+        if self._dataStore._last_view_type == "ByLocation":    
+            #asyncio.ensure_future(self.sendNotify("Location View loaded...", nm.NotificationStatus.INFO))
+            self.ActiveView = LocGrpView(viewPath="/Loc", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
+            
+        if self._dataStore._last_view_type == "ByType":    
+            #asyncio.ensure_future(self.sendNotify("Type View loaded...", nm.NotificationStatus.INFO))
+            self.ActiveView = TypeGrpView(viewPath="/Type", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
+            
+        if self._dataStore._last_view_type == "BySub":    
+            #asyncio.ensure_future(self.sendNotify("Subscription View loaded..", nm.NotificationStatus.INFO))
+            self.ActiveView = SubGrpView(viewPath="/Subs", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
+            
+        if self._dataStore._last_view_type == "ByTag":    
+            #asyncio.ensure_future(self.sendNotify("Tag View loaded..", nm.NotificationStatus.INFO))
+            self.ActiveView = TypeTagView(viewPath="/Tag", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
+
+                
+    #Invoked from UI - Show the Stages based on the View.
+    def ShowStage(self, viewType:str):
+
+        #Set a subclass to handle the View Creation    
         if viewType == "ByGroup":
-            asyncio.ensure_future(self.sendNotify("Group View loaded...", nm.NotificationStatus.INFO))   
-            self.ActiveView = ResGrpView(viewPath="/RGrp", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes, showCosts=self._show_cost_data)
+            #asyncio.ensure_future(self.sendNotify("Group View loaded...", nm.NotificationStatus.INFO))   
+            self.ActiveView = ResGrpView(viewPath="/RGrp", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
             
         if viewType == "ByLocation":    
-            asyncio.ensure_future(self.sendNotify("Location View loaded...", nm.NotificationStatus.INFO))
-            self.ActiveView = LocGrpView(viewPath="/Loc", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes, showCosts=self._show_cost_data)
+            #asyncio.ensure_future(self.sendNotify("Location View loaded...", nm.NotificationStatus.INFO))
+            self.ActiveView = LocGrpView(viewPath="/Loc", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
             
         if viewType == "ByType":    
-            asyncio.ensure_future(self.sendNotify("Type View loaded...", nm.NotificationStatus.INFO))
-            self.ActiveView = TypeGrpView(viewPath="/Type", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes, showCosts=self._show_cost_data)
+            #asyncio.ensure_future(self.sendNotify("Type View loaded...", nm.NotificationStatus.INFO))
+            self.ActiveView = TypeGrpView(viewPath="/Type", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
             
         if viewType == "BySub":    
-            asyncio.ensure_future(self.sendNotify("Subscription View loaded..", nm.NotificationStatus.INFO))
-            self.ActiveView = SubGrpView(viewPath="/Subs", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes, showCosts=self._show_cost_data)
+            #asyncio.ensure_future(self.sendNotify("Subscription View loaded..", nm.NotificationStatus.INFO))
+            self.ActiveView = SubGrpView(viewPath="/Subs", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
             
         if viewType == "ByTag":    
-            asyncio.ensure_future(self.sendNotify("Tag View loaded..", nm.NotificationStatus.INFO))
-            self.ActiveView = TypeTagView(viewPath="/Tag", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes, showCosts=self._show_cost_data)
+            #asyncio.ensure_future(self.sendNotify("Tag View loaded..", nm.NotificationStatus.INFO))
+            self.ActiveView = TypeTagView(viewPath="/Tag", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
+
+        #Are the options compatible with the data?
+        maxDims = (self._dataStore._options_count_models[0].as_float * self._dataStore._options_count_models[1].as_float * self._dataStore._options_count_models[2].as_float)
+        grpCnt = len(self._dataStore._groups)
+        if grpCnt > maxDims:
+            asyncio.ensure_future(self.sendNotify("Not enough dimensions for ..." + str(grpCnt) + "res groups, Max Dims: " + str(maxDims), nm.NotificationStatus.WARNING))   
+            return
 
         #populate the stage
         self.ActiveView.initializeStage(self.stage_unit_per_meter) #Base Method
         self.ActiveView.calcPlaneGroupSettings() #Abstract Method
         self.ActiveView.calulateCosts() #Abstract Method
+
 
         #Use Customized Scatter algorythm get coordinates for varying sized planes
         transforms = distributePlanes(
@@ -195,14 +169,14 @@ class StageManager():
         #Create the groups in an async loop
         if (len(self.ActiveView._groups)) >0 :
 
-            asyncio.ensure_future(self.ActiveView.CreateGroups(
+            #TODO Async
+            self.ActiveView.CreateGroups(
                 basePath=self.ActiveView.view_path,
                 upAxis=self._upAxis,
                 groups=self.ActiveView._groups,
-                sizes=self.ActiveView._sizes,
-                transforms=transforms
-            ))
-
+                transforms=transforms,
+                sizes=self.ActiveView._sizes
+            )
 
     def LoadResources(self):
         
@@ -219,7 +193,10 @@ class StageManager():
             for s in selected_prims:
                 path = str(s).replace("/CollisionMesh" "")
                 paths.append(path)                       
-
+        else:
+            pass
+            #Load them all
+            
         #View is already set, show resources for specific or all paths
         self.ActiveView.LoadResources(paths) #Base Method
 
@@ -229,134 +206,14 @@ class StageManager():
         create_plane(self,Path, Name, Size, Location, Color)
 
 
-    def ShowCosts(self):
-        pass
+    def Select_Planes(self):
+        self.ActiveView.selectGroupPrims()
         #change the shaders to non-cost
 
 
-    def HideCosts(self):
-        pass
-        #change the shaders to cost shaders based on score
+    def ShowCosts(self):
+        self.ActiveView.show_hide_costs()
 
-
-
-
-
-
-
-    #Load Stage Mesh Images to Shaders
-    # def AddPlaneLabelShaders(self, viewType: str, sizes, groups):
-
-        
-    #         if viewType == "ByLocation":
-    #             #Get the cost for this location
-    #             if self._dataStore._show_costs_model.as_bool:
-    #                 locale.setlocale(locale.LC_ALL, '')
-    #                 try:
-    #                     cost = str(locale.currency(self._dataStore._location_cost[g]))
-    #                 except:
-    #                     cost = "" # blank not 0, blank means dont show it at all     
-    #             else:
-    #                 cost = ""
-
-    #         if viewType == "ByType":
-    #             #Get the cost for this group
-    #             if self._dataStore._show_costs_model.as_bool:
-    #                 locale.setlocale(locale.LC_ALL, '')
-    #                 try:
-    #                     cost = str(locale.currency(self._dataStore._type_cost[g]))
-    #                 except:
-    #                     cost = "" # blank not 0, blank means dont show it at all     
-    #             else:
-    #                 cost = ""
-
-
-    #         if viewType == "BySub":
-    #             #Get the cost for this sub
-    #             if self._dataStore._show_costs_model.as_bool:
-    #                 locale.setlocale(locale.LC_ALL, '')
-    #                 try:
-    #                     cost = str(locale.currency(self._dataStore._subscription_cost[g]))
-    #                 except:
-    #                     cost = "" # blank not 0, blank means dont show it at all     
-    #             else:
-    #                 cost = ""
-
-
-    #         if viewType == "ByTag":
-    #             #Get the cost for this tag
-    #             if self._dataStore._show_costs_model.as_bool:
-    #                 locale.setlocale(locale.LC_ALL, '')
-    #                 try:
-    #                     cost = str(locale.currency(self._dataStore._cost[g]))
-    #                 except:
-    #                     cost = "" # blank not 0, blank means dont show it at all     
-    #             else:
-    #                 cost = ""
-        
-            
-    #         #MAKE A TEMP COPY OF THE BASE IMAGE TEXTURE SO THAT WE CAN DRAW TEXT ON THE COPY
-            
-    #         #src_file = DATA_PATH.joinpath("tron_grid_test.png")
-    #         src_file = self._dataStore._bg_file_path 
-    #         output_file = DATA_PATH.joinpath(g + ".png")
-
-    #         shutil.copyfile(src_file, output_file)
-
-    #         font_size = get_font_size_from_length(len(g))
-
-    #         draw_text_on_image_at_position(
-    #             input_image_path=output_file,
-    #             output_image_path=output_file, 
-    #             textToDraw=g, 
-    #             costToDraw=cost,
-    #             x=180, y=1875, fillColor="Yellow", fontSize=font_size )
-
-    #         #Get Stage
-    #         stage = omni.usd.get_context().get_stage()
-
-    #         #Find the /Looks root
-    #         curr_prim = stage.GetPrimAtPath("/")
-    #         looks_path = ""
-    #         for prim in Usd.PrimRange(curr_prim):
-
-    #             if prim.GetPath() == "/Looks":
-    #                 looks_path = "/Looks"
-    #                 continue
-    #             elif prim.GetPath() == "/World/Looks":
-    #                 looks_path = "/World/Looks"
-    #                 continue
-
-    #         #print("Looks root is: " +looks_path)
-    #         #Get the Shader and set the image property
-    #         if (looks_path == ""):
-    #             looks_path = "/Looks"
-
-    #         shader_path = Sdf.Path(looks_path)
-    #         shader_path = Sdf.Path(shader_path.AppendPath(g))
-    #         shader_path = Sdf.Path(shader_path.AppendPath("Shader"))
-
-    #         #select the shader
-    #         selection = omni.usd.get_context().get_selection()
-    #         selection.set_selected_prim_paths([str(shader_path)], False)         
-
-    #         #Get the Shader
-    #         shader_prim = stage.GetPrimAtPath(str(shader_path))
-
-    #         # print("Shader Attributes:-----" + str(shader_path))
-    #         # print(shader_prim.GetAttributes())
-
-    #         try:
-    #             shader_prim.CreateAttribute("inputs:diffuse_texture", Sdf.ValueTypeNames.Asset)
-                                    
-    #             omni.kit.commands.execute('ChangeProperty',
-    #                 prop_path=Sdf.Path(shader_path).AppendPath('.inputs:diffuse_texture'),
-    #                 value=str(output_file), prev=str(output_file))
-    #         except:
-    #             #Do it again!
-    #             omni.kit.commands.execute('ChangeProperty',
-    #             prop_path=Sdf.Path(shader_path).AppendPath('.inputs:diffuse_texture'),
-    #             value=str(output_file),prev=str(output_file))
 
 
     # Set Color
@@ -386,18 +243,7 @@ class StageManager():
         
         #Let the Ui breathe ;)
         for x in range(5):
-            await omni.kit.app.get_app().next_update_async()
-
-
-    def SelectPlanes(self, viewType:str):
-
-        paths = []
-
-        omni.kit.commands.execute('SelectPrims',
-            old_selected_paths=['/World'],
-            new_selected_paths=['/World/RGrp'],
-            expand_in_stage=True)
-
+            await omni.kit.app.get_app().next_update_async()    
 
 
 

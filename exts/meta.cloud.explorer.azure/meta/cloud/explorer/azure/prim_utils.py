@@ -75,7 +75,7 @@ def cleanup_prim_path(self, Name: str):
     #print("cleanup: " + Name)
     nme = Name.replace("-", "_")
     nme = nme.replace(" ", "_")
-    nme = nme.replace("/", "-") # these might need to go back if its a path
+    nme = nme.replace("/", "_") 
     nme = nme.replace(".", "_")
     nme = nme.replace(":", "_")
     nme = nme.replace(";", "_")
@@ -85,6 +85,10 @@ def cleanup_prim_path(self, Name: str):
     #if it starts with a number add a _
     if nme[0].isnumeric():
         nme = "_" + nme
+
+    #dont start with a -
+    if nme[0] == "-":
+        nme = nme[1:len(nme[0])-1]
 
     #print("cleanup res: " + nme)
     return nme

@@ -112,7 +112,7 @@ def create_prims(up_axis:str, plane_size:List[float], transforms: List = [], pri
     for matrix in enumerate(transforms):
 
         if (i >= len(prim_names)): continue
-        path = Sdf.Path(parent_path).AppendPath(prim_names[i])
+        path = Sdf.Path(parent_path).AppendPath(prim_names[i]["group"])
         print(str(i) + " adding plane:" + str(path) + " " + str(plane_size[i]) +  " @ " + str(matrix[1]))
 
         omni.kit.commands.execute('AddGroundPlaneCommand',
@@ -135,7 +135,7 @@ def create_prims(up_axis:str, plane_size:List[float], transforms: List = [], pri
         i=i+1
 
 
-async def create_shaders(base_path:str, prim_name:str ):
+def create_shaders(base_path:str, prim_name:str ):
 
     prim_path = Sdf.Path(base_path)
     prim_path = prim_path.AppendPath("CollisionMesh")

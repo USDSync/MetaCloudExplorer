@@ -6,6 +6,7 @@ import asyncio
 import os
 import time
 import os.path as path
+from pathlib import Path
 
 from datetime import datetime, timedelta
 
@@ -46,6 +47,10 @@ def draw_text_on_image_at_position(
 
     makeFile = False
 
+    if not os.path.exists(input_image_path):
+        print("No src file: " + str(input_image_path))
+        return
+
     if os.path.exists(output_image_path):
         if is_file_older_than_x_days(output_image_path, 1):
             makeFile = True
@@ -53,13 +58,13 @@ def draw_text_on_image_at_position(
         makeFile = True
 
     if makeFile:
-        textToDraw = textToDraw.replace("-", "/") #Change / back for visual
 
         print("File is old, refreshing Image " + str(output_image_path) + " with text: "  + textToDraw + " cst: " + costToDraw) 
 
         font1 = font
         font = load_font_from_uri(fontSize, font1)
 
+        print("Loading src file: " + str(input_image_path))
         image = Image.open(input_image_path)
         image = image.rotate(270, expand=1)
         draw = ImageDraw.Draw(image)
