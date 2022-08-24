@@ -222,8 +222,8 @@ class StageManager():
                 path = str(s).replace("/CollisionMesh" "")
                 paths.append(path)                       
         else:
-            pass
-            #Load them all
+            pass           
+            # Traverse all prims in the stage starting at this path
             
         #View is already set, show resources for specific or all paths
         self.ActiveView.LoadResources(paths) #Base Method

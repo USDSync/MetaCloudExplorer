@@ -579,12 +579,18 @@ class SubGrpView(GroupBase):
     def selectGroupPrims(self):
         
         self.paths = []
+        stage = omni.usd.get_context().get_stage()
+        base = Sdf.Path("/World/Subs")
 
-        base = Sdf.Path("/Subs")
+        curr_prim = stage.GetPrimAtPath(base)
 
-        for grp in self._dataStore._map_subscription.keys():
-            grp_path = base.AppendPath(cleanup_prim_path(self, grp))
-            self.paths.append(str(grp_path))
+        for prim in Usd.PrimRange(curr_prim):
+            # only process shapes and meshes
+            self.paths.append(str(prim.GetPath()))
+
+        # for grp in self._dataStore._map_subscription.keys():
+        #     grp_path = base.AppendPath(cleanup_prim_path(self, grp))
+        #     self.paths.append(str(grp_path))
 
         omni.kit.commands.execute('SelectPrimsCommand',
             old_selected_paths=[],
