@@ -162,7 +162,7 @@ class StageManager():
         blocks = []
         sorted_sizes = sorted(self.ActiveView._sizes, reverse=True)
         for size in sorted_sizes:
-            sz = (size*3) #double the size end to end
+            sz = (size*2) #double the size end to end
             blocks.append(Block((sz,sz)))
             #blocks.append(Block(sz,sz))
 
