@@ -43,6 +43,7 @@ from  .prim_utils import create_plane
 from  .prim_utils import cleanup_prim_path
 from  .prim_utils import get_font_size_from_length
 
+from .packer import Node, Block, Packer
 
 from omni.kit.window.file_importer import get_file_importer
 from omni.ui import scene as sc
@@ -154,17 +155,41 @@ class StageManager():
         self.ActiveView.calcPlaneGroupSettings() #Abstract Method
         self.ActiveView.calulateCosts() #Abstract Method
 
+        #sortd = dict(sorted(self.ActiveView._groups["group"]["size"], key=lambda item: item[1]))
+
+        #Use Packer Algorythm to determine positioning
+        transforms =[]
+        blocks = []
+        sorted_sizes = sorted(self.ActiveView._sizes, reverse=True)
+        for size in sorted_sizes:
+            sz = (size*3) #double the size end to end
+            blocks.append(Block((sz,sz)))
+            #blocks.append(Block(sz,sz))
+
+        pack = Packer()
+        pack.fit(blocks)
+
+        for block in blocks:
+            if block.fit:
+                transforms.append(Gf.Vec3f(block.fit.location[0], block.fit.location[1] ,0))
+                print("size: {} loc: {}".format(block.size, block.fit.location))
+            else:
+                print("not fit: {}".format(block.size))
+
 
         #Use Customized Scatter algorythm get coordinates for varying sized planes
-        transforms = distributePlanes(
-            UpAxis=self._upAxis,
-            count=[m.as_int for m in self._dataStore._options_count_models],
-            distance=[m.as_float for m in self._dataStore._options_dist_models],
-            sizes=self.ActiveView._sizes,
-            randomization=[m.as_float for m in self._dataStore._options_random_models],
-            seed=0,
-            scaleFactor=self._dataStore._composition_scale_model.as_float
-        )
+        # transforms = distributePlanes(
+        #     UpAxis=self._upAxis,
+        #     count=[m.as_int for m in self._dataStore._options_count_models],
+        #     distance=[m.as_float for m in self._dataStore._options_dist_models],
+        #     sizes=self.ActiveView._sizes,
+        #     randomization=[m.as_float for m in self._dataStore._options_random_models],
+        #     seed=0,
+        #     scaleFactor=self._dataStore._composition_scale_model.as_float
+        # )
+
+        self.ActiveView._groups.sort(key=lambda element: element['size'], reverse=True)
+        self.ActiveView._sizes.sort(reverse=True)
 
         #Create the groups in an async loop
         if (len(self.ActiveView._groups)) >0 :
@@ -177,6 +202,9 @@ class StageManager():
                 transforms=transforms,
                 sizes=self.ActiveView._sizes
             )
+
+    def get_size(self, element):
+        return element['size']
 
     def LoadResources(self):
         

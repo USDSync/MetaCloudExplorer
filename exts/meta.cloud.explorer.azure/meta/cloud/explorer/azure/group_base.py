@@ -410,15 +410,14 @@ class GroupBase(ABC):
 
             try:                           
                 currentVal = shader_prim.GetAttribute("inputs:diffuse_texture").Get()
-
-                if str(currentVal).__contains__("-cost.png"):
-                    omni.kit.commands.execute('ChangeProperty',
-                        prop_path=Sdf.Path(shader_path).AppendPath('.inputs:diffuse_texture'),
-                        value=str(output_file), prev=str(cost_file))
-                else:
+                if "-cost.png" not in str(currentVal): 
                     omni.kit.commands.execute('ChangeProperty',
                         prop_path=Sdf.Path(shader_path).AppendPath('.inputs:diffuse_texture'),
                         value=str(cost_file), prev=str(output_file))
+                else:
+                    omni.kit.commands.execute('ChangeProperty',
+                        prop_path=Sdf.Path(shader_path).AppendPath('.inputs:diffuse_texture'),
+                        value=str(output_file), prev=str(cost_file))
             except:
                 pass
 
