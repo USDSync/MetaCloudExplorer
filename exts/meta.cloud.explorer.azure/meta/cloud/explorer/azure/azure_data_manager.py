@@ -42,7 +42,7 @@ class AzureDataManager():
 
     #validate we can connect
     def connect(self):
-        self.sendNotify("Connecting to Azure Tenant...")     
+        self.sendNotify("Connecting to Azure Tenant...", nm.NotificationStatus.INFO)     
         
         #Get a token
         self.get_token()
@@ -54,7 +54,7 @@ class AzureDataManager():
     def clicked_ok():
         carb.log_info("User clicked ok")
 
-    def sendNotify(self, message:str, status:str):
+    def sendNotify(self, message:str, status:nm.NotificationStatus):
         
         # https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.kit.notification_manager/docs/index.html?highlight=omni%20kit%20notification_manager#
 
@@ -65,7 +65,7 @@ class AzureDataManager():
             message,
             hide_after_timeout=False,
             duration=0,
-            status=nm.NotificationStatus.WARNING,
+            status=status,
             button_infos=[ok_button, ok_button],
         )        
 

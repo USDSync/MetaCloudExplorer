@@ -72,10 +72,19 @@ def position_resource_on_target(
     if (planeSize == 100.0):
         pass
 
+    if (planeSize == 200.0):
+        pass
 
+    if (planeSize == 300.0):
+        pass
 
-#Given a plane of xxx size
-#calculate the x,y,z,up postion of resource #X 
-#to place on the surface of the plane
-#return the x,y,x to place
+    if (planeSize == 400.0):
+        pass
+
+    if (planeSize == 500.0):
+        pass
+
+    if (planeSize == 600.0):
+        pass                
+
 

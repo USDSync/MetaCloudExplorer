@@ -2,53 +2,97 @@ import glob
 from PIL import Image, ImageDraw, ImageFont, ImageDraw
 import requests
 import io
-import os.path
+import asyncio
+import os
+import time
+import os.path as path
+from pathlib import Path
 
-#W, H = (300,200)
-#msg = "hello"
-#draw.text(((W-w)/2,(H-h)/2), msg, fill="black")
-#im.save("hello.png", "PNG")
+from datetime import datetime, timedelta
 
+
+#Create and draw images in async contexxt
+async def draw_text_on_image_at_position_async (
+    input_image_path:str, 
+    output_image_path:str, 
+    textToDraw:str, 
+    costToDraw:str,
+    x:int, y:int,
+    fillColor:str,
+    font:str,
+    fontSize:int):    
+
+    await draw_text_on_image_at_position(
+        input_image_path, 
+        output_image_path, 
+        textToDraw, 
+        costToDraw,
+        x, y, fillColor, font, fontSize
+    )
+
+
+def is_file_older_than_x_days(file, days=1): 
+    file_time = path.getmtime(file) 
+    # Check against 24 hours 
+    return ((time.time() - file_time) / 3600 > 24*days)
+
+#Create a new image with text
 def draw_text_on_image_at_position(
     input_image_path:str, 
     output_image_path:str, 
     textToDraw:str, 
     costToDraw:str,
     x:int, y:int,
-    fillColor:str, fontSize:int):    
+    fillColor:str, font:str, fontSize:int):    
 
-    #bail if file exists
-    #if os.path.exists(output_image_path):
-    #   return
+    makeFile = False
 
-    font1 = "https://github.com/googlefonts/Arimo/raw/main/fonts/ttf/Arimo-Regular.ttf"
-    font = load_font_from_uri(fontSize, font1)
+    if not os.path.exists(input_image_path):
+        print("No src file: " + str(input_image_path))
+        return
 
-    image = Image.open(input_image_path)
-    image = image.rotate(270, expand=1)
-    draw = ImageDraw.Draw(image)
-    textW, textH = draw.textsize(textToDraw, font) # how big is out text
-    costW, costH = draw.textsize(costToDraw, font) # how big is out text
+    if os.path.exists(output_image_path):
+        if is_file_older_than_x_days(output_image_path, 1):
+            makeFile = True
+    else: 
+        makeFile = True
 
+    if makeFile:
 
-    draw.text((x, y), textToDraw, font_size=fontSize,anchor="ls", font=font, fill=fillColor)
+        print("Refreshing Image " + str(output_image_path) + " with text: "  + textToDraw + " cst: " + costToDraw) 
 
-    if costToDraw != "":
-        xx = (2084 - (costW +300))
-        costToDraw = str(costToDraw) + " /mo"
-        draw.text((xx,y), costToDraw, font_size=(fontSize-40), anchor="ls", font=font, fill="red")
+        font1 = font
+        font = load_font_from_uri(fontSize, font1)
 
-    image = image.rotate(-270, expand=1)
-    image.save(output_image_path)
+        print("Loading src file: " + str(input_image_path))
+        image = Image.open(input_image_path)
+        image = image.rotate(270, expand=1)
+        draw = ImageDraw.Draw(image)
+        textW, textH = draw.textsize(textToDraw, font) # how big is our text
+        costW, costH = draw.textsize(costToDraw, font) # how big is cost text
 
+        draw.text((x, y), textToDraw, font_size=fontSize,anchor="ls", font=font, fill=fillColor)
+
+        if costToDraw != "":
+            width, height = image.size
+            xx = (width - (costW +350))
+            costToDraw = str(costToDraw) + " /m"
+            draw.text((xx,y), costToDraw, font_size=(fontSize-50), anchor="ls", font=font, fill="red")
+
+        image = image.rotate(-270, expand=1)
+
+        with open(output_image_path, 'wb') as out_file:
+            image.save(out_file, 'PNG')
+
+    #image.save(output_image_path)
 
 def create_image_with_text(output_image_path:str, textToDraw:str, x:int, y:int, h:int, w:int, color:str, alignment:str, fillColor:str, fontPath:str, fontSize:int):    
     image = Image.new("RGB", (h, w), color)
     draw = ImageDraw.Draw(image)
 
     # Load font from URI
-    font1 = "https://github.com/googlefonts/Arimo/raw/main/fonts/ttf/Arimo-Regular.ttf"
-    truetype_url = 'https://github.com/googlefonts/roboto/blob/main/src/hinted/Roboto-Black.ttf?raw=true'
+    #font1 = "https://github.com/googlefonts/Arimo/raw/main/fonts/ttf/Arimo-Regular.ttf"
+    font1 = 'https://github.com/googlefonts/roboto/blob/main/src/hinted/Roboto-Black.ttf?raw=true'
     font = load_font_from_uri(fontSize, font1)
 
     #font = ImageFont.truetype(fontPath, layout_engine=ImageFont.LAYOUT_BASIC, size=fontSize)
