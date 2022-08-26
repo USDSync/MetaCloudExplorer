@@ -1,5 +1,5 @@
-__all__ = ["create_plane", "get_font_size_from_length"]
-
+__all__ = ["create_plane", "get_font_size_from_length", "get_parent_child_prim_path", "create_and_place_prim", "log_transforms"]
+import sys
 import omni.usd
 import omni.kit.commands
 import shutil
@@ -8,18 +8,119 @@ from pxr import Gf, UsdGeom, UsdLux
 from .pillow_text import draw_text_on_image_at_position
 
 
+def create_and_place_prim(self,
+    new_prim_path:str,
+    shapeToRender:str, 
+    scale:float, 
+    position:Gf.Vec3f
+    ):
+    
+    print("Creating new prim: " + new_prim_path)
+    stage =  omni.usd.get_context().get_stage()
 
-# Calculates where to put a prim on a parent plane depending on the size and index 
-# stageClass = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 *2
-def calcPrimPlacementOnPlane(stageClass: int, stageSize: float, position: int, scaleFactor:float, groudOffset:float, upDirection:str ): 
+    # Create prim to add the reference to.
+    prim = stage.DefinePrim(new_prim_path)
+    prim.GetReferences().AddReference(shapeToRender)
+    my_new_prim = stage.GetPrimAtPath(new_prim_path)
 
-    if stageClass == 1: # holds one resource, put it in center..
-        if upDirection == "Y":
-            return Gf.Vec3f(0,0,0)
+    #Are we still set to default? Change cube size and position
+    if shapeToRender == "omniverse://localhost/Resources/3dIcons/scene.usd":
+        scale = 3.0
+        position[2] = position[2] + 30 #Buffer the cube off the z
 
-    elif stageClass == 2: #holds 4 resources
-        
-        pass
+    print("Placing prim: " + shapeToRender + " | " + str(new_prim_path) + " @ " 
+        + "scl:" + str(scale) + " x:" + str(position[0]) + "," + " y:" + str(position[1]) + "," + " z:" + str(position[2]))           
+
+    # # Remove the tranform, rotate, scale attributes
+    for name in my_new_prim.GetPropertyNames():
+        if name == "xformOp:translate":
+            my_new_prim.RemoveProperty("xformOp:translate")
+
+        if name == "xformOp:rotateXYZ":
+            my_new_prim.RemoveProperty("xformOp:rotateXYZ")
+
+        if name == "xformOp:scale":
+            my_new_prim.RemoveProperty("xformOp:scale")
+
+        if name == "xformOp:orient":
+            my_new_prim.RemoveProperty("xformOp:orient")
+
+    xform = UsdGeom.Xformable(my_new_prim)
+    properties = my_new_prim.GetPropertyNames()
+
+    try:
+
+        order = my_new_prim.GetAttribute("xformOpOrder").Get()
+        if 'xformOp:scale' not in properties:
+            my_new_prim.CreateAttribute("xformOp:scale", Sdf.ValueTypeNames.Asset)
+            my_new_prim.GetAttribute('xformOp:scale').Set(Gf.Vec3f(scale,scale,scale))
+        else:
+            my_new_prim.GetAttribute('xformOp:scale').Set(Gf.Vec3f(scale,scale,scale))
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+
+    try:
+
+        if 'xformOp:rotateXYZ' not in properties:
+            my_new_prim.CreateAttribute("xformOp:rotateXYZ", Sdf.ValueTypeNames.Asset)
+            my_new_prim.GetAttribute('xformOp:rotateXYZ').Set(Gf.Vec3f(0.0, 0.0, 0.0))
+        else:
+            my_new_prim.GetAttribute('xformOp:rotateXYZ').Set(Gf.Vec3f(0.0, 0.0, 0.0))
+
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+
+    try:
+        if 'xformOp:translate' not in properties:
+            my_new_prim.CreateAttribute("xformOp:translate", Sdf.ValueTypeNames.Asset)
+            my_new_prim.GetAttribute('xformOp:translate').Set(Gf.Vec3d(position[0], position[1], position[2]))
+        else: 
+            my_new_prim.GetAttribute('xformOp:translate').Set(Gf.Vec3d(position[0], position[1], position[2]))    
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+        # Set your transform, rotate, scale attributes, ORDER MATTERS!!!
+        # Create TRANSLATE,SCALE, ROATATE - in that order..
+    try:    
+        print("before: " + str(my_new_prim.GetAttribute("xformOpOrder").Get()))
+        my_new_prim.GetAttribute("xformOpOrder").Set(["xformOp:translate", "xformOp:scale", "xformOp:rotateXYZ"])
+        print("after: " + str(my_new_prim.GetAttribute("xformOpOrder").Get()))
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+
+
+      
+    # #this might error
+    # try:
+    #     properties = my_new_prim.GetPropertyNames()
+    #     if 'xformOp:scale' not in properties:
+    #         UsdGeom.Xformable(my_new_prim).AddScaleOp()
+    #     if 'xformOp:rotateXYZ' not in properties:
+    #         UsdGeom.Xformable(my_new_prim).AddRotateXYZOp()
+    #     if 'xformOp:translate' not in properties:
+    #         UsdGeom.Xformable(my_new_prim).AddTranslateOp()
+    # except:
+    #     pass
+
+    # # Set your transform, rotate, scale attributes, ORDER MATTERS!!!
+    # # Create SCALE, TRANSLATE, ROATATE - in that order..
+    # try:
+    #     my_new_prim.GetAttribute('xformOp:translate').Set(position)
+    #     my_new_prim.GetAttribute('xformOp:rotateXYZ').Set(Gf.Vec3f(0.0, 0.0, 0.0))
+    #     my_new_prim.GetAttribute('xformOp:scale').Set(Gf.Vec3f(scale,scale,scale))
+    
+    #     #print("before: " + str(my_new_prim.GetAttribute("xformOpOrder").Get()))
+    #     my_new_prim.GetAttribute("xformOpOrder").Set(["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"])
+    #     #print("after: " + str(my_new_prim.GetAttribute("xformOpOrder").Get()))
+    # except:
+    #     pass                          
+    #     #my_new_prim.GetAttribute('xformOpOrder').Set(["xformOp:translate, xformOp:rotateXYZ, xformOp:scale"])
+   
+
+#log the vectors
+def log_transforms(self, vectors):
+    for v in vectors:
+        logdata = str(vectors[v][0]) + "," + str(vectors[v][1]) + "," + str(vectors[v][2])
+        print(logdata)
 
 
 def create_shaders(base_path:str, prim_name:str ):
@@ -92,6 +193,21 @@ def cleanup_prim_path(self, Name: str):
 
     #print("cleanup res: " + nme)
     return nme
+
+# Concats two Sdf.Paths and truncates he result to MAX_PATH_LENGTH
+def get_parent_child_prim_path(self, groupPath:Sdf.Path, resName:str):
+
+    resName = cleanup_prim_path(self, resName)  
+
+    prim_len = len(str(groupPath)) + len(resName)
+    if (prim_len) > 70:
+        diff = prim_len - 70
+        trim = len(resName) - diff 
+        resName = resName[:trim] 
+    
+    shape_prim_path = Sdf.Path(groupPath.AppendPath(resName))
+    return shape_prim_path
+    
 
 def get_font_size_from_length(nameLength:int):
     if (nameLength < 10):

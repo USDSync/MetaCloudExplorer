@@ -48,7 +48,16 @@ class DataStore():
         #track where the data last came from (state)
         self._source_of_data = ""
         self._use_symmetric_planes = False
+        self._use_packing_algo = False
         self._last_view_type = "ByGroup" # ByGroup, ByLocation, ByType, BySub, ByTag
+        self._scale_model = 1.0
+
+        #temporary arrays
+        #Calc Plane sizes based on items in group
+        self._lcl_sizes = [] #Plane  sizes determined by resource counts
+        self._lcl_groups = [] #Group data for creating planes
+        self._lcl_resources = [] #Resources to show on stage
+
 
         #Variables for files to import (UI settings)
         self._rg_csv_file_path = ""

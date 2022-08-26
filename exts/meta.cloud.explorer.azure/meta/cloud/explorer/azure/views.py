@@ -84,6 +84,40 @@ class MainView(ui.Window):
         webbrowser.open_new("http://metacloudexplorer.com")
 
     def on_help(self):
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/API_management_services_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/API_management_services_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/app-service-plan.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/app-service-plan.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/application-insights.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/application-insights.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/application_insights_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/application_insights_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/app_service_plan_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/app_service_plan_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/automation_accounts_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/automation_accounts_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/azure_data_explorer_clusters_fix.fbx","	C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/azure_data_explorer_clusters_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/azure_devops_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/azure_devops_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/azure_workbook_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/azure_workbook_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/container_registries_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/container_registries_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/data_factory_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/data_factory_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/data_lake_storage_gen1_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/data_lake_storage_gen1_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/events_hub_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/events_hub_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/event_grid_topics_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/event_grid_topics_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/files.txt","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/files.txt"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/function_apps_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/function_apps_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/image_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/image_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/kubernetess_services_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/kubernetess_services_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/load_balancer_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/load_balancer_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/Logic_apps_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/Logic_apps_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/network-security-groups.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/network-security-groups.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/network_interface_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/network_interface_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/network_security_group_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/network_security_group_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/network_watcher_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/network_watcher_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/public_ip_adresses_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/public_ip_adresses_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/quick_start_wireframed.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/quick_start_wireframed.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/recovery_service_vault_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/recovery_service_vault_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/search_services_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/search_services_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/service-fabric-clusters_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/service-fabric-clusters_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/service_bus_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/service_bus_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/solution.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/solution.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/sql_virtual_machine_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/sql_virtual_machine_fix.usd"))
+        asyncio.ensure_future(convert_asset_to_usd("C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/FBX files/traffic_manager_profiles_fix.fbx","C:/Users/Gavin/Documents/AzureVerse/Assets/RawFromArtists/Converted/traffic_manager_profiles_fix.usd"))
+
         webbrowser.open_new("https://github.com/CloudArchitectLive/MetaCloudExplorer/issues")
 
 
@@ -108,19 +142,18 @@ class MainView(ui.Window):
 
     #Load a fresh stage
     def load_stage(self, viewType: str):
+        self._dataStore._last_view_type = viewType
         self._dataStore.Save_Config_Data()
         self.clear_stage()
         self._stageManager.ShowStage(viewType)
 
     #load the resource onto the stage
-    def load_resources(self, viewType: str):
-        self._stageManager.LoadResources(viewType)
+    def load_resources(self):
+        self._stageManager.LoadResources(self._dataStore._last_view_type)
 
 
     def show_hide_costs(self):
         self._stageManager.ShowCosts()
-
-
 
     #GROUP VIEW
     def load_resource_groups(self):
@@ -134,7 +167,6 @@ class MainView(ui.Window):
 
     #ALL RESOURCES
     def load_all_resources(self):
-        
         self._stageManager.ShowAllResources()
 
     # Clear the stage
@@ -234,7 +266,7 @@ class MainView(ui.Window):
             with ui.HStack(style=button_styles):
                 ui.Button("Res Groups", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=35)
                 ui.Button("Res Types", clicked_fn=lambda: self.load_stage("ByType"), name="subs",height=35)
-                ui.Button("Show Resources", clicked_fn=lambda: self.load_resources("ByGroup"), name="clr", height=35)
+                ui.Button("Show Resources", clicked_fn=lambda: self.load_resources(), name="clr", height=35)
                 
         with ui.VStack(height=0, spacing=SPACING):
             #ui.Spacer(height=120)
@@ -362,14 +394,26 @@ class MainView(ui.Window):
                     ui.Button("Load", width=40, clicked_fn=lambda: self._dataManager.select_file("bgh"))                    
 
 
-    def _build_options(self):
+    def _build_options(self, default_value=0, min=0, max=1):
+        def _on_value_changed(model, rect_changed, rect_defaul):
+            if model.as_float == default_value:
+                rect_changed.visible = False
+                rect_defaul.visible = True
+            else:
+                rect_changed.visible = True
+                rect_defaul.visible = False
+
+        def _restore_default(slider):
+            slider.model.set_value(default_value)
+
         with ui.CollapsableFrame("Scene Composition Options", name="group", collapsed=True, style={"color": 0xFF008976, "font_size":20}): 
             with ui.VStack(height=0, spacing=SPACING, style={"color": 0xFFFFFFFF, "font_size":16}):
                 with ui.HStack():
                     #self._dataStore._composition_scale_model = self._build_gradient_float_slider("Scale Factor", default_value=10, min=1, max=100)
                     ui.Label("Object Scale", name="attribute_name", width=self.label_width, min=1, max=100)
                     ui.FloatDrag(self._dataStore._composition_scale_model, min=1, max=100)
-
+                    self._dataStore._composition_scale_model.set_value(self._dataStore._scale_model)
+                    #self._dataStore._composition_scale_model.add_value_changed_fn(lambda model: _on_value_changed(model, rect_changed, rect_default))
                     ui.Label("Up Axis", name="attribute_name", width=self.label_width)
                     ui.ComboBox(self._dataStore._primary_axis_model)    
                 
