@@ -48,7 +48,7 @@ class DataStore():
         #track where the data last came from (state)
         self._source_of_data = ""
         self._use_symmetric_planes = False
-        self._use_packing_algo = False
+        self._use_packing_algo = True
         self._last_view_type = "ByGroup" # ByGroup, ByLocation, ByType, BySub, ByTag
         self._scale_model = 1.0
 
@@ -83,6 +83,7 @@ class DataStore():
 
         #composition options (UI settings)
         self._symmetric_planes_model = ui.SimpleBoolModel(False)
+        self._packing_algo_model = ui.SimpleBoolModel(True)
         self._primary_axis_model = ComboBoxModel("Z", "X", "Y") # track which Axis is up
         self._shape_up_axis_model = ComboBoxModel("Z", "X", "Y") # track which Axis is up for the shape placement
         self._composition_scale_model = ui.SimpleFloatModel()
@@ -205,6 +206,7 @@ class DataStore():
             self._options_random_models[0].set_value(1.0)
             self._options_random_models[1].set_value(1.0)
             self._options_random_models[2].set_value(1)
+
         # #Reload dictionaries
         # self._aad_count = pickle.load(open('aad_count', 'r'))
         # self._subscription_count = pickle.load(open('subscription_count', 'r'))

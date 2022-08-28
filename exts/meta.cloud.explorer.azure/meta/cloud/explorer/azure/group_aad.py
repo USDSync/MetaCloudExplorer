@@ -5,7 +5,7 @@ import locale
 
 class AADGrpView(GroupBase):
     def __init__(self, viewPath:str, scale:float, upAxis:str, shapeUpAxis:str):
-        self.layer_root_path = Sdf.Path(self.root_path.AppendPath('AAD'))
+
         self._scale = scale
         self._upAxis = upAxis
         self._shapeUpAxis = shapeUpAxis

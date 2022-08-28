@@ -18,6 +18,7 @@ import asyncbg
 import logging
 import shutil
 import locale 
+import carb
 
 
 # User either connects to Azure with connection info 
@@ -28,7 +29,7 @@ import locale
 # User clicks Connect, Or Load, Goal is the same, load data from azure or files 
 # and give the user some basic info to show the connection / import worked.
 # now connected, user can load different sets of resources and view then in different ways.
-
+ASYNC_ENABLED = True
 CURRENT_PATH = Path(__file__).parent
 DATA_PATH = CURRENT_PATH.joinpath("temp")
 RES_PATH = CURRENT_PATH.parent.parent.parent.parent.joinpath("data\\resources")
@@ -39,7 +40,7 @@ class DataManager:
 
         logging.getLogger("asyncio").setLevel(logging.WARNING)
 
-        print("DataManager Created.")
+        carb.log_info("DataManager Created.")
         self._dataStore = DataStore.instance()
         self._offlineDataManager = CSVDataManager()
         self._onlineDataManager = AzureDataManager()
@@ -47,17 +48,19 @@ class DataManager:
         self.refresh_data()
 
     def load_csv_files(self):
-        #self._dataStore._groups.clear()
-        #self._dataStore._resources.clear()
+        self._dataStore._groups.clear()
+        self._dataStore._resources.clear()
         self._dataStore._source_of_data = "OfflineData"
         self._dataStore.Save_Config_Data()
         self._offlineDataManager.loadFiles()
-        #asyncio.ensure_future(self.process_data())
-        self.process_data()
+        if ASYNC_ENABLED:
+            asyncio.ensure_future(self.process_data())
+        else:
+            self.process_data()
 
     def load_from_api(self):
-        #self._dataStore._groups.clear()
-        #self._dataStore._resources.clear()
+        self._dataStore._groups.clear()
+        self._dataStore._resources.clear()
         self._dataStore._source_of_data = "LiveAzureAPI"
         self._dataStore.Save_Config_Data()
         
@@ -66,8 +69,10 @@ class DataManager:
         self._onlineDataManager.load_data()
 
         #Aggregate the info
-        #asyncio.ensure_future(self.process_data())
-        self.process_data()
+        if ASYNC_ENABLED:
+            asyncio.ensure_future(self.process_data())
+        else:
+            self.process_data()
 
     def wipe_data(self):
         self._dataStore._groups.clear()
@@ -85,59 +90,65 @@ class DataManager:
         self._dataStore._type_cost = {}
         self._dataStore._tag_cost = {}
         
-        print("Data Cleared.")
+        carb.log_info("Data Cleared.")
 
     def refresh_data(self):
         if self._dataStore._source_of_data =="OfflineData":
             self.load_csv_files()
-            print("CSV Data Refreshed.")
+            carb.log_info("CSV Data Refreshed.")
         elif self._dataStore._source_of_data == "LiveAzureAPI":
             self.load_from_api()
-            print("Live Data Refreshed.")
+            carb.log_info("Live Data Refreshed.")
 
     async def process_data(self):  
         self.process_data()
     
     #Aggregate subscription, resources counts to DataManager Dictionaries
-    def process_data(self):  
-        print("Processing Data...")
+    async def process_data(self):  
+        carb.log_info("Processing Data...")
 
         #For every resrouce...
         for key in self._dataStore._resources:
             obj = self._dataStore._resources[key]
 
             ### AGGREGATE COUNTS
-            #await self.AggregateCounts(obj)
-            self.AggregateCounts(obj)
+            if ASYNC_ENABLED:
+                await asyncio.ensure_future(self.AggregateCountsAsync(obj))
+            else:
+                self.AggregateCounts(obj)
 
             ### AGGREGATE COSTS
-            #await self.AggregateCosts(obj)
-            self.AggregateCosts(obj)
+            if ASYNC_ENABLED:
+                await asyncio.ensure_future(self.AggregateCostsAsync(obj))
+            else:
+                self.AggregateCosts(obj)
             
             ### MAP RESOURCES TO AGGREGATES
-            self.MapResourcesToGroups(obj)
-            #await self.MapResourcesToGroups(obj)
-
-        self.ScoreCosts()
+            if ASYNC_ENABLED:
+                await asyncio.ensure_future(self.MapResourcesToGroupsAsync(obj))
+            else:
+                self.MapResourcesToGroups(obj)
 
         #Pre-create images for the groups
-        #await self.CreateImagesForGroups()
-        self.CreateImagesForGroups()
+        if ASYNC_ENABLED:
+            asyncio.ensure_future(self.CreateImagesForGroupsAsync())
+        else:
+            self.CreateImagesForGroups()
 
         #output aggregation results to console
-        print("Data processing complete..")
-        print(self._dataStore._source_of_data + " data refreshed.")     
-        print(str(len(self._dataStore._resources)) + " Resources loaded from " + self._dataStore._source_of_data)
-        print(str(len(self._dataStore._groups)) + " Groups loaded from " + self._dataStore._source_of_data)
+        carb.log_info("Data processing complete..")
+        carb.log_info(self._dataStore._source_of_data + " data refreshed.")     
+        carb.log_info(str(len(self._dataStore._resources)) + " Resources loaded from " + self._dataStore._source_of_data)
+        carb.log_info(str(len(self._dataStore._groups)) + " Groups loaded from " + self._dataStore._source_of_data)
 
     #Async Context
-    async def CreateImagesForGroups(self):
-        self.CreateImagesForGroups(self)
+    async def CreateImagesForGroupsAsync(self):
+        self.CreateImagesForGroups()
 
     #Create Images for all the maps
     def CreateImagesForGroups(self):
 
-        print("Processing images.")
+        carb.log_info("Processing images.")
 
         #go through all the maps and create images 
         #this will save a ton of time later 
@@ -175,8 +186,8 @@ class DataManager:
                 rawCost = float(self._dataStore._subscription_cost[recText])
                 costToDraw = locale.currency(self._dataStore._subscription_cost[recText])
 
-                print ("RawCost: " + recText + " $" + str(rawCost))
-                print ("Cost: " + recText + " $" + str(costToDraw))
+                carb.log_info ("RawCost: " + recText + " $" + str(rawCost))
+                carb.log_info ("Cost: " + recText + " $" + str(costToDraw))
 
                 if rawCost < 500:
                     src_image = src_filel
@@ -212,8 +223,8 @@ class DataManager:
                 rawCost = float(self._dataStore._location_cost[recText])
                 costToDraw = locale.currency(self._dataStore._location_cost[recText])      
 
-                print ("RawCost: " + recText + " $" + str(rawCost))
-                print ("Cost: " + recText + " $" + str(costToDraw))
+                carb.log_info ("RawCost: " + recText + " $" + str(rawCost))
+                carb.log_info ("Cost: " + recText + " $" + str(costToDraw))
 
                 if rawCost < 500:
                     src_image = src_filel
@@ -245,8 +256,8 @@ class DataManager:
                 rawCost = float(self._dataStore._group_cost[rec])
                 costToDraw = locale.currency(self._dataStore._group_cost[recText])
 
-                print ("RawCost: " + recText + " $" + str(rawCost))
-                print ("Cost: " + recText + " $" + str(costToDraw))
+                carb.log_info ("RawCost: " + recText + " $" + str(rawCost))
+                carb.log_info ("Cost: " + recText + " $" + str(costToDraw))
 
                 if rawCost < 500:
                     src_image = src_filel
@@ -277,8 +288,8 @@ class DataManager:
                 locale.setlocale( locale.LC_ALL, 'en_CA.UTF-8' )
                 rawCost = float(self._dataStore._type_cost[recText])
                 costToDraw = locale.currency(self._dataStore._type_cost[recText])
-                print ("RawCost: " + recText + " $" + str(rawCost))
-                print ("Cost: " + recText + " $" + str(costToDraw))
+                carb.log_info ("RawCost: " + recText + " $" + str(rawCost))
+                carb.log_info ("Cost: " + recText + " $" + str(costToDraw))
                 if rawCost < 500:
                     src_image = src_filel
                 if rawCost > 500 and rawCost < 1500:
@@ -309,8 +320,8 @@ class DataManager:
                 rawCost = float(self._dataStore._tag_cost[recText])
                 costToDraw = locale.currency(self._dataStore._tag_cost[recText])
 
-                print ("RawCost: " + recText + " $" + str(rawCost))
-                print ("Cost: " + recText + " $" + str(costToDraw))
+                carb.log_info ("RawCost: " + recText + " $" + str(rawCost))
+                carb.log_info ("Cost: " + recText + " $" + str(costToDraw))
 
                 if rawCost < 500:
                     src_image = src_filel
@@ -325,14 +336,14 @@ class DataManager:
             draw_image(self, output_file=output_file, src_file=src_image, textToDraw=textToDraw, costToDraw="")
             draw_image(self, output_file=cost_output_file, src_file=src_image, textToDraw=textToDraw, costToDraw=costToDraw)
 
-        print("Processing images complete..")
+        carb.log_info("Processing images complete..")
 
     #Calculate the low, min, max, mean costs and score each group according to its peers
     def ScoreCosts(self):
         pass
 
     #Async context
-    async def AggregateCosts(self, obj):
+    async def AggregateCostsAsync(self, obj):
          self.AggregateCosts(obj)
 
     def AggregateCosts(self, obj):
@@ -369,14 +380,14 @@ class DataManager:
         #your_dictionary = {'Australia':1780, 'England':6723, 'Tokyo': 1946}
 
 #        new_maximum_val = max([obj["subscription"]].values(), key=(lambda new_k: your_dictionary[new_k]))
-#        print('Maximum Value: ',your_dictionary[new_maximum_val])
+#        carb.log_info('Maximum Value: ',your_dictionary[new_maximum_val])
 #        new_minimum_val = min(your_dictionary.keys(), key=(lambda new_k: your_dictionary[new_k]))
-#        print('Minimum Value: ',your_dictionary[new_minimum_val])
+#        carb.log_info('Minimum Value: ',your_dictionary[new_minimum_val])
 
 
 
     #Async Context
-    async def AggregateCounts(self, obj):
+    async def AggregateCountsAsync(self, obj):
         self.AggregateCounts(obj)
 
     def AggregateCounts(self, obj):
@@ -412,7 +423,7 @@ class DataManager:
 
 
     #Async Context
-    async def MapResourcesToGroups(self, obj):
+    async def MapResourcesToGroupsAsync(self, obj):
         self.MapResourcesToGroups(obj)
 
     #Given a resource, Map it to all the groups it belongs to.
@@ -427,19 +438,19 @@ class DataManager:
             typeName = cleanup_prim_path(self,  obj["type"])
             shape_to_render = shape_usda_name[typeName]   
         except:
-            print("No matching prim found - " + typeName)                                  
+            carb.log_info("No matching prim found - " + typeName)                                  
 
         # SUBSCRIPTION MAP
         self.map_objects(resName, typeName, "/Subs" ,shape_to_render, self._dataStore._map_subscription, obj, "subscription")
 
         # GROUP MAP
-        self.map_objects(resName, typeName, "/RGrp", shape_to_render, self._dataStore._map_group, obj, "group")
+        self.map_objects(resName, typeName, "/RGrps", shape_to_render, self._dataStore._map_group, obj, "group")
 
         # TYPE MAP
-        self.map_objects(resName, typeName, "/Type", shape_to_render, self._dataStore._map_type, obj, "type")
+        self.map_objects(resName, typeName, "/Types", shape_to_render, self._dataStore._map_type, obj, "type")
 
         # LOCATION MAP
-        self.map_objects(resName, typeName, "/Loc", shape_to_render, self._dataStore._map_location, obj, "location")
+        self.map_objects(resName, typeName, "/Locs", shape_to_render, self._dataStore._map_location, obj, "location")
 
         #TODO TAGMAP
         #self.map_objects(typeName, "/Tag", shape_to_render, self._dataStore._tag_map, obj, "tag")
@@ -449,7 +460,7 @@ class DataManager:
     def map_objects(self, resName, typeName, root, shape, map, obj, field:str):
         
         cleaned_group_name = cleanup_prim_path(self, Name=obj[field])
-        print(cleaned_group_name)
+        carb.log_info(cleaned_group_name)
         
         map_obj = {"name": resName, "type":typeName, "shape":shape}
 
