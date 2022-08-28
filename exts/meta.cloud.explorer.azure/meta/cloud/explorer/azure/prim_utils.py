@@ -63,28 +63,6 @@ def log_transforms(self, vectors):
         print(logdata)
 
 
-def create_shaders(base_path:str, prim_name:str ):
-
-    prim_path = Sdf.Path(base_path)
-    prim_path = prim_path.AppendPath("CollisionMesh")
-
-
-    #Select the Collision Mesh
-    omni.kit.commands.execute('SelectPrims',
-        old_selected_paths=[''],
-        new_selected_paths=[str(prim_path)],
-        expand_in_stage=True)
-
-    #print("Creating Shader: " + str(prim_path))
-
-    #Create a Shader for the Mesh
-    omni.kit.commands.execute('CreateAndBindMdlMaterialFromLibrary',
-        mdl_name='OmniPBR.mdl',
-        mtl_name='OmniPBR',
-        prim_name=g,
-        mtl_created_list=None,
-        bind_selected_prims=True)
-
 def draw_image(self, output_file:str, src_file:str, textToDraw:str, costToDraw:str):
             
     font = RES_PATH.joinpath("airstrike.ttf")
@@ -153,8 +131,6 @@ def get_parent_child_prim_path(self, groupPath:Sdf.Path, resName:str):
     except:
         print("Oops!", sys.exc_info()[0], "occurred.")
 
-    
-    
 
 
 

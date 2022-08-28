@@ -50,12 +50,10 @@ from omni.ui import color as cl
 
 #import utilities
 from .azure_resource_map import shape_usda_name
-from .math_utils import calcPlaneSizeForGroup
 from .data_manager import DataManager
 from .data_store import DataStore
 from .scatter_complex import distributePlanes
 from .scatter_on_planes import scatterOnFixedPlane
-from .omni_utils import create_prims, create_shaders
 
 #Import View Models
 from .group_aad import AADGrpView
@@ -74,13 +72,10 @@ DATA_PATH = CURRENT_PATH.joinpath("temp")
 # It will render the resources in each group on individual planes
 class StageManager():
     def __init__(self):
-        #pass
 
-        #moved to abstract base GroupBase
         self._dataManager = DataManager.instance() # Get A Singleton instance
         self._dataStore = DataStore.instance() # Get A Singleton instance
        
-        # # # stage_unit defines the number of unit per meter
         self.stage_unit_per_meter = 1
 
         #Get Composition Options from UI
@@ -89,13 +84,9 @@ class StageManager():
         except:
             self._scale=1.0
         try:
-            self._upAxis = self._dataStore._primary_axis_model.get_current_item()
+            self._use_packing_algo = self._dataStore._use_packing_algo
         except:
-            self._upAxis="Z"
-        try:
-            self._shapeUpAxis = self._dataStore._shape_up_axis_model.get_current_item
-        except:
-            self._shapeUpAxis="Z"
+            self._use_packing_algo = False
         try:
             self._use_symmetric_planes = self._dataStore._use_symmetric_planes
         except:
@@ -108,6 +99,8 @@ class StageManager():
         if self._last_view_type is None:
             self._last_view_type = "ByGroup"
 
+        self._upAxis="Z"
+        self._shapeUpAxis="Z"
         self.ActiveView = self.SetActiveView(self._last_view_type)
 
     def SetActiveView(self, viewType:str):
@@ -115,29 +108,34 @@ class StageManager():
                 #Set a subclass to handle the View Creation    
         if viewType == "ByGroup":
             #asyncio.ensure_future(self.sendNotify("Group View loaded...", nm.NotificationStatus.INFO))   
-            view = ResGrpView(viewPath="RGrps", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
+            view = ResGrpView(viewPath="RGrps", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, 
+                symPlanes=self._dataStore._symmetric_planes_model.as_bool, binPack=self._use_packing_algo)
             
         if viewType == "ByLocation":    
             #asyncio.ensure_future(self.sendNotify("Location View loaded...", nm.NotificationStatus.INFO))
-            view = LocGrpView(viewPath="Locs", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
+            view = LocGrpView(viewPath="Locs", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, 
+                symPlanes=self._dataStore._symmetric_planes_model.as_bool, binPack=self._use_packing_algo)
             
         if viewType == "ByType":    
             #asyncio.ensure_future(self.sendNotify("Type View loaded...", nm.NotificationStatus.INFO))
-            view = TypeGrpView(viewPath="Types", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
+            view = TypeGrpView(viewPath="Types", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, 
+                symPlanes=self._dataStore._symmetric_planes_model.as_bool, binPack=self._use_packing_algo)
             
         if viewType == "BySub":    
             #asyncio.ensure_future(self.sendNotify("Subscription View loaded..", nm.NotificationStatus.INFO))
-            view = SubGrpView(viewPath="Subs", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
+            view = SubGrpView(viewPath="Subs", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, 
+                symPlanes=self._dataStore._symmetric_planes_model.as_bool, binPack=self._use_packing_algo)
             
         if viewType == "ByTag":    
             #asyncio.ensure_future(self.sendNotify("Tag View loaded..", nm.NotificationStatus.INFO))
-            view = TagGrpView(viewPath="Tags", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
+            view = TagGrpView(viewPath="Tags", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, 
+                symPlanes=self._dataStore._symmetric_planes_model.as_bool, binPack=self._use_packing_algo)
 
         return view
 
                 
     #Invoked from UI - Show the Stages based on the View.
-    def ShowStage(self, viewType:str):
+    async def ShowStage(self, viewType:str):
 
         self.ActiveView = self.SetActiveView(viewType)
 
@@ -154,7 +152,9 @@ class StageManager():
 
         #Create the groups in an async loop
         if (len(self._dataStore._lcl_groups)) >0 :
-            self.ActiveView.CreateGroups(transforms=transforms)
+            await self.ActiveView.CreateGroups(transforms=transforms)
+        
+
 
 
     def LoadResources(self, viewType:str):
@@ -233,9 +233,9 @@ class StageManager():
     def ShowCosts(self):
         if self.ActiveView is None:
             self.ActiveView = self.SetActiveView(self._last_view_type)
-            self.ActiveView.show_hide_costs()
+            self.ActiveView.showHideCosts()
         else:
-            self.ActiveView.show_hide_costs()
+            self.ActiveView.showHideCosts()
 
 
 

@@ -15,13 +15,14 @@ import omni.kit.commands
 
 #--- SUBSCRIPTION BASED GROUPS
 class TagGrpView(GroupBase):
-    def __init__(self, viewPath:str, scale:float, upAxis:str, shapeUpAxis:str, symPlanes:bool):
+    def __init__(self, viewPath:str, scale:float, upAxis:str, shapeUpAxis:str, symPlanes:bool, binPack:bool):
 
         self._scale = scale
         self._upAxis = upAxis
         self._shapeUpAxis = shapeUpAxis
         self._view_path = viewPath
         self._symPlanes = symPlanes
+        self._binPack = binPack
 
         super().__init__()
 
@@ -42,14 +43,26 @@ class TagGrpView(GroupBase):
 
         #temp group list to prep for planes, adds to main aggregate
         gpz = self._dataStore._tag_count.copy()
+
         for grp in gpz:
             size = calcPlaneSizeForGroup(
                     scaleFactor=self._scale, 
                     resourceCount=self._dataStore._tag_count.get(grp)
                 )
-            self._dataStore._lcl_sizes.append(
-                size
-            )
+            #mixed plane sizes
+            self._dataStore._lcl_sizes.append(size)
+
+            #Should the planes all be the same size ?
+            if self._dataStore._use_symmetric_planes:
+                sorted = self._dataStore._lcl_groups.sort(key=lambda element: element['size'], reverse=True)
+                maxPlaneSize = sorted[0]["size"]
+                groupCount = len(sorted)
+
+                #Reset plane sizes
+                self._dataStore._lcl_sizes = []
+                for count in range(0,groupCount):
+                    self._dataStore._lcl_sizes.append(maxPlaneSize)               
+
             grp = cleanup_prim_path(self, grp)
             self._dataStore._lcl_groups.append({ "group":grp, "size":size })
 

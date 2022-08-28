@@ -22,9 +22,8 @@ from pxr import Gf, UsdGeom, UsdLux, Usd, Sdf
 from .data_manager import DataManager
 from .data_store import DataStore
 
-from .math_utils import calcPlaneSizeForGroup
+from .math_utils import calcPlaneSizeForGroup, calculateGroupTransforms
 from .scatter_complex import distributePlanes
-from .scatter_on_planes import scatterOnFixedPlane
 from .omni_utils import create_prims, create_shaders
 from os.path import exists
 
@@ -75,12 +74,17 @@ class GroupBase(ABC):
         light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
         light_prim.CreateIntensityAttr(500.0)
     
-    async def CreateGroups(self):
-        await self.CreateGroups(self)
+        # add a light
+        light_prim_path = self.root_path.AppendPath('DistantLight')
+        light_prim = UsdLux.DistantLight.Define(self._stage, str(light_prim_path))
+        light_prim.CreateAngleAttr(0.53)
+        light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
+        light_prim.CreateIntensityAttr(1000.0)    
+
 
     #Depending on the Active View, "groups" will contain different aggreagetes.
     #This function creates the GroundPlane objects on the stage for each group
-    def CreateGroups(self, transforms):
+    async def CreateGroups(self, transforms):
         
         #b = sorted(groups)
         #carb.log_info("Sorted keys",b)  
@@ -104,13 +108,16 @@ class GroupBase(ABC):
                 prim_path = Sdf.Path(self.root_path).AppendPath(str(self._view_path))
                 prim_path = Sdf.Path(prim_path).AppendPath(grp["group"])
                 
-                create_shaders(base_path=prim_path, prim_name=grp["group"])
+                #Selects prim, creates associated OMNIPBR shaders
 
-            #Draw shaders on the stages
-            self.AddPlaneLabelShaders()
+                carb.log_info("Create shader " + grp["group"] + " of " + str(len(self._dataStore._lcl_groups)))
+                await create_shaders(base_path=prim_path, prim_name=grp["group"])
+
+            #Set the shader images for the groups
+            await self.AddShaderImages()
 
     #Assign Images to the group Shaders
-    def AddPlaneLabelShaders(self):
+    async def AddShaderImages(self):
 
         #Images have been pre-made, jsut assign them
         for g in self._dataStore._lcl_groups:     
@@ -154,8 +161,9 @@ class GroupBase(ABC):
             #Get the Shader
             shader_prim = stage.GetPrimAtPath(str(shader_path))
 
-            # carb.log_info("Shader Attributes:-----" + str(shader_path))
-            # carb.log_info(shader_prim.GetAttributes())
+            carb.log_info("Shader Attributes:-----" + str(shader_path))
+            #carb.log_info(shader_prim.GetAttributes())
+            carb.log_info("Set shader image " + str(output_file))
 
             try:
                 shader_prim.CreateAttribute("inputs:diffuse_texture", Sdf.ValueTypeNames.Asset)
@@ -168,29 +176,9 @@ class GroupBase(ABC):
                 omni.kit.commands.execute('ChangeProperty',
                 prop_path=Sdf.Path(shader_path).AppendPath('.inputs:diffuse_texture'),
                 value=str(output_file),prev=str(output_file))        
-
-    #FIGURES OUT WHERE TO PUT THE PRIMS ON A VARIABLE SIZED-PLANE
-    def calculateGroupTransforms(self, scale:float, count:int, upAxis:str ):
-
-        #ex 400.0 -> 800 - 400 plane is 800x800
-        plane_size = (calcPlaneSizeForGroup(scaleFactor=scale, resourceCount=count)*1.8)
-        plane_class = ((plane_size/100)/2) +2
-        
-        #distance of objects depending on grid size..  
-        dist = plane_size / plane_class
-
-        #Use NVIDIAs Scatter algo to position on varying sized planes
-        transforms = scatterOnFixedPlane(
-            upAxis=upAxis,
-            count=[int(plane_class), int(plane_class)-1, 1], # Distribute accross the plane size
-            distance=[dist,dist,dist],
-            scaleFactor=scale
-        )
-
-        return transforms 
    
     #Change the Group Shaders textures to /from cost images
-    def show_hide_costs(self):
+    def showHideCosts(self):
 
         #Get Stage
         stage = omni.usd.get_context().get_stage()
@@ -258,6 +246,7 @@ class GroupBase(ABC):
             except:
                 pass
 
+    #Load group resources async
     async def loadGroupResources(self,group_name, group_prim_path, values):
         await self.loadGroupResources(self,group_name, group_prim_path, values)
 
@@ -268,7 +257,7 @@ class GroupBase(ABC):
         resCount = len(values)
         
         #Get the transform coordinates for a plane of this size with nn resources
-        transforms = self.calculateGroupTransforms(scale=self._scale,upAxis=self._upAxis, count=resCount+20)
+        transforms = calculateGroupTransforms(self=self, scale=self._scale,upAxis=self._upAxis, count=resCount)
 
         for res in values:
             carb.log_info("Placing prim " + res["type"] + " " + str(i) + " of " + str(resCount))
@@ -290,7 +279,6 @@ class GroupBase(ABC):
             )                    
 
             i=i+1 #increment resource id
-
 
 
     # Create Group Planes for the aggregates

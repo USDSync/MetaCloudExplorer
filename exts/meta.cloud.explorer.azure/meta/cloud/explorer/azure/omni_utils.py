@@ -134,7 +134,7 @@ def get_selected_prims(self):
         prims = [stage.GetPrimAtPath(m) for m in context.get_selection().get_selected_prim_paths()]
         return prims
 
-def create_shaders(base_path:str, prim_name:str ):
+async def create_shaders(base_path:str, prim_name:str ):
 
     prim_path = Sdf.Path(base_path)
     prim_path = prim_path.AppendPath("CollisionMesh")

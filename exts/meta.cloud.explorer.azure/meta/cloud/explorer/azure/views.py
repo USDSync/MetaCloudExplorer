@@ -106,53 +106,24 @@ class MainView(ui.Window):
     def select_planes(self):
         self._stageManager.Select_Planes()
 
-    def TestPlanes(self):
-
-        #usd_context = omni.usd.get_context()
-        #stage_ref = usd_context.get_stage()  
-
-        #path = Sdf.Path("/World").AppendPath("testplane")
-
-        #create_plane(self, str(path), "testplane", 500, Gf.Vec3f(0,0,0), Color=Gf.Vec3f(0,0,0))
-
-        self._dataStore._last_view_type = "ByGroup"
-        self._dataStore.Save_Config_Data()
-
-        self.clear_stage()
-        self._stageManager.ShowStage("ByGroup")
-
-
-
     #Load a fresh stage
     def load_stage(self, viewType: str):
         self._dataStore._last_view_type = viewType
         self._dataStore.Save_Config_Data()
 
-        self.clear_stage()
-        self._stageManager.ShowStage(viewType)
+        asyncio.ensure_future(self.clear_stage())
+        asyncio.ensure_future(self._stageManager.ShowStage(viewType))
 
     #load the resource onto the stage
     def load_resources(self):
         self._stageManager.LoadResources(self._dataStore._last_view_type)
 
-
-    def show_hide_costs(self):
+    #change the background shaders to reflect costs
+    def showHideCosts(self):
         self._stageManager.ShowCosts()
 
-    #GROUP VIEW
-    def load_resource_groups(self):
-        self._stageManager.ShowGroups()
-
-    #LOCATION VIEW
-    def load_locations(self):
-        self._stageManager.ShowLocations()
-
-    #ALL RESOURCES
-    def load_all_resources(self):
-        self._stageManager.ShowAllResources()
-
     # Clear the stage
-    def clear_stage(self):
+    async def clear_stage(self):
 
         stage = omni.usd.get_context().get_stage()
         root_prim = stage.GetPrimAtPath("/World")
@@ -255,13 +226,13 @@ class MainView(ui.Window):
             with ui.HStack(style=button_styles):
                 ui.Button("Location VIEW", clicked_fn=lambda: self.load_stage("ByLocation"), name="subs", height=35)
                 ui.Button("Subscription VIEW", clicked_fn=lambda: self.load_stage("BySub"), name="subs", height=15)
-                ui.Button("Clear Stage", clicked_fn=lambda: self.clear_stage(), name="clr", height=35)
+                ui.Button("Clear Stage", clicked_fn=lambda: asyncio.ensure_future(self.clear_stage()), name="clr", height=35)
                 
                 
         with ui.VStack(height=0, spacing=SPACING):
             #ui.Spacer(height=160)
             with ui.HStack(style=button_styles):
-                ui.Button("Show/Hide Costs", clicked_fn=lambda: self.show_hide_costs(),name="subs", height=35)
+                ui.Button("Show/Hide Costs", clicked_fn=lambda: self.showHideCosts(),name="subs", height=35)
                 ui.Button("Show Templates", clicked_fn=lambda: self.load_stage("Templates"),name="subs", height=15)
                 ui.Button("Select All Groups", clicked_fn=lambda: self.select_planes(),name="clr", height=35)
             
@@ -390,6 +361,7 @@ class MainView(ui.Window):
                     ui.Label("Object Scale", name="attribute_name", width=self.label_width, min=1, max=100)
                     ui.FloatDrag(self._dataStore._composition_scale_model, min=1, max=100)
                     self._dataStore._composition_scale_model.set_value(self._dataStore._scale_model)
+                with ui.HStack():
                     ui.Label("Use Symmetric groups?", name="attribute_name", width=self.label_width)
                     ui.CheckBox(self._dataStore._symmetric_planes_model)                    
                 with ui.HStack():

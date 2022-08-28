@@ -100,9 +100,6 @@ class DataManager:
             self.load_from_api()
             carb.log_info("Live Data Refreshed.")
 
-    async def process_data(self):  
-        self.process_data()
-    
     #Aggregate subscription, resources counts to DataManager Dictionaries
     async def process_data(self):  
         carb.log_info("Processing Data...")
@@ -112,28 +109,16 @@ class DataManager:
             obj = self._dataStore._resources[key]
 
             ### AGGREGATE COUNTS
-            if ASYNC_ENABLED:
-                await asyncio.ensure_future(self.AggregateCountsAsync(obj))
-            else:
-                self.AggregateCounts(obj)
+            await self.AggregateCountsAsync(obj)
 
             ### AGGREGATE COSTS
-            if ASYNC_ENABLED:
-                await asyncio.ensure_future(self.AggregateCostsAsync(obj))
-            else:
-                self.AggregateCosts(obj)
+            await self.AggregateCostsAsync(obj)
             
             ### MAP RESOURCES TO AGGREGATES
-            if ASYNC_ENABLED:
-                await asyncio.ensure_future(self.MapResourcesToGroupsAsync(obj))
-            else:
-                self.MapResourcesToGroups(obj)
+            await self.MapResourcesToGroupsAsync(obj)
 
         #Pre-create images for the groups
-        if ASYNC_ENABLED:
-            asyncio.ensure_future(self.CreateImagesForGroupsAsync())
-        else:
-            self.CreateImagesForGroups()
+        await self.CreateImagesForGroups()
 
         #output aggregation results to console
         carb.log_info("Data processing complete..")
@@ -141,14 +126,11 @@ class DataManager:
         carb.log_info(str(len(self._dataStore._resources)) + " Resources loaded from " + self._dataStore._source_of_data)
         carb.log_info(str(len(self._dataStore._groups)) + " Groups loaded from " + self._dataStore._source_of_data)
 
-    #Async Context
-    async def CreateImagesForGroupsAsync(self):
-        self.CreateImagesForGroups()
 
     #Create Images for all the maps
-    def CreateImagesForGroups(self):
+    async def CreateImagesForGroups(self):
 
-        carb.log_info("Processing images.")
+        carb.log_info("Processing images async.")
 
         #go through all the maps and create images 
         #this will save a ton of time later 
@@ -344,9 +326,6 @@ class DataManager:
 
     #Async context
     async def AggregateCostsAsync(self, obj):
-         self.AggregateCosts(obj)
-
-    def AggregateCosts(self, obj):
 
         ### AGGREGATE COSTS
         #Cost per Sub
@@ -388,9 +367,6 @@ class DataManager:
 
     #Async Context
     async def AggregateCountsAsync(self, obj):
-        self.AggregateCounts(obj)
-
-    def AggregateCounts(self, obj):
 
         ### AGGREGATE COUNTS
         #Count per Sub
@@ -422,12 +398,9 @@ class DataManager:
             self._dataStore._group_count[grpKey] = self._dataStore._group_count[grpKey] + 1
 
 
-    #Async Context
-    async def MapResourcesToGroupsAsync(self, obj):
-        self.MapResourcesToGroups(obj)
-
+      
     #Given a resource, Map it to all the groups it belongs to.
-    def MapResourcesToGroups(self, obj):
+    async def MapResourcesToGroupsAsync(self, obj):
         
         #Get the mapped shape and figure out the prim path for the map
         # Set a default
