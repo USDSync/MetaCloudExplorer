@@ -74,10 +74,13 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
     async def _destroy_window_async(self):
         # wait one frame, this is due to the one frame defer
         # in Window::_moveToMainOSWindow()
-        await omni.kit.app.get_app().next_update_async()
-        if self._window is not None:
-            self._window.destroy()
-            self._window = None
+        try:
+            await omni.kit.app.get_app().next_update_async()
+            if self._window is not None:
+                self._window.destroy()
+                self._window = None
+        except:
+            pass
 
     async def _dock_window(self):
         property_win = None

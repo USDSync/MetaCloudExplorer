@@ -134,7 +134,7 @@ class StageManager():
 
                 
     #Invoked from UI - Show the Stages based on the View.
-    async def ShowStage(self, viewType:str):
+    def ShowStage(self, viewType:str):
 
         #Reset view data
         self._dataStore._lcl_sizes = [] 
@@ -156,7 +156,7 @@ class StageManager():
 
         #Create the groups in an async loop
         if (len(self._dataStore._lcl_groups)) >0 :
-            await self.ActiveView.CreateGroups(transforms=transforms)
+            asyncio.ensure_future(self.ActiveView.CreateGroups(transforms=transforms))
         
 
     def LoadResources(self, viewType:str):

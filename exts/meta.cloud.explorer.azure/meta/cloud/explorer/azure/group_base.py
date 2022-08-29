@@ -112,9 +112,11 @@ class GroupBase(ABC):
 
                 carb.log_info("Create shader " + grp["group"] + " of " + str(len(self._dataStore._lcl_groups)))
                 await create_shaders(base_path=prim_path, prim_name=grp["group"])
+                await omni.kit.app.get_app().next_update_async()
 
             #Set the shader images for the groups
             await self.AddShaderImages()
+            await omni.kit.app.get_app().next_update_async()
 
     #Assign Images to the group Shaders
     async def AddShaderImages(self):
@@ -171,6 +173,7 @@ class GroupBase(ABC):
                 omni.kit.commands.execute('ChangeProperty',
                     prop_path=Sdf.Path(shader_path).AppendPath('.inputs:diffuse_texture'),
                     value=str(output_file), prev=str(output_file))
+                await omni.kit.app.get_app().next_update_async()
             except:
                 #Do it again!
                 omni.kit.commands.execute('ChangeProperty',
