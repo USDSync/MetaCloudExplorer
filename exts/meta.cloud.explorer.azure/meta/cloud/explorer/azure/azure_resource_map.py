@@ -15,7 +15,7 @@ shape_usda_name = {
     "Availability_test":"omniverse://localhost/Resources/3dIcons/Availability_Test.usd",
     "Azure_Cosmos_DB_API_for_MongoDB_account":"omniverse://localhost/Resources/3dIcons/Azure_Cosmos_DB_API_MongoDB.usd",
     "Azure_Cosmos_DB_account":"omniverse://localhost/Resources/3dIcons/Azure_Cosmos_DB.usd",
-    "Azure_Data_Explorer_Cluster":"omniverse://localhost/Resources/3dIcons/StorageAccounts_2.8.usd",
+    "Azure_Data_Explorer_Cluster":"omniverse://localhost/Resources/3dIcons/azure_data_explorer_clusters_fix.usd",
     "Azure_DevOps_organization":"omniverse://localhost/Resources/3dIcons/azure_devops_fix.usd",
     "Azure_Machine_Learning":"omniverse://localhost/Resources/3dIcons/Azure_Machine_Learning.usd",
     "Azure_Workbook":"omniverse://localhost/Resources/3dIcons/azure_workbook_fix.usd",
@@ -69,6 +69,14 @@ shape_usda_name = {
     "Virtual_machine":"omniverse://localhost/Resources/3dIcons/Virtual_Machine_1.1.usd",
     "Virtual_network":"omniverse://localhost/Resources/3dIcons/Virtual_Network.usd",
     "Web_App_Bot":"omniverse://localhost/Resources/3dIcons/Web_App_Bot.usd",
+    "Coat_Rack":"C:/Users/Gavin/Documents/AzureVerse/test/Coat_Rack__Bowler_Hat.usdz",
+    "Observation_Chair":"omniverse://localhost/Resources/Nvidia-Ball-Chair/Nvidia-Ball-Chair.usd",
+    "Leather_Jacket":"C:/Users/Gavin/Documents/AzureVerse/test/Leather_Jacket.usdz",
+    "Neon_All_Resources":  "omniverse://localhost/Resources/NeonSigns/all_resources/all_resources.usd",
+    "Neon_By_Group":  "omniverse://localhost/Resources/NeonSigns/resources_by_group/resources_by_group.usd",
+    "Neon_By_Subscription":  "omniverse://localhost/Resources/NeonSigns/resources_by_cost/resources_by_cost.usd",
+    "Neon_By_Location":  "omniverse://localhost/Resources/NeonSigns/resources_by_location/resources_by_location.usd",
+    "Neon_Azure_Cloud":  "omniverse://localhost/Resources/NeonSigns/azure cloud/azure cloud.usd"
 }
 
 

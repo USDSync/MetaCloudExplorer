@@ -155,8 +155,6 @@ class StageManager():
             await self.ActiveView.CreateGroups(transforms=transforms)
         
 
-
-
     def LoadResources(self, viewType:str):
         
         self.ActiveView = self.SetActiveView(viewType)

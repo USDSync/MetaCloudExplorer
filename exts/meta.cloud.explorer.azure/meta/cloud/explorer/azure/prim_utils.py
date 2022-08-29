@@ -35,11 +35,28 @@ def create_and_place_prim(self,
     my_new_prim.SetCustomDataByKey('res_name', prim_name) 
     my_new_prim.SetCustomDataByKey('res_grp', grp_name) 
 
+    #Default rotation
+    rotation = Gf.Vec3f(0,0,0)
+    translate = Gf.Vec3d(position[0], position[1], position[2])
+
     #Are we still set to default? Change cube size and position
     if shapeToRender == "omniverse://localhost/Resources/3dIcons/scene.usd":
         scale = 3.0
         position[2] = position[2] + 30 #Buffer the cube off the z
 
+    #CUSTOM SHAPE OVERRIDES
+    if prim_name == "nvidia_chair":
+        scale =0.8
+        rotation = Gf.Vec3f(90,0,220)
+        translate=Gf.Vec3d(position[0]+150, position[1]+150, position[2])
+    if prim_name == "nvidia_jacket":
+        scale =0.25
+        rotation = Gf.Vec3f(90,0,0)
+        translate=Gf.Vec3d(position[0]-20, position[1], position[2]-25)
+    if prim_name == "nvidia_coat_rack":
+        scale =0.55
+        rotation = Gf.Vec3f(90,0,0)                        
+        translate=Gf.Vec3d(position[0]-220, position[1]+210, position[2]+10)
     carb.log_info("Placing prim: " + shapeToRender + " | " + str(new_prim_path) + " @ " 
         + "scl:" + str(scale) + " x:" + str(position[0]) + "," + " y:" + str(position[1]) + "," + " z:" + str(position[2]))           
 
@@ -47,9 +64,9 @@ def create_and_place_prim(self,
 
     try:
         carb.log_info("Setting prim translate")
-        api.SetTranslate(Gf.Vec3d(position[0], position[1], position[2]),1)
+        api.SetTranslate(translate,1)
         print("Setting prim rotate")
-        api.SetRotate(Gf.Vec3f(0,0,0),UsdGeom.XformCommonAPI.RotationOrderXYZ,1)
+        api.SetRotate(rotation,UsdGeom.XformCommonAPI.RotationOrderXYZ,1)
         print("Setting prim scale")
         api.SetScale(Gf.Vec3f(scale,scale,scale), 1)
     except:

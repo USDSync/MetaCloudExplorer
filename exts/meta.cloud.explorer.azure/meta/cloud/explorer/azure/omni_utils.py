@@ -114,6 +114,11 @@ def create_prims(up_axis:str, plane_size:List[float], transforms: List = [], pri
         path = Sdf.Path(parent_path).AppendPath(prim_names[i]["group"])
         print(str(i) + " adding plane:" + str(path) + " " + str(plane_size[i]) +  " @ " + str(matrix[1]))
 
+        if prim_names[i]["group"] == "observation_deck":
+            matrix[1][0] = matrix[1][0] + 500
+            matrix[1][1] = matrix[1][1] + 500
+            matrix[1][2] = matrix[1][2] + 500
+
         omni.kit.commands.execute('AddGroundPlaneCommand',
         stage=stage_ref,
         planePath=str(path), #'/RGrp/Test_Positioning'
