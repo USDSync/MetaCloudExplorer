@@ -1,19 +1,22 @@
 # Meta Cloud Explorer
 # NVIDIA Onmiverse Extension, a Scene Authoring Tool
 
-CloudArchitect.live
+MetaCloudExplorer.com
 (In Alpha Development phase)
+
 Quickly connect to your Cloud Infrastructure and visualize it in your private Omniverse!*
 This extension generates digital models of your Cloud Infrastructure that can be used to gain insights to drive better infrastructure, optimized resources, reduced costs, and breakthrough customer experiences.
 
 ![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/azurescaled.png)
-Gain Insight by seeing your infrastructure at scale:
+**Gain Insight by seeing your infrastructure at scale:**
 ![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/resourcegroups.png)
-View resources by Location, Group, Type, Subscription
+**View resources by Location, Group, Type, Subscription**
 ![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/westus.png)
-Optional costs data integrated to groups
+**Optional costs data integrated to groups**
 ![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/costs.png)
-Can support multiple clouds!*
+
+**Can support multiple clouds!**
+
 ![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/aws-azure-gcp.png)
 
 **Only works with Microsoft Azure Cloud currently*
