@@ -136,6 +136,11 @@ class StageManager():
     #Invoked from UI - Show the Stages based on the View.
     async def ShowStage(self, viewType:str):
 
+        #Reset view data
+        self._dataStore._lcl_sizes = [] 
+        self._dataStore._lcl_groups = [] 
+        self._dataStore._lcl_resources = [] 
+
         self.ActiveView = self.SetActiveView(viewType)
 
         #populate the stage
