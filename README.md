@@ -1,19 +1,22 @@
 # Meta Cloud Explorer (MCE)
 # NVIDIA Onmiverse Extension, a Scene Authoring Tool
 
-CloudArchitect.live
+MetaCloudExplorer.com
 (In Alpha Development phase)
+
 Quickly connect to your Cloud Infrastructure and visualize it in your private Omniverse!*
 This extension generates digital models of your Cloud Infrastructure that can be used to gain insights to drive better infrastructure, optimized resources, reduced costs, and breakthrough customer experiences.
 
 ![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/azurescaled.png)
-Gain Insight by seeing your infrastructure at scale:
+**Gain Insight by seeing your infrastructure at scale:**
 ![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/resourcegroups.png)
-View resources by Location, Group, Type, Subscription
+**View resources by Location, Group, Type, Subscription**
 ![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/westus.png)
-Optional costs data integrated to groups
+**Optional costs data integrated to groups**
 ![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/costs.png)
-Can support multiple clouds!*
+
+**Can support multiple clouds!**
+
 ![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/aws-azure-gcp.png)
 
 **Only works with Microsoft Azure Cloud currently*
@@ -46,12 +49,11 @@ Steps to Connect:
 
 The Azure 3D Icon set is a derivative work, created by several artists to help bring the needed visual context into the Meta Cloud Explorer.  The application code includes an Object Resource Map that maps Azure Objects to their corresponding 3D object assets.  By default these can use Cubes or other primitive shapes.  see: cloudarchitect.live/cloud/explorer/azure/resource_map.py
 
+**The icon set is available here, it is pending copyright permission from Microsoft.**
+ https://drive.google.com/file/d/1st1PVMvAtI5zMLFQjEEzziCkvAPUxWro/view?usp=sharing
 
-https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/aws-azure-gcp.png
-https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/mce_ui.png
-
-**The icon set is not yet publicly available pending copyright permission from Microsoft.*
-
+Extract and upload to omniverse://localhost/Resources/
+  
 # Disconnected mode
 
 Due to some technical issues with the Azure / Python / OmniVerse Create API integration, you can manually export data from your Azure Cloud and use these data files as the data source instead.  Detailed metadata information on resources is limited in this mode, but it has enough data to view the Subscriptions, Resource Groups and Resources.
