@@ -52,6 +52,8 @@ The Azure 3D Icon set is a derivative work, created by several artists to help b
 **The icon set is available here, it is pending copyright permission from Microsoft.**
  https://drive.google.com/file/d/1st1PVMvAtI5zMLFQjEEzziCkvAPUxWro/view?usp=sharing
 
+Extract and upload to omniverse://localhost/Resources/
+  
 # Disconnected mode
 
 Due to some technical issues with the Azure / Python / OmniVerse Create API integration, you can manually export data from your Azure Cloud and use these data files as the data source instead.  Detailed metadata information on resources is limited in this mode, but it has enough data to view the Subscriptions, Resource Groups and Resources.
