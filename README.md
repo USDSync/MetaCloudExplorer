@@ -13,6 +13,7 @@ Quickly connect to your Cloud Infrastructure and visualize it in the Omniverse!*
 This extension generates digital models of your Cloud Infrastructure that can be used to gain insights to drive better infrastructure, optimized resources, reduced costs, and breakthrough customer experiences.
 
 ![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/aws-azure-gcp.png)
+
 **Only works with Microsoft Azure Cloud currently*
 AWS, GCP planned on roadmap.
 
