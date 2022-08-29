@@ -37,12 +37,10 @@ class SubGrpView(GroupBase):
         #check it again
         if len(self._dataStore._subscription_count) == 0:
             return 0
-        
-        self.view_path = Sdf.Path(self.root_path.AppendPath(self._view_path))
 
-        #temp group list to prep for planes, adds to main aggregate
-        gpz = self._dataStore._subscription_count.copy()
-        
+        #Clone the sub groups
+        gpz = self._dataStore._subscription_count.copy()        
+       
         for grp in gpz:
             size = calcPlaneSizeForGroup(
                     scaleFactor=self._scale, 
@@ -62,6 +60,7 @@ class SubGrpView(GroupBase):
                 for count in range(0,groupCount):
                     self._dataStore._lcl_sizes.append(maxPlaneSize)               
 
+            self._dataStore._lcl_groups = []
             grp = cleanup_prim_path(self, grp)
             self._dataStore._lcl_groups.append({ "group":grp, "size":size })
 

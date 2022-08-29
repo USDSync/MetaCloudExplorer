@@ -41,6 +41,7 @@ class LocGrpView(GroupBase):
         #Clone the location groups
         gpz = self._dataStore._location_count.copy()
 
+        
         #How big should the groups be?
         for grp in gpz:
             size = calcPlaneSizeForGroup(

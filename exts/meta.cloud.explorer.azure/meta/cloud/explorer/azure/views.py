@@ -163,7 +163,8 @@ class MainView(ui.Window):
         self._dataStore.Save_Config_Data()
 
         asyncio.ensure_future(self.clear_stage())
-        asyncio.ensure_future(self._stageManager.ShowStage(viewType))
+        
+        self._stageManager.ShowStage(viewType)
 
     #load the resource onto the stage
     def load_resources(self):
@@ -180,42 +181,54 @@ class MainView(ui.Window):
         root_prim = stage.GetPrimAtPath("/World")
         if (root_prim.IsValid()):
             stage.RemovePrim("/World")
+            await omni.kit.app.get_app().next_update_async()
         
         ground_prim = stage.GetPrimAtPath('/GroundPlane')
         if (ground_prim.IsValid()):
-            stage.RemovePrim('/GroundPlane')                    
+            stage.RemovePrim('/GroundPlane')                
+            await omni.kit.app.get_app().next_update_async()    
 
         ground_prim = stage.GetPrimAtPath('/RGrp')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/RGrp')
+            await omni.kit.app.get_app().next_update_async()
 
         ground_prim = stage.GetPrimAtPath('/Loc')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Loc')
+            await omni.kit.app.get_app().next_update_async()
 
         ground_prim = stage.GetPrimAtPath('/AAD')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/AAD') 
+            await omni.kit.app.get_app().next_update_async()
 
         ground_prim = stage.GetPrimAtPath('/Subs')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Subs')
+            await omni.kit.app.get_app().next_update_async()
 
         ground_prim = stage.GetPrimAtPath('/Type')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Type')
+            await omni.kit.app.get_app().next_update_async()
 
         ground_prim = stage.GetPrimAtPath('/Cost')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Cost')
+            await omni.kit.app.get_app().next_update_async()
 
         ground_prim = stage.GetPrimAtPath('/Looks')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Looks')
+            await omni.kit.app.get_app().next_update_async()
 
         ground_prim = stage.GetPrimAtPath('/Tag')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Tag')
+            
+        for x in range(50):
+                await omni.kit.app.get_app().next_update_async()
 
 
     #___________________________________________________________________________________________________
