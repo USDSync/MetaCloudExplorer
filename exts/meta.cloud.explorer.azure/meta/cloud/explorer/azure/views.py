@@ -374,9 +374,9 @@ class MainView(ui.Window):
         def _on_clicked(self, source):
             self.set_defaults(source)
 #style={"color": 0xFF008976, "font_size":20}
-        with ui.CollapsableFrame("Quickstarts", name="group", collapsed=True ): 
+        with ui.CollapsableFrame("Quickstarts", name="group", collapsed=True, style={"color": 0xFF008976, "font_size":20}): 
             with ui.VStack():
-                with ui.HStack():
+                with ui.HStack(style={}):
                     with ui.VStack():
                         ui.Label("TOWER", name="attribute_name", width=self.label_width)
                         SimpleImageButton(image="omniverse://localhost/Resources/images/tower.png", size=150, name="twr_btn", clicked_fn=lambda: _on_clicked(self, source="tower"))
