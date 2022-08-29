@@ -4,7 +4,7 @@ description="An Omniverse scene authoring tool to help visualize your Azure Infr
 version = "1.0.0"
 category = "Browsers"
 authors = ["CloudArchitect.live"]
-#preview_image = "data/inspector_full.png"
+preview_image = "data/resources/azurescaled.png"
 icon = "data/resources/meta_cloud_explorer.png"
 
 # Path (relative to the root) or content of readme markdown file for UI.
