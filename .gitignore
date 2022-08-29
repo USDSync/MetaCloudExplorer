@@ -15,5 +15,5 @@ api/acdt/obj/
 api/acdt/.vs/
 venv/
 .vscode
-exts/meta.cloud.explorer.azure/meta/cloud/explorer/azure/temp/
+exts/meta.cloud.explorer.azure/meta/cloud/explorer/azure/temp/*.png
 exts/meta.cloud.explorer.azure/meta/cloud/explorer/azure/import_fbx.py
