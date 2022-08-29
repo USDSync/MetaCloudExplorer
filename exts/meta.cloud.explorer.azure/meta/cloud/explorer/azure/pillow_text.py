@@ -1,15 +1,14 @@
 import glob
 from PIL import Image, ImageDraw, ImageFont, ImageDraw
-import requests
 import io
 import asyncio
 import os
 import time
+import sys
 import os.path as path
 from pathlib import Path
-
+import omni.kit.pipapi
 from datetime import datetime, timedelta
-
 
 #Create and draw images in async contexxt
 async def draw_text_on_image_at_position_async (
@@ -61,8 +60,8 @@ def draw_text_on_image_at_position(
 
         print("Refreshing Image " + str(output_image_path) + " with text: "  + textToDraw + " cst: " + costToDraw) 
 
-        font1 = font
-        font = load_font_from_uri(fontSize, font1)
+        #font = ImageFont.load(str(font))
+        font = ImageFont.truetype(str(font), fontSize, encoding="unic")
 
         print("Loading src file: " + str(input_image_path))
         image = Image.open(input_image_path)
@@ -71,13 +70,12 @@ def draw_text_on_image_at_position(
         textW, textH = draw.textsize(textToDraw, font) # how big is our text
         costW, costH = draw.textsize(costToDraw, font) # how big is cost text
 
-        draw.text((x, y), textToDraw, font_size=fontSize,anchor="ls", font=font, fill=fillColor)
-
         if costToDraw != "":
-            width, height = image.size
-            xx = (width - (costW +350))
-            costToDraw = str(costToDraw) + " /m"
-            draw.text((xx,y), costToDraw, font_size=(fontSize-50), anchor="ls", font=font, fill="red")
+            costToDraw = str(costToDraw) + " /month"
+            draw.text((x,y-75), textToDraw, font_size=fontSize,anchor="ls", font=font, fill=fillColor)
+            draw.text((x,y+75), costToDraw, font_size=(fontSize-50), anchor="ls", font=font, fill="red")
+        else:
+            draw.text((x, y-50), textToDraw, font_size=fontSize,anchor="ls", font=font, fill=fillColor)
 
         image = image.rotate(-270, expand=1)
 
@@ -98,13 +96,6 @@ def create_image_with_text(output_image_path:str, textToDraw:str, x:int, y:int, 
     #font = ImageFont.truetype(fontPath, layout_engine=ImageFont.LAYOUT_BASIC, size=fontSize)
     draw.text((x, y), textToDraw, font=font, anchor="ls", fill=fillColor)
     image.save(output_image_path)
-
-
-def load_font_from_uri(size:int, url:str):
-    # Load font from URI
-    truetype_url = url
-    r = requests.get(truetype_url, allow_redirects=True)
-    return ImageFont.truetype(io.BytesIO(r.content), size=size)
 
 
 #angled text 

@@ -17,7 +17,6 @@ from pxr import Sdf, Gf, Usd, UsdGeom
 from .prim_utils import create_plane
 
 
-
 def get_selection() -> List[str]:
     """Get the list of currently selected prims"""
     return omni.usd.get_context().get_selection().get_selected_prim_paths()
@@ -105,7 +104,7 @@ def create_prims(up_axis:str, plane_size:List[float], transforms: List = [], pri
     # Call commands in a single undo group. So the user will undo everything
     # with a single press of ctrl-z
     #with omni.kit.undo.group():
-    print("Prim count: " + str(len(prim_names)))
+    #print("Prim count: " + str(len(prim_names)))
     # Create a group
     #omni.kit.commands.execute("CreatePrim", prim_path=parent_path, prim_type="Scope")
     i=0
@@ -115,27 +114,32 @@ def create_prims(up_axis:str, plane_size:List[float], transforms: List = [], pri
         path = Sdf.Path(parent_path).AppendPath(prim_names[i]["group"])
         print(str(i) + " adding plane:" + str(path) + " " + str(plane_size[i]) +  " @ " + str(matrix[1]))
 
+        if prim_names[i]["group"] == "observation_deck":
+            matrix[1][0] = matrix[1][0] + 500
+            matrix[1][1] = matrix[1][1] + 500
+            matrix[1][2] = matrix[1][2] + 500
+
         omni.kit.commands.execute('AddGroundPlaneCommand',
         stage=stage_ref,
-        planePath=str(path),
-        axis=up_axis,
+        planePath=str(path), #'/RGrp/Test_Positioning'
+        axis='Z',
         size=plane_size[i],
         position=matrix[1],
         color=Gf.Vec3f(0,0,0))
 
-        #Add a UV
-        # plane_prim = omni.usd.get_context().get_stage().GetPrimAtPath(path)
-        # mesh = UsdGeom.Mesh(plane_prim)
-        # uv_primvar = mesh.CreatePrimvar("st",
-        #     Sdf.ValueTypeNames.TexCoord2fArray,
-        #     UsdGeom.Tokens.varying
-        # )
-        # uv_primvar.Set([(0,0), (0,1), (1,1), (1,0)])
-
         i=i+1
 
+def get_selected_prims(self):
+        """
+        Get the currently selected prims in the scene
+        """
+        
+        context = omni.usd.get_context()
+        stage = context.get_stage()
+        prims = [stage.GetPrimAtPath(m) for m in context.get_selection().get_selected_prim_paths()]
+        return prims
 
-def create_shaders(base_path:str, prim_name:str ):
+async def create_shaders(base_path:str, prim_name:str ):
 
     prim_path = Sdf.Path(base_path)
     prim_path = prim_path.AppendPath("CollisionMesh")

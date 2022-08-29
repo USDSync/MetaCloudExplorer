@@ -10,6 +10,7 @@ from .style_meta import cl_combobox_background, cls_temperature_gradient, cls_co
 
 from .data_manager import DataManager
 from .data_store import DataStore
+from .button import SimpleImageButton
 
 import sys
 import asyncio
@@ -18,7 +19,6 @@ import webbrowser
 import omni.ext
 import omni.ui as ui
 from omni.ui import color as cl
-from omni.ui import scene as sc
 import os
 import omni.kit.commands
 import omni.kit.pipapi
@@ -30,6 +30,7 @@ from .combo_box_model import ComboBoxModel
 from .omni_utils import duplicate_prims
 from .stage_manager import StageManager
 from .import_fbx import convert_asset_to_usd
+from .prim_utils import create_plane
 
 
 import random
@@ -103,42 +104,77 @@ class MainView(ui.Window):
     def on_group():
         print("On Group")
 
+    def set_defaults(self, defType:str):
+        if defType == "tower":
+            self._dataStore._symmetric_planes_model.set_value(True)
+            self._dataStore._packing_algo_model.set_value(False)
+            self._dataStore._options_count_models[0].set_value(2)
+            self._dataStore._options_count_models[1].set_value(2)
+            self._dataStore._options_count_models[2].set_value(20)
+            self._dataStore._options_dist_models[0].set_value(500.0)
+            self._dataStore._options_dist_models[1].set_value(500.0)
+            self._dataStore._options_dist_models[2].set_value(250.0)
+            self._dataStore._options_random_models[0].set_value(1)
+            self._dataStore._options_random_models[1].set_value(1)
+            self._dataStore._options_random_models[2].set_value(1)
+        if defType == "symmetric":
+            self._dataStore._symmetric_planes_model.set_value(True)
+            self._dataStore._packing_algo_model.set_value(False)
+            self._dataStore._options_count_models[0].set_value(4)
+            self._dataStore._options_count_models[1].set_value(4)
+            self._dataStore._options_count_models[2].set_value(20)
+            self._dataStore._options_dist_models[0].set_value(500.0)
+            self._dataStore._options_dist_models[1].set_value(500.0)
+            self._dataStore._options_dist_models[2].set_value(250.0)
+            self._dataStore._options_random_models[0].set_value(1)
+            self._dataStore._options_random_models[1].set_value(1)
+            self._dataStore._options_random_models[2].set_value(1)
+        if defType == "islands":
+            self._dataStore._symmetric_planes_model.set_value(False)
+            self._dataStore._packing_algo_model.set_value(False)
+            self._dataStore._options_count_models[0].set_value(10)
+            self._dataStore._options_count_models[1].set_value(2)
+            self._dataStore._options_count_models[2].set_value(4)
+            self._dataStore._options_dist_models[0].set_value(500.0)
+            self._dataStore._options_dist_models[1].set_value(500.0)
+            self._dataStore._options_dist_models[2].set_value(250.0)
+            self._dataStore._options_random_models[0].set_value(1)
+            self._dataStore._options_random_models[1].set_value(1)
+            self._dataStore._options_random_models[2].set_value(1)
+        if defType == "packer":
+            self._dataStore._symmetric_planes_model.set_value(True)
+            self._dataStore._packing_algo_model.set_value(True)
+            self._dataStore._options_count_models[0].set_value(4)
+            self._dataStore._options_count_models[1].set_value(4)
+            self._dataStore._options_count_models[2].set_value(20)
+            self._dataStore._options_dist_models[0].set_value(500.0)
+            self._dataStore._options_dist_models[1].set_value(500.0)
+            self._dataStore._options_dist_models[2].set_value(250.0)
+            self._dataStore._options_random_models[0].set_value(1)
+            self._dataStore._options_random_models[1].set_value(1)
+            self._dataStore._options_random_models[2].set_value(1)
+
     def select_planes(self):
         self._stageManager.Select_Planes()
 
     #Load a fresh stage
     def load_stage(self, viewType: str):
+        self._dataStore._last_view_type = viewType
         self._dataStore.Save_Config_Data()
-        self.clear_stage()
-        self._stageManager.ShowStage(viewType)
+
+        asyncio.ensure_future(self.clear_stage())
+        asyncio.ensure_future(self._stageManager.ShowStage(viewType))
 
     #load the resource onto the stage
-    def load_resources(self, viewType: str):
-        self._stageManager.LoadResources(viewType)
+    def load_resources(self):
+        self._stageManager.LoadResources(self._dataStore._last_view_type)
 
-
-    def show_hide_costs(self):
+    #change the background shaders to reflect costs
+    def showHideCosts(self):
         self._stageManager.ShowCosts()
 
-
-
-    #GROUP VIEW
-    def load_resource_groups(self):
-        
-        self._stageManager.ShowGroups()
-
-    #LOCATION VIEW
-    def load_locations(self):
-        
-        self._stageManager.ShowLocations()
-
-    #ALL RESOURCES
-    def load_all_resources(self):
-        
-        self._stageManager.ShowAllResources()
-
     # Clear the stage
-    def clear_stage(self):
+    async def clear_stage(self):
 
         stage = omni.usd.get_context().get_stage()
         root_prim = stage.GetPrimAtPath("/World")
@@ -199,6 +235,7 @@ class MainView(ui.Window):
         with ui.ScrollingFrame():
             with ui.VStack(height=0):
                 self._build_new_header()
+                self._build_image_presets()
                 self._build_options()
                 self._build_connection()
                 self._build_import()
@@ -232,22 +269,22 @@ class MainView(ui.Window):
         with ui.VStack(height=0, spacing=SPACING):
             #ui.Spacer(height=80)
             with ui.HStack(style=button_styles):
-                ui.Button("Res Groups", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=35)
-                ui.Button("Res Types", clicked_fn=lambda: self.load_stage("ByType"), name="subs",height=35)
-                ui.Button("Show Resources", clicked_fn=lambda: self.load_resources("ByGroup"), name="clr", height=35)
+                ui.Button("Group VIEW", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=35)
+                ui.Button("Type VIEW", clicked_fn=lambda: self.load_stage("ByType"), name="subs",height=35)
+                ui.Button("Show Resources", clicked_fn=lambda: self.load_resources(), name="clr", height=35)
                 
         with ui.VStack(height=0, spacing=SPACING):
             #ui.Spacer(height=120)
             with ui.HStack(style=button_styles):
-                ui.Button("Locations", clicked_fn=lambda: self.load_stage("ByLocation"), name="subs", height=35)
-                ui.Button("Subscriptions", clicked_fn=lambda: self.load_stage("BySub"), name="subs", height=15)
-                ui.Button("Clear the Stage", clicked_fn=lambda: self.clear_stage(), name="clr", height=35)
+                ui.Button("Location VIEW", clicked_fn=lambda: self.load_stage("ByLocation"), name="subs", height=35)
+                ui.Button("Subscription VIEW", clicked_fn=lambda: self.load_stage("BySub"), name="subs", height=15)
+                ui.Button("Clear Stage", clicked_fn=lambda: asyncio.ensure_future(self.clear_stage()), name="clr", height=35)
                 
                 
         with ui.VStack(height=0, spacing=SPACING):
             #ui.Spacer(height=160)
             with ui.HStack(style=button_styles):
-                ui.Button("Show/Hide Costs", clicked_fn=lambda: self.show_hide_costs(),name="subs", height=35)
+                ui.Button("Show/Hide Costs", clicked_fn=lambda: self.showHideCosts(),name="subs", height=35)
                 ui.Button("Show Templates", clicked_fn=lambda: self.load_stage("Templates"),name="subs", height=15)
                 ui.Button("Select All Groups", clicked_fn=lambda: self.select_planes(),name="clr", height=35)
             
@@ -255,12 +292,7 @@ class MainView(ui.Window):
             #     ui.Button("Network View", clicked_fn=lambda: self.load_stage("ByNetwork"), height=15)
             #     ui.Button("Cost View", clicked_fn=lambda: self.load_stage("ByCost"), height=15)
             #     ui.Button("Template View", clicked_fn=lambda: self.load_stage("Template"), height=15)
-        with ui.VStack(height=0, spacing=SPACING):
-            #ui.Spacer(height=200)
-            with ui.HStack(style=button_styles):
-                ui.Button("Docs", clicked_fn=lambda: self.on_docs(), name="help", height=15)
-                ui.Button("Code", clicked_fn=lambda: self.on_code(), name="help", height=15)
-                ui.Button("Help", clicked_fn=lambda: self.on_help(), name="help", height=15)                      
+       
 
     def _build_import(self):
         with ui.CollapsableFrame("Import Offline Files", name="group", collapsed=True, style={"color": 0xFF008976, "font_size":20}):
@@ -281,8 +313,11 @@ class MainView(ui.Window):
                     self._dataStore._rs_csv_field_model = self._rs_data_import_field.model
                     ui.Button("Load", width=40, clicked_fn=lambda: self._dataManager.select_file("res"))
                 with ui.HStack():
-                    ui.Button("Clear Data", clicked_fn=lambda: self._dataManager.wipe_data())            
+                    ui.Button("Clear imported Data", clicked_fn=lambda: self._dataManager.wipe_data())            
                     ui.Button("Import Data Files", clicked_fn=lambda: self._dataManager.load_csv_files())            
+                with ui.HStack():
+                    ui.Button("Load Sample Dataset", clicked_fn=lambda: self._dataManager.wipe_data())            
+                    ui.Button("Load Sample Resources", clicked_fn=lambda: self._dataManager.load_csv_files())                                
 
     def _build_connection(self):
         with ui.CollapsableFrame("Cloud API Connection", name="group", collapsed=True, style={"color": 0xFF008976, "font_size":20}):
@@ -334,6 +369,32 @@ class MainView(ui.Window):
                     ui.Label("Randomness", name="attribute_name", width=self.label_width)
                     ui.FloatDrag(self._dataStore._options_random_models[axis_id], min=1.0, max=10.0)
 
+
+    def _build_image_presets(self):
+        def _on_clicked(self, source):
+            self.set_defaults(source)
+#style={"color": 0xFF008976, "font_size":20}
+        with ui.CollapsableFrame("Quickstarts", name="group", collapsed=True ): 
+            with ui.VStack():
+                with ui.HStack():
+                    with ui.VStack():
+                        ui.Label("TOWER", name="attribute_name", width=self.label_width)
+                        SimpleImageButton(image="omniverse://localhost/Resources/images/tower.png", size=150, name="twr_btn", clicked_fn=lambda: _on_clicked(self, source="tower"))
+                    with ui.VStack():
+                        ui.Label("ISLANDS", name="attribute_name", width=self.label_width)
+                        SimpleImageButton(image="omniverse://localhost/Resources/images/islands.png", size=150, name="isl_btn", clicked_fn=lambda: _on_clicked(self, source="islands"))
+                    with ui.VStack():
+                        ui.Label("SYMMETRIC", name="attribute_name", width=self.label_width)
+                        SimpleImageButton(image="omniverse://localhost/Resources/images/Symmetric.png", size=150, name="sym_btn", clicked_fn=lambda: _on_clicked(self, source="symmetric"))
+                    with ui.VStack():
+                        ui.Label("BIN PACKER", name="attribute_name", width=self.label_width)
+                        SimpleImageButton(image="omniverse://localhost/Resources/images/rows.png", size=150, name="row_btn",clicked_fn=lambda: _on_clicked(self, source="packer"))
+
+                    #ui.Image("../../../data/Resources/images/tower.png", fill_policy=ui.FillPolicy.PRESERVE_ASPECT_FIT, alignment=ui.Alignment.CENTER,style={'border_radius':10})
+                    #ui.Image("omniverse://localhost/Resources/images/Symmetric.png", fill_policy=ui.FillPolicy.PRESERVE_ASPECT_FIT, alignment=ui.Alignment.CENTER,style={'border_radius':10})
+                    #ui.Image("omniverse://localhost/Resources/images/rows.png", fill_policy=ui.FillPolicy.PRESERVE_ASPECT_FIT, alignment=ui.Alignment.CENTER,style={'border_radius':10})
+
+
     def _build_image_options(self):
         with ui.CollapsableFrame("Group Images", name="group", collapsed=True):        
             with ui.VStack(height=0, spacing=SPACING):
@@ -362,23 +423,27 @@ class MainView(ui.Window):
                     ui.Button("Load", width=40, clicked_fn=lambda: self._dataManager.select_file("bgh"))                    
 
 
-    def _build_options(self):
+    def _build_options(self, default_value=0, min=0, max=1):
+        def _on_value_changed_bp(model):
+            self._dataStore._use_packing_algo = model.as_bool
+        def _on_value_changed_sg(model):
+            self._dataStore._use_symmetric_planes = model.as_bool
+
         with ui.CollapsableFrame("Scene Composition Options", name="group", collapsed=True, style={"color": 0xFF008976, "font_size":20}): 
             with ui.VStack(height=0, spacing=SPACING, style={"color": 0xFFFFFFFF, "font_size":16}):
                 with ui.HStack():
                     #self._dataStore._composition_scale_model = self._build_gradient_float_slider("Scale Factor", default_value=10, min=1, max=100)
                     ui.Label("Object Scale", name="attribute_name", width=self.label_width, min=1, max=100)
                     ui.FloatDrag(self._dataStore._composition_scale_model, min=1, max=100)
-
-                    ui.Label("Up Axis", name="attribute_name", width=self.label_width)
-                    ui.ComboBox(self._dataStore._primary_axis_model)    
-                
-                ui.Spacer()
-                with ui.HStack():  
-                    ui.Label("Symmetric groups?", name="attribute_name", width=self.label_width)
-                    ui.CheckBox(self._dataStore._symmetric_planes_model)                    
-                    ui.Label("Shape Up Axis", name="attribute_name", width=self.label_width)
-                    ui.ComboBox(self._dataStore._shape_up_axis_model)    
+                    self._dataStore._composition_scale_model.set_value(self._dataStore._scale_model)
+                with ui.HStack():
+                    ui.Label("Use Symmetric groups?", name="attribute_name", width=self.label_width)
+                    cb1 = ui.CheckBox(self._dataStore._symmetric_planes_model)                    
+                    cb1.model.add_value_changed_fn(lambda model: _on_value_changed_sg(model))
+                with ui.HStack():
+                    ui.Label("Use Bin Packing?", name="attribute_name", width=self.label_width)
+                    cb2 = ui.CheckBox(self._dataStore._packing_algo_model)                    
+                    cb2.model.add_value_changed_fn(lambda model: _on_value_changed_bp(model))
 
                 self._build_image_options()
 

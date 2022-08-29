@@ -46,17 +46,22 @@ from  .prim_utils import get_font_size_from_length
 from .packer import Node, Block, Packer
 
 from omni.kit.window.file_importer import get_file_importer
-from omni.ui import scene as sc
 from omni.ui import color as cl
 
+#import utilities
 from .azure_resource_map import shape_usda_name
-from .math_utils import calcPlaneSizeForGroup
 from .data_manager import DataManager
 from .data_store import DataStore
 from .scatter_complex import distributePlanes
-from .scatter_on_planes import scatterOnFixedPlane
-from .omni_utils import create_prims, create_shaders
-from .group_base import AADGrpView, ResGrpView, SubGrpView, LocGrpView, TypeGrpView, TypeTagView
+
+#Import View Models
+from .group_aad import AADGrpView
+from .group_group import ResGrpView
+from .group_sub import SubGrpView
+from .group_location import LocGrpView
+from .group_type import TypeGrpView
+from .group_tag import TagGrpView
+
 
 CURRENT_PATH = Path(__file__).parent
 DATA_PATH = CURRENT_PATH.joinpath("temp")
@@ -66,181 +71,168 @@ DATA_PATH = CURRENT_PATH.joinpath("temp")
 # It will render the resources in each group on individual planes
 class StageManager():
     def __init__(self):
-        #pass
 
-        #moved to abstract base GroupBase
         self._dataManager = DataManager.instance() # Get A Singleton instance
         self._dataStore = DataStore.instance() # Get A Singleton instance
        
-        # # # stage_unit defines the number of unit per meter
         self.stage_unit_per_meter = 1
 
-               #Get Composition Options from UI
+        #Get Composition Options from UI
         try:
-            self._scale = self._dataStore._composition_scale_model.as_float
+            self._scale = self._dataStore._scale_model
         except:
             self._scale=1.0
         try:
-            self._upAxis = self._dataStore._primary_axis_model.get_current_item().as_string
+            self._use_packing_algo = self._dataStore._use_packing_algo
         except:
-            self._upAxis="Z"
+            self._use_packing_algo = False
         try:
-            self._shapeUpAxis = self._dataStore._shape_up_axis_model.get_current_item().as_string
-        except:
-            self._shapeUpAxis="Z"
-        try:
-            self._use_symmetric_planes = self._dataStore._use_symmetric_planes().as_bool
+            self._use_symmetric_planes = self._dataStore._use_symmetric_planes
         except:
             self._use_symmetric_planes = False
         try:
-            self._last_view_type =  self._dataStore._last_view_type().as_string
+            self._last_view_type =  self._dataStore._last_view_type
         except:
             self._last_view_type = "ByGroup"
-     
-        #Set a subclass to handle the View Creation    
-        if self._dataStore._last_view_type == "ByGroup":
-            #asyncio.ensure_future(self.sendNotify("Group View loaded...", nm.NotificationStatus.INFO))   
-            self.ActiveView = ResGrpView(viewPath="/RGrp", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
-            
-        if self._dataStore._last_view_type == "ByLocation":    
-            #asyncio.ensure_future(self.sendNotify("Location View loaded...", nm.NotificationStatus.INFO))
-            self.ActiveView = LocGrpView(viewPath="/Loc", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
-            
-        if self._dataStore._last_view_type == "ByType":    
-            #asyncio.ensure_future(self.sendNotify("Type View loaded...", nm.NotificationStatus.INFO))
-            self.ActiveView = TypeGrpView(viewPath="/Type", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
-            
-        if self._dataStore._last_view_type == "BySub":    
-            #asyncio.ensure_future(self.sendNotify("Subscription View loaded..", nm.NotificationStatus.INFO))
-            self.ActiveView = SubGrpView(viewPath="/Subs", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
-            
-        if self._dataStore._last_view_type == "ByTag":    
-            #asyncio.ensure_future(self.sendNotify("Tag View loaded..", nm.NotificationStatus.INFO))
-            self.ActiveView = TypeTagView(viewPath="/Tag", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
 
-                
-    #Invoked from UI - Show the Stages based on the View.
-    def ShowStage(self, viewType:str):
+        if self._last_view_type is None:
+            self._last_view_type = "ByGroup"
 
-        #Set a subclass to handle the View Creation    
+        self._upAxis="Z"
+        self._shapeUpAxis="Z"
+        self.ActiveView = self.SetActiveView(self._last_view_type)
+
+    def SetActiveView(self, viewType:str):
+
+                #Set a subclass to handle the View Creation    
         if viewType == "ByGroup":
             #asyncio.ensure_future(self.sendNotify("Group View loaded...", nm.NotificationStatus.INFO))   
-            self.ActiveView = ResGrpView(viewPath="/RGrp", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
+            view = ResGrpView(viewPath="RGrps", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, 
+                symPlanes=self._dataStore._symmetric_planes_model.as_bool, binPack=self._use_packing_algo)
             
         if viewType == "ByLocation":    
             #asyncio.ensure_future(self.sendNotify("Location View loaded...", nm.NotificationStatus.INFO))
-            self.ActiveView = LocGrpView(viewPath="/Loc", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
+            view = LocGrpView(viewPath="Locs", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, 
+                symPlanes=self._dataStore._symmetric_planes_model.as_bool, binPack=self._use_packing_algo)
             
         if viewType == "ByType":    
             #asyncio.ensure_future(self.sendNotify("Type View loaded...", nm.NotificationStatus.INFO))
-            self.ActiveView = TypeGrpView(viewPath="/Type", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
+            view = TypeGrpView(viewPath="Types", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, 
+                symPlanes=self._dataStore._symmetric_planes_model.as_bool, binPack=self._use_packing_algo)
             
         if viewType == "BySub":    
             #asyncio.ensure_future(self.sendNotify("Subscription View loaded..", nm.NotificationStatus.INFO))
-            self.ActiveView = SubGrpView(viewPath="/Subs", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
+            view = SubGrpView(viewPath="Subs", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, 
+                symPlanes=self._dataStore._symmetric_planes_model.as_bool, binPack=self._use_packing_algo)
             
         if viewType == "ByTag":    
             #asyncio.ensure_future(self.sendNotify("Tag View loaded..", nm.NotificationStatus.INFO))
-            self.ActiveView = TypeTagView(viewPath="/Tag", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, symPlanes=self._use_symmetric_planes)
+            view = TagGrpView(viewPath="Tags", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, 
+                symPlanes=self._dataStore._symmetric_planes_model.as_bool, binPack=self._use_packing_algo)
 
-        #Are the options compatible with the data?
-        maxDims = (self._dataStore._options_count_models[0].as_float * self._dataStore._options_count_models[1].as_float * self._dataStore._options_count_models[2].as_float)
-        grpCnt = len(self._dataStore._groups)
-        if grpCnt > maxDims:
-            asyncio.ensure_future(self.sendNotify("Not enough dimensions for ..." + str(grpCnt) + "res groups, Max Dims: " + str(maxDims), nm.NotificationStatus.WARNING))   
-            return
+        return view
+
+                
+    #Invoked from UI - Show the Stages based on the View.
+    async def ShowStage(self, viewType:str):
+
+        self.ActiveView = self.SetActiveView(viewType)
 
         #populate the stage
         self.ActiveView.initializeStage(self.stage_unit_per_meter) #Base Method
-        self.ActiveView.calcPlaneGroupSettings() #Abstract Method
+        self.ActiveView.calcGroupPlaneSizes() #Abstract Method
         self.ActiveView.calulateCosts() #Abstract Method
 
-        #sortd = dict(sorted(self.ActiveView._groups["group"]["size"], key=lambda item: item[1]))
+        transforms = self.getTransforms() #Cooredinates for the group planes
 
-        #Use Packer Algorythm to determine positioning
-        transforms =[]
-        blocks = []
-        sorted_sizes = sorted(self.ActiveView._sizes, reverse=True)
-        for size in sorted_sizes:
-            sz = (size*2) #double the size end to end
-            blocks.append(Block((sz,sz)))
-            #blocks.append(Block(sz,sz))
-
-        pack = Packer()
-        pack.fit(blocks)
-
-        for block in blocks:
-            if block.fit:
-                transforms.append(Gf.Vec3f(block.fit.location[0], block.fit.location[1] ,0))
-                print("size: {} loc: {}".format(block.size, block.fit.location))
-            else:
-                print("not fit: {}".format(block.size))
-
-
-        #Use Customized Scatter algorythm get coordinates for varying sized planes
-        # transforms = distributePlanes(
-        #     UpAxis=self._upAxis,
-        #     count=[m.as_int for m in self._dataStore._options_count_models],
-        #     distance=[m.as_float for m in self._dataStore._options_dist_models],
-        #     sizes=self.ActiveView._sizes,
-        #     randomization=[m.as_float for m in self._dataStore._options_random_models],
-        #     seed=0,
-        #     scaleFactor=self._dataStore._composition_scale_model.as_float
-        # )
-
-        self.ActiveView._groups.sort(key=lambda element: element['size'], reverse=True)
-        self.ActiveView._sizes.sort(reverse=True)
+        #sort the groups to add largest first
+        self._dataStore._lcl_groups.sort(key=lambda element: element['size'], reverse=True)
+        self._dataStore._lcl_sizes.sort(reverse=True)
 
         #Create the groups in an async loop
-        if (len(self.ActiveView._groups)) >0 :
-
-            #TODO Async
-            self.ActiveView.CreateGroups(
-                basePath=self.ActiveView.view_path,
-                upAxis=self._upAxis,
-                groups=self.ActiveView._groups,
-                transforms=transforms,
-                sizes=self.ActiveView._sizes
-            )
-
-    def get_size(self, element):
-        return element['size']
-
-    def LoadResources(self):
+        if (len(self._dataStore._lcl_groups)) >0 :
+            await self.ActiveView.CreateGroups(transforms=transforms)
         
-        #Get Stage
-        usd_context = omni.usd.get_context()
-        stage = usd_context.get_stage()
-        paths = []
 
-        #Get Selected paths, if any?
-        selected_prims = usd_context.get_selection().get_selected_prim_paths()
+    def LoadResources(self, viewType:str):
+        
+        self.ActiveView = self.SetActiveView(viewType)
 
-        if selected_prims is not None:           
-            # Loop through all selected prims, remove the Meshs from path
-            for s in selected_prims:
-                path = str(s).replace("/CollisionMesh" "")
-                paths.append(path)                       
-        else:
-            pass           
-            # Traverse all prims in the stage starting at this path
-            
+        self.ActiveView.initializeStage(self.stage_unit_per_meter) #Base Method
+        self.ActiveView.calcGroupPlaneSizes() #Abstract Method
+        self.ActiveView.calulateCosts() #Abstract Method
+
         #View is already set, show resources for specific or all paths
-        self.ActiveView.LoadResources(paths) #Base Method
+        if self.ActiveView is None:
+            self.ActiveView = self.SetActiveView(self._last_view_type)
 
+        self.ActiveView.loadResources() #Abstract Method           
 
-    #Draw a GroundPlane for the Resources to sit on.
-    def DrawStage(self, Path:str, Name: str, Size: int, Location: Gf.Vec3f, Color:Gf.Vec3d):      
-        create_plane(self,Path, Name, Size, Location, Color)
+    #Gets the x,y,z coordinates to place the grouping planes
+    def getTransforms(self):
+        if (self._dataStore._use_packing_algo):
+
+            #Use Packer Algorithm to determine positioning
+            transforms = []
+            blocks = []
+            sorted_sizes = sorted(self._dataStore._lcl_sizes, reverse=True)
+            for size in sorted_sizes:
+                sz = (size*2) #double the size end to end
+                blocks.append(Block((sz,sz)))
+
+            pack = Packer()
+            pack.fit(blocks)
+
+            for block in blocks:
+                if block.fit:
+                    fitX = block.fit.location[0]
+                    fitY = block.fit.location[1]
+                    fitZ = 0
+                    transforms.append(Gf.Vec3f(fitX, fitY ,fitZ))
+                    #print("size: {} loc: {},{}".format(str(block.size[0]), str(block.fit.location[0]), str(block.fit.location[1])))
+                else:
+                    print("not fit: {}".format(block.size[0]))
+            
+            return transforms
+
+        else:
+            #Use the scatter distribution method
+            maxDims = (self._dataStore._options_count_models[0].as_float * self._dataStore._options_count_models[1].as_float * self._dataStore._options_count_models[2].as_float)
+            grpCnt = len(self._dataStore._lcl_groups)
+            if grpCnt > maxDims:
+                asyncio.ensure_future(self.sendNotify("Not enough dimensions for ..." + str(grpCnt) + "res groups, Max Dims: " + str(maxDims), nm.NotificationStatus.WARNING))   
+                return
+
+            #Use Customized Scatter algorithm get coordinates for varying sized planes
+            transforms = distributePlanes(
+                UpAxis=self._upAxis,
+                count=[m.as_int for m in self._dataStore._options_count_models],
+                distance=[m.as_float for m in self._dataStore._options_dist_models],
+                sizes=self._dataStore._lcl_sizes,
+                randomization=[m.as_float for m in self._dataStore._options_random_models],
+                seed=0,
+                scaleFactor=self._dataStore._composition_scale_model.as_float)
+
+            return transforms
 
 
     def Select_Planes(self):
-        self.ActiveView.selectGroupPrims()
-        #change the shaders to non-cost
 
+        if self.ActiveView is None:
+            self.ActiveView = self.SetActiveView(self._last_view_type)
+            self.ActiveView.selectGroupPrims()
+        else:
+            self.ActiveView.selectGroupPrims()
+
+    def get_size(self, element):
+        return element['size']      
 
     def ShowCosts(self):
-        self.ActiveView.show_hide_costs()
+        if self.ActiveView is None:
+            self.ActiveView = self.SetActiveView(self._last_view_type)
+            self.ActiveView.showHideCosts()
+        else:
+            self.ActiveView.showHideCosts()
 
 
 

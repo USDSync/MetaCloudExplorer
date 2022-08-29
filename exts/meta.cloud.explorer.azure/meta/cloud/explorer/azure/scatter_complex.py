@@ -39,9 +39,9 @@ def distributePlanes(
             ix = iPlane % count[0]
             iy = i // nUpPlane
 
-        x = ix*(distance[0]*scaleFactor) + random.random() * randomization[0]
-        y = iy*(distance[1]*scaleFactor) + random.random() * randomization[1]
-        z = iz*(distance[2]*scaleFactor) + random.random() * randomization[2]
+        x = ix*((distance[0]+sizes[i])*scaleFactor) * randomization[0]
+        y = iy*((distance[1]+sizes[i])*scaleFactor) * randomization[1]
+        z = iz*((distance[2]+sizes[i])*scaleFactor) * randomization[2]
 
         yield(Gf.Vec3d(x,y,z))
 

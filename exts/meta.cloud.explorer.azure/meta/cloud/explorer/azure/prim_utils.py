@@ -1,51 +1,88 @@
-__all__ = ["create_plane", "get_font_size_from_length"]
-
+__all__ = ["create_plane", "get_font_size_from_length", "get_parent_child_prim_path", "create_and_place_prim", "log_transforms"]
+import sys
+from tokenize import Double
 import omni.usd
 import omni.kit.commands
 import shutil
+import carb
+from pathlib import Path
 from pxr import Sdf
 from pxr import Gf, UsdGeom, UsdLux
 from .pillow_text import draw_text_on_image_at_position
 
+CURRENT_PATH = Path(__file__).parent
+RES_PATH = CURRENT_PATH.parent.parent.parent.parent.joinpath("data\\resources")
 
+def create_and_place_prim(self,
+    prim_type:str,
+    prim_name:str,
+    grp_name:str,
+    new_prim_path:str,
+    shapeToRender:str, 
+    scale:float, 
+    position:Gf.Vec3f
+    ):
+    
+    carb.log_info("Creating new prim: " + prim_type + " @ "+ new_prim_path + " shape: " + shapeToRender)
+    stage =  omni.usd.get_context().get_stage()
 
-# Calculates where to put a prim on a parent plane depending on the size and index 
-# stageClass = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 *2
-def calcPrimPlacementOnPlane(stageClass: int, stageSize: float, position: int, scaleFactor:float, groudOffset:float, upDirection:str ): 
+    # Create prim to add the reference to.
+    prim = stage.DefinePrim(new_prim_path)
+    prim.GetReferences().AddReference(shapeToRender)
+    my_new_prim = stage.GetPrimAtPath(new_prim_path)
 
-    if stageClass == 1: # holds one resource, put it in center..
-        if upDirection == "Y":
-            return Gf.Vec3f(0,0,0)
+    my_new_prim.SetCustomDataByKey('res_type', prim_type) 
+    my_new_prim.SetCustomDataByKey('res_name', prim_name) 
+    my_new_prim.SetCustomDataByKey('res_grp', grp_name) 
 
-    elif stageClass == 2: #holds 4 resources
-        
-        pass
+    #Default rotation
+    rotation = Gf.Vec3f(0,0,0)
+    translate = Gf.Vec3d(position[0], position[1], position[2])
 
+    #Are we still set to default? Change cube size and position
+    if shapeToRender == "omniverse://localhost/Resources/3dIcons/scene.usd":
+        scale = 3.0
+        position[2] = position[2] + 30 #Buffer the cube off the z
 
-def create_shaders(base_path:str, prim_name:str ):
+    #CUSTOM SHAPE OVERRIDES
+    if prim_name == "nvidia_chair":
+        scale =0.8
+        rotation = Gf.Vec3f(90,0,220)
+        translate=Gf.Vec3d(position[0]+150, position[1]+150, position[2])
+    if prim_name == "nvidia_jacket":
+        scale =0.25
+        rotation = Gf.Vec3f(90,0,0)
+        translate=Gf.Vec3d(position[0]-20, position[1], position[2]-25)
+    if prim_name == "nvidia_coat_rack":
+        scale =0.55
+        rotation = Gf.Vec3f(90,0,0)                        
+        translate=Gf.Vec3d(position[0]-220, position[1]+210, position[2]+10)
+    carb.log_info("Placing prim: " + shapeToRender + " | " + str(new_prim_path) + " @ " 
+        + "scl:" + str(scale) + " x:" + str(position[0]) + "," + " y:" + str(position[1]) + "," + " z:" + str(position[2]))           
 
-    prim_path = Sdf.Path(base_path)
-    prim_path = prim_path.AppendPath("CollisionMesh")
+    api = UsdGeom.XformCommonAPI(my_new_prim)
 
+    try:
+        carb.log_info("Setting prim translate")
+        api.SetTranslate(translate,1)
+        print("Setting prim rotate")
+        api.SetRotate(rotation,UsdGeom.XformCommonAPI.RotationOrderXYZ,1)
+        print("Setting prim scale")
+        api.SetScale(Gf.Vec3f(scale,scale,scale), 1)
+    except:
+        carb.log_error("Oops!", sys.exc_info()[0], "occurred.")
+    
 
-    #Select the Collision Mesh
-    omni.kit.commands.execute('SelectPrims',
-        old_selected_paths=[''],
-        new_selected_paths=[str(prim_path)],
-        expand_in_stage=True)
+#log the vectors
+def log_transforms(self, vectors):
+    for v in vectors:
+        logdata = str(vectors[v][0]) + "," + str(vectors[v][1]) + "," + str(vectors[v][2])
+        print(logdata)
 
-    #print("Creating Shader: " + str(prim_path))
-
-    #Create a Shader for the Mesh
-    omni.kit.commands.execute('CreateAndBindMdlMaterialFromLibrary',
-        mdl_name='OmniPBR.mdl',
-        mtl_name='OmniPBR',
-        prim_name=g,
-        mtl_created_list=None,
-        bind_selected_prims=True)
 
 def draw_image(self, output_file:str, src_file:str, textToDraw:str, costToDraw:str):
             
+    font = RES_PATH.joinpath("airstrike.ttf")
     font_size = get_font_size_from_length(len(textToDraw))
 
     draw_text_on_image_at_position(                
@@ -53,9 +90,8 @@ def draw_image(self, output_file:str, src_file:str, textToDraw:str, costToDraw:s
         output_image_path=output_file, 
         textToDraw=str(textToDraw), 
         costToDraw=str(costToDraw),
-        x=180, y=1875, fillColor="Yellow", font='https://github.com/googlefonts/roboto/blob/main/src/hinted/Roboto-Black.ttf?raw=true',
+        x=180, y=1875, fillColor="Yellow", font=font,
         fontSize=font_size )
-
 
 #Creates a plane of a certain size in a specific location
 def create_plane(self,Path:str, Name :str, Size: int, Location: Gf.Vec3f, Color:Gf.Vec3f):
@@ -81,6 +117,8 @@ def cleanup_prim_path(self, Name: str):
     nme = nme.replace(";", "_")
     nme = nme.replace("(", "_")
     nme = nme.replace(")", "_")
+    nme = nme.replace("[", "_")
+    nme = nme.replace("]", "_")
 
     #if it starts with a number add a _
     if nme[0].isnumeric():
@@ -92,6 +130,26 @@ def cleanup_prim_path(self, Name: str):
 
     #print("cleanup res: " + nme)
     return nme
+
+# Concats two Sdf.Paths and truncates he result to MAX_PATH_LENGTH
+def get_parent_child_prim_path(self, groupPath:Sdf.Path, resName:str):
+
+    resName = cleanup_prim_path(self, resName)  
+
+    #prim_len = len(str(groupPath)) + len(resName)
+    #if (prim_len) > 70:
+    #    diff = prim_len - 70
+    #    trim = len(resName) - diff 
+    #    resName = resName[:trim] 
+    
+    try:
+        shape_prim_path = Sdf.Path(groupPath.AppendPath(resName))
+        return shape_prim_path
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
+
+
+
 
 def get_font_size_from_length(nameLength:int):
     if (nameLength < 10):
