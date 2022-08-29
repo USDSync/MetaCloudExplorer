@@ -1,4 +1,4 @@
-# Meta Cloud Explorer
+# Meta Cloud Explorer (MCE)
 # NVIDIA Onmiverse Extension, a Scene Authoring Tool
 
 CloudArchitect.live
