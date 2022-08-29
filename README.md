@@ -52,8 +52,8 @@ Due to some technical issues with the Azure / Python / OmniVerse Create API inte
 
 1. Export a list of Resource Groups
 2. Export a list of All Azure Resources
-3. Aggregate the data into high level groupings (acdt.exe utility)
-4. Select the 3 output files as input for the extension
+3. Aggregate the data into high level groupings
+4. Select the Resource Group and Resources CSV files as input for the extension
 5. Explore your Azure Infrastructure in the Omniverse!
 
 API working in Code 2021.1.1
