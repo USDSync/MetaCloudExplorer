@@ -4,7 +4,8 @@
 CloudArchitect.live
 (In Alpha Development phase)
 
-![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/meta_cloud_explorer_800.png)
+![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/azurescale.png)
+![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/resourcegroups.png)
 
 
 Quickly connect to your Cloud Infrastructure and visualize it in the Omniverse!*
