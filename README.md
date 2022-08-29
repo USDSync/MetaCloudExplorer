@@ -49,11 +49,8 @@ Steps to Connect:
 
 The Azure 3D Icon set is a derivative work, created by several artists to help bring the needed visual context into the Meta Cloud Explorer.  The application code includes an Object Resource Map that maps Azure Objects to their corresponding 3D object assets.  By default these can use Cubes or other primitive shapes.  see: cloudarchitect.live/cloud/explorer/azure/resource_map.py
 
-
-https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/aws-azure-gcp.png
-https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/mce_ui.png
-
-**The icon set is not yet publicly available pending copyright permission from Microsoft.*
+**The icon set is available here, it is pending copyright permission from Microsoft.**
+ https://drive.google.com/file/d/1st1PVMvAtI5zMLFQjEEzziCkvAPUxWro/view?usp=sharing
 
 # Disconnected mode
 
