@@ -53,7 +53,6 @@ from .azure_resource_map import shape_usda_name
 from .data_manager import DataManager
 from .data_store import DataStore
 from .scatter_complex import distributePlanes
-from .scatter_on_planes import scatterOnFixedPlane
 
 #Import View Models
 from .group_aad import AADGrpView
@@ -144,7 +143,7 @@ class StageManager():
         self.ActiveView.calcGroupPlaneSizes() #Abstract Method
         self.ActiveView.calulateCosts() #Abstract Method
 
-        transforms = self.getTransforms()
+        transforms = self.getTransforms() #Cooredinates for the group planes
 
         #sort the groups to add largest first
         self._dataStore._lcl_groups.sort(key=lambda element: element['size'], reverse=True)
@@ -173,7 +172,7 @@ class StageManager():
     def getTransforms(self):
         if (self._dataStore._use_packing_algo):
 
-            #Use Packer Algorythm to determine positioning
+            #Use Packer Algorithm to determine positioning
             transforms = []
             blocks = []
             sorted_sizes = sorted(self._dataStore._lcl_sizes, reverse=True)
@@ -204,7 +203,7 @@ class StageManager():
                 asyncio.ensure_future(self.sendNotify("Not enough dimensions for ..." + str(grpCnt) + "res groups, Max Dims: " + str(maxDims), nm.NotificationStatus.WARNING))   
                 return
 
-            #Use Customized Scatter algorythm get coordinates for varying sized planes
+            #Use Customized Scatter algorithm get coordinates for varying sized planes
             transforms = distributePlanes(
                 UpAxis=self._upAxis,
                 count=[m.as_int for m in self._dataStore._options_count_models],

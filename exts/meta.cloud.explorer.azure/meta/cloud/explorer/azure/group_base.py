@@ -22,7 +22,7 @@ from pxr import Gf, UsdGeom, UsdLux, Usd, Sdf
 from .data_manager import DataManager
 from .data_store import DataStore
 
-from .math_utils import calcPlaneSizeForGroup, calculateGroupTransforms
+from .math_utils import calculateGroupTransforms
 from .scatter_complex import distributePlanes
 from .omni_utils import create_prims, create_shaders
 from os.path import exists
@@ -257,7 +257,7 @@ class GroupBase(ABC):
         resCount = len(values)
         
         #Get the transform coordinates for a plane of this size with nn resources
-        transforms = calculateGroupTransforms(self=self, scale=self._scale,upAxis=self._upAxis, count=resCount)
+        transforms = calculateGroupTransforms(self=self, scale=self._scale, count=resCount)
 
         for res in values:
             carb.log_info("Placing prim " + res["type"] + " " + str(i) + " of " + str(resCount))

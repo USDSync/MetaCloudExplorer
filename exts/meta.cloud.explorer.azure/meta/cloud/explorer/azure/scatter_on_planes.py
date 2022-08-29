@@ -11,13 +11,10 @@ __all__ = ["scatterOnFixedPlane"]
 from typing import List, Optional
 import random
 
-#comment for testing
 from pxr import Gf
 
 
-
 def scatterOnFixedPlane(
-    upAxis: str,
     count: List[int], 
     distance: List[float], 
     scaleFactor:float=1.0

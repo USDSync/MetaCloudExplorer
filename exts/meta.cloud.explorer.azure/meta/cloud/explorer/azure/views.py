@@ -10,6 +10,7 @@ from .style_meta import cl_combobox_background, cls_temperature_gradient, cls_co
 
 from .data_manager import DataManager
 from .data_store import DataStore
+from .button import SimpleImageButton
 
 import sys
 import asyncio
@@ -103,6 +104,56 @@ class MainView(ui.Window):
     def on_group():
         print("On Group")
 
+    def set_defaults(self, defType:str):
+        if defType == "tower":
+            self._dataStore._symmetric_planes_model.set_value(True)
+            self._dataStore._packing_algo_model.set_value(False)
+            self._dataStore._options_count_models[0].set_value(2)
+            self._dataStore._options_count_models[1].set_value(2)
+            self._dataStore._options_count_models[2].set_value(20)
+            self._dataStore._options_dist_models[0].set_value(500.0)
+            self._dataStore._options_dist_models[1].set_value(500.0)
+            self._dataStore._options_dist_models[2].set_value(250.0)
+            self._dataStore._options_random_models[0].set_value(1)
+            self._dataStore._options_random_models[1].set_value(1)
+            self._dataStore._options_random_models[2].set_value(1)
+        if defType == "symmetric":
+            self._dataStore._symmetric_planes_model.set_value(True)
+            self._dataStore._packing_algo_model.set_value(False)
+            self._dataStore._options_count_models[0].set_value(4)
+            self._dataStore._options_count_models[1].set_value(4)
+            self._dataStore._options_count_models[2].set_value(20)
+            self._dataStore._options_dist_models[0].set_value(500.0)
+            self._dataStore._options_dist_models[1].set_value(500.0)
+            self._dataStore._options_dist_models[2].set_value(250.0)
+            self._dataStore._options_random_models[0].set_value(1)
+            self._dataStore._options_random_models[1].set_value(1)
+            self._dataStore._options_random_models[2].set_value(1)
+        if defType == "islands":
+            self._dataStore._symmetric_planes_model.set_value(False)
+            self._dataStore._packing_algo_model.set_value(False)
+            self._dataStore._options_count_models[0].set_value(10)
+            self._dataStore._options_count_models[1].set_value(2)
+            self._dataStore._options_count_models[2].set_value(4)
+            self._dataStore._options_dist_models[0].set_value(500.0)
+            self._dataStore._options_dist_models[1].set_value(500.0)
+            self._dataStore._options_dist_models[2].set_value(250.0)
+            self._dataStore._options_random_models[0].set_value(1)
+            self._dataStore._options_random_models[1].set_value(1)
+            self._dataStore._options_random_models[2].set_value(1)
+        if defType == "packer":
+            self._dataStore._symmetric_planes_model.set_value(True)
+            self._dataStore._packing_algo_model.set_value(True)
+            self._dataStore._options_count_models[0].set_value(4)
+            self._dataStore._options_count_models[1].set_value(4)
+            self._dataStore._options_count_models[2].set_value(20)
+            self._dataStore._options_dist_models[0].set_value(500.0)
+            self._dataStore._options_dist_models[1].set_value(500.0)
+            self._dataStore._options_dist_models[2].set_value(250.0)
+            self._dataStore._options_random_models[0].set_value(1)
+            self._dataStore._options_random_models[1].set_value(1)
+            self._dataStore._options_random_models[2].set_value(1)
+
     def select_planes(self):
         self._stageManager.Select_Planes()
 
@@ -184,6 +235,7 @@ class MainView(ui.Window):
         with ui.ScrollingFrame():
             with ui.VStack(height=0):
                 self._build_new_header()
+                self._build_image_presets()
                 self._build_options()
                 self._build_connection()
                 self._build_import()
@@ -261,8 +313,11 @@ class MainView(ui.Window):
                     self._dataStore._rs_csv_field_model = self._rs_data_import_field.model
                     ui.Button("Load", width=40, clicked_fn=lambda: self._dataManager.select_file("res"))
                 with ui.HStack():
-                    ui.Button("Clear Data", clicked_fn=lambda: self._dataManager.wipe_data())            
+                    ui.Button("Clear imported Data", clicked_fn=lambda: self._dataManager.wipe_data())            
                     ui.Button("Import Data Files", clicked_fn=lambda: self._dataManager.load_csv_files())            
+                with ui.HStack():
+                    ui.Button("Load Sample Dataset", clicked_fn=lambda: self._dataManager.wipe_data())            
+                    ui.Button("Load Sample Resources", clicked_fn=lambda: self._dataManager.load_csv_files())                                
 
     def _build_connection(self):
         with ui.CollapsableFrame("Cloud API Connection", name="group", collapsed=True, style={"color": 0xFF008976, "font_size":20}):
@@ -314,6 +369,32 @@ class MainView(ui.Window):
                     ui.Label("Randomness", name="attribute_name", width=self.label_width)
                     ui.FloatDrag(self._dataStore._options_random_models[axis_id], min=1.0, max=10.0)
 
+
+    def _build_image_presets(self):
+        def _on_clicked(self, source):
+            self.set_defaults(source)
+#style={"color": 0xFF008976, "font_size":20}
+        with ui.CollapsableFrame("Quickstarts", name="group", collapsed=True ): 
+            with ui.VStack():
+                with ui.HStack():
+                    with ui.VStack():
+                        ui.Label("TOWER", name="attribute_name", width=self.label_width)
+                        SimpleImageButton(image="omniverse://localhost/Resources/images/tower.png", size=150, name="twr_btn", clicked_fn=lambda: _on_clicked(self, source="tower"))
+                    with ui.VStack():
+                        ui.Label("ISLANDS", name="attribute_name", width=self.label_width)
+                        SimpleImageButton(image="omniverse://localhost/Resources/images/islands.png", size=150, name="isl_btn", clicked_fn=lambda: _on_clicked(self, source="islands"))
+                    with ui.VStack():
+                        ui.Label("SYMMETRIC", name="attribute_name", width=self.label_width)
+                        SimpleImageButton(image="omniverse://localhost/Resources/images/Symmetric.png", size=150, name="sym_btn", clicked_fn=lambda: _on_clicked(self, source="symmetric"))
+                    with ui.VStack():
+                        ui.Label("BIN PACKER", name="attribute_name", width=self.label_width)
+                        SimpleImageButton(image="omniverse://localhost/Resources/images/rows.png", size=150, name="row_btn",clicked_fn=lambda: _on_clicked(self, source="packer"))
+
+                    #ui.Image("../../../data/Resources/images/tower.png", fill_policy=ui.FillPolicy.PRESERVE_ASPECT_FIT, alignment=ui.Alignment.CENTER,style={'border_radius':10})
+                    #ui.Image("omniverse://localhost/Resources/images/Symmetric.png", fill_policy=ui.FillPolicy.PRESERVE_ASPECT_FIT, alignment=ui.Alignment.CENTER,style={'border_radius':10})
+                    #ui.Image("omniverse://localhost/Resources/images/rows.png", fill_policy=ui.FillPolicy.PRESERVE_ASPECT_FIT, alignment=ui.Alignment.CENTER,style={'border_radius':10})
+
+
     def _build_image_options(self):
         with ui.CollapsableFrame("Group Images", name="group", collapsed=True):        
             with ui.VStack(height=0, spacing=SPACING):
@@ -343,16 +424,10 @@ class MainView(ui.Window):
 
 
     def _build_options(self, default_value=0, min=0, max=1):
-        def _on_value_changed(model, rect_changed, rect_defaul):
-            if model.as_float == default_value:
-                rect_changed.visible = False
-                rect_defaul.visible = True
-            else:
-                rect_changed.visible = True
-                rect_defaul.visible = False
-
-        def _restore_default(slider):
-            slider.model.set_value(default_value)
+        def _on_value_changed_bp(model):
+            self._dataStore._use_packing_algo = model.as_bool
+        def _on_value_changed_sg(model):
+            self._dataStore._use_symmetric_planes = model.as_bool
 
         with ui.CollapsableFrame("Scene Composition Options", name="group", collapsed=True, style={"color": 0xFF008976, "font_size":20}): 
             with ui.VStack(height=0, spacing=SPACING, style={"color": 0xFFFFFFFF, "font_size":16}):
@@ -363,10 +438,12 @@ class MainView(ui.Window):
                     self._dataStore._composition_scale_model.set_value(self._dataStore._scale_model)
                 with ui.HStack():
                     ui.Label("Use Symmetric groups?", name="attribute_name", width=self.label_width)
-                    ui.CheckBox(self._dataStore._symmetric_planes_model)                    
+                    cb1 = ui.CheckBox(self._dataStore._symmetric_planes_model)                    
+                    cb1.model.add_value_changed_fn(lambda model: _on_value_changed_sg(model))
                 with ui.HStack():
                     ui.Label("Use Bin Packing?", name="attribute_name", width=self.label_width)
-                    ui.CheckBox(self._dataStore._packing_algo_model)                    
+                    cb2 = ui.CheckBox(self._dataStore._packing_algo_model)                    
+                    cb2.model.add_value_changed_fn(lambda model: _on_value_changed_bp(model))
 
                 self._build_image_options()
 

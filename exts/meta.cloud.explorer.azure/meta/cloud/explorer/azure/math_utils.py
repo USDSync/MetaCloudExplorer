@@ -24,7 +24,7 @@ def calcPlaneSizeForGroup(scaleFactor:float, resourceCount: int):
 
 
 #FIGURES OUT WHERE TO PUT THE PRIMS ON A VARIABLE SIZED-PLANE
-def calculateGroupTransforms(self, scale:float, count:int, upAxis:str ):
+def calculateGroupTransforms(self, scale:float, count:int ):
 
     #ex 400.0 -> 800 - 400 plane is 800x800
     plane_size = (calcPlaneSizeForGroup(scaleFactor=scale, resourceCount=count)*2)
@@ -35,8 +35,7 @@ def calculateGroupTransforms(self, scale:float, count:int, upAxis:str ):
 
     #Use NVIDIAs Scatter algo to position on varying sized planes
     transforms = scatterOnFixedPlane(
-        upAxis=upAxis,
-        count=[int(plane_class), int(plane_class), 1], # Distribute accross the plane size
+        count=[int(plane_class), int(plane_class), 1], # Distribute accross the plane class
         distance=[dist,dist,dist],
         scaleFactor=scale
     )
