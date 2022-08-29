@@ -374,7 +374,7 @@ class MainView(ui.Window):
         def _on_clicked(self, source):
             self.set_defaults(source)
 #style={"color": 0xFF008976, "font_size":20}
-        with ui.CollapsableFrame("Quickstarts", name="group", collapsed=True, style={"color": 0xFF008976, "font_size":20}): 
+        with ui.CollapsableFrame("Quickstarts", name="group", collapsed=True, style={"font_size":20}): 
             with ui.VStack():
                 with ui.HStack(style={}):
                     with ui.VStack():

@@ -4,7 +4,7 @@
 CloudArchitect.live
 (In Alpha Development phase)
 
-![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/azurescale.png)
+![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/azurescaled.png)
 ![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/resourcegroups.png)
 ![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/westus.png)
 
@@ -28,6 +28,7 @@ Alternatively, you can launch your app from console with this folder added to se
 > app\omni.code.bat --ext-folder exts --enable cloud.explorer.azure
 
 # Azure API App Link Setup
+![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/mce_ui.png)
 
 This extension lets you easily load and explore a representation of your Cloud Infrastructure in the Omniverse. This extension can connect to the Azure Resource Manager API to access your Azure Infrastructure. A read-only account can be utilized to ensure infrastructure security.  See the wiki page for more info on creating an account.
 
