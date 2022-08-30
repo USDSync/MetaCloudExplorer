@@ -13,6 +13,7 @@ sys.path.append("D:/python37/lib/site-packages")
 #print(sys.modules.keys())
 
 from .data_store import DataStore
+from .prim_utils import cleanup_prim_path
 from azure.mgmt.resource import ResourceManagementClient
 from azure.identity import ClientSecretCredential
 import os
@@ -28,17 +29,18 @@ class AzureDataManager():
 
     def get_token(self):
          # Acquire a credential object using CLI-based authentication.
-        self._token_credential = ClientSecretCredential(self._dataStore._azure_tenant_id, self._dataStore._azure_client_id, self._dataStore._azure_client_secret)
+        self._dataStore._azure_tenant_id="64b3cefb-e38e-4fe8-8356-de6129c50262"
+        self._dataStore._azure_client_id = "970ebf4e-232e-428a-9a33-6e42d2a70ebb"
+        self._dataStore._azure_client_secret="DUU8Q~5YcqMepVdLBzvCaIKU2bqQH31AmQFMxbI3"
+        self._dataStore._azure_subscription_id="9af72be6-0c53-464c-aa30-0834b42c0d94"
+
+        self._token_credential = ClientSecretCredential(
+            self._dataStore._azure_tenant_id, 
+            self._dataStore._azure_client_id, 
+            self._dataStore._azure_client_secret)
 
         # Retrieve subscription ID from environment variable.
         self._subscription_id = self._dataStore._azure_subscription_id
-
-            
-    def get_tenants(sub_client):
-        tenants = sub_client.tenants
-        print('api_version: ' + tenants.api_version)
-        for tenant in tenants.list():
-            print(tenant.__dict__.keys())
 
     #validate we can connect
     def connect(self):
@@ -47,10 +49,7 @@ class AzureDataManager():
         #Get a token
         self.get_token()
 
-        #Make a request
         
-
-
     def clicked_ok():
         carb.log_info("User clicked ok")
 
@@ -63,40 +62,72 @@ class AzureDataManager():
 
         nm.post_notification(
             message,
-            hide_after_timeout=False,
-            duration=0,
+            hide_after_timeout=True,
+            duration=3,
             status=status,
-            button_infos=[ok_button, ok_button],
+            button_infos=[],
         )        
 
     #Connect to API and load adata
     def load_data(self):
         self.save_connection_data()
-        self.load_resources()
         self.load_groups()
+        self.load_resources()
 
 
     def save_connection_data(self):
         pass
     
-    def load_resources(self):
-        pass
+    def load_resources(self):    
+        try:
+            resCnt = 0
+            for grp in self._dataStore._groups:
+                resources = self.list_group_resources(grp)
+                for res in resources:
+                    resCnt = resCnt +1
+                    name = cleanup_prim_path(self, Name=res.name)
+                    self._dataStore._resources[name] = {"name":name, "type": res.type, "group": grp, "location":res.location, "subscription":self._subscription_id, "lmcost": 0}
+        
+                    #self._dataStore.res["name"] = {"name":res["name"], "type": type, "group": group, "location":location, "subscription":subscription, "lmcost": lmcost}
+            carb.log_info("Azure API resources loaded: " + str(resCnt))                    
+        except:
+            error = sys.exc_info()[0]
+            carb.log_error("Oops! " + str(error) + " occurred.")
+            self.sendNotify("Error:" + str(error), nm.NotificationStatus.WARNING)                   
+
 
     def load_groups(self):
-        pass
+        try:
+            grps = self.get_resource_groups()
+
+            grpCnt = 0
+            for group in grps:            
+                grp = {group.name:{"name":group.name, "subs": self._subscription_id, "location":group.location}}
+                self._dataStore._groups.update(grp)     
+                grpCnt = grpCnt + 1
+        
+            carb.log_info("Azure API groups loaded: " + str(grpCnt))
+
+        except:
+            error = sys.exc_info()[0]
+            carb.log_error("Oops! " + str(error) + " occurred.")
+            self.sendNotify("Error:" + str(error), nm.NotificationStatus.WARNING)           
 
 
+        
+    
     #return a list of resource groups
     def get_resource_groups(self):
 
-        self.getToken()
-
         # Obtain the management object for resources.
-        resource_client = ResourceManagementClient(self._token_credential, self._subscription_id)
-
-        rg_groups = resource_client.resource_groups.list()
-
-        return rg_groups
+        try:
+            resource_client = ResourceManagementClient(self._token_credential, self._subscription_id)
+            rg_groups = resource_client.resource_groups.list()
+            return rg_groups
+        except:
+            error = sys.exc_info()[0]
+            carb.log_error("Oops! " + str(error) + " occurred.")
+            self.sendNotify("Error:" + str(error), nm.NotificationStatus.WARNING)           
 
         #for item in rg_groups:
         #    print(item)
@@ -105,21 +136,16 @@ class AzureDataManager():
     # List Resources within the group
     def list_group_resources(self, groupName:str):
         
-        self.getToken()
-
         # Obtain the management object for resources.
         resource_client = ResourceManagementClient(self._token_credential, self._subscription_id)
 
-        print("List all of the resources within the group")
-        for item in resource_client.resources.list_by_resource_group(groupName):
-            self.print_item(item)
-
-        return resource_client.resources.list_by_resource_group(groupName)
+        carb.log_info("List all of the resources within the group")
+        res = resource_client.resources.list_by_resource_group(groupName)
+        return res
 
 
     #creates a resource group with groupName at location
     def create_resource_group(self, groupName:str, location:str):
-        self.getToken()
 
         # Obtain the management object for resources.
         resource_client = ResourceManagementClient(self._token_credential, self._subscription_id)
@@ -155,7 +181,6 @@ class AzureDataManager():
 
     # Create a Key Vault in the Resource Group
     def create_key_vault(self, vaultName:str, location:str, groupName:str):
-        self.getToken()
 
         # Obtain the management object for resources.
         resource_client = ResourceManagementClient(self._token_credential, self._subscription_id)
@@ -186,7 +211,6 @@ class AzureDataManager():
     # Export the Resource group template
     def export_group_template(self, groupName:str):
 
-        self.getToken()
 
         # Obtain the management object for resources.
         resource_client = ResourceManagementClient(self._token_credential, self._subscription_id)

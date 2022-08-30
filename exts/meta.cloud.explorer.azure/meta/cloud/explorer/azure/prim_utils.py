@@ -27,8 +27,13 @@ async def create_and_place_prim(self,
     stage =  omni.usd.get_context().get_stage()
 
     # Create prim to add the reference to.
-    prim = stage.DefinePrim(new_prim_path)
-    prim.GetReferences().AddReference(shapeToRender)
+    try:
+        prim = stage.DefinePrim(new_prim_path)
+        prim.GetReferences().AddReference(shapeToRender)
+    except:
+        carb.log_error("Invalid prim path:" + str(new_prim_path))
+        return
+
     my_new_prim = stage.GetPrimAtPath(new_prim_path)
 
     my_new_prim.SetCustomDataByKey('res_type', prim_type) 

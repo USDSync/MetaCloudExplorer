@@ -108,7 +108,7 @@ class MainView(ui.Window):
 
     def set_defaults(self, defType:str):
         if defType == "tower":
-            asyncio.ensure_future(self.sendNotify("Tower defaults set...", nm.NotificationStatus.INFO))   
+            asyncio.ensure_future(self.sendNotify("Tower defaults set... Select a VIEW", nm.NotificationStatus.INFO))   
             self._dataStore._symmetric_planes_model.set_value(True)
             self._dataStore._packing_algo_model.set_value(False)
             self._dataStore._options_count_models[0].set_value(2)
@@ -121,7 +121,7 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[1].set_value(1)
             self._dataStore._options_random_models[2].set_value(1)
         if defType == "symmetric":
-            asyncio.ensure_future(self.sendNotify("Symmetric defaults set...", nm.NotificationStatus.INFO))   
+            asyncio.ensure_future(self.sendNotify("Symmetric defaults set... Select a VIEW", nm.NotificationStatus.INFO))   
             self._dataStore._symmetric_planes_model.set_value(True)
             self._dataStore._packing_algo_model.set_value(False)
             self._dataStore._options_count_models[0].set_value(4)
@@ -134,7 +134,7 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[1].set_value(1)
             self._dataStore._options_random_models[2].set_value(1)
         if defType == "islands":
-            asyncio.ensure_future(self.sendNotify("Island defaults set...", nm.NotificationStatus.INFO))   
+            asyncio.ensure_future(self.sendNotify("Island defaults set... Select a VIEW", nm.NotificationStatus.INFO))   
             self._dataStore._symmetric_planes_model.set_value(False)
             self._dataStore._packing_algo_model.set_value(False)
             self._dataStore._options_count_models[0].set_value(20)
@@ -147,7 +147,7 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[1].set_value(1)
             self._dataStore._options_random_models[2].set_value(1)
         if defType == "packer":
-            asyncio.ensure_future(self.sendNotify("Packer algo enabled...", nm.NotificationStatus.INFO))   
+            asyncio.ensure_future(self.sendNotify("Packer algo enabled... Select a VIEW", nm.NotificationStatus.INFO))   
             self._dataStore._symmetric_planes_model.set_value(True)
             self._dataStore._packing_algo_model.set_value(True)
             self._dataStore._options_count_models[0].set_value(4)

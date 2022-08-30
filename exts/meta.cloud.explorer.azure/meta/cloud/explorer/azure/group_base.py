@@ -67,20 +67,6 @@ class GroupBase(ABC):
         UsdGeom.SetStageMetersPerUnit(self._stage, stage_unit_per_meter)
         self._stage.SetDefaultPrim(root_prim)
 
-        # add a light
-        light_prim_path = self.root_path.AppendPath('DomeLight')
-        light_prim = UsdLux.DistantLight.Define(self._stage, str(light_prim_path))
-        light_prim.CreateAngleAttr(0.53)
-        light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
-        light_prim.CreateIntensityAttr(500.0)
-    
-        # add a light
-        light_prim_path = self.root_path.AppendPath('DistantLight')
-        light_prim = UsdLux.DistantLight.Define(self._stage, str(light_prim_path))
-        light_prim.CreateAngleAttr(0.53)
-        light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
-        light_prim.CreateIntensityAttr(1000.0)    
-
 
     #Depending on the Active View, "groups" will contain different aggreagetes.
     #This function creates the GroundPlane objects on the stage for each group
@@ -265,7 +251,12 @@ class GroupBase(ABC):
             resShape = res["shape"]
             resType = res["type"]
             prim_vector = transforms[i]
+            
+            carb.log_info("Creating prim path:" + str(group_prim_path) + " " + str(resName))
+
             new_prim_path = get_parent_child_prim_path(self, group_prim_path, resName)
+
+            carb.log_info("New prim path:" + str(new_prim_path))
 
             await create_and_place_prim(self,
                 prim_type= resType,
