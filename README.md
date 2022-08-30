@@ -50,13 +50,13 @@ Steps to Connect:
 The Azure 3D Icon set is a derivative work, created by several artists to help bring the needed visual context into the Meta Cloud Explorer.  The application code includes an Object Resource Map that maps Azure Objects to their corresponding 3D object assets.  By default these can use Cubes or other primitive shapes.  see: exts/meta.cloud.explorer.azure/meta/cloud/explorer/azure/azure_resource_map.py
 
 **The icon set is available here, it is pending copyright permission from Microsoft.**
- https://drive.google.com/file/d/1st1PVMvAtI5zMLFQjEEzziCkvAPUxWro/view?usp=sharing
+https://drive.google.com/file/d/1IPVqOR5HsXn8A-dcJYMUl78mKHhnXqbQ/view?usp=sharing
 
-Extract and upload to omniverse://localhost/Resources/
+Extract and upload to your local omniverse://localhost/Resources/
   
 # Disconnected mode
 
-Due to some technical issues with the Azure / Python / OmniVerse Create API integration, you can manually export data from your Azure Cloud and use these data files as the data source instead.  Detailed metadata information on resources is limited in this mode, but it has enough data to view the Subscriptions, Resource Groups and Resources.
+Due to some technical issues with the Azure / Python / OmniVerse Create API integration, the current version isn't connecting directly to the python azure api. you can manually export data from your Azure Cloud and use these data files as the data source as a workaround.  Detailed metadata information on resources is limited in this mode, but it has enough data to view the Subscriptions, Resource Groups,Resources and Locations.
 
 1. Export a list of Resource Groups
 2. Export a list of All Azure Resources
@@ -64,13 +64,13 @@ Due to some technical issues with the Azure / Python / OmniVerse Create API inte
 4. Select the Resource Group and Resources CSV files as input for the extension
 5. Explore your Azure Infrastructure in the Omniverse!
 
-API working in Code 2021.1.1
+Extension working in Omniverse Code 2021.1.1
 
-API NOT WORKING in Code 2021.1.2 and 2021.1.3!
+EXTENSION NOT WORKING in Code 2021.1.2 and 2021.1.3!
 
-# Welcome to The Future!
+# Welcome to The Future of Cloud Insights!
 
-Not quite the future yet, but this is the beginning of a new way to gain insight to your cloud infrastructure.
+Not quite the future yet, but this is the beginning of a new way to gain insight to your cloud infrastructure.  What insight do you gain from seeing all your resources?
 
 You can also create resources in Azure from the OmniVerse! 
 This extension gives you the ability to create and model your environment in a metaverse and then create it in your Azure Cloud!

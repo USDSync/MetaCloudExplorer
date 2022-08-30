@@ -3,7 +3,7 @@ from tokenize import group
 from .group_base import GroupBase
 from pxr import Gf, UsdGeom, UsdLux, Usd, Sdf
 from .math_utils import calcPlaneSizeForGroup
-from .prim_utils import cleanup_prim_path, create_and_place_prim, get_parent_child_prim_path
+from .prim_utils import cleanup_prim_path
 import locale 
 import asyncio
 import carb
@@ -86,7 +86,8 @@ class ResGrpView(GroupBase):
 
         self.view_path = Sdf.Path(self.root_path.AppendPath(self._view_path))
 
-        if (len(self._dataStore._lcl_groups)) >0 :
+        grpCnt = len(self._dataStore._lcl_groups)
+        if (grpCnt) >0 :
 
             #Cycle all the loaded groups
             for grp in self._dataStore._lcl_groups:
@@ -100,9 +101,8 @@ class ResGrpView(GroupBase):
 
                     #Is this the group?
                     if key == grp["group"]:
-                        self.loadGroupResources(key, group_prim_path, values)
-                        #asyncio.ensure_future(self.loadGroupResources(key, group_prim_path, values))
-
+                        asyncio.ensure_future(self.loadGroupResources(key, group_prim_path, values))
+        
 
 
     def selectGroupPrims(self):

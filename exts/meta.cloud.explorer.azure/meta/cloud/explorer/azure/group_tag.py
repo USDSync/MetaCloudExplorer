@@ -98,7 +98,7 @@ class TagGrpView(GroupBase):
                     #Is this the group?
                     if key == grp["group"]:
 
-                        self.loadGroupResources(key, group_prim_path, values)
+                        asyncio.ensure_future(self.loadGroupResources(key, group_prim_path, values))
 
     
     def selectGroupPrims(self):

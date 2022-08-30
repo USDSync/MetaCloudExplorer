@@ -13,7 +13,7 @@ from .pillow_text import draw_text_on_image_at_position
 CURRENT_PATH = Path(__file__).parent
 RES_PATH = CURRENT_PATH.parent.parent.parent.parent.joinpath("data\\resources")
 
-def create_and_place_prim(self,
+async def create_and_place_prim(self,
     prim_type:str,
     prim_name:str,
     grp_name:str,

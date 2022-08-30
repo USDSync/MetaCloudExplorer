@@ -15,10 +15,6 @@ import omni.kit.app
 import omni.ui as ui
 import pathlib
 
-EXTENSION_FOLDER_PATH = pathlib.Path(
-    omni.kit.app.get_app().get_extension_manager().get_extension_path_by_module(__name__)
-)
-
 # Pre-defined constants. It's possible to change them runtime.
 cl.meta_window_hovered = cl("#2b2e2e")
 cl.meta_window_text = cl("#9e9e9e")

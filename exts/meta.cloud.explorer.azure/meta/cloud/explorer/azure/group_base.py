@@ -181,7 +181,7 @@ class GroupBase(ABC):
                 value=str(output_file),prev=str(output_file))        
    
     #Change the Group Shaders textures to /from cost images
-    def showHideCosts(self):
+    async def showHideCosts(self):
 
         #Get Stage
         stage = omni.usd.get_context().get_stage()
@@ -249,12 +249,8 @@ class GroupBase(ABC):
             except:
                 pass
 
-    #Load group resources async
-    async def loadGroupResources(self,group_name, group_prim_path, values):
-        await self.loadGroupResources(self,group_name, group_prim_path, values)
-
     #Load the resources from map
-    def loadGroupResources(self,group_name, group_prim_path, values):
+    async def loadGroupResources(self,group_name, group_prim_path, values):
         
         i=0 # prim count tracker
         resCount = len(values)
@@ -271,7 +267,7 @@ class GroupBase(ABC):
             prim_vector = transforms[i]
             new_prim_path = get_parent_child_prim_path(self, group_prim_path, resName)
 
-            create_and_place_prim(self,
+            await create_and_place_prim(self,
                 prim_type= resType,
                 prim_name=resName,
                 grp_name=group_name,

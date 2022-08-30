@@ -44,7 +44,7 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
         # Show the window. It will call `self.show_window`
         ui.Workspace.show_window(MetaCloudExplorerAzure.WINDOW_NAME)
 
-        # # show the window in the usual way if the stage is loaded
+        # show the window in the usual way if the stage is loaded
         # if self.stage:
         #     self._window.deferred_dock_in("Property")
         # else:
