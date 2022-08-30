@@ -155,10 +155,13 @@ class StageManager():
         self._dataStore._lcl_sizes.sort(reverse=True)
 
         #Create the groups in an async loop
-        if (len(self._dataStore._lcl_groups)) >0 :
+        grpCnt = len(self._dataStore._lcl_groups)
+        if (grpCnt) >0 :
             asyncio.ensure_future(self.ActiveView.CreateGroups(transforms=transforms))
         
+        asyncio.ensure_future(self.sendNotify("Stage loading complete: " + str(grpCnt) + " groups loaded.", nm.NotificationStatus.INFO))   
 
+    #Load the resources by group
     def LoadResources(self, viewType:str):
         
         self.ActiveView = self.SetActiveView(viewType)
@@ -171,7 +174,7 @@ class StageManager():
         if self.ActiveView is None:
             self.ActiveView = self.SetActiveView(self._last_view_type)
 
-        self.ActiveView.loadResources() #Abstract Method           
+        self.ActiveView.loadResources() #Abstract Method      
 
     #Gets the x,y,z coordinates to place the grouping planes
     def getTransforms(self):
@@ -235,9 +238,8 @@ class StageManager():
     def ShowCosts(self):
         if self.ActiveView is None:
             self.ActiveView = self.SetActiveView(self._last_view_type)
-            self.ActiveView.showHideCosts()
-        else:
-            self.ActiveView.showHideCosts()
+
+        asyncio.ensure_future(self.ActiveView.showHideCosts())
 
 
 
