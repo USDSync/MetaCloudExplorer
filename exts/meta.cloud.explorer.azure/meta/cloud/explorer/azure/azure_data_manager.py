@@ -29,10 +29,7 @@ class AzureDataManager():
 
     def get_token(self):
          # Acquire a credential object using CLI-based authentication.
-        self._dataStore._azure_tenant_id="64b3cefb-e38e-4fe8-8356-de6129c50262"
-        self._dataStore._azure_client_id = "970ebf4e-232e-428a-9a33-6e42d2a70ebb"
-        self._dataStore._azure_client_secret="DUU8Q~5YcqMepVdLBzvCaIKU2bqQH31AmQFMxbI3"
-        self._dataStore._azure_subscription_id="9af72be6-0c53-464c-aa30-0834b42c0d94"
+
 
         self._token_credential = ClientSecretCredential(
             self._dataStore._azure_tenant_id, 
