@@ -69,10 +69,8 @@ class DataManager:
         self._onlineDataManager.load_data()
 
         #Aggregate the info
-        if ASYNC_ENABLED:
-            asyncio.ensure_future(self.process_data())
-        else:
-            self.process_data()
+        asyncio.ensure_future(self.process_data())
+        
 
     def wipe_data(self):
         self._dataStore._groups.clear()
@@ -414,23 +412,23 @@ class DataManager:
             carb.log_info("No matching prim found - " + typeName)                                  
 
         # SUBSCRIPTION MAP
-        self.map_objects(resName, typeName, "/Subs" ,shape_to_render, self._dataStore._map_subscription, obj, "subscription")
+        await self.map_objects(resName, typeName, "/Subs" ,shape_to_render, self._dataStore._map_subscription, obj, "subscription")
 
         # GROUP MAP
-        self.map_objects(resName, typeName, "/RGrps", shape_to_render, self._dataStore._map_group, obj, "group")
+        await self.map_objects(resName, typeName, "/RGrps", shape_to_render, self._dataStore._map_group, obj, "group")
 
         # TYPE MAP
-        self.map_objects(resName, typeName, "/Types", shape_to_render, self._dataStore._map_type, obj, "type")
+        await self.map_objects(resName, typeName, "/Types", shape_to_render, self._dataStore._map_type, obj, "type")
 
         # LOCATION MAP
-        self.map_objects(resName, typeName, "/Locs", shape_to_render, self._dataStore._map_location, obj, "location")
+        await self.map_objects(resName, typeName, "/Locs", shape_to_render, self._dataStore._map_location, obj, "location")
 
         #TODO TAGMAP
         #self.map_objects(typeName, "/Tag", shape_to_render, self._dataStore._tag_map, obj, "tag")
 
 
     #Maps objects to create to each aggregate
-    def map_objects(self, resName, typeName, root, shape, map, obj, field:str):
+    async def map_objects(self, resName, typeName, root, shape, map, obj, field:str):
         
         cleaned_group_name = cleanup_prim_path(self, Name=obj[field])
         carb.log_info(cleaned_group_name)

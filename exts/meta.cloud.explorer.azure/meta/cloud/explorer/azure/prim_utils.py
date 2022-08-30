@@ -13,7 +13,7 @@ from .pillow_text import draw_text_on_image_at_position
 CURRENT_PATH = Path(__file__).parent
 RES_PATH = CURRENT_PATH.parent.parent.parent.parent.joinpath("data\\resources")
 
-def create_and_place_prim(self,
+async def create_and_place_prim(self,
     prim_type:str,
     prim_name:str,
     grp_name:str,
@@ -27,8 +27,13 @@ def create_and_place_prim(self,
     stage =  omni.usd.get_context().get_stage()
 
     # Create prim to add the reference to.
-    prim = stage.DefinePrim(new_prim_path)
-    prim.GetReferences().AddReference(shapeToRender)
+    try:
+        prim = stage.DefinePrim(new_prim_path)
+        prim.GetReferences().AddReference(shapeToRender)
+    except:
+        carb.log_error("Invalid prim path:" + str(new_prim_path))
+        return
+
     my_new_prim = stage.GetPrimAtPath(new_prim_path)
 
     my_new_prim.SetCustomDataByKey('res_type', prim_type) 

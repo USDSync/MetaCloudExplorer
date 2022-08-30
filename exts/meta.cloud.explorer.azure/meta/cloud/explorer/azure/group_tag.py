@@ -39,11 +39,10 @@ class TagGrpView(GroupBase):
         if len(self._dataStore._tag_count) == 0:
             return 0
 
-        self.view_path = Sdf.Path(self.root_path.AppendPath(self._view_path))
-
         #temp group list to prep for planes, adds to main aggregate
         gpz = self._dataStore._tag_count.copy()
 
+        
         for grp in gpz:
             size = calcPlaneSizeForGroup(
                     scaleFactor=self._scale, 
@@ -63,6 +62,7 @@ class TagGrpView(GroupBase):
                 for count in range(0,groupCount):
                     self._dataStore._lcl_sizes.append(maxPlaneSize)               
 
+            self._dataStore._lcl_groups = []
             grp = cleanup_prim_path(self, grp)
             self._dataStore._lcl_groups.append({ "group":grp, "size":size })
 
@@ -98,7 +98,7 @@ class TagGrpView(GroupBase):
                     #Is this the group?
                     if key == grp["group"]:
 
-                        self.loadGroupResources(key, group_prim_path, values)
+                        asyncio.ensure_future(self.loadGroupResources(key, group_prim_path, values))
 
     
     def selectGroupPrims(self):

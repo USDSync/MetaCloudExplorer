@@ -67,20 +67,6 @@ class GroupBase(ABC):
         UsdGeom.SetStageMetersPerUnit(self._stage, stage_unit_per_meter)
         self._stage.SetDefaultPrim(root_prim)
 
-        # add a light
-        light_prim_path = self.root_path.AppendPath('DomeLight')
-        light_prim = UsdLux.DistantLight.Define(self._stage, str(light_prim_path))
-        light_prim.CreateAngleAttr(0.53)
-        light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
-        light_prim.CreateIntensityAttr(500.0)
-    
-        # add a light
-        light_prim_path = self.root_path.AppendPath('DistantLight')
-        light_prim = UsdLux.DistantLight.Define(self._stage, str(light_prim_path))
-        light_prim.CreateAngleAttr(0.53)
-        light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
-        light_prim.CreateIntensityAttr(1000.0)    
-
 
     #Depending on the Active View, "groups" will contain different aggreagetes.
     #This function creates the GroundPlane objects on the stage for each group
@@ -112,9 +98,11 @@ class GroupBase(ABC):
 
                 carb.log_info("Create shader " + grp["group"] + " of " + str(len(self._dataStore._lcl_groups)))
                 await create_shaders(base_path=prim_path, prim_name=grp["group"])
+                await omni.kit.app.get_app().next_update_async()
 
             #Set the shader images for the groups
             await self.AddShaderImages()
+            await omni.kit.app.get_app().next_update_async()
 
     #Assign Images to the group Shaders
     async def AddShaderImages(self):
@@ -171,6 +159,7 @@ class GroupBase(ABC):
                 omni.kit.commands.execute('ChangeProperty',
                     prop_path=Sdf.Path(shader_path).AppendPath('.inputs:diffuse_texture'),
                     value=str(output_file), prev=str(output_file))
+                await omni.kit.app.get_app().next_update_async()
             except:
                 #Do it again!
                 omni.kit.commands.execute('ChangeProperty',
@@ -178,7 +167,7 @@ class GroupBase(ABC):
                 value=str(output_file),prev=str(output_file))        
    
     #Change the Group Shaders textures to /from cost images
-    def showHideCosts(self):
+    async def showHideCosts(self):
 
         #Get Stage
         stage = omni.usd.get_context().get_stage()
@@ -246,12 +235,8 @@ class GroupBase(ABC):
             except:
                 pass
 
-    #Load group resources async
-    async def loadGroupResources(self,group_name, group_prim_path, values):
-        await self.loadGroupResources(self,group_name, group_prim_path, values)
-
     #Load the resources from map
-    def loadGroupResources(self,group_name, group_prim_path, values):
+    async def loadGroupResources(self,group_name, group_prim_path, values):
         
         i=0 # prim count tracker
         resCount = len(values)
@@ -266,9 +251,14 @@ class GroupBase(ABC):
             resShape = res["shape"]
             resType = res["type"]
             prim_vector = transforms[i]
+            
+            carb.log_info("Creating prim path:" + str(group_prim_path) + " " + str(resName))
+
             new_prim_path = get_parent_child_prim_path(self, group_prim_path, resName)
 
-            create_and_place_prim(self,
+            carb.log_info("New prim path:" + str(new_prim_path))
+
+            await create_and_place_prim(self,
                 prim_type= resType,
                 prim_name=resName,
                 grp_name=group_name,

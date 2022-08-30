@@ -2,7 +2,7 @@
 from .group_base import GroupBase
 from pxr import Gf, UsdGeom, UsdLux, Usd, Sdf
 from .math_utils import calcPlaneSizeForGroup
-from .prim_utils import cleanup_prim_path, create_and_place_prim, get_parent_child_prim_path
+from .prim_utils import cleanup_prim_path
 import locale 
 import asyncio
 import carb
@@ -112,7 +112,7 @@ class TypeGrpView(GroupBase):
                     #Is this the group?
                     if key == grp["group"]:
 
-                        self.loadGroupResources(key, group_prim_path, values)
+                        asyncio.ensure_future(self.loadGroupResources(key, group_prim_path, values))
 
     
     def selectGroupPrims(self):

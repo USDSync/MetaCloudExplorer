@@ -25,6 +25,8 @@ import omni.kit.pipapi
 from pxr import Sdf, Usd, Gf, UsdGeom
 import omni
 from pathlib import Path
+import omni.kit.notification_manager as nm
+
 from .omni_utils import get_selection
 from .combo_box_model import ComboBoxModel
 from .omni_utils import duplicate_prims
@@ -106,11 +108,12 @@ class MainView(ui.Window):
 
     def set_defaults(self, defType:str):
         if defType == "tower":
+            asyncio.ensure_future(self.sendNotify("Tower defaults set... Select a VIEW", nm.NotificationStatus.INFO))   
             self._dataStore._symmetric_planes_model.set_value(True)
             self._dataStore._packing_algo_model.set_value(False)
             self._dataStore._options_count_models[0].set_value(2)
             self._dataStore._options_count_models[1].set_value(2)
-            self._dataStore._options_count_models[2].set_value(20)
+            self._dataStore._options_count_models[2].set_value(60)
             self._dataStore._options_dist_models[0].set_value(500.0)
             self._dataStore._options_dist_models[1].set_value(500.0)
             self._dataStore._options_dist_models[2].set_value(250.0)
@@ -118,11 +121,12 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[1].set_value(1)
             self._dataStore._options_random_models[2].set_value(1)
         if defType == "symmetric":
+            asyncio.ensure_future(self.sendNotify("Symmetric defaults set... Select a VIEW", nm.NotificationStatus.INFO))   
             self._dataStore._symmetric_planes_model.set_value(True)
             self._dataStore._packing_algo_model.set_value(False)
             self._dataStore._options_count_models[0].set_value(4)
             self._dataStore._options_count_models[1].set_value(4)
-            self._dataStore._options_count_models[2].set_value(20)
+            self._dataStore._options_count_models[2].set_value(40)
             self._dataStore._options_dist_models[0].set_value(500.0)
             self._dataStore._options_dist_models[1].set_value(500.0)
             self._dataStore._options_dist_models[2].set_value(250.0)
@@ -130,10 +134,11 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[1].set_value(1)
             self._dataStore._options_random_models[2].set_value(1)
         if defType == "islands":
+            asyncio.ensure_future(self.sendNotify("Island defaults set... Select a VIEW", nm.NotificationStatus.INFO))   
             self._dataStore._symmetric_planes_model.set_value(False)
             self._dataStore._packing_algo_model.set_value(False)
-            self._dataStore._options_count_models[0].set_value(10)
-            self._dataStore._options_count_models[1].set_value(2)
+            self._dataStore._options_count_models[0].set_value(20)
+            self._dataStore._options_count_models[1].set_value(4)
             self._dataStore._options_count_models[2].set_value(4)
             self._dataStore._options_dist_models[0].set_value(500.0)
             self._dataStore._options_dist_models[1].set_value(500.0)
@@ -142,6 +147,7 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[1].set_value(1)
             self._dataStore._options_random_models[2].set_value(1)
         if defType == "packer":
+            asyncio.ensure_future(self.sendNotify("Packer algo enabled... Select a VIEW", nm.NotificationStatus.INFO))   
             self._dataStore._symmetric_planes_model.set_value(True)
             self._dataStore._packing_algo_model.set_value(True)
             self._dataStore._options_count_models[0].set_value(4)
@@ -163,7 +169,8 @@ class MainView(ui.Window):
         self._dataStore.Save_Config_Data()
 
         asyncio.ensure_future(self.clear_stage())
-        asyncio.ensure_future(self._stageManager.ShowStage(viewType))
+        
+        self._stageManager.ShowStage(viewType)
 
     #load the resource onto the stage
     def load_resources(self):
@@ -180,42 +187,54 @@ class MainView(ui.Window):
         root_prim = stage.GetPrimAtPath("/World")
         if (root_prim.IsValid()):
             stage.RemovePrim("/World")
+            await omni.kit.app.get_app().next_update_async()
         
         ground_prim = stage.GetPrimAtPath('/GroundPlane')
         if (ground_prim.IsValid()):
-            stage.RemovePrim('/GroundPlane')                    
+            stage.RemovePrim('/GroundPlane')                
+            await omni.kit.app.get_app().next_update_async()    
 
         ground_prim = stage.GetPrimAtPath('/RGrp')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/RGrp')
+            await omni.kit.app.get_app().next_update_async()
 
         ground_prim = stage.GetPrimAtPath('/Loc')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Loc')
+            await omni.kit.app.get_app().next_update_async()
 
         ground_prim = stage.GetPrimAtPath('/AAD')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/AAD') 
+            await omni.kit.app.get_app().next_update_async()
 
         ground_prim = stage.GetPrimAtPath('/Subs')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Subs')
+            await omni.kit.app.get_app().next_update_async()
 
         ground_prim = stage.GetPrimAtPath('/Type')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Type')
+            await omni.kit.app.get_app().next_update_async()
 
         ground_prim = stage.GetPrimAtPath('/Cost')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Cost')
+            await omni.kit.app.get_app().next_update_async()
 
         ground_prim = stage.GetPrimAtPath('/Looks')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Looks')
+            await omni.kit.app.get_app().next_update_async()
 
         ground_prim = stage.GetPrimAtPath('/Tag')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Tag')
+            
+        for x in range(50):
+                await omni.kit.app.get_app().next_update_async()
 
 
     #___________________________________________________________________________________________________
@@ -388,7 +407,7 @@ class MainView(ui.Window):
                         SimpleImageButton(image="omniverse://localhost/Resources/images/Symmetric.png", size=150, name="sym_btn", clicked_fn=lambda: _on_clicked(self, source="symmetric"))
                     with ui.VStack():
                         ui.Label("BIN PACKER", name="attribute_name", width=self.label_width)
-                        SimpleImageButton(image="omniverse://localhost/Resources/images/rows.png", size=150, name="row_btn",clicked_fn=lambda: _on_clicked(self, source="packer"))
+                        SimpleImageButton(image="omniverse://localhost/Resources/images/packer.png", size=150, name="row_btn",clicked_fn=lambda: _on_clicked(self, source="packer"))
 
                     #ui.Image("../../../data/Resources/images/tower.png", fill_policy=ui.FillPolicy.PRESERVE_ASPECT_FIT, alignment=ui.Alignment.CENTER,style={'border_radius':10})
                     #ui.Image("omniverse://localhost/Resources/images/Symmetric.png", fill_policy=ui.FillPolicy.PRESERVE_ASPECT_FIT, alignment=ui.Alignment.CENTER,style={'border_radius':10})
@@ -508,3 +527,26 @@ class MainView(ui.Window):
             # add call back to click the rect_changed to restore the default value
             rect_changed.set_mouse_pressed_fn(lambda x, y, b, m: _restore_default(slider))
         return button_background_gradient
+
+    
+    async def sendNotify(self, message:str, status:nm.NotificationStatus):
+        
+        # https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.kit.notification_manager/docs/index.html?highlight=omni%20kit%20notification_manager#
+
+        import omni.kit.notification_manager as nm
+        ok_button = nm.NotificationButtonInfo("OK", on_complete=self.clicked_ok)
+
+        nm.post_notification(
+            message,
+            hide_after_timeout=True,
+            duration=5,
+            status=status,
+            button_infos=[]
+        )        
+        
+        #Let the Ui breathe ;)
+        for x in range(5):
+            await omni.kit.app.get_app().next_update_async()    
+
+    def clicked_ok(self):
+        pass

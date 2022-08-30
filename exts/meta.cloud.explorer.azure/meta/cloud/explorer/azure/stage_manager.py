@@ -134,7 +134,9 @@ class StageManager():
 
                 
     #Invoked from UI - Show the Stages based on the View.
-    async def ShowStage(self, viewType:str):
+    def ShowStage(self, viewType:str):
+
+        self.AddLightsToStage()
 
         #Reset view data
         self._dataStore._lcl_sizes = [] 
@@ -155,10 +157,13 @@ class StageManager():
         self._dataStore._lcl_sizes.sort(reverse=True)
 
         #Create the groups in an async loop
-        if (len(self._dataStore._lcl_groups)) >0 :
-            await self.ActiveView.CreateGroups(transforms=transforms)
+        grpCnt = len(self._dataStore._lcl_groups)
+        if (grpCnt) >0 :
+            asyncio.ensure_future(self.ActiveView.CreateGroups(transforms=transforms))
         
+        asyncio.ensure_future(self.sendNotify("Stage loading complete: " + str(grpCnt) + " groups loaded.", nm.NotificationStatus.INFO))   
 
+    #Load the resources by group
     def LoadResources(self, viewType:str):
         
         self.ActiveView = self.SetActiveView(viewType)
@@ -171,7 +176,7 @@ class StageManager():
         if self.ActiveView is None:
             self.ActiveView = self.SetActiveView(self._last_view_type)
 
-        self.ActiveView.loadResources() #Abstract Method           
+        self.ActiveView.loadResources() #Abstract Method      
 
     #Gets the x,y,z coordinates to place the grouping planes
     def getTransforms(self):
@@ -220,6 +225,23 @@ class StageManager():
 
             return transforms
 
+    def AddLightsToStage(self):
+
+        stage = omni.usd.get_context().get_stage()
+
+        # add a light
+        light_prim_path = Sdf.Path("/World").AppendPath('DomeLight')
+        light_prim = UsdLux.DistantLight.Define(stage, str(light_prim_path))
+        light_prim.CreateAngleAttr(0.53)
+        light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
+        light_prim.CreateIntensityAttr(500.0)
+    
+        # add a light
+        light_prim_path = Sdf.Path("/World").AppendPath('DistantLight')
+        light_prim = UsdLux.DistantLight.Define(stage, str(light_prim_path))
+        light_prim.CreateAngleAttr(0.53)
+        light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
+        light_prim.CreateIntensityAttr(750.0)    
 
     def Select_Planes(self):
 
@@ -235,9 +257,8 @@ class StageManager():
     def ShowCosts(self):
         if self.ActiveView is None:
             self.ActiveView = self.SetActiveView(self._last_view_type)
-            self.ActiveView.showHideCosts()
-        else:
-            self.ActiveView.showHideCosts()
+
+        asyncio.ensure_future(self.ActiveView.showHideCosts())
 
 
 
@@ -263,7 +284,7 @@ class StageManager():
             hide_after_timeout=True,
             duration=5,
             status=status,
-            button_infos=[ok_button]
+            button_infos=[]
         )        
         
         #Let the Ui breathe ;)

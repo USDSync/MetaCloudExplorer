@@ -2,7 +2,7 @@
 from .group_base import GroupBase
 from pxr import Gf, UsdGeom, UsdLux, Usd, Sdf
 from .math_utils import calcPlaneSizeForGroup
-from .prim_utils import cleanup_prim_path, create_and_place_prim, get_parent_child_prim_path
+from .prim_utils import cleanup_prim_path
 import locale 
 import asyncio
 import carb
@@ -37,12 +37,10 @@ class SubGrpView(GroupBase):
         #check it again
         if len(self._dataStore._subscription_count) == 0:
             return 0
-        
-        self.view_path = Sdf.Path(self.root_path.AppendPath(self._view_path))
 
-        #temp group list to prep for planes, adds to main aggregate
-        gpz = self._dataStore._subscription_count.copy()
-        
+        #Clone the sub groups
+        gpz = self._dataStore._subscription_count.copy()        
+       
         for grp in gpz:
             size = calcPlaneSizeForGroup(
                     scaleFactor=self._scale, 
@@ -50,21 +48,23 @@ class SubGrpView(GroupBase):
                 )
             #mixed plane sizes
             self._dataStore._lcl_sizes.append(size)
-
-            #Should the planes all be the same size ?
-            if self._dataStore._use_symmetric_planes:
-                sorted = self._dataStore._lcl_groups.sort(key=lambda element: element['size'], reverse=True)
-                maxPlaneSize = sorted[0]["size"]
-                groupCount = len(sorted)
-
-                #Reset plane sizes
-                self._dataStore._lcl_sizes = []
-                for count in range(0,groupCount):
-                    self._dataStore._lcl_sizes.append(maxPlaneSize)               
-
             grp = cleanup_prim_path(self, grp)
             self._dataStore._lcl_groups.append({ "group":grp, "size":size })
 
+        #Should the groups all be the same size ?
+        if self._symPlanes:
+            self._dataStore._lcl_sizes.sort(reverse=True)
+            maxPlaneSize = self._dataStore._lcl_sizes[0] #largest plane
+            groupCount = len(self._dataStore._lcl_sizes) #count of groups
+
+            #Reset plane sizes
+            self._dataStore._lcl_sizes = []
+            for count in range(0,groupCount):
+                self._dataStore._lcl_sizes.append(maxPlaneSize)               
+
+            self._dataStore._lcl_groups = []
+            for grp in gpz:
+                self._dataStore._lcl_groups.append({ "group":grp, "size":maxPlaneSize })
 
     def calulateCosts(self):      
 
@@ -96,7 +96,7 @@ class SubGrpView(GroupBase):
 
                     #Is this the group?
                     if key == grp["group"]:
-                        self.loadGroupResources(key, group_prim_path, values)
+                        asyncio.ensure_future(self.loadGroupResources(key, group_prim_path, values))
     
     def selectGroupPrims(self):
         

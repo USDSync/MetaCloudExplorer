@@ -41,6 +41,7 @@ class LocGrpView(GroupBase):
         #Clone the location groups
         gpz = self._dataStore._location_count.copy()
 
+        
         #How big should the groups be?
         for grp in gpz:
             size = calcPlaneSizeForGroup(
@@ -99,7 +100,7 @@ class LocGrpView(GroupBase):
 
                     #Is this the group?
                     if key == grp["group"]:
-                        self.loadGroupResources(key, group_prim_path, values)
+                        asyncio.ensure_future(self.loadGroupResources(key, group_prim_path, values))
 
     def selectGroupPrims(self):
         
