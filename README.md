@@ -41,7 +41,7 @@ Look for "meta.cloud.explorer.azure" extension in extension manager and enable i
 # Azure API App Link Setup
 ![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/mce_ui.png)
 
-This extension lets you easily load and explore a representation of your Cloud Infrastructure in the Omniverse. This extension can connect to the Azure Resource Manager API to access your Azure Infrastructure. A read-only account can be utilized to ensure infrastructure security.  See the wiki page for more info on creating an account.
+This extension lets you easily load and explore a representation of your Cloud Infrastructure in the Omniverse. This extension can connect to the Azure Resource Manager API to access your Azure Infrastructure. A read-only account can be utilized to ensure infrastructure security.  See the wiki page for detailed steps on creating an application to access your Azure environment.
 
 Steps to Connect:
 1. Create an Azure AAD Application to act as a Service principal to read your Azure resources.
