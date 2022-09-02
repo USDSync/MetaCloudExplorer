@@ -13,6 +13,7 @@ class DataStore():
     def __init__(self):
 
         print("DataStore initialized")
+
         #Azure Resoruce Groups
         #NAME,SUBSCRIPTION,LOCATION
         self._groups = {}
@@ -102,6 +103,36 @@ class DataStore():
         self._options_random_models[1].as_float = 1.0
         self._options_random_models[2].as_float = 1.0
         self.Load_Config_Data()
+
+
+    def wipe_data(self):
+        self._groups.clear()
+        self._resources.clear()
+
+        self._subscription_count = {}
+        self._location_count = {}
+        self._group_count = {}
+        self._type_count = {}
+        self._tag_count = {}
+
+        self._subscription_cost = {}
+        self._location_cost = {}
+        self._group_cost = {}
+        self._type_cost = {}
+        self._tag_cost = {}
+        
+        self._map_aad = {}
+        self._map_subscription = {}
+        self._map_location = {}
+        self._map_group = {}
+        self._map_type = {}
+        self._map_tag = {}
+
+        self._lcl_sizes = [] 
+        self._lcl_groups = [] 
+        self._lcl_resources = [] 
+
+        carb.log_info("Data Cleared.")
 
 
     def Save_Config_Data(self):
@@ -231,10 +262,7 @@ class DataStore():
         # self._map_type = pickle.load(open('map_type', 'r'))
         # self._map_tag = pickle.load(open('map_tag', 'r'))
 
-
-
-
-
+#-- SINGLETON SUPPORT
 #-- SINGLETON SUPPORT
 
     def instance(self):

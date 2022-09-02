@@ -74,7 +74,7 @@ class StageManager():
 
         self._dataManager = DataManager.instance() # Get A Singleton instance
         self._dataStore = DataStore.instance() # Get A Singleton instance
-       
+        #self._dataManager.add_model_changed_callback(self.model_changed)
         self.stage_unit_per_meter = 1
 
         #Get Composition Options from UI
@@ -132,6 +132,8 @@ class StageManager():
 
         return view
 
+    # def model_changed():
+    #     pass
                 
     #Invoked from UI - Show the Stages based on the View.
     def ShowStage(self, viewType:str):
@@ -229,19 +231,32 @@ class StageManager():
 
         stage = omni.usd.get_context().get_stage()
 
-        # add a light
-        light_prim_path = Sdf.Path("/World").AppendPath('DomeLight')
-        light_prim = UsdLux.DistantLight.Define(stage, str(light_prim_path))
-        light_prim.CreateAngleAttr(0.53)
-        light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
-        light_prim.CreateIntensityAttr(500.0)
+        # # add a light
+        # light_prim_path = Sdf.Path("/World").AppendPath('DomeLight')
+        # light_prim = UsdLux.DistantLight.Define(stage, str(light_prim_path))
+        # light_prim.CreateAngleAttr(0.53)
+        # light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
+        # light_prim.CreateIntensityAttr(500.0)
     
-        # add a light
-        light_prim_path = Sdf.Path("/World").AppendPath('DistantLight')
-        light_prim = UsdLux.DistantLight.Define(stage, str(light_prim_path))
-        light_prim.CreateAngleAttr(0.53)
-        light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
-        light_prim.CreateIntensityAttr(750.0)    
+        # # add a light
+        # light_prim_path = Sdf.Path("/World").AppendPath('DistantLight')
+        # light_prim = UsdLux.DistantLight.Define(stage, str(light_prim_path))
+        # light_prim.CreateAngleAttr(0.53)
+        # light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
+        # light_prim.CreateIntensityAttr(750.0)    
+
+        omni.kit.commands.execute('DeletePrimsCommand',
+            paths=['/Environment/sky'])
+
+        omni.kit.commands.execute('CreateDynamicSkyCommand',
+            sky_url='http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Skies/Dynamic/NightSky.usd',
+            sky_path='/Environment/sky')
+
+        omni.kit.commands.execute('ChangeProperty',
+            prop_path=Sdf.Path('/Environment/sky.xformOp:rotateZYX'),
+            value=Gf.Vec3f(90.0, 0.0, 0.0),
+            prev=Gf.Vec3f(0.0, 0.0, 0.0))
+
 
     def Select_Planes(self):
 

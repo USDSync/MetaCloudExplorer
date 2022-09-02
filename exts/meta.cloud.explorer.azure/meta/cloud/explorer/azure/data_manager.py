@@ -38,6 +38,8 @@ RES_PATH = CURRENT_PATH.parent.parent.parent.parent.joinpath("data\\resources")
 class DataManager:
     def __init__(self):
 
+        self._callbacks = []
+
         logging.getLogger("asyncio").setLevel(logging.WARNING)
 
         carb.log_info("DataManager Created.")
@@ -47,48 +49,71 @@ class DataManager:
         self._dataStore.Load_Config_Data()
         self.refresh_data()
 
+    #shut it down...
+    def destroy(self):
+        carb.log_info("DataManager Destroyed.")
+        self._callbacks = []
+        self._offlineDataManager = None
+        self._onlineDataManager = None
+        self._dataStore = None
+
+    #add a callback for model changed
+    def add_model_changed_callback(self, func):
+        self._callbacks.append(func)
+
+    #Invoke the callbacks that want to know when the data changes
+    def _model_changed(self):
+        for c in self._callbacks:
+            c()
+
+    #Load data from file
     def load_csv_files(self):
         self._dataStore._groups.clear()
         self._dataStore._resources.clear()
+        self._lcl_sizes = [] 
+        self._lcl_groups = [] 
+        self._lcl_resources = [] 
+
         self._dataStore._source_of_data = "OfflineData"
         self._dataStore.Save_Config_Data()
-        self._offlineDataManager.loadFiles()
-        if ASYNC_ENABLED:
-            asyncio.ensure_future(self.process_data())
-        else:
-            self.process_data()
+        
+        asyncio.ensure_future(self.load_and_process_csv())
 
+    async def load_and_process_csv(self):
+    
+        #Load data from Cloud API
+        self._offlineDataManager.loadFiles()
+
+        #Aggregate the info
+        if len(self._dataStore._groups) >0:
+            asyncio.ensure_future(self.process_data())
+
+
+    #Load data from Azure API
     def load_from_api(self):
         self._dataStore._groups.clear()
         self._dataStore._resources.clear()
+        self._lcl_sizes = [] 
+        self._lcl_groups = [] 
+        self._lcl_resources = [] 
         self._dataStore._source_of_data = "LiveAzureAPI"
         self._dataStore.Save_Config_Data()
         
+        asyncio.ensure_future(self.load_and_process_api())
+       
+    async def load_and_process_api(self):
+    
         #Load data from Cloud API
-        self._onlineDataManager.connect()
-        self._onlineDataManager.load_data()
+        if self._onlineDataManager.connect():
+            await self._onlineDataManager.load_data()
 
-        #Aggregate the info
-        asyncio.ensure_future(self.process_data())
-        
+        #Now that we have the data, process it
+        if len(self._dataStore._groups) >0:
+            await self.process_data()
+   
 
     def wipe_data(self):
-        self._dataStore._groups.clear()
-        self._dataStore._resources.clear()
-
-        self._dataStore._subscription_count = {}
-        self._dataStore._location_count = {}
-        self._dataStore._group_count = {}
-        self._dataStore._type_count = {}
-        self._dataStore._tag_count = {}
-
-        self._dataStore._subscription_cost = {}
-        self._dataStore._location_cost = {}
-        self._dataStore._group_cost = {}
-        self._dataStore._type_cost = {}
-        self._dataStore._tag_cost = {}
-        
-        carb.log_info("Data Cleared.")
+        self._dataStore.wipe_data()
 
     def refresh_data(self):
         if self._dataStore._source_of_data =="OfflineData":
@@ -97,6 +122,15 @@ class DataManager:
         elif self._dataStore._source_of_data == "LiveAzureAPI":
             self.load_from_api()
             carb.log_info("Live Data Refreshed.")
+
+    #Load a sample company data
+    def load_sample():
+        pass
+
+    #Load the "All resources set"
+    def load_sample_resources():
+        pass
+
 
     #Aggregate subscription, resources counts to DataManager Dictionaries
     async def process_data(self):  
@@ -116,7 +150,9 @@ class DataManager:
             await self.MapResourcesToGroupsAsync(obj)
 
         #Pre-create images for the groups
-        await self.CreateImagesForGroups()
+        asyncio.ensure_future(self.CreateImagesForGroups())
+
+        self._model_changed()
 
         #output aggregation results to console
         carb.log_info("Data processing complete..")
@@ -354,15 +390,6 @@ class DataManager:
         else:
             self._dataStore._group_cost[grpKey] = float(self._dataStore._group_cost[grpKey]) + float(obj["lmcost"])
 
-        #your_dictionary = {'Australia':1780, 'England':6723, 'Tokyo': 1946}
-
-#        new_maximum_val = max([obj["subscription"]].values(), key=(lambda new_k: your_dictionary[new_k]))
-#        carb.log_info('Maximum Value: ',your_dictionary[new_maximum_val])
-#        new_minimum_val = min(your_dictionary.keys(), key=(lambda new_k: your_dictionary[new_k]))
-#        carb.log_info('Minimum Value: ',your_dictionary[new_minimum_val])
-
-
-
     #Async Context
     async def AggregateCountsAsync(self, obj):
 
@@ -395,8 +422,6 @@ class DataManager:
         else:
             self._dataStore._group_count[grpKey] = self._dataStore._group_count[grpKey] + 1
 
-
-      
     #Given a resource, Map it to all the groups it belongs to.
     async def MapResourcesToGroupsAsync(self, obj):
         

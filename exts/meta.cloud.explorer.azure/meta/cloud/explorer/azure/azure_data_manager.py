@@ -15,6 +15,7 @@ sys.path.append("D:/python37/lib/site-packages")
 from .data_store import DataStore
 from .prim_utils import cleanup_prim_path
 from azure.mgmt.resource import ResourceManagementClient
+from azure.mgmt.resource.subscriptions import SubscriptionClient
 from azure.identity import ClientSecretCredential
 import os
 
@@ -27,10 +28,18 @@ class AzureDataManager():
         
         self._dataStore = DataStore.instance() # Get A Singleton instance, store data here
 
+
     def get_token(self):
          # Acquire a credential object using CLI-based authentication.
+        if self._dataStore._azure_tenant_id =="":
+            self.sendNotify("MCE: Please enter Azure credentials to connect...", nm.NotificationStatus.WARNING) 
+            return
 
+        if self._dataStore._azure_client_secret =="":
+            self.sendNotify("MCE: Please enter Azure client secret to connect...", nm.NotificationStatus.WARNING) 
+            return False
 
+        self.sendNotify("MCE: Connecting to Azure Tenant...", nm.NotificationStatus.INFO)     
         self._token_credential = ClientSecretCredential(
             self._dataStore._azure_tenant_id, 
             self._dataStore._azure_client_id, 
@@ -39,12 +48,30 @@ class AzureDataManager():
         # Retrieve subscription ID from environment variable.
         self._subscription_id = self._dataStore._azure_subscription_id
 
+        return True
+
     #validate we can connect
     def connect(self):
-        self.sendNotify("Connecting to Azure Tenant...", nm.NotificationStatus.INFO)     
         
         #Get a token
-        self.get_token()
+        valid = self.get_token()
+        try:
+            if (valid):
+                # List subscriptions
+                subscription_client = SubscriptionClient(credential=self._token_credential)
+                
+                page_result = subscription_client.subscriptions.list()
+                result = [item for item in page_result]
+                for item in result:
+                    carb.log_warn(item.subscription_id)
+                    carb.log_warn(item.tags)
+        except:
+            valid = False
+            error = sys.exc_info()[0]
+            carb.log_error("Oops! " + str(error) + " occurred.")
+            self.sendNotify("Error:" + str(error), nm.NotificationStatus.WARNING)   
+
+        return valid
 
         
     def clicked_ok():
@@ -66,16 +93,16 @@ class AzureDataManager():
         )        
 
     #Connect to API and load adata
-    def load_data(self):
+    async def load_data(self):
         self.save_connection_data()
-        self.load_groups()
-        self.load_resources()
+        await self.load_groups()
+        await self.load_resources()
 
 
     def save_connection_data(self):
-        pass
+        self._dataStore.Save_Config_Data()
     
-    def load_resources(self):    
+    async def load_resources(self):    
         try:
             resCnt = 0
             for grp in self._dataStore._groups:
@@ -86,6 +113,7 @@ class AzureDataManager():
                     self._dataStore._resources[name] = {"name":name, "type": res.type, "group": grp, "location":res.location, "subscription":self._subscription_id, "lmcost": 0}
         
                     #self._dataStore.res["name"] = {"name":res["name"], "type": type, "group": group, "location":location, "subscription":subscription, "lmcost": lmcost}
+            self.sendNotify("MCE:Azure resources loaded: " + str(resCnt), nm.NotificationStatus.INFO)     
             carb.log_info("Azure API resources loaded: " + str(resCnt))                    
         except:
             error = sys.exc_info()[0]
@@ -93,16 +121,18 @@ class AzureDataManager():
             self.sendNotify("Error:" + str(error), nm.NotificationStatus.WARNING)                   
 
 
-    def load_groups(self):
+    async def load_groups(self):
         try:
-            grps = self.get_resource_groups()
+            resource_client = ResourceManagementClient(self._token_credential, self._subscription_id)
+            rg_groups = resource_client.resource_groups.list()
 
             grpCnt = 0
-            for group in grps:            
+            for group in rg_groups:            
                 grp = {group.name:{"name":group.name, "subs": self._subscription_id, "location":group.location}}
                 self._dataStore._groups.update(grp)     
                 grpCnt = grpCnt + 1
         
+            self.sendNotify("MCE:Azure groups loaded: " + str(grpCnt), nm.NotificationStatus.INFO)     
             carb.log_info("Azure API groups loaded: " + str(grpCnt))
 
         except:

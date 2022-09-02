@@ -45,7 +45,7 @@ async def create_and_place_prim(self,
     translate = Gf.Vec3d(position[0], position[1], position[2])
 
     #Are we still set to default? Change cube size and position
-    if shapeToRender == "omniverse://localhost/Resources/3dIcons/scene.usd":
+    if shapeToRender == "omniverse://localhost/MCE/3dIcons/scene.usd":
         scale = 3.0
         position[2] = position[2] + 30 #Buffer the cube off the z
 
@@ -53,7 +53,7 @@ async def create_and_place_prim(self,
     if prim_name == "nvidia_chair":
         scale =0.8
         rotation = Gf.Vec3f(90,0,220)
-        translate=Gf.Vec3d(position[0]+150, position[1]+150, position[2])
+        translate=Gf.Vec3d(position[0]+200, position[1]+200, position[2])
     if prim_name == "nvidia_jacket":
         scale =0.25
         rotation = Gf.Vec3f(90,0,0)
@@ -62,18 +62,26 @@ async def create_and_place_prim(self,
         scale =0.55
         rotation = Gf.Vec3f(90,0,0)                        
         translate=Gf.Vec3d(position[0]-220, position[1]+210, position[2]+10)
+    if prim_name == "observation_rug":
+        scale =1.0
+        rotation = Gf.Vec3f(90,90,0)                        
+        translate=Gf.Vec3d(position[0]-220, position[1]+210, position[2]+10)
+        stage = omni.usd.get_context().get_stage()
+        my_new_prim.CreateAttribute("transform:rotateXYZ", Sdf.ValueTypeNames.Double3Array)
+        
+
     carb.log_info("Placing prim: " + shapeToRender + " | " + str(new_prim_path) + " @ " 
         + "scl:" + str(scale) + " x:" + str(position[0]) + "," + " y:" + str(position[1]) + "," + " z:" + str(position[2]))           
 
     api = UsdGeom.XformCommonAPI(my_new_prim)
-
+    
     try:
         carb.log_info("Setting prim translate")
-        api.SetTranslate(translate,1)
+        api.SetTranslate(translate,0)
         print("Setting prim rotate")
-        api.SetRotate(rotation,UsdGeom.XformCommonAPI.RotationOrderXYZ,1)
+        api.SetRotate(rotation,UsdGeom.XformCommonAPI.RotationOrderXYZ,0)
         print("Setting prim scale")
-        api.SetScale(Gf.Vec3f(scale,scale,scale), 1)
+        api.SetScale(Gf.Vec3f(scale,scale,scale), 0)
     except:
         carb.log_error("Oops!", sys.exc_info()[0], "occurred.")
     
@@ -124,6 +132,7 @@ def cleanup_prim_path(self, Name: str):
     nme = nme.replace(")", "_")
     nme = nme.replace("[", "_")
     nme = nme.replace("]", "_")
+    nme = nme.replace("#", "_")
 
     #if it starts with a number add a _
     if nme[0].isnumeric():

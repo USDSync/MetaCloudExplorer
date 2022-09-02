@@ -638,13 +638,13 @@ kygold-193152b6,Virtual network,kygold,West US,Dynamics Dev/Test,,49.47
 kygold-networksecuritygroup,Network security group,kygold,West US,Dynamics Dev/Test,,49.47
 kygold94d404ec956b002f,Storage account,kygold,West US,Dynamics Dev/Test,,49.47
 kygolddemo,Public IP address,kygold,West US,Dynamics Dev/Test,,99.95
-kyr-Cashapp-qa-nsg,Network security group,kyr-Cashapp-qa,West US 2,Cashapp Dev/Test,,49.47
-kyr-dev-api-vault,Key vault,kyr-api-dev,West US 2,Dataapp Dev/Test,,49.47
-kyr-devops,Function App,devops,West US 2,Cashapp Dev/Test,,49.47
-kyr-devops,Application Insights,devops,West US 2,Cashapp Dev/Test,,135.15
-kyr-devops-law,Log Analytics workspace,devops,West US,Cashapp Dev/Test,,138
-kyr-gateway-qa,Public IP address,usdt-Cashapp-qa-centralus-rg-001,West US 2,Cashapp Dev/Test,,99
-kyrCashappuatsqlstorage,Storage account,kyr-Cashapp-uat,West US 2,Cashapp Dev/Test,,135.15
+the-Cashapp-qa-nsg,Network security group,the-Cashapp-qa,West US 2,Cashapp Dev/Test,,49.47
+the-dev-api-vault,Key vault,the-api-dev,West US 2,Dataapp Dev/Test,,49.47
+the-devops,Function App,devops,West US 2,Cashapp Dev/Test,,49.47
+the-devops,Application Insights,devops,West US 2,Cashapp Dev/Test,,135.15
+the-devops-law,Log Analytics workspace,devops,West US,Cashapp Dev/Test,,138
+the-gateway-qa,Public IP address,usdt-Cashapp-qa-centralus-rg-001,West US 2,Cashapp Dev/Test,,99
+theCashappuatsqlstorage,Storage account,the-Cashapp-uat,West US 2,Cashapp Dev/Test,,135.15
 Company1-buddybot,Cognitive Service,ca-dev,Global,Cashapp Dev/Test,,55
 Company1-cnx-cashmgmt-test,Logic app,Company1-cnx-dynamics,West US,Dataapp Dev/Test,,5
 Company1-cnx-context,Logic app,Company1-cnx-dynamics,West US,Dataapp Dev/Test,,5
@@ -737,7 +737,7 @@ Company1test-loadbalancer,Load balancer,Company1-test,West US,Dynamics Dev/Test,
 Company1Test-nic-0,Network Interface,Company1-test,West US,Dynamics Dev/Test,,50
 Company1Test-osdisk,Disk,Company1-test,West US,Dynamics Dev/Test,,50
 Company1test4d81a214b88aba,Storage account,Company1-test,West US,Dynamics Dev/Test,,225
-kyruatdatalogs,Storage account,sf-data-uat,West US 2,Cashapp Dev/Test,,0
+theuatdatalogs,Storage account,sf-data-uat,West US 2,Cashapp Dev/Test,,0
 kytest-0b8c7337,Virtual network,kytest,West US,Dynamics Dev/Test,,15
 kytest-networksecuritygroup,Network security group,kytest,West US,Dynamics Dev/Test,,0
 kytest273798c7b1031135,Storage account,kytest,West US,Dynamics Dev/Test,,0
@@ -749,7 +749,7 @@ label-fa-Cashapp-qa,Availability test,fa-Cashapp-qa-tests,West US 2,Cashapp Dev/
 label-info-fa-Cashapp-qa,Availability test,fa-Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,20
 label-info-sf-logging-dev,Availability test,fa-Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,20
 label-info-uat-sf-logging-uat,Availability test,fa-Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,20
-LB-kyr-Cashapp-qa-nt1vm,Load balancer,kyr-Cashapp-qa,West US 2,Cashapp Dev/Test,,20
+LB-the-Cashapp-qa-nt1vm,Load balancer,the-Cashapp-qa,West US 2,Cashapp Dev/Test,,20
 log-app-sf-logging-dev,Availability test,fa-Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,44
 log-app-uat-sf-logging-uat,Availability test,fa-Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,23
 log-fa-Cashapp-hf,Availability test,fa-Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,23
@@ -837,7 +837,7 @@ platform security api  v1-usdt-Dataapp-csdev-tests-centralus-appi,Availability t
 privatelink.blob.core.windows.net,Private DNS zone,usdt-Dataapp-csdev-sftp-centralus-rg-001,Global,Dataapp Dev/Test,,0
 privatelink.blob.core.windows.net,Private DNS zone,usdt-Dataapp-test-sftp-centralus-rg-001,Global,Dataapp Dev/Test,,0
 provisioning metadata api service  v1-usdt-Dataapp-csdev-tests-centralus-appi,Availability test,usdt-Dataapp-csdev-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-PublicIP-LB-FE,Public IP address,kyr-Cashapp-qa,West US 2,Cashapp Dev/Test,,0
+PublicIP-LB-FE,Public IP address,the-Cashapp-qa,West US 2,Cashapp Dev/Test,,0
 qa-Cashapp,Function App,qa-Cashapp,West Central US,Cashapp Dev/Test,,0
 qaCashapp80bf,Storage account,qa-Cashapp,West Central US,Cashapp Dev/Test,,0
 rate-app-sf-logging-dev,Availability test,fa-Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,0
@@ -930,8 +930,8 @@ SecurityCenterFree(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS),So
 SecurityCenterFree(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS2),Solution,defaultresourcegroup-wus2,West US 2,Dataapp Dev/Test,,0
 SecurityCenterFree(dev-data-Oms-Workspace),Solution,fa-dev-data,East US,Dataapp Dev/Test,,0
 SecurityCenterFree(fa-platform-oms-ws),Solution,fa-dev-infrastructure,East US,Dataapp Dev/Test,,0
-seovjpt5vqu5y2,Storage account,kyr-Cashapp-qa,West US 2,Cashapp Dev/Test,,111
-seovjpt5vqu5y3,Storage account,kyr-Cashapp-qa,West US 2,Cashapp Dev/Test,,67
+seovjpt5vqu5y2,Storage account,the-Cashapp-qa,West US 2,Cashapp Dev/Test,,111
+seovjpt5vqu5y3,Storage account,the-Cashapp-qa,West US 2,Cashapp Dev/Test,,67
 SequencedStartStop_Parent (devops-auto-vms/SequencedStartStop_Parent),Runbook,devops,West US,Cashapp Dev/Test,,23
 servicebus,API Connection,fa-dev-infrastructure,Central US,Dataapp Dev/Test,,35
 servicebus,API Connection,fa-dev-logic,Central US,Dataapp Dev/Test,,66
@@ -1086,10 +1086,10 @@ SQLVulnerabilityAssessment(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016
 SQLVulnerabilityAssessment(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EUS),Solution,defaultresourcegroup-eus,East US,Dataapp Dev/Test,,0
 SQLVulnerabilityAssessment(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS),Solution,defaultresourcegroup-wus,West US,Dataapp Dev/Test,,20
 SQLVulnerabilityAssessment(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS2),Solution,defaultresourcegroup-wus2,West US 2,Dataapp Dev/Test,,0
-Start-Stop-VM[kyr-devops-law],Solution,devops,West US,Cashapp Dev/Test,,0
+Start-Stop-VM[the-devops-law],Solution,devops,West US,Cashapp Dev/Test,,0
 storageaccountdatah9138,Storage account,Dataapp-devops,Central US,Dataapp Dev/Test,,0
 storageaccountdevopa973,Storage account,devops,West US 2,Cashapp Dev/Test,,111
-storageaccountkyrib8562,Storage account,Company1-cnx-erptk,West US,Dataapp Dev/Test,,67
+storageaccounttest8562,Storage account,Company1-cnx-erptk,West US,Dataapp Dev/Test,,67
 streamset-demo-rg-vnet,Virtual network,streamset-demo-rg,West US,Dataapp Dev/Test,,23
 streamset-demo-vm,Virtual machine,streamset-demo-rg,West US,Dataapp Dev/Test,,35
 streamset-demo-vm-ip,Public IP address,streamset-demo-rg,West US,Dataapp Dev/Test,,66
@@ -1258,6 +1258,6 @@ user-info-sf-logging-dev,Availability test,fa-Cashapp-dev-tests,West US 2,Cashap
 user-info-uat-sf-logging-uat,Availability test,fa-Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,40
 usLinux,App Service plan,ca-dev,West US 2,Cashapp Dev/Test,,40
 VMInsights(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS2),Solution,defaultresourcegroup-wus2,West US 2,Cashapp Dev/Test,,40
-VNet,Virtual network,kyr-Cashapp-qa,West US 2,Cashapp Dev/Test,,40
+VNet,Virtual network,the-Cashapp-qa,West US 2,Cashapp Dev/Test,,40
 VNet-fa-Cashapp-dev,Virtual network,fa-tenable-scanner,West US 2,Cashapp Dev/Test,,40
 zuul gateway-sf-logging-uat,Availability test,fa-Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,40

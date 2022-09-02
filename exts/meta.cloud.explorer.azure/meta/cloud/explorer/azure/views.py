@@ -20,6 +20,7 @@ import omni.ext
 import omni.ui as ui
 from omni.ui import color as cl
 import os
+import carb
 import omni.kit.commands
 import omni.kit.pipapi
 from pxr import Sdf, Usd, Gf, UsdGeom
@@ -37,6 +38,7 @@ from .prim_utils import create_plane
 
 import random
 LABEL_WIDTH = 120
+WINDOW_NAME = "Meta Cloud Explorer"
 SPACING = 4
 
 CURRENT_PATH = Path(__file__).parent
@@ -45,26 +47,42 @@ DATA_PATH = CURRENT_PATH.parent.parent.parent.parent.joinpath("data\\resources")
 
 class MainView(ui.Window):
     """The class that represents the window"""
-    def __init__(self, title: str, delegate=None, **kwargs):
+    def __init__(self, title: str, menu_path):
         self.__label_width = LABEL_WIDTH
 
-        super().__init__(title, **kwargs)
+        super().__init__(title, width=640, height=480)
 
         #Helper Class instances
         self._stageManager = StageManager()
         self._dataManager = DataManager.instance()
         self._dataStore = DataStore.instance()
 
+        self._menu_path = menu_path
+        self.set_visibility_changed_fn(self._on_visibility_changed)
+        self._build_fn()
+
+        self._dataManager.add_model_changed_callback(self.model_changed)
+                
         # Apply the style to all the widgets of this window
         self.frame.style = meta_window_style
        
         # Set the function that is called to build widgets when the window is visible
         self.frame.set_build_fn(self._build_fn)
 
-    def destroy(self):
-        super().destroy() 
-        self._usd_context = None
-        
+    def on_shutdown(self):
+        self._win = None
+
+    def show(self):
+        self.visible = True
+        self.focus()
+
+    def hide(self):
+        self.visible = False
+
+    
+    def _on_visibility_changed(self, visible):
+        omni.kit.ui.get_editor_menu().set_value(self._menu_path, visible)
+       
     @property
     def label_width(self):
         """The width of the attribute label"""
@@ -89,22 +107,14 @@ class MainView(ui.Window):
     def on_help(self):
         webbrowser.open_new("https://github.com/CloudArchitectLive/MetaCloudExplorer/issues")
 
+    #Callback invoked when data model changes
+    def model_changed(self):
+        carb.log_info("Model changed!")
+        if (hasattr(self, "_grpLbl")):
+            self._grpLbl.text = "GROUPS: " + str(len(self._dataStore._groups))
+        if (hasattr(self, "_resLbl")):
+            self._resLbl.text = "RESOURCES: " + str(len(self._dataStore._resources))
 
-    def load_account_info(self):
-        print("Connect to Azure API")
-        #todo
-
-    def on_resource():
-        print("On Resource")
-
-    def on_network():
-        print("On Network")
-
-    def on_cost():
-        print("On Cost")
-
-    def on_group():
-        print("On Group")
 
     def set_defaults(self, defType:str):
         if defType == "tower":
@@ -120,6 +130,7 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[0].set_value(1)
             self._dataStore._options_random_models[1].set_value(1)
             self._dataStore._options_random_models[2].set_value(1)
+            self.clear_stage()
         if defType == "symmetric":
             asyncio.ensure_future(self.sendNotify("Symmetric defaults set... Select a VIEW", nm.NotificationStatus.INFO))   
             self._dataStore._symmetric_planes_model.set_value(True)
@@ -133,6 +144,7 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[0].set_value(1)
             self._dataStore._options_random_models[1].set_value(1)
             self._dataStore._options_random_models[2].set_value(1)
+            self.clear_stage()
         if defType == "islands":
             asyncio.ensure_future(self.sendNotify("Island defaults set... Select a VIEW", nm.NotificationStatus.INFO))   
             self._dataStore._symmetric_planes_model.set_value(False)
@@ -146,9 +158,10 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[0].set_value(1)
             self._dataStore._options_random_models[1].set_value(1)
             self._dataStore._options_random_models[2].set_value(1)
+            self.clear_stage()
         if defType == "packer":
             asyncio.ensure_future(self.sendNotify("Packer algo enabled... Select a VIEW", nm.NotificationStatus.INFO))   
-            self._dataStore._symmetric_planes_model.set_value(True)
+            self._dataStore._symmetric_planes_model.set_value(False)
             self._dataStore._packing_algo_model.set_value(True)
             self._dataStore._options_count_models[0].set_value(4)
             self._dataStore._options_count_models[1].set_value(4)
@@ -159,6 +172,7 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[0].set_value(1)
             self._dataStore._options_random_models[1].set_value(1)
             self._dataStore._options_random_models[2].set_value(1)
+            self.clear_stage()
 
     def select_planes(self):
         self._stageManager.Select_Planes()
@@ -168,7 +182,7 @@ class MainView(ui.Window):
         self._dataStore._last_view_type = viewType
         self._dataStore.Save_Config_Data()
 
-        asyncio.ensure_future(self.clear_stage())
+        self.clear_stage()
         
         self._stageManager.ShowStage(viewType)
 
@@ -181,61 +195,49 @@ class MainView(ui.Window):
         self._stageManager.ShowCosts()
 
     # Clear the stage
-    async def clear_stage(self):
+    def clear_stage(self):
 
         stage = omni.usd.get_context().get_stage()
         root_prim = stage.GetPrimAtPath("/World")
         if (root_prim.IsValid()):
             stage.RemovePrim("/World")
-            await omni.kit.app.get_app().next_update_async()
-        
+            
         ground_prim = stage.GetPrimAtPath('/GroundPlane')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/GroundPlane')                
-            await omni.kit.app.get_app().next_update_async()    
-
+            
         ground_prim = stage.GetPrimAtPath('/RGrp')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/RGrp')
-            await omni.kit.app.get_app().next_update_async()
-
+            
         ground_prim = stage.GetPrimAtPath('/Loc')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Loc')
-            await omni.kit.app.get_app().next_update_async()
-
+            
         ground_prim = stage.GetPrimAtPath('/AAD')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/AAD') 
-            await omni.kit.app.get_app().next_update_async()
-
+            
         ground_prim = stage.GetPrimAtPath('/Subs')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Subs')
-            await omni.kit.app.get_app().next_update_async()
-
+            
         ground_prim = stage.GetPrimAtPath('/Type')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Type')
-            await omni.kit.app.get_app().next_update_async()
-
+            
         ground_prim = stage.GetPrimAtPath('/Cost')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Cost')
-            await omni.kit.app.get_app().next_update_async()
-
+            
         ground_prim = stage.GetPrimAtPath('/Looks')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Looks')
-            await omni.kit.app.get_app().next_update_async()
-
+            
         ground_prim = stage.GetPrimAtPath('/Tag')
         if (ground_prim.IsValid()):
             stage.RemovePrim('/Tag')
             
-        for x in range(50):
-                await omni.kit.app.get_app().next_update_async()
-
 
     #___________________________________________________________________________________________________
     # Window UI Definitions
@@ -282,8 +284,9 @@ class MainView(ui.Window):
                             ui.Label("Cloud Infrastructure Scene Authoring Extension", style={"color": cl("#3f84a5"), "font_size":18}, alignment=ui.Alignment.LEFT, height=0)                              
                         with ui.VStack():
                             ui.Spacer(height=10)                                    
-                            ui.Label("GROUPS: " + str(len(self._dataStore._groups)),style={"color": 0xFF008976, "font_size":18 }, alignment=ui.Alignment.RIGHT, height=0)
-                            ui.Label("RESOURCES: " + str(len(self._dataStore._resources)), style={"color": 0xFF008976, "font_size":18}, alignment=ui.Alignment.RIGHT, height=0)
+
+                            self._grpLbl = ui.Label("GROUPS: " + str(len(self._dataStore._groups)),style={"color": 0xFF008976, "font_size":18 }, alignment=ui.Alignment.RIGHT, height=0)
+                            self._resLbl = ui.Label("RESOURCES: " + str(len(self._dataStore._resources)), style={"color": 0xFF008976, "font_size":18}, alignment=ui.Alignment.RIGHT, height=0)
 
         with ui.VStack(height=0, spacing=SPACING):
             #ui.Spacer(height=80)
@@ -297,7 +300,7 @@ class MainView(ui.Window):
             with ui.HStack(style=button_styles):
                 ui.Button("Location VIEW", clicked_fn=lambda: self.load_stage("ByLocation"), name="subs", height=35)
                 ui.Button("Subscription VIEW", clicked_fn=lambda: self.load_stage("BySub"), name="subs", height=15)
-                ui.Button("Clear Stage", clicked_fn=lambda: asyncio.ensure_future(self.clear_stage()), name="clr", height=35)
+                ui.Button("Clear Stage", clicked_fn=lambda: self.clear_stage(), name="clr", height=35)
                 
                 
         with ui.VStack(height=0, spacing=SPACING):
@@ -335,10 +338,27 @@ class MainView(ui.Window):
                     ui.Button("Clear imported Data", clicked_fn=lambda: self._dataManager.wipe_data())            
                     ui.Button("Import Data Files", clicked_fn=lambda: self._dataManager.load_csv_files())            
                 with ui.HStack():
-                    ui.Button("Load Sample Dataset", clicked_fn=lambda: self._dataManager.wipe_data())            
-                    ui.Button("Load Sample Resources", clicked_fn=lambda: self._dataManager.load_csv_files())                                
+                    ui.Button("Load Sample Dataset", clicked_fn=lambda: self._dataManager.load_sample())            
+                    ui.Button("Load Sample Resources", clicked_fn=lambda: self._dataManager.load_sample_resources())                                
 
     def _build_connection(self):
+
+        def _on_value_changed(field:str, value):
+            if field == "tenant":
+                self._dataStore._azure_tenant_id = value
+            if field == "client":
+                self._dataStore._azure_client_id = value
+            if field == "subid":
+                self._dataStore._azure_subscription_id = value
+            if field == "secret":
+                self._dataStore._azure_client_secret = value
+
+
+        # def setText(label, text):
+        #     '''Sets text on the label'''
+        #     # This function exists because lambda cannot contain assignment
+        #     label.text = f"You wrote '{text}'"
+
         with ui.CollapsableFrame("Cloud API Connection", name="group", collapsed=True, style={"color": 0xFF008976, "font_size":20}):
             with ui.VStack(style={"color": 0xFFFFFFFF, "font_size":16}):
                 # with ui.CollapsableFrame("Azure API Connection", name="group", collapsed=True):
@@ -347,31 +367,28 @@ class MainView(ui.Window):
                         self._tenant_import_field = ui.StringField(height=15)
                         self._tenant_import_field.enabled = True
                         self._tenant_import_field.model.set_value(str(self._dataStore._azure_tenant_id))
-                        self._dataStore._azure_tenant_id_model = self._tenant_import_field.model
+                        self._tenant_import_field.model.add_value_changed_fn(lambda m: _on_value_changed("tenant", m.get_value_as_string()))
+                        
                         ui.Label("Client Id",width=self.label_width)
                         self._client_import_field = ui.StringField(height=15)
                         self._client_import_field.enabled = True
                         self._client_import_field.model.set_value(str(self._dataStore._azure_client_id))
-                        self._dataStore._azure_client_id_model = self._client_import_field.model
+                        self._client_import_field.model.add_value_changed_fn(lambda m: _on_value_changed("client", m.get_value_as_string()))
+
                         ui.Label("Subscription Id",width=self.label_width)
                         self._subscription_id_field = ui.StringField(height=15)
                         self._subscription_id_field.enabled = True
                         self._subscription_id_field.model.set_value(str(self._dataStore._azure_subscription_id))
-                        self._dataStore._azure_subscription_id_model = self._subscription_id_field.model
+                        self._subscription_id_field.model.add_value_changed_fn(lambda m: _on_value_changed("subid", m.get_value_as_string()))
+                        
                         ui.Label("Client Secret",width=self.label_width)
                         self._client_secret_field = ui.StringField(height=15, password_mode=True)
                         self._client_secret_field.enabled = True
                         self._client_secret_field.model.set_value(str(self._dataStore._azure_client_secret))
-                        self._dataStore._azure_client_secret_model = self._client_secret_field.model
+                        self._client_secret_field.model.add_value_changed_fn(lambda m: _on_value_changed("secret", m.get_value_as_string()))
+                        
                         ui.Button("Connect to Azure", clicked_fn=lambda: self._dataManager.load_from_api())
-                # with ui.CollapsableFrame("AWS API Connection", name="group", collapsed=True):
-                #     with ui.VStack():
-                #         ui.Label("COMING SOON!",width=self.label_width)
-                #         #ui.Button("Connect to AWS", clicked_fn=lambda: self._dataManager.load_from_api())
-                # with ui.CollapsableFrame("GCP API Connection", name="group", collapsed=True):
-                #     with ui.VStack():
-                #         ui.Label("COMING SOON!",width=self.label_width)
-                        #ui.Button("Connect to AWS", clicked_fn=lambda: self._dataManager.load_from_api())
+
 
 
     def _build_axis(self, axis_id, axis_name):
