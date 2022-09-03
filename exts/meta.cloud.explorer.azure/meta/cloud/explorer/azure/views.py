@@ -47,10 +47,12 @@ DATA_PATH = CURRENT_PATH.parent.parent.parent.parent.joinpath("data\\resources")
 
 class MainView(ui.Window):
     """The class that represents the window"""
-    def __init__(self, title: str, menu_path):
-        self.__label_width = LABEL_WIDTH
+    def __init__(self, title: str = None, menu_path:str = "", delegate=None, **kwargs):
+        super().__init__(title, width=640, height=480, **kwargs)
 
-        super().__init__(title, width=640, height=480)
+        self._viewport_scene = None
+        self.obj_info_model = kwargs["obj_info_model"]
+        self.frame.set_build_fn(self._build_window)
 
         #Helper Class instances
         self._stageManager = StageManager()

@@ -7,7 +7,10 @@ import omni.ext
 import omni.kit.ui
 import omni.ui as ui
 import omni.kit.pipapi
+from omni.kit.viewport.utility import get_active_viewport_window
 from .views import MainView, WINDOW_NAME
+from .viewport_scene import ViewportScene
+from .object_info_model import ObjectInfoModel
 
 #omni.kit.pipapi.install("azure-identity", module="azure-identity", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
 #omni.kit.pipapi.install("azure-mgmt-resource", module="azure-mgmt-resource", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
@@ -31,30 +34,18 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
     def on_startup(self, ext_id):
 
         carb.log_info("[meta.cloud.explorer.azure.extension] MetaCloudExplorer startup")
-
+        self._ext_id = ext_id
         self._menu_path = f"Window/{WINDOW_NAME}"
         self._window = None
         self._menu = omni.kit.ui.get_editor_menu().add_item(self._menu_path, self._on_menu_click, True)
 
-        # The ability to show up the window if the system requires it. We use it in QuickLayout.
-        #ui.Workspace.set_show_window_fn(MetaCloudExplorerAzure.WINDOW_NAME, partial(self.show_window, None))
+        # Get the active Viewport (which at startup is the default Viewport)
+        self._viewport_window = get_active_viewport_window()
 
-        # Put the new menu
-        #editor_menu = omni.kit.ui.get_editor_menu()
-        #if editor_menu:
-            #self._menu = editor_menu.add_item(
-            #    MetaCloudExplorerAzure.MENU_PATH, self.show_window, toggle=True, value=True
-            #)
-
-        # Show the window. It will call `self.show_window`
-        #ui.Workspace.show_window(MetaCloudExplorerAzure.WINDOW_NAME)
-
-        # show the window in the usual way if the stage is loaded
-        # if self.stage:
-        #     self._window.deferred_dock_in("Property")
-        # else:
-        #     # otherwise, show the window after the stage is loaded
-        #     self._setup_window_task = asyncio.ensure_future(self._dock_window())
+        # Issue an error if there is no Viewport
+        if not self._viewport_window:
+            carb.log_error(f"No Viewport Window to add {ext_id} scene to")
+            return
 
     def on_shutdown(self):
         carb.log_info("[meta.cloud.explorer.azure.extension] MetaCloudExplorer shutdown")
@@ -68,7 +59,10 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
         """Handles showing and hiding the window from the 'Windows' menu."""
         if toggled:
             if self._window is None:
-                self._window = MainView(WINDOW_NAME, self._menu_path)
+                 # Build out the scene
+                model = ObjectInfoModel()
+                self._viewport_scene = ViewportScene(self._viewport_window, self._ext_id, model)
+                self._window = MainView(WINDOW_NAME, obj_info_model=model, width=600, height=800)
             else:
                 self._window.show()
         else:
