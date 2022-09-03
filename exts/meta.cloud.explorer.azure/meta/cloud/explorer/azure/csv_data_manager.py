@@ -2,13 +2,14 @@
 import carb
 from omni.kit.window.file_importer import get_file_importer
 import os.path
+import asyncio
 from pathlib import Path
 # external python lib
 import csv
 import itertools
 from .data_store import DataStore
 from .prim_utils import cleanup_prim_path
-
+import omni.kit.notification_manager as nm
 
 #This class is designed to import data from 3 input files 
 #This file acts like a data provider for the data_manager
@@ -20,7 +21,12 @@ class CSVDataManager():
        
         # limit the number of rows read
         self.max_elements = 5000
-       
+
+    #specify the filesnames to load
+    def loadFilesManual(self, grpFile:str, resFile:str):   
+
+        self.load_grp_file_manual(grpFile)
+        self.load_res_file_manual(resFile)
 
     #Load all the data from CSV files and process it
     def loadFiles(self):
@@ -43,6 +49,8 @@ class CSVDataManager():
                 self._dataStore._groups.update(grp)               
                 i=i+1
                 if i > self.max_elements: return
+
+            self.sendNotify("MCE: Azure groups loaded: " + str(len(self._dataStore._groups)), nm.NotificationStatus.INFO)     
 
     #Groups File Import
     def load_grp_file(self):
@@ -71,6 +79,8 @@ class CSVDataManager():
 
                 i=i+1
                 if i > self.max_elements: return
+            
+        self.sendNotify("MCE: Azure resources loaded: " + str(len(self._dataStore._resources)), nm.NotificationStatus.INFO)     
 
     #Resources File Import
     def load_res_file(self):
@@ -230,3 +240,23 @@ class CSVDataManager():
             return True
         else:
             return False
+
+
+    def sendNotify(self, message:str, status:nm.NotificationStatus):
+        
+        # https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.kit.notification_manager/docs/index.html?highlight=omni%20kit%20notification_manager#
+
+        import omni.kit.notification_manager as nm
+        ok_button = nm.NotificationButtonInfo("OK", on_complete=self.clicked_ok)
+
+        nm.post_notification(
+            message,
+            hide_after_timeout=True,
+            duration=3,
+            status=status,
+            button_infos=[],
+        )        
+
+        
+    def clicked_ok():
+        carb.log_info("User clicked ok")

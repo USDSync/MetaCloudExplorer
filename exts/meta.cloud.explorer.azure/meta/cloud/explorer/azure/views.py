@@ -118,7 +118,7 @@ class MainView(ui.Window):
 
     def set_defaults(self, defType:str):
         if defType == "tower":
-            asyncio.ensure_future(self.sendNotify("Tower defaults set... Select a VIEW", nm.NotificationStatus.INFO))   
+            self.sendNotify("MCE: Tower defaults set... Select a VIEW", nm.NotificationStatus.INFO)
             self._dataStore._symmetric_planes_model.set_value(True)
             self._dataStore._packing_algo_model.set_value(False)
             self._dataStore._options_count_models[0].set_value(2)
@@ -130,9 +130,8 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[0].set_value(1)
             self._dataStore._options_random_models[1].set_value(1)
             self._dataStore._options_random_models[2].set_value(1)
-            self.clear_stage()
         if defType == "symmetric":
-            asyncio.ensure_future(self.sendNotify("Symmetric defaults set... Select a VIEW", nm.NotificationStatus.INFO))   
+            self.sendNotify("MCE: Symmetric defaults set... Select a VIEW", nm.NotificationStatus.INFO)
             self._dataStore._symmetric_planes_model.set_value(True)
             self._dataStore._packing_algo_model.set_value(False)
             self._dataStore._options_count_models[0].set_value(4)
@@ -144,9 +143,8 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[0].set_value(1)
             self._dataStore._options_random_models[1].set_value(1)
             self._dataStore._options_random_models[2].set_value(1)
-            self.clear_stage()
         if defType == "islands":
-            asyncio.ensure_future(self.sendNotify("Island defaults set... Select a VIEW", nm.NotificationStatus.INFO))   
+            self.sendNotify("MCE: Island defaults set... Select a VIEW", nm.NotificationStatus.INFO)
             self._dataStore._symmetric_planes_model.set_value(False)
             self._dataStore._packing_algo_model.set_value(False)
             self._dataStore._options_count_models[0].set_value(20)
@@ -158,9 +156,8 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[0].set_value(1)
             self._dataStore._options_random_models[1].set_value(1)
             self._dataStore._options_random_models[2].set_value(1)
-            self.clear_stage()
         if defType == "packer":
-            asyncio.ensure_future(self.sendNotify("Packer algo enabled... Select a VIEW", nm.NotificationStatus.INFO))   
+            self.sendNotify("MCE: Packer algo enabled... Select a VIEW", nm.NotificationStatus.INFO)
             self._dataStore._symmetric_planes_model.set_value(False)
             self._dataStore._packing_algo_model.set_value(True)
             self._dataStore._options_count_models[0].set_value(4)
@@ -172,7 +169,6 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[0].set_value(1)
             self._dataStore._options_random_models[1].set_value(1)
             self._dataStore._options_random_models[2].set_value(1)
-            self.clear_stage()
 
     def select_planes(self):
         self._stageManager.Select_Planes()
@@ -182,7 +178,8 @@ class MainView(ui.Window):
         self._dataStore._last_view_type = viewType
         self._dataStore.Save_Config_Data()
 
-        self.clear_stage()
+        #Block and clear stage
+        asyncio.ensure_future(self.clear_stage())
         
         self._stageManager.ShowStage(viewType)
 
@@ -195,61 +192,57 @@ class MainView(ui.Window):
         self._stageManager.ShowCosts()
 
     # Clear the stage
-    def clear_stage(self):
+    async def clear_stage(self):
 
-        stage = omni.usd.get_context().get_stage()
-        root_prim = stage.GetPrimAtPath("/World")
-        if (root_prim.IsValid()):
-            stage.RemovePrim("/World")
-            
-        ground_prim = stage.GetPrimAtPath('/GroundPlane')
-        if (ground_prim.IsValid()):
-            stage.RemovePrim('/GroundPlane')                
-            
-        ground_prim = stage.GetPrimAtPath('/RGrp')
-        if (ground_prim.IsValid()):
-            stage.RemovePrim('/RGrp')
-            
-        ground_prim = stage.GetPrimAtPath('/Loc')
-        if (ground_prim.IsValid()):
-            stage.RemovePrim('/Loc')
-            
-        ground_prim = stage.GetPrimAtPath('/AAD')
-        if (ground_prim.IsValid()):
-            stage.RemovePrim('/AAD') 
-            
-        ground_prim = stage.GetPrimAtPath('/Subs')
-        if (ground_prim.IsValid()):
-            stage.RemovePrim('/Subs')
-            
-        ground_prim = stage.GetPrimAtPath('/Type')
-        if (ground_prim.IsValid()):
-            stage.RemovePrim('/Type')
-            
-        ground_prim = stage.GetPrimAtPath('/Cost')
-        if (ground_prim.IsValid()):
-            stage.RemovePrim('/Cost')
-            
-        ground_prim = stage.GetPrimAtPath('/Looks')
-        if (ground_prim.IsValid()):
-            stage.RemovePrim('/Looks')
-            
-        ground_prim = stage.GetPrimAtPath('/Tag')
-        if (ground_prim.IsValid()):
-            stage.RemovePrim('/Tag')
-            
+        try:
+            stage = omni.usd.get_context().get_stage()
+            root_prim = stage.GetPrimAtPath("/World")
+            if (root_prim.IsValid()):
+                stage.RemovePrim("/World")
+                
+            ground_prim = stage.GetPrimAtPath('/GroundPlane')
+            if (ground_prim.IsValid()):
+                stage.RemovePrim('/GroundPlane')                
+                
+            ground_prim = stage.GetPrimAtPath('/RGrp')
+            if (ground_prim.IsValid()):
+                stage.RemovePrim('/RGrp')
+                
+            ground_prim = stage.GetPrimAtPath('/Loc')
+            if (ground_prim.IsValid()):
+                stage.RemovePrim('/Loc')
+                
+            ground_prim = stage.GetPrimAtPath('/AAD')
+            if (ground_prim.IsValid()):
+                stage.RemovePrim('/AAD') 
+                
+            ground_prim = stage.GetPrimAtPath('/Subs')
+            if (ground_prim.IsValid()):
+                stage.RemovePrim('/Subs')
+                
+            ground_prim = stage.GetPrimAtPath('/Type')
+            if (ground_prim.IsValid()):
+                stage.RemovePrim('/Type')
+                
+            ground_prim = stage.GetPrimAtPath('/Cost')
+            if (ground_prim.IsValid()):
+                stage.RemovePrim('/Cost')
+                
+            ground_prim = stage.GetPrimAtPath('/Looks')
+            if (ground_prim.IsValid()):
+                stage.RemovePrim('/Looks')
+                
+            ground_prim = stage.GetPrimAtPath('/Tag')
+            if (ground_prim.IsValid()):
+                stage.RemovePrim('/Tag')
+
+            omni.kit.commands.execute('DeletePrimsCommand',paths=['/Environment/sky'])
+        except:
+            pass #ignore failure
 
     #___________________________________________________________________________________________________
     # Window UI Definitions
     #___________________________________________________________________________________________________
-
-
-    def onRadioValueChanged (self, uiFieldModel, uiLabel):
-        if not uiFieldModel or not uiLabel:
-            return
-
-        v = uiFieldModel.get_value_as_int()
-        uiLabel.text = "Select Type : " + str(v)
 
     def _build_fn(self):
         """The method that is called to build all the UI once the window is visible."""
@@ -260,7 +253,7 @@ class MainView(ui.Window):
                 self._build_options()
                 self._build_connection()
                 self._build_import()
-                #self._build_about()
+                self._build_help()
 
     # slider = ui.FloatSlider(min=1.0, max=150.0)
     # slider.model.as_float = 10.0
@@ -280,34 +273,31 @@ class MainView(ui.Window):
                 with ui.VStack():
                     with ui.HStack():
                         with ui.VStack():
-                            ui.Label("Meta Cloud Explorer", style={"color": cl("#d85318"), "font_size":36 }, alignment=ui.Alignment.LEFT, height=0)
-                            ui.Label("Cloud Infrastructure Scene Authoring Extension", style={"color": cl("#3f84a5"), "font_size":18}, alignment=ui.Alignment.LEFT, height=0)                              
+                            ui.Label("Meta Cloud Explorer", style={"color": cl("#2069e0"), "font_size":36 }, alignment=ui.Alignment.LEFT, height=0)
+                            ui.Label("Cloud Infrastructure Scene Authoring Extension", style={"color": cl("#878683"), "font_size":18}, alignment=ui.Alignment.LEFT, height=0)                              
+                            ui.Line(style={"color": cl("#bebebe")}, height=20)
                         with ui.VStack():
-                            ui.Spacer(height=10)                                    
-
-                            self._grpLbl = ui.Label("GROUPS: " + str(len(self._dataStore._groups)),style={"color": 0xFF008976, "font_size":18 }, alignment=ui.Alignment.RIGHT, height=0)
-                            self._resLbl = ui.Label("RESOURCES: " + str(len(self._dataStore._resources)), style={"color": 0xFF008976, "font_size":18}, alignment=ui.Alignment.RIGHT, height=0)
+                            ui.Spacer(height=15)                                    
+                            self._grpLbl = ui.Label("GROUPS: " + str(len(self._dataStore._groups)),style={"color": cl("#2069e0"), "font_size":18 }, alignment=ui.Alignment.RIGHT, height=0)
+                            self._resLbl = ui.Label("RESOURCES: " + str(len(self._dataStore._resources)), style={"color": cl("#2069e0"), "font_size":18}, alignment=ui.Alignment.RIGHT, height=0)
 
         with ui.VStack(height=0, spacing=SPACING):
             #ui.Spacer(height=80)
-            with ui.HStack(style=button_styles):
-                ui.Button("Group VIEW", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=35)
-                ui.Button("Type VIEW", clicked_fn=lambda: self.load_stage("ByType"), name="subs",height=35)
-                ui.Button("Show Resources", clicked_fn=lambda: self.load_resources(), name="clr", height=35)
+            with ui.HStack():
+                ui.Button("<  GROUPS  >", clicked_fn=lambda: self.load_stage("ByGroup"), name="subs", height=35, style={"color": cl("#bebebe"), "font_size":20 })
+                ui.Button("<  TYPES  >", clicked_fn=lambda: self.load_stage("ByType"), name="subs",height=35, style={"color": cl("#bebebe"), "font_size":20 })
                 
         with ui.VStack(height=0, spacing=SPACING):
             #ui.Spacer(height=120)
-            with ui.HStack(style=button_styles):
-                ui.Button("Location VIEW", clicked_fn=lambda: self.load_stage("ByLocation"), name="subs", height=35)
-                ui.Button("Subscription VIEW", clicked_fn=lambda: self.load_stage("BySub"), name="subs", height=15)
-                ui.Button("Clear Stage", clicked_fn=lambda: self.clear_stage(), name="clr", height=35)
-                
-                
+            with ui.HStack():
+                ui.Button("<  LOCATIONS  >", clicked_fn=lambda: self.load_stage("ByLocation"), name="subs", height=35, style={"color": cl("#bebebe"), "font_size":20 })
+                ui.Button("<  SUBSCRIPTIONS  >", clicked_fn=lambda: self.load_stage("BySub"), name="subs", height=35, style={"color": cl("#bebebe"), "font_size":20 })
+
         with ui.VStack(height=0, spacing=SPACING):
-            #ui.Spacer(height=160)
-            with ui.HStack(style=button_styles):
+            #ui.Spacer(height=120)
+            with ui.HStack():
+                ui.Button("Clear Stage", clicked_fn=lambda: asyncio.ensure_future(self.clear_stage()), name="clr", height=35)
                 ui.Button("Show/Hide Costs", clicked_fn=lambda: self.showHideCosts(),name="subs", height=35)
-                ui.Button("Show Templates", clicked_fn=lambda: self.load_stage("Templates"),name="subs", height=15)
                 ui.Button("Select All Groups", clicked_fn=lambda: self.select_planes(),name="clr", height=35)
             
             # with ui.HStack():
@@ -317,7 +307,7 @@ class MainView(ui.Window):
        
 
     def _build_import(self):
-        with ui.CollapsableFrame("Import Offline Files", name="group", collapsed=True, style={"color": 0xFF008976, "font_size":20}):
+        with ui.CollapsableFrame("Import Offline Files", name="group", collapsed=True, style={"color": cl("#2069e0"), "font_size":20}):
             with ui.VStack(style={"color": 0xFFFFFFFF, "font_size":16}):
                 ui.Label("Resource Groups file path:", height=10, width=120)             
                 with ui.HStack():                   
@@ -338,8 +328,8 @@ class MainView(ui.Window):
                     ui.Button("Clear imported Data", clicked_fn=lambda: self._dataManager.wipe_data())            
                     ui.Button("Import Data Files", clicked_fn=lambda: self._dataManager.load_csv_files())            
                 with ui.HStack():
-                    ui.Button("Load Sample Dataset", clicked_fn=lambda: self._dataManager.load_sample())            
-                    ui.Button("Load Sample Resources", clicked_fn=lambda: self._dataManager.load_sample_resources())                                
+                    ui.Button("Load Sample Company", clicked_fn=lambda: self._dataManager.load_sample_company())            
+                    ui.Button("Load Shapes Library", clicked_fn=lambda: self._dataManager.load_sample_resources())                                
 
     def _build_connection(self):
 
@@ -359,7 +349,7 @@ class MainView(ui.Window):
         #     # This function exists because lambda cannot contain assignment
         #     label.text = f"You wrote '{text}'"
 
-        with ui.CollapsableFrame("Cloud API Connection", name="group", collapsed=True, style={"color": 0xFF008976, "font_size":20}):
+        with ui.CollapsableFrame("Cloud API Connection", name="group", collapsed=True, style={"color": cl("#2069e0"), "font_size":20}):
             with ui.VStack(style={"color": 0xFFFFFFFF, "font_size":16}):
                 # with ui.CollapsableFrame("Azure API Connection", name="group", collapsed=True):
                 #     with ui.VStack():
@@ -409,27 +399,25 @@ class MainView(ui.Window):
     def _build_image_presets(self):
         def _on_clicked(self, source):
             self.set_defaults(source)
-#style={"color": 0xFF008976, "font_size":20}
-        with ui.CollapsableFrame("Quickstarts", name="group", collapsed=True, style={"font_size":20}): 
-            with ui.VStack():
+
+            #add selection rectangle
+
+
+        with ui.CollapsableFrame("Quickstarts", name="group", collapsed=True, style={"color":cl("#2069e0"), "font_size":20}): 
+            with ui.VStack(style={"color": 0xFFFFFFFF}):
                 with ui.HStack(style={}):
                     with ui.VStack():
                         ui.Label("TOWER", name="attribute_name", width=self.label_width)
-                        SimpleImageButton(image="omniverse://localhost/Resources/images/tower.png", size=150, name="twr_btn", clicked_fn=lambda: _on_clicked(self, source="tower"))
+                        SimpleImageButton(image="omniverse://localhost/MCE/images/tower.png", size=150, name="twr_btn", clicked_fn=lambda: _on_clicked(self, source="tower"))
                     with ui.VStack():
                         ui.Label("ISLANDS", name="attribute_name", width=self.label_width)
-                        SimpleImageButton(image="omniverse://localhost/Resources/images/islands.png", size=150, name="isl_btn", clicked_fn=lambda: _on_clicked(self, source="islands"))
+                        SimpleImageButton(image="omniverse://localhost/MCE/images/islands.png", size=150, name="isl_btn", clicked_fn=lambda: _on_clicked(self, source="islands"))
                     with ui.VStack():
                         ui.Label("SYMMETRIC", name="attribute_name", width=self.label_width)
-                        SimpleImageButton(image="omniverse://localhost/Resources/images/Symmetric.png", size=150, name="sym_btn", clicked_fn=lambda: _on_clicked(self, source="symmetric"))
+                        SimpleImageButton(image="omniverse://localhost/MCE/images/Symmetric.png", size=150, name="sym_btn", clicked_fn=lambda: _on_clicked(self, source="symmetric"))
                     with ui.VStack():
                         ui.Label("BIN PACKER", name="attribute_name", width=self.label_width)
-                        SimpleImageButton(image="omniverse://localhost/Resources/images/packer.png", size=150, name="row_btn",clicked_fn=lambda: _on_clicked(self, source="packer"))
-
-                    #ui.Image("../../../data/Resources/images/tower.png", fill_policy=ui.FillPolicy.PRESERVE_ASPECT_FIT, alignment=ui.Alignment.CENTER,style={'border_radius':10})
-                    #ui.Image("omniverse://localhost/Resources/images/Symmetric.png", fill_policy=ui.FillPolicy.PRESERVE_ASPECT_FIT, alignment=ui.Alignment.CENTER,style={'border_radius':10})
-                    #ui.Image("omniverse://localhost/Resources/images/rows.png", fill_policy=ui.FillPolicy.PRESERVE_ASPECT_FIT, alignment=ui.Alignment.CENTER,style={'border_radius':10})
-
+                        SimpleImageButton(image="omniverse://localhost/MCE/images/packer.png", size=150, name="row_btn",clicked_fn=lambda: _on_clicked(self, source="packer"))
 
     def _build_image_options(self):
         with ui.CollapsableFrame("Group Images", name="group", collapsed=True):        
@@ -465,7 +453,7 @@ class MainView(ui.Window):
         def _on_value_changed_sg(model):
             self._dataStore._use_symmetric_planes = model.as_bool
 
-        with ui.CollapsableFrame("Scene Composition Options", name="group", collapsed=True, style={"color": 0xFF008976, "font_size":20}): 
+        with ui.CollapsableFrame("Scene Composition Options", name="group", collapsed=True, style={"color": cl("#2069e0"), "font_size":20}): 
             with ui.VStack(height=0, spacing=SPACING, style={"color": 0xFFFFFFFF, "font_size":16}):
                 with ui.HStack():
                     #self._dataStore._composition_scale_model = self._build_gradient_float_slider("Scale Factor", default_value=10, min=1, max=100)
@@ -488,15 +476,8 @@ class MainView(ui.Window):
                 self._build_axis(2, "Groups on Z Axis")
 
 
-                    
-    # def _build_about(self):
-    #     with ui.VStack():
-    #         ui.Label("Meta Cloud Explorer (Azure)", style={"color": 0xFF008976, "font_size":36}, alignment=ui.Alignment.LEFT, height=0)
-    #         ui.Label("An Omniverse Scene Authoring extension", height=10, name="TItle", alignment=ui.Alignment.LEFT)
-    #         ui.Line(style={"color": 0xff00b976}, height=20)
-
     def _build_help(self):
-        ui.Line(style={"color": 0xff00b976}, height=20)
+        ui.Line(style={"color": cl("#bebebe")}, height=20)
 
         with ui.VStack():
             with ui.HStack():
@@ -546,7 +527,7 @@ class MainView(ui.Window):
         return button_background_gradient
 
     
-    async def sendNotify(self, message:str, status:nm.NotificationStatus):
+    def sendNotify(self, message:str, status:nm.NotificationStatus):
         
         # https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.kit.notification_manager/docs/index.html?highlight=omni%20kit%20notification_manager#
 
@@ -560,10 +541,6 @@ class MainView(ui.Window):
             status=status,
             button_infos=[]
         )        
-        
-        #Let the Ui breathe ;)
-        for x in range(5):
-            await omni.kit.app.get_app().next_update_async()    
-
+    
     def clicked_ok(self):
         pass

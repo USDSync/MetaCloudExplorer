@@ -159,3 +159,7 @@ async def create_shaders(base_path:str, prim_name:str ):
         prim_name=prim_name,
         mtl_created_list=None,
         bind_selected_prims=True)
+
+    await omni.kit.app.get_app().next_update_async()
+
+    

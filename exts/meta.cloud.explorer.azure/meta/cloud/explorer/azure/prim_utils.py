@@ -103,7 +103,7 @@ def draw_image(self, output_file:str, src_file:str, textToDraw:str, costToDraw:s
         output_image_path=output_file, 
         textToDraw=str(textToDraw), 
         costToDraw=str(costToDraw),
-        x=180, y=1875, fillColor="Yellow", font=font,
+        x=180, y=1875, fillColor="White", font=font,
         fontSize=font_size )
 
 #Creates a plane of a certain size in a specific location

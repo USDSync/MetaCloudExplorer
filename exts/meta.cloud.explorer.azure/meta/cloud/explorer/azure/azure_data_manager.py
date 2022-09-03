@@ -69,7 +69,7 @@ class AzureDataManager():
             valid = False
             error = sys.exc_info()[0]
             carb.log_error("Oops! " + str(error) + " occurred.")
-            self.sendNotify("Error:" + str(error), nm.NotificationStatus.WARNING)   
+            self.sendNotify("MCE: Error:" + str(error), nm.NotificationStatus.WARNING)   
 
         return valid
 
@@ -113,12 +113,12 @@ class AzureDataManager():
                     self._dataStore._resources[name] = {"name":name, "type": res.type, "group": grp, "location":res.location, "subscription":self._subscription_id, "lmcost": 0}
         
                     #self._dataStore.res["name"] = {"name":res["name"], "type": type, "group": group, "location":location, "subscription":subscription, "lmcost": lmcost}
-            self.sendNotify("MCE:Azure resources loaded: " + str(resCnt), nm.NotificationStatus.INFO)     
-            carb.log_info("Azure API resources loaded: " + str(resCnt))                    
+            self.sendNotify("MCE: Azure resources loaded: " + str(len(self._dataStore._resources)), nm.NotificationStatus.INFO)     
+            carb.log_info("Azure API resources loaded: " + str(len(self._dataStore._resources)))                    
         except:
             error = sys.exc_info()[0]
             carb.log_error("Oops! " + str(error) + " occurred.")
-            self.sendNotify("Error:" + str(error), nm.NotificationStatus.WARNING)                   
+            self.sendNotify("MCE: Error:" + str(error), nm.NotificationStatus.WARNING)                   
 
 
     async def load_groups(self):
@@ -132,13 +132,13 @@ class AzureDataManager():
                 self._dataStore._groups.update(grp)     
                 grpCnt = grpCnt + 1
         
-            self.sendNotify("MCE:Azure groups loaded: " + str(grpCnt), nm.NotificationStatus.INFO)     
-            carb.log_info("Azure API groups loaded: " + str(grpCnt))
+            self.sendNotify("MCE: Azure groups loaded: " + str(len(self._dataStore._groups)), nm.NotificationStatus.INFO)     
+            carb.log_info("Azure API groups loaded: " + str(len(self._dataStore._groups)))
 
         except:
             error = sys.exc_info()[0]
             carb.log_error("Oops! " + str(error) + " occurred.")
-            self.sendNotify("Error:" + str(error), nm.NotificationStatus.WARNING)           
+            self.sendNotify("MCE: Error:" + str(error), nm.NotificationStatus.WARNING)           
 
 
         
@@ -154,7 +154,7 @@ class AzureDataManager():
         except:
             error = sys.exc_info()[0]
             carb.log_error("Oops! " + str(error) + " occurred.")
-            self.sendNotify("Error:" + str(error), nm.NotificationStatus.WARNING)           
+            self.sendNotify("MCE: Error:" + str(error), nm.NotificationStatus.WARNING)           
 
         #for item in rg_groups:
         #    print(item)

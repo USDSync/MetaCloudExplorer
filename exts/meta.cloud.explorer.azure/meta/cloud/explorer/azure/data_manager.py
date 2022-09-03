@@ -33,6 +33,7 @@ ASYNC_ENABLED = True
 CURRENT_PATH = Path(__file__).parent
 DATA_PATH = CURRENT_PATH.joinpath("temp")
 RES_PATH = CURRENT_PATH.parent.parent.parent.parent.joinpath("data\\resources")
+IMPORTS_PATH = CURRENT_PATH.parent.parent.parent.parent.joinpath("data\\import")
 
 @Singleton
 class DataManager:
@@ -77,17 +78,12 @@ class DataManager:
         self._dataStore._source_of_data = "OfflineData"
         self._dataStore.Save_Config_Data()
         
-        asyncio.ensure_future(self.load_and_process_csv())
-
-    async def load_and_process_csv(self):
-    
         #Load data from Cloud API
         self._offlineDataManager.loadFiles()
 
-        #Aggregate the info
+        #Aggregate the info, wait for it
         if len(self._dataStore._groups) >0:
             asyncio.ensure_future(self.process_data())
-
 
     #Load data from Azure API
     def load_from_api(self):
@@ -99,21 +95,32 @@ class DataManager:
         self._dataStore._source_of_data = "LiveAzureAPI"
         self._dataStore.Save_Config_Data()
         
-        asyncio.ensure_future(self.load_and_process_api())
-       
-    async def load_and_process_api(self):
-    
-        #Load data from Cloud API
+        #Load the data and process it
         if self._onlineDataManager.connect():
-            await self._onlineDataManager.load_data()
+            loop = asyncio.get_event_loop()
+            t = loop.create_task(self._onlineDataManager.load_data())
+            r = loop.run_until_complete(t)
+            #wait for data to finish loading
 
-        #Now that we have the data, process it
         if len(self._dataStore._groups) >0:
-            await self.process_data()
+            asyncio.run(self.process_data())
+
+        
+       
+    # async def load_and_process_api(self):
+    
+    #     #Load data from Cloud API
+    #     if self._onlineDataManager.connect():
+    #         await self._onlineDataManager.load_data()
+
+    #     #Now that we have the data, process it
+    #     if len(self._dataStore._groups) >0:
+    #         await self.process_data()
    
 
     def wipe_data(self):
         self._dataStore.wipe_data()
+        self._model_changed()
 
     def refresh_data(self):
         if self._dataStore._source_of_data =="OfflineData":
@@ -127,9 +134,36 @@ class DataManager:
     def load_sample():
         pass
 
-    #Load the "All resources set"
-    def load_sample_resources():
-        pass
+    #Load the "All resources (Shapes) set"
+    #This sample contains 1 resource per group
+    def load_sample_resources(self):
+
+        self._dataStore.wipe_data()
+        src_filel = IMPORTS_PATH.joinpath("TestShapes_RG.csv")
+        src_file2 = IMPORTS_PATH.joinpath("TestShapes_all.csv")
+
+        self.load_and_process_manual(src_filel, src_file2)
+
+
+    #Load the "All resources (Shapes) set"
+    #This sample contains 1 resource per group
+    def load_sample_company(self):
+
+        self._dataStore.wipe_data()
+        src_filel = IMPORTS_PATH.joinpath("SolidCloud_RG.csv")
+        src_file2 = IMPORTS_PATH.joinpath("SolidCloud_all.csv")
+
+        self.load_and_process_manual(src_filel, src_file2)
+
+    #load the files async
+    def load_and_process_manual(self, grpFile, rgFIle ):
+    
+        #load the files
+        self._offlineDataManager.loadFilesManual(grpFile, rgFIle)
+
+        #Aggregate the info
+        if len(self._dataStore._groups) >0:
+            asyncio.ensure_future(self.process_data())
 
 
     #Aggregate subscription, resources counts to DataManager Dictionaries
@@ -139,6 +173,9 @@ class DataManager:
         #For every resrouce...
         for key in self._dataStore._resources:
             obj = self._dataStore._resources[key]
+            
+            #yield control
+            await asyncio.sleep(0)
 
             ### AGGREGATE COUNTS
             await self.AggregateCountsAsync(obj)
@@ -150,8 +187,11 @@ class DataManager:
             await self.MapResourcesToGroupsAsync(obj)
 
         #Pre-create images for the groups
-        asyncio.ensure_future(self.CreateImagesForGroups())
+        carb.log_info("Creating images..")        
+        await self.CreateImagesForGroups()
+        carb.log_info("Creating images complete..")        
 
+        #let everyone know, stuff changed...
         self._model_changed()
 
         #output aggregation results to console
