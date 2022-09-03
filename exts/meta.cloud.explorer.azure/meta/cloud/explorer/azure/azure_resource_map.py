@@ -28,6 +28,7 @@ shape_usda_name = {
     "Data_factory__V2_":"omniverse://localhost/MCE/3dIcons/data_factory_fix.usd",
     "Disk":"omniverse://localhost/MCE/3dIcons/Disk_1.0.usd",
     "DNS_zone":"omniverse://localhost/MCE/3dIcons/DNS_Zone.usd",
+    "DNS_Zone":"omniverse://localhost/MCE/3dIcons/DNS_Zone.usd",
     "Event_Grid_System_Topic":"omniverse://localhost/MCE/3dIcons/event_grid_topics_fix.usd",
     "Event_Hubs_Namespace":"omniverse://localhost/MCE/3dIcons/events_hub_fix.usd",
     "Firewall_Policy":"omniverse://localhost/MCE/3dIcons/Firewall_Policy.usd",

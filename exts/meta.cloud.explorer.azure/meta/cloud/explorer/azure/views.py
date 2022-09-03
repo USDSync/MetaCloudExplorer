@@ -275,9 +275,8 @@ class MainView(ui.Window):
                 with ui.VStack():
                     with ui.HStack():
                         with ui.VStack():
-                            ui.Label("Meta Cloud Explorer", style={"color": cl("#2069e0"), "font_size":36 }, alignment=ui.Alignment.LEFT, height=0)
+                            ui.Label("Meta Cloud Explorer", style={"color": cl("#A4B7FD"), "font_size":36 }, alignment=ui.Alignment.LEFT, height=0)
                             ui.Label("Cloud Infrastructure Scene Authoring Extension", style={"color": cl("#878683"), "font_size":18}, alignment=ui.Alignment.LEFT, height=0)                              
-                            ui.Line(style={"color": cl("#bebebe")}, height=20)
                         with ui.VStack():
                             ui.Spacer(height=15)                                    
                             self._grpLbl = ui.Label("GROUPS: " + str(len(self._dataStore._groups)),style={"color": cl("#2069e0"), "font_size":18 }, alignment=ui.Alignment.RIGHT, height=0)

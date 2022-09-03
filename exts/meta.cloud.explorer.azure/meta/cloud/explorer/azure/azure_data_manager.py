@@ -17,6 +17,7 @@ from .prim_utils import cleanup_prim_path
 from azure.mgmt.resource import ResourceManagementClient
 from azure.mgmt.resource.subscriptions import SubscriptionClient
 from azure.identity import ClientSecretCredential
+import asyncio
 import os
 
 # Manage resources and resource groups - create, update and delete a resource group,
@@ -39,7 +40,8 @@ class AzureDataManager():
             self.sendNotify("MCE: Please enter Azure client secret to connect...", nm.NotificationStatus.WARNING) 
             return False
 
-        self.sendNotify("MCE: Connecting to Azure Tenant...", nm.NotificationStatus.INFO)     
+        self.sendNotify("MCE: Connecting to Azure Tenant...", nm.NotificationStatus.INFO)
+        
         self._token_credential = ClientSecretCredential(
             self._dataStore._azure_tenant_id, 
             self._dataStore._azure_client_id, 
@@ -93,16 +95,16 @@ class AzureDataManager():
         )        
 
     #Connect to API and load adata
-    async def load_data(self):
+    def load_data(self):
         self.save_connection_data()
-        await self.load_groups()
-        await self.load_resources()
+        self.load_groups()
+        self.load_resources()
 
 
     def save_connection_data(self):
         self._dataStore.Save_Config_Data()
     
-    async def load_resources(self):    
+    def load_resources(self):    
         try:
             resCnt = 0
             for grp in self._dataStore._groups:
@@ -121,7 +123,7 @@ class AzureDataManager():
             self.sendNotify("MCE: Error:" + str(error), nm.NotificationStatus.WARNING)                   
 
 
-    async def load_groups(self):
+    def load_groups(self):
         try:
             resource_client = ResourceManagementClient(self._token_credential, self._subscription_id)
             rg_groups = resource_client.resource_groups.list()

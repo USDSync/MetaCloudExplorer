@@ -97,26 +97,11 @@ class DataManager:
         
         #Load the data and process it
         if self._onlineDataManager.connect():
-            loop = asyncio.get_event_loop()
-            t = loop.create_task(self._onlineDataManager.load_data())
-            r = loop.run_until_complete(t)
+            self._onlineDataManager.load_data()
             #wait for data to finish loading
 
         if len(self._dataStore._groups) >0:
-            asyncio.run(self.process_data())
-
-        
-       
-    # async def load_and_process_api(self):
-    
-    #     #Load data from Cloud API
-    #     if self._onlineDataManager.connect():
-    #         await self._onlineDataManager.load_data()
-
-    #     #Now that we have the data, process it
-    #     if len(self._dataStore._groups) >0:
-    #         await self.process_data()
-   
+            asyncio.ensure_future(self.process_data())
 
     def wipe_data(self):
         self._dataStore.wipe_data()
