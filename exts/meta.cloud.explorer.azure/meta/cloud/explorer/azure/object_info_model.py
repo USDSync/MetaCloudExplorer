@@ -36,32 +36,41 @@ class ObjectInfoModel(sc.AbstractManipulatorModel):
     def __init__(self):
         super().__init__()
 
-        # Current selected prim and material
+        # Current selected prims and positions
         self._current_paths = []
         self.positions = []
         self._stage_listener = None
-        self.populate()
         
         if not self._stage_listener:
-            # This handles camera movement
-            usd_context = self._get_context()
-            stage = usd_context.get_stage()
-            self._stage_listener = Tf.Notice.Register(Usd.Notice.ObjectsChanged, self._notice_changed, stage)
+            # This handles object/camera movement
+            self.usd_context = omni.usd.get_context()
+            self.events = self.usd_context.get_stage_event_stream()
+            self.stage_event_delegate = self.events.create_subscription_to_pop(
+                self.on_stage_event, name ="Object Info Selection Update"
+            )
 
-    def populate(self):
-        self._current_paths = []
+    def on_stage_event(self, event):
+        selected_prims = self.usd_context.get_selection().get_selected_prim_paths()
+        self.populate(selected_prims)
+        #self._stage_listener = Tf.Notice.Register(Usd.Notice.ObjectsChanged, self._notice_changed, self._stage)
+
+    def populate(self, selectedPrims):
+        self._current_paths = selectedPrims
         self.positions = []
+
         usd_context = self._get_context()
         stage = usd_context.get_stage()
-        prim = stage.GetPrimAtPath("/World/Labeled")
-        if not prim.IsValid():
-            return
-        for child in prim.GetChildren():
-            if child.IsA(UsdGeom.Imageable):
-                self._current_paths.append(child.GetPath())
-                self.positions.append(ObjectInfoModel.PositionItem())
-                # Position is changed because new selected object has a different position
-                self._item_changed(self.positions[-1])
+
+        for prim_path in self._current_paths:
+            prim = stage.GetPrimAtPath(prim_path)
+            if not prim.IsValid():
+                return
+            for child in prim.GetChildren():
+                if child.IsA(UsdGeom.Imageable):
+                    self._current_paths.append(child.GetPath())
+                    self.positions.append(ObjectInfoModel.PositionItem())
+                    # Position is changed because new selected object has a different position
+                    self._item_changed(self.positions[-1])
 
     def _get_context(self):
         # Get the UsdContext we are attached to

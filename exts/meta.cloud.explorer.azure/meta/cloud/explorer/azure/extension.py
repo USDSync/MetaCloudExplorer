@@ -7,7 +7,11 @@ import omni.ext
 import omni.kit.ui
 import omni.ui as ui
 import omni.kit.pipapi
-from omni.kit.viewport.utility import get_active_viewport_window
+# Requires Code 2022.1.2+ - Blocked by typing_extensions incompatibility
+#from omni.kit.viewport.utility import get_active_viewport_window
+import omni.kit.viewport_legacy as vp
+
+
 from .views import MainView, WINDOW_NAME
 from .viewport_scene import ViewportScene
 from .object_info_model import ObjectInfoModel
@@ -39,13 +43,22 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
         self._window = None
         self._menu = omni.kit.ui.get_editor_menu().add_item(self._menu_path, self._on_menu_click, True)
 
-        # Get the active Viewport (which at startup is the default Viewport)
-        self._viewport_window = get_active_viewport_window()
+    #for second, third viewport
+    @staticmethod
+    def create_new_viewport_overlay(vp_win):
+        obj_info_model = ObjectInfoModel()
+        viewport_scene = ViewportScene(vp_win=vp_win,model=obj_info_model)
+        viewport_scene.build_viewport_overlay()
 
-        # Issue an error if there is no Viewport
-        if not self._viewport_window:
-            carb.log_error(f"No Viewport Window to add {ext_id} scene to")
-            return
+    @staticmethod
+    def on_window_created(win_handle):
+        """Add a new ReticleOverlay whenever a new viewport window is created.
+
+        Args:
+            win_handle (WindowHandle): The window that was created.
+        """
+        if win_handle.title.startswith("Viewport"):
+            MetaCloudExplorerAzure.create_new_obj_info_overlay(win_handle)
 
     def on_shutdown(self):
         carb.log_info("[meta.cloud.explorer.azure.extension] MetaCloudExplorer shutdown")
@@ -59,10 +72,19 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
         """Handles showing and hiding the window from the 'Windows' menu."""
         if toggled:
             if self._window is None:
+                windows = ui.Workspace.get_windows()
+                for window in windows:
+                    if window.title.startswith("Viewport"):
+                        self._viewport_window = window
+                        continue
+                
+                ui.Workspace.set_window_created_callback(MetaCloudExplorerAzure.on_window_created)
+                
                  # Build out the scene
                 model = ObjectInfoModel()
-                self._viewport_scene = ViewportScene(self._viewport_window, self._ext_id, model)
-                self._window = MainView(WINDOW_NAME, obj_info_model=model, width=600, height=800)
+                self._viewport_scene = ViewportScene(vp_win=self._viewport_window,model=model)
+                self._window = MainView(WINDOW_NAME, obj_info_model=model)
+
             else:
                 self._window.show()
         else:

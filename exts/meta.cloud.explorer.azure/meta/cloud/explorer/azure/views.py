@@ -50,21 +50,22 @@ class MainView(ui.Window):
     def __init__(self, title: str = None, menu_path:str = "", delegate=None, **kwargs):
         super().__init__(title, width=640, height=480, **kwargs)
 
+        self.__label_width = LABEL_WIDTH
         self._viewport_scene = None
-        self.obj_info_model = kwargs["obj_info_model"]
-        self.frame.set_build_fn(self._build_window)
+        self.model = kwargs["obj_info_model"]
+        self._menu_path = menu_path
 
         #Helper Class instances
         self._stageManager = StageManager()
         self._dataManager = DataManager.instance()
         self._dataStore = DataStore.instance()
-
-        self._menu_path = menu_path
+        
+        #Get notified when visibility changes
         self.set_visibility_changed_fn(self._on_visibility_changed)
-        self._build_fn()
 
+        #Get notifed when the datamodel changes
         self._dataManager.add_model_changed_callback(self.model_changed)
-                
+               
         # Apply the style to all the widgets of this window
         self.frame.style = meta_window_style
        
@@ -173,7 +174,17 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[2].set_value(1)
 
     def select_planes(self):
-        self._stageManager.Select_Planes()
+        self._stageM
+    
+    def show_info_objects(self):
+
+        #Get selected prims
+        usd_context = omni.usd.get_context()
+        self._stage: Usd.Stage = usd_context.get_stage()
+        self._selection = usd_context.get_selection()
+        paths = self._selection.get_selected_prim_paths()
+
+        self.model.populate(paths)
 
     #Load a fresh stage
     def load_stage(self, viewType: str):
@@ -299,7 +310,8 @@ class MainView(ui.Window):
             with ui.HStack():
                 ui.Button("Clear Stage", clicked_fn=lambda: asyncio.ensure_future(self.clear_stage()), name="clr", height=35)
                 ui.Button("Show/Hide Costs", clicked_fn=lambda: self.showHideCosts(),name="subs", height=35)
-                ui.Button("Select All Groups", clicked_fn=lambda: self.select_planes(),name="clr", height=35)
+                ui.Button("Show Object Info", clicked_fn=lambda: self.show_info_objects(),name="clr", height=35)
+                #ui.Button("Select All Groups", clicked_fn=lambda: self.select_planes(),name="clr", height=35)
             
             # with ui.HStack():
             #     ui.Button("Network View", clicked_fn=lambda: self.load_stage("ByNetwork"), height=15)

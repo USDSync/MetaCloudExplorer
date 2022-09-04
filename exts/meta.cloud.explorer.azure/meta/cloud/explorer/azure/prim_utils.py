@@ -76,11 +76,8 @@ async def create_and_place_prim(self,
     api = UsdGeom.XformCommonAPI(my_new_prim)
     
     try:
-        carb.log_info("Setting prim translate")
         api.SetTranslate(translate,0)
-        print("Setting prim rotate")
         api.SetRotate(rotation,UsdGeom.XformCommonAPI.RotationOrderXYZ,0)
-        print("Setting prim scale")
         api.SetScale(Gf.Vec3f(scale,scale,scale), 0)
     except:
         carb.log_error("Oops!", sys.exc_info()[0], "occurred.")

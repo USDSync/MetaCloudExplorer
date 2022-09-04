@@ -11,6 +11,7 @@ __all__ = ["ObjectInfoManipulator"]
 from omni.ui import color as cl
 from omni.ui import scene as sc
 import omni.ui as ui
+import carb
 
 LEADER_LINE_CIRCLE_RADIUS = 2
 LEADER_LINE_THICKNESS = 2
@@ -26,6 +27,7 @@ class ObjectInfoManipulator(sc.Manipulator):
     with a leader line to the top of the object's bounding box.
     """
     def on_build(self):
+        carb.log_info("ObjectInfoManipulator - on_build")
         """Called when the model is changed and rebuilds the whole manipulator"""
         if not self.model:
             return

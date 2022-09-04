@@ -14,25 +14,33 @@ import omni.ui as ui
 from .object_info_manipulator import ObjectInfoManipulator
 
 
-
 class ViewportScene():
     """The Object Info Manipulator, placed into a Viewport"""
 
-    def __init__(self, viewport_window: ui.Window, ext_id: str, model) -> None:
+    def __init__(self, vp_win, model) -> None:
         self._scene_view = None
-        self._viewport_window = viewport_window
+        self.vp_win = vp_win
 
-        # Create a unique frame for our SceneView
-        with self._viewport_window.get_frame(ext_id):
-            # Create a default SceneView (it has a default camera-model)
-            self._scene_view = sc.SceneView()
-            # Add the manipulator into the SceneView's scene
-            with self._scene_view.scene:
-                ObjectInfoManipulator(model=model)
+        if self.vp_win is not None:
+            self.vp_win.frame.clear()
+            with self.vp_win.frame:
+                self._scene_view = sc.SceneView()
+                with self._scene_view.scene:
+                    ObjectInfoManipulator(model=model)                   
 
-            # Register the SceneView with the Viewport to get projection and view updates
-            self._viewport_window.viewport_api.add_scene_view(self._scene_view)
+                #self._viewport_window.viewport_api.add_scene_view(self._scene_view)
 
+    #To Refactor in 2022.1.2+            
+    # def build_viewport_overlay(self):
+    #     #Requires newer viewport extension
+    #     # Create a unique frame for our SceneView
+    #     # with self._viewport_window.get_frame(ext_id):
+    #     #     # Create a default SceneView (it has a default camera-model)
+    #     #     self._scene_view = sc.SceneView()
+    #     #     # Add the manipulator into the SceneView's scene
+    #     #     with self._scene_view.scene:
+    #     #         ObjectInfoManipulator(model=model
+        
     def __del__(self):
         self.destroy()
 
@@ -41,8 +49,8 @@ class ViewportScene():
             # Empty the SceneView of any elements it may have
             self._scene_view.scene.clear()
             # Be a good citizen, and un-register the SceneView from Viewport updates
-            if self._viewport_window:
-                self._viewport_window.viewport_api.remove_scene_view(self._scene_view)
+            #if self._viewport_window:
+                #self._viewport_window.viewport_api.remove_scene_view(self._scene_view)
         # Remove our references to these objects
-        self._viewport_window = None
+        self.vp_win = None
         self._scene_view = None
