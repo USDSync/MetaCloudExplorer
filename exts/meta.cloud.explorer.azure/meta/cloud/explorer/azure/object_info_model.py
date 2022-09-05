@@ -36,41 +36,58 @@ class ObjectInfoModel(sc.AbstractManipulatorModel):
     def __init__(self):
         super().__init__()
 
-        # Current selected prims and positions
+        # Current selected prim and material
         self._current_paths = []
         self.positions = []
         self._stage_listener = None
+        self.populate()
         
-        if not self._stage_listener:
-            # This handles object/camera movement
-            self.usd_context = omni.usd.get_context()
-            self.events = self.usd_context.get_stage_event_stream()
-            self.stage_event_delegate = self.events.create_subscription_to_pop(
-                self.on_stage_event, name ="Object Info Selection Update"
-            )
+        # Track selection changes
+        self.events = self._get_context().get_stage_event_stream()
+        self.stage_event_delegate = self.events.create_subscription_to_pop(
+            self.on_stage_event, name="Object Info Selection Update"
+        )
 
     def on_stage_event(self, event):
-        selected_prims = self.usd_context.get_selection().get_selected_prim_paths()
-        self.populate(selected_prims)
-        #self._stage_listener = Tf.Notice.Register(Usd.Notice.ObjectsChanged, self._notice_changed, self._stage)
+        """Called by stage_event_stream.  We only care about selection changes."""
+        # NEW: if statement to only check when selection changed
+        if event.type == int(omni.usd.StageEventType.SELECTION_CHANGED):        
+            self.populate()       
 
-    def populate(self, selectedPrims):
-        self._current_paths = selectedPrims
+    def destroy(self):
+        self.events = None
+        self.stage_event_delegate.unsubscribe()
+
+
+    def populate(self):
+
+        self._current_paths = []
         self.positions = []
-
         usd_context = self._get_context()
         stage = usd_context.get_stage()
 
-        for prim_path in self._current_paths:
-            prim = stage.GetPrimAtPath(prim_path)
+        #Get selected prims
+        usd_context = omni.usd.get_context()
+        self._stage: Usd.Stage = usd_context.get_stage()
+        self._selection = usd_context.get_selection()
+        self._paths = self._selection.get_selected_prim_paths()
+
+        #if len(self._current_paths) > 1: #ONLY SHOW ON MULTISELECT!
+        for path in self._paths:
+            prim = stage.GetPrimAtPath(path)
             if not prim.IsValid():
                 return
             for child in prim.GetChildren():
                 if child.IsA(UsdGeom.Imageable):
-                    self._current_paths.append(child.GetPath())
-                    self.positions.append(ObjectInfoModel.PositionItem())
-                    # Position is changed because new selected object has a different position
-                    self._item_changed(self.positions[-1])
+                    if str(path).find("Collision") == -1:
+                        if str(path).find("Baked") == -1:
+                            if str(path).find("/materials") == -1:
+                                self._current_paths.append(child.GetPath())
+                                self.positions.append(ObjectInfoModel.PositionItem())
+                                # Position is changed because new selected object has a different position
+                                self._item_changed(self.positions[-1])
+        #elif len(self._current_paths == 0):
+        #    pass
 
     def _get_context(self):
         # Get the UsdContext we are attached to
@@ -84,7 +101,9 @@ class ObjectInfoModel(sc.AbstractManipulatorModel):
                     self._item_changed(self.positions[i])
 
     def get_name(self, index):
-        return self._current_paths[index]
+        stage = self._get_context().get_stage()
+        prim = stage.GetPrimAtPath(self._current_paths[index])
+        return prim.GetCustomDataByKey('res_name') 
 
     def get_num_prims(self):
         return len(self._current_paths)

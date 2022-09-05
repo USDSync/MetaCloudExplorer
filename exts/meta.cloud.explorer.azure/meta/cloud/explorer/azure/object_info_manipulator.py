@@ -35,6 +35,10 @@ class ObjectInfoManipulator(sc.Manipulator):
         for i in range(self.model.get_num_prims()):
 
             position = self.model.get_position(i)
+            infoBlurb = str(self.model.get_name(i)).replace("/World/RGrps/", "")
+            infoBlurb = infoBlurb.replace("/World/Subs/", "")
+            infoBlurb = infoBlurb.replace("/World/Locs/", "")
+            infoBlurb = infoBlurb.replace("/World/Types/", "")
 
             # Move everything to where the object is
             with sc.Transform(transform=sc.Matrix44.get_translation_matrix(*position)):
@@ -56,8 +60,7 @@ class ObjectInfoManipulator(sc.Manipulator):
                         with sc.Transform(scale_to=sc.Space.SCREEN):
                             # Offset each Label vertically in screen space
                             with sc.Transform(transform=sc.Matrix44.get_translation_matrix(0, LINE1_OFFSET, 0)):
-                                sc.Label(f"Path: {self.model.get_name(i)}",
-                                        alignment=ui.Alignment.LEFT_BOTTOM)
+                                sc.Label(f"Resource: {infoBlurb}",alignment=ui.Alignment.LEFT_BOTTOM)
 
     def on_model_updated(self, item):
         # Regenerate the manipulator

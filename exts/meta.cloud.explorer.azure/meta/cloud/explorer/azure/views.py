@@ -52,7 +52,9 @@ class MainView(ui.Window):
 
         self.__label_width = LABEL_WIDTH
         self._viewport_scene = None
-        self.model = kwargs["obj_info_model"]
+        self.objModel = kwargs["objectModel"]
+        self.widModel = kwargs["widgetModel"]
+
         self._menu_path = menu_path
 
         #Helper Class instances
@@ -81,7 +83,6 @@ class MainView(ui.Window):
 
     def hide(self):
         self.visible = False
-
     
     def _on_visibility_changed(self, visible):
         omni.kit.ui.get_editor_menu().set_value(self._menu_path, visible)
@@ -172,19 +173,10 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[0].set_value(1)
             self._dataStore._options_random_models[1].set_value(1)
             self._dataStore._options_random_models[2].set_value(1)
-
-    def select_planes(self):
-        self._stageM
     
     def show_info_objects(self):
 
-        #Get selected prims
-        usd_context = omni.usd.get_context()
-        self._stage: Usd.Stage = usd_context.get_stage()
-        self._selection = usd_context.get_selection()
-        paths = self._selection.get_selected_prim_paths()
-
-        self.model.populate(paths)
+        self.model.populate()
 
     #Load a fresh stage
     def load_stage(self, viewType: str):
@@ -249,7 +241,9 @@ class MainView(ui.Window):
             if (ground_prim.IsValid()):
                 stage.RemovePrim('/Tag')
 
-            omni.kit.commands.execute('DeletePrimsCommand',paths=['/Environment/sky'])
+            if stage.GetPrimAtPath('/Environment/sky'):
+                omni.kit.commands.execute('DeletePrimsCommand',paths=['/Environment/sky'])
+                
         except:
             pass #ignore failure
 
@@ -286,12 +280,13 @@ class MainView(ui.Window):
                 with ui.VStack():
                     with ui.HStack():
                         with ui.VStack():
-                            ui.Label("Meta Cloud Explorer", style={"color": cl("#A4B7FD"), "font_size":36 }, alignment=ui.Alignment.LEFT, height=0)
-                            ui.Label("Cloud Infrastructure Scene Authoring Extension", style={"color": cl("#878683"), "font_size":18}, alignment=ui.Alignment.LEFT, height=0)                              
+                            ui.Label("Meta Cloud Explorer", style={"color": cl("#A4B7FD"), "font_size":20}, alignment=ui.Alignment.LEFT, height=0)
+                            ui.Label("Cloud Infrastructure Scene Authoring Extension", style={"color": cl("#878683"), "font_size":16}, alignment=ui.Alignment.LEFT, height=0)                              
                         with ui.VStack():
                             ui.Spacer(height=15)                                    
                             self._grpLbl = ui.Label("GROUPS: " + str(len(self._dataStore._groups)),style={"color": cl("#2069e0"), "font_size":18 }, alignment=ui.Alignment.RIGHT, height=0)
                             self._resLbl = ui.Label("RESOURCES: " + str(len(self._dataStore._resources)), style={"color": cl("#2069e0"), "font_size":18}, alignment=ui.Alignment.RIGHT, height=0)
+            ui.Line(style={"color": cl("#66b3ff")}, height=20)    
 
         with ui.VStack(height=0, spacing=SPACING):
             #ui.Spacer(height=80)
@@ -490,13 +485,28 @@ class MainView(ui.Window):
 
 
     def _build_help(self):
-        ui.Line(style={"color": cl("#bebebe")}, height=20)
 
-        with ui.VStack():
-            with ui.HStack():
-                ui.Button("Docs", clicked_fn=lambda: self.on_docs(), height=15)
-                ui.Button("Code", clicked_fn=lambda: self.on_code(), height=15)
-                ui.Button("Help", clicked_fn=lambda: self.on_help(), height=15)           
+        with ui.CollapsableFrame("About", name="group", collapsed=True, style={"color": cl("#2069e0"), "font_size":20}): 
+            with ui.VStack(height=0, spacing=SPACING, style={"color": 0xFFFFFFFF, "font_size":16}):
+                with ui.HStack():
+                    with ui.VStack():        
+                        with ui.HStack():
+                            ui.Label("Meta Cloud Explorer (MCE)", clicked_fn=lambda: self.on_docs(), height=15)
+                            ui.Label("v1.0.0", clicked_fn=lambda: self.on_docs(), height=15)
+                with ui.HStack():
+                    with ui.VStack():        
+                        with ui.HStack():
+                            ui.Label("The true power of the Metaverse is to gain new insights to existing problems by experiencing things in a different way, a simple change in perspective!",
+                                style={"color":0xFF000000},
+                                elided_text=True,
+                            )                            
+                with ui.HStack():
+                    with ui.VStack():        
+                        with ui.HStack():
+                            ui.Line(style={"color": cl("#bebebe")}, height=20)                    
+                            ui.Button("Docs", clicked_fn=lambda: self.on_docs(), height=15)
+                            ui.Button("Code", clicked_fn=lambda: self.on_code(), height=15)
+                            ui.Button("Help", clicked_fn=lambda: self.on_help(), height=15)           
                     
 
     def __build_value_changed_widget(self):

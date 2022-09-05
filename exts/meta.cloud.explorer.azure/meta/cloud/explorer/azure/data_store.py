@@ -19,7 +19,7 @@ class DataStore():
         self._groups = {}
 
         #All the reosurces
-        #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION
+        #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION, LMCOST
         self._resources = {}        
 
         #aggregated data (counts)
@@ -39,6 +39,8 @@ class DataStore():
         self._tag_cost = {}
 
         #mapped resources (indexes)
+        #sample json format: (key(group), values[{}])
+        #map_obj = {"name": resName, "type":typeName, "shape":shape, "location":loc, "subscription":sub, "group":grp, "cost":cost }
         self._map_aad = {}
         self._map_subscription = {}
         self._map_location = {}

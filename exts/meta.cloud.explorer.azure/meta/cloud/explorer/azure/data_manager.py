@@ -2,7 +2,9 @@
 from typing import Dict
 from .Singleton import Singleton
 from .csv_data_manager import CSVDataManager
-from .azure_data_manager import AzureDataManager
+from .azure_data_manager_stub import AzureDataManager
+#Azure API disabled in this version, due to:
+
 from .data_store import DataStore
 from .prim_utils import cleanup_prim_path, draw_image
 from .azure_resource_map import shape_usda_name
@@ -14,7 +16,6 @@ from  .prim_utils import get_font_size_from_length
 import omni.kit.notification_manager as nm
 import omni
 import asyncio
-import asyncbg
 import logging
 import shutil
 import locale 
@@ -453,37 +454,42 @@ class DataManager:
         #Get the mapped shape and figure out the prim path for the map
         # Set a default
         shape_to_render = "omniverse://localhost/Resources/3dIcons/scene.usd"
+        #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION, LMCOST
 
         try:
             resName = obj["name"]
-            typeName = cleanup_prim_path(self,  obj["type"])
+            typeName = cleanup_prim_path(self,  obj["type"]) #needs to be clean, used to map to shapes
+            group = obj["group"]
+            location = obj["location"]
+            sub = obj["subscription"]
+            cost =obj["lmcost"]
             shape_to_render = shape_usda_name[typeName]   
         except:
-            carb.log_info("No matching prim found - " + typeName)                                  
+            carb.log_info("Error getting priom values - " + resName)
 
         # SUBSCRIPTION MAP
-        await self.map_objects(resName, typeName, "/Subs" ,shape_to_render, self._dataStore._map_subscription, obj, "subscription")
+        await self.map_objects(resName, typeName, group, location, sub, cost, "/Subs" ,shape_to_render, self._dataStore._map_subscription, obj, "subscription")
 
         # GROUP MAP
-        await self.map_objects(resName, typeName, "/RGrps", shape_to_render, self._dataStore._map_group, obj, "group")
+        await self.map_objects(resName, typeName, group, location, sub, cost, "/RGrps", shape_to_render, self._dataStore._map_group, obj, "group")
 
         # TYPE MAP
-        await self.map_objects(resName, typeName, "/Types", shape_to_render, self._dataStore._map_type, obj, "type")
+        await self.map_objects(resName, typeName, group, location, sub, cost, "/Types", shape_to_render, self._dataStore._map_type, obj, "type")
 
         # LOCATION MAP
-        await self.map_objects(resName, typeName, "/Locs", shape_to_render, self._dataStore._map_location, obj, "location")
+        await self.map_objects(resName, typeName, group, location, sub, cost, "/Locs", shape_to_render, self._dataStore._map_location, obj, "location")
 
         #TODO TAGMAP
         #self.map_objects(typeName, "/Tag", shape_to_render, self._dataStore._tag_map, obj, "tag")
 
 
     #Maps objects to create to each aggregate
-    async def map_objects(self, resName, typeName, root, shape, map, obj, field:str):
+    async def map_objects(self, resName, typeName,grp, loc, sub, cost, root, shape, map, obj, field:str):
         
         cleaned_group_name = cleanup_prim_path(self, Name=obj[field])
         carb.log_info(cleaned_group_name)
         
-        map_obj = {"name": resName, "type":typeName, "shape":shape}
+        map_obj = {"name": resName, "type":typeName, "shape":shape, "location":loc, "subscription":sub, "group":grp, "cost":cost }
 
         if cleaned_group_name not in map.keys():
             #new map!

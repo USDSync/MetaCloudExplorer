@@ -5,13 +5,13 @@ webapp-app,App Service,webappprod,West US 3,Subscription 2,49.47
 webapp-bot,App Service,webappprod,West US 3,Subscription 2,49.47
 webapp-meta,App Service,webappprod,West US 3,Subscription 2,49.47
 mybusybrush,App Service,mybusybrush,West US 2,Subscription 1,49.47
-nft-bot-demo,App Service,nftbotdemo,West US 3,Subscription 1,99.95
-nftbot-dev,App Service,nftbot-dev,East Asia,Subscription 2,49.47
-nftbotdemo,App Service,nftbotdemo,West US 3,Subscription 1,49.47
+web-bot-demo,App Service,nftbotdemo,West US 3,Subscription 1,99.95
+customer-bot-dev,App Service,nftbot-dev,East Asia,Subscription 2,49.47
+botdemo,App Service,nftbotdemo,West US 3,Subscription 1,49.47
 web-admin-portal-m6g2pf3tx5vaa,App Service,mrg-nmm-20220527104325,West US,Subscription 3,49.47
 ASP-webappProd-9280,App Service plan,webappprod,West US 3,Subscription 2,135.15
 ASP-EndiVerse-a9fd,App Service plan,endiverse,West US 3,Subscription 1,138
-ASP-MyBusyBrush-b45f,App Service plan,mybusybrush,West US 2,Subscription 1,99
+ASP-BusyBrush-b45f,App Service plan,mybusybrush,West US 2,Subscription 1,99
 nftbot-asp-dev,App Service plan,nftbot-dev,East Asia,Subscription 2,135.15
 web-admin-portal-plan-m6g2pf3tx5vaa,App Service plan,mrg-nmm-20220527104325,West US,Subscription 3,55
 webapp,Application Insights,webappprod,West US 3,Subscription 2,5
@@ -78,6 +78,6 @@ zapbbxnas,Storage account,backups,West US,Subscription 3,40
 portalvhdslqyyx49rhsj1d,Storage account (classic),default-storage-westus,West US,Subscription 1,40
 solidcloud,Storage account (classic),default-storage-westus,West US,Subscription 1,40
 nft-bot-demo,Web App Bot,nftbotdemo,Global,Subscription 1,10
-nvidia chair,Observation_Chair,observation_deck,West US,Subscription 4,0
-nvidia jacket,Leather_Jacket,observation_deck,West US,Subscription 4,0
-nvidia coat rack,Coat_Rack,observation_deck,West US,Subscription 4,0
+obv chair,Observation_Chair,observation_deck,West US,Subscription 4,0
+leather jacket,Leather_Jacket,observation_deck,West US,Subscription 4,0
+coat rack,Coat_Rack,observation_deck,West US,Subscription 4,0

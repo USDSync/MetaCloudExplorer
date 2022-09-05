@@ -17,6 +17,9 @@ async def create_and_place_prim(self,
     prim_type:str,
     prim_name:str,
     grp_name:str,
+    sub_name:str,
+    loc_name:str,
+    cost:str,
     new_prim_path:str,
     shapeToRender:str, 
     scale:float, 
@@ -38,7 +41,10 @@ async def create_and_place_prim(self,
 
     my_new_prim.SetCustomDataByKey('res_type', prim_type) 
     my_new_prim.SetCustomDataByKey('res_name', prim_name) 
+    my_new_prim.SetCustomDataByKey('res_sub', sub_name) 
     my_new_prim.SetCustomDataByKey('res_grp', grp_name) 
+    my_new_prim.SetCustomDataByKey('res_loc', loc_name) 
+    my_new_prim.SetCustomDataByKey('res_cost', cost) 
 
     #Default rotation
     rotation = Gf.Vec3f(0,0,0)
@@ -50,24 +56,18 @@ async def create_and_place_prim(self,
         position[2] = position[2] + 30 #Buffer the cube off the z
 
     #CUSTOM SHAPE OVERRIDES
-    if prim_name == "nvidia_chair":
+    if prim_name == "obv_chair":
         scale =0.8
         rotation = Gf.Vec3f(90,0,220)
         translate=Gf.Vec3d(position[0]+200, position[1]+200, position[2])
-    if prim_name == "nvidia_jacket":
+    if prim_name == "leather_jacket":
         scale =0.25
         rotation = Gf.Vec3f(90,0,0)
         translate=Gf.Vec3d(position[0]-20, position[1], position[2]-25)
-    if prim_name == "nvidia_coat_rack":
+    if prim_name == "coat_rack":
         scale =0.55
         rotation = Gf.Vec3f(90,0,0)                        
         translate=Gf.Vec3d(position[0]-220, position[1]+210, position[2]+10)
-    if prim_name == "observation_rug":
-        scale =1.0
-        rotation = Gf.Vec3f(90,90,0)                        
-        translate=Gf.Vec3d(position[0]-220, position[1]+210, position[2]+10)
-        stage = omni.usd.get_context().get_stage()
-        my_new_prim.CreateAttribute("transform:rotateXYZ", Sdf.ValueTypeNames.Double3Array)
         
 
     carb.log_info("Placing prim: " + shapeToRender + " | " + str(new_prim_path) + " @ " 
