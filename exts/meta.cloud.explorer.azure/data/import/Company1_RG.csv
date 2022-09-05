@@ -36,59 +36,59 @@ DefaultResourceGroup-WUS2,DataApp Dev/Test,West US 2
 deploy-bot,CashApp Dev/Test,West Central US
 devops,CashApp Dev/Test,West Central US
 devops-build,DataApp Dev/Test,Central US
-devops-gavin,CashApp Dev/Test,West US
+devops-testvm,CashApp Dev/Test,West US
 devops-images,CashApp Dev/Test,West US 2
 devops-images-test,CashApp Dev/Test,West US 2
-devops-nabil,CashApp Dev/Test,West Europe
+devops-french,CashApp Dev/Test,West Europe
 DockerRegistry,CashApp Dev/Test,West US 2
 DynamicsDeployments-westus,Dynamics Dev/Test,West US
-fa-CashApp-dev-tests,CashApp Dev/Test,West US 2
-fa-CashApp-hf-tests,CashApp Dev/Test,West US 2
-fa-CashApp-qa-tests,CashApp Dev/Test,West US 2
-fa-CashApp-uat-tests,CashApp Dev/Test,West US 2
-fa-CashApp-vault,CashApp Dev/Test,West US 2
-fa-contracts-dev,CashApp Dev/Test,West US 2
-fa-dev-api,DataApp Dev/Test,Central US
-fa-dev-data,DataApp Dev/Test,West US 2
-fa-dev-infrastructure,DataApp Dev/Test,Central US
-fa-dev-logging,DataApp Dev/Test,Central US
-fa-dev-logic,DataApp Dev/Test,Central US
-fa-dev-sample-sb-conn,CashApp Dev/Test,Central US
-fa-dev-security,DataApp Dev/Test,Central US
-fa-dev-sftp,DataApp Dev/Test,Central US
-fa-dev-sftp-admin,DataApp Dev/Test,Central US
-fa-dev-sftp-v2,DataApp Dev/Test,Central US
-fa-devops-bot,CashApp Dev/Test,West US
-fa-docker,DataApp Dev/Test,West US 2
-fa-pbi-service-RG,CashApp Dev/Test,West US
-fa-qa-api,DataApp Dev/Test,Central US
-fa-qa-data,DataApp Dev/Test,Central US
-fa-qa-infrastructure,DataApp Dev/Test,Central US
-fa-qa-logic,DataApp Dev/Test,Central US
-fa-qa-security,DataApp Dev/Test,Central US
-fa-qa-sftp,DataApp Dev/Test,Central US
-fa-qa-sftp-rg-001,DataApp Dev/Test,Central US
-fa-qa-test,DataApp Dev/Test,Central US
-fa-tenable-scanner,CashApp Dev/Test,West US 2
-fa-uat-api,DataApp Dev/Test,Central US
-fa-uat-data,DataApp Dev/Test,Central US
-fa-uat-infrastructure,DataApp Dev/Test,Central US
-fa-uat-logic,DataApp Dev/Test,Central US
-fa-uat-security,DataApp Dev/Test,Central US
-fa-uat-sftp,DataApp Dev/Test,Central US
-fa-uat-sftp-new,DataApp Dev/Test,Central US
-fa-uat-test,DataApp Dev/Test,Central US
-fa_it_asset_dash_rg,CashApp Dev/Test,West US
+CashApp-dev-tests,CashApp Dev/Test,West US 2
+CashApp-hf-tests,CashApp Dev/Test,West US 2
+CashApp-qa-tests,CashApp Dev/Test,West US 2
+CashApp-uat-tests,CashApp Dev/Test,West US 2
+CashApp-vault,CashApp Dev/Test,West US 2
+contracts-dev,CashApp Dev/Test,West US 2
+dev-api,DataApp Dev/Test,Central US
+dev-data,DataApp Dev/Test,West US 2
+dev-infrastructure,DataApp Dev/Test,Central US
+dev-logging,DataApp Dev/Test,Central US
+dev-logic,DataApp Dev/Test,Central US
+dev-sample-sb-conn,CashApp Dev/Test,Central US
+dev-security,DataApp Dev/Test,Central US
+dev-sftp,DataApp Dev/Test,Central US
+dev-sftp-admin,DataApp Dev/Test,Central US
+dev-sftp-v2,DataApp Dev/Test,Central US
+devops-bot,CashApp Dev/Test,West US
+docker,DataApp Dev/Test,West US 2
+pbi-service-RG,CashApp Dev/Test,West US
+qa-api,DataApp Dev/Test,Central US
+qa-data,DataApp Dev/Test,Central US
+qa-infrastructure,DataApp Dev/Test,Central US
+qa-logic,DataApp Dev/Test,Central US
+qa-security,DataApp Dev/Test,Central US
+qa-sftp,DataApp Dev/Test,Central US
+qa-sftp-rg-001,DataApp Dev/Test,Central US
+qa-test,DataApp Dev/Test,Central US
+tenable-scanner,CashApp Dev/Test,West US 2
+uat-api,DataApp Dev/Test,Central US
+uat-data,DataApp Dev/Test,Central US
+uat-infrastructure,DataApp Dev/Test,Central US
+uat-logic,DataApp Dev/Test,Central US
+uat-security,DataApp Dev/Test,Central US
+uat-sftp,DataApp Dev/Test,Central US
+uat-sftp-new,DataApp Dev/Test,Central US
+uat-test,DataApp Dev/Test,Central US
+it_asset_dash_rg,CashApp Dev/Test,West US
 fadevrgpcentralus-shared,CashApp Dev/Test,Central US
 FunctionAppTesting,DataApp Dev/Test,Central US
 FW-Hybrid-Test,DevOps Dev/Test,East US
 isms-resources,CashApp Dev/Test,East US
-kapp-integration-dev,CashApp Dev/Test,West US 2
-kapp-integration-qa,CashApp Dev/Test,West US 2
-ky-etl-RandD,DataApp Dev/Test,Central US
-ky-hilton-wf,DataApp Dev/Test,Central US
-kydev,Dynamics Dev/Test,West US
-kygold,Dynamics Dev/Test,West US
+xapp-integration-dev,CashApp Dev/Test,West US 2
+xapp-integration-qa,CashApp Dev/Test,West US 2
+zx-etl-RandD,DataApp Dev/Test,Central US
+zx-hilton-wf,DataApp Dev/Test,Central US
+zxdev,Dynamics Dev/Test,West US
+zxgold,Dynamics Dev/Test,West US
 the-api-dev,DataApp Dev/Test,West US 2
 the-CashApp-qa,CashApp Dev/Test,West US 2
 the-CashApp-uat,CashApp Dev/Test,West US 2
@@ -104,7 +104,7 @@ Company1-gold,Dynamics Dev/Test,West US
 Company1-oracle-ebs-payments_group,DataApp Dev/Test,North Central US
 Company1-test,Dynamics Dev/Test,West US
 Company1HubRandD,DataApp Dev/Test,Central US
-kytest,Dynamics Dev/Test,West US
+zxtest,Dynamics Dev/Test,West US
 la-platform-orchestrator,CashApp Dev/Test,West US 2
 la-platform-orchestrator,DataApp Dev/Test,West US 2
 LogAnalyticsDefaultResources,DataApp Dev/Test,West US 2
@@ -148,12 +148,12 @@ usdt-data-CashApp-dev-centralus-rg-001,CashApp Dev/Test,Central US
 usdt-data-CashApp-hf-centralus-rg-001,CashApp Dev/Test,Central US
 usdt-data-CashApp-qa-centralus-rg-001,CashApp Dev/Test,Central US
 usdt-data-CashApp-uat-centralus-rg-001,CashApp UAT,Central US
-usdt-DataApp-csdev-apps-centralus-rg-001,DataApp Dev/Test,Central US
-usdt-DataApp-csdev-data-centralus-rg-001,DataApp Dev/Test,Central US
-usdt-DataApp-csdev-logic-centralus-rg-001,DataApp Dev/Test,Central US
-usdt-DataApp-csdev-security-centralus-rg-001,DataApp Dev/Test,Central US
-usdt-DataApp-csdev-sftp-centralus-rg-001,DataApp Dev/Test,Central US
-usdt-DataApp-csdev-tests-centralus-rg-001,DataApp Dev/Test,Central US
+usdt-DataApp-client-apps-centralus-rg-001,DataApp Dev/Test,Central US
+usdt-DataApp-client-data-centralus-rg-001,DataApp Dev/Test,Central US
+usdt-DataApp-client-logic-centralus-rg-001,DataApp Dev/Test,Central US
+usdt-DataApp-client-security-centralus-rg-001,DataApp Dev/Test,Central US
+usdt-DataApp-client-sftp-centralus-rg-001,DataApp Dev/Test,Central US
+usdt-DataApp-client-tests-centralus-rg-001,DataApp Dev/Test,Central US
 usdt-DataApp-test-apps-centralus-rg-001,DataApp Dev/Test,Central US
 usdt-DataApp-test-data-centralus-rg-001,DataApp Dev/Test,Central US
 usdt-DataApp-test-logic-centralus-rg-001,DataApp Dev/Test,Central US

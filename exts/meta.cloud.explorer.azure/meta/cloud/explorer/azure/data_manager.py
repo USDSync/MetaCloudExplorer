@@ -115,29 +115,28 @@ class DataManager:
         elif self._dataStore._source_of_data == "LiveAzureAPI":
             self.load_from_api()
             carb.log_info("Live Data Refreshed.")
-
-    #Load a sample company data
-    def load_sample():
-        pass
+        else:
+            carb.log_info("Load some data!")
 
     #Load the "All resources (Shapes) set"
     #This sample contains 1 resource per group
     def load_sample_resources(self):
 
         self._dataStore.wipe_data()
+        self._dataStore._source_of_data = "SampleFiles"
         src_filel = IMPORTS_PATH.joinpath("TestShapes_RG.csv")
         src_file2 = IMPORTS_PATH.joinpath("TestShapes_all.csv")
 
         self.load_and_process_manual(src_filel, src_file2)
 
 
-    #Load the "All resources (Shapes) set"
-    #This sample contains 1 resource per group
+    #Load the "Small Company sample"
     def load_sample_company(self):
 
         self._dataStore.wipe_data()
-        src_filel = IMPORTS_PATH.joinpath("SolidCloud_RG.csv")
-        src_file2 = IMPORTS_PATH.joinpath("SolidCloud_all.csv")
+        self._dataStore._source_of_data = "SampleFiles"
+        src_filel = IMPORTS_PATH.joinpath("SmallCompany_RG.csv")
+        src_file2 = IMPORTS_PATH.joinpath("SmallCompany_all.csv")
 
         self.load_and_process_manual(src_filel, src_file2)
 
