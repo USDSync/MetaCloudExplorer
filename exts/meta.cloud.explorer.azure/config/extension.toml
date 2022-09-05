@@ -1,7 +1,7 @@
 [package]
 title = "Meta Cloud Explorer (Azure)"
 description="An Omniverse scene authoring tool to help visualize your Azure Infrastructure in your own private Metaverse!"
-version = "1.0.0"
+version = "2022.1.1.0"
 category = "Browsers"
 authors = ["CloudArchitect.live"]
 preview_image = "data/resources/azurescaled.png"
