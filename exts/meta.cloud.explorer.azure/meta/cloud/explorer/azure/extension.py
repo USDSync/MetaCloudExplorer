@@ -42,8 +42,9 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
 
         omni.kit.ui.get_editor_menu().remove_item(self._menu)
         if hasattr(self, "_window"):
-            self._window.destroy()
-            self._window = None
+            if self._window is not None:
+                self._window.destroy()
+                self._window = None
 
     def _on_menu_click(self, menu, toggled):
         """Handles showing and hiding the window from the 'Windows' menu."""

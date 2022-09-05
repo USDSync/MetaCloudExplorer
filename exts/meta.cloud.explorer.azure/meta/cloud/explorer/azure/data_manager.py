@@ -123,21 +123,33 @@ class DataManager:
     def load_sample_resources(self):
 
         self._dataStore.wipe_data()
+        self._dataStore._source_of_data = "SampleFiles"
         src_filel = IMPORTS_PATH.joinpath("TestShapes_RG.csv")
         src_file2 = IMPORTS_PATH.joinpath("TestShapes_all.csv")
 
         self.load_and_process_manual(src_filel, src_file2)
 
 
-    #Load the "All resources (Shapes) set"
-    #This sample contains 1 resource per group
-    def load_sample_company(self):
+    #Load the "Small Company sample"
+    def load_small_company(self):
 
         self._dataStore.wipe_data()
+        self._dataStore._source_of_data = "SampleFiles"
         src_filel = IMPORTS_PATH.joinpath("SmallCompany_RG.csv")
         src_file2 = IMPORTS_PATH.joinpath("SmallCompany_all.csv")
 
         self.load_and_process_manual(src_filel, src_file2)
+
+    #Load the "Large Company sample"
+    def load_large_company(self):
+
+        self._dataStore.wipe_data()
+        self._dataStore._source_of_data = "SampleFiles"
+        src_filel = IMPORTS_PATH.joinpath("LargeCompany_RG.csv")
+        src_file2 = IMPORTS_PATH.joinpath("LarrgeCompany_all.csv")
+
+        self.load_and_process_manual(src_filel, src_file2)
+
 
     #load the files async
     def load_and_process_manual(self, grpFile, rgFIle ):
