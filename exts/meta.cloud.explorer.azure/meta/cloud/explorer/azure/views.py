@@ -334,9 +334,10 @@ class MainView(ui.Window):
                     ui.Button("Load", width=40, clicked_fn=lambda: self._dataManager.select_file("res"))
                 with ui.HStack():
                     ui.Button("Clear imported Data", clicked_fn=lambda: self._dataManager.wipe_data())            
-                    ui.Button("Import Data Files", clicked_fn=lambda: self._dataManager.load_csv_files())            
+                    ui.Button("Import Selected Files", clicked_fn=lambda: self._dataManager.load_csv_files())            
                 with ui.HStack():
-                    ui.Button("Load Sample Company", clicked_fn=lambda: self._dataManager.load_sample_company())            
+                    ui.Button("Load Small Company", clicked_fn=lambda: self._dataManager.load_small_company())            
+                    ui.Button("Load Large Company", clicked_fn=lambda: self._dataManager.load_large_company())            
                     ui.Button("Load Shapes Library", clicked_fn=lambda: self._dataManager.load_sample_resources())                                
 
     def _build_connection(self):
@@ -416,16 +417,16 @@ class MainView(ui.Window):
                 with ui.HStack(style={}):
                     with ui.VStack():
                         ui.Label("TOWER", name="attribute_name", width=self.label_width)
-                        SimpleImageButton(image="omniverse://localhost/MCE/images/tower.png", size=150, name="twr_btn", clicked_fn=lambda: _on_clicked(self, source="tower"))
+                        SimpleImageButton(image="omniverse://localhost/MCE/images/tower.png", size=125, name="twr_btn", clicked_fn=lambda: _on_clicked(self, source="tower"))
                     with ui.VStack():
                         ui.Label("ISLANDS", name="attribute_name", width=self.label_width)
-                        SimpleImageButton(image="omniverse://localhost/MCE/images/islands.png", size=150, name="isl_btn", clicked_fn=lambda: _on_clicked(self, source="islands"))
+                        SimpleImageButton(image="omniverse://localhost/MCE/images/islands.png", size=125, name="isl_btn", clicked_fn=lambda: _on_clicked(self, source="islands"))
                     with ui.VStack():
                         ui.Label("SYMMETRIC", name="attribute_name", width=self.label_width)
-                        SimpleImageButton(image="omniverse://localhost/MCE/images/Symmetric.png", size=150, name="sym_btn", clicked_fn=lambda: _on_clicked(self, source="symmetric"))
+                        SimpleImageButton(image="omniverse://localhost/MCE/images/Symmetric.png", size=125, name="sym_btn", clicked_fn=lambda: _on_clicked(self, source="symmetric"))
                     with ui.VStack():
                         ui.Label("BIN PACKER", name="attribute_name", width=self.label_width)
-                        SimpleImageButton(image="omniverse://localhost/MCE/images/packer.png", size=150, name="row_btn",clicked_fn=lambda: _on_clicked(self, source="packer"))
+                        SimpleImageButton(image="omniverse://localhost/MCE/images/packer.png", size=125, name="row_btn",clicked_fn=lambda: _on_clicked(self, source="packer"))
 
     def _build_image_options(self):
         with ui.CollapsableFrame("Group Images", name="group", collapsed=True):        
@@ -447,7 +448,7 @@ class MainView(ui.Window):
                     ui.Button("Load", width=40, clicked_fn=lambda: self._dataManager.select_file("bgm"))
                     
                 with ui.HStack():
-                    ui.Label("BgHighCost", name="attribute_name", width=self.label_width)
+                    ui.Label("Bg High Cost", name="attribute_name", width=self.label_width)
                     self._bgh_data_import_field = ui.StringField(height=15)
                     self._bgh_data_import_field.enabled = True
                     self._bgh_data_import_field.model.set_value(str(self._dataStore._bgh_file_path))

@@ -51,7 +51,7 @@ def draw_text_on_image_at_position(
         return
 
     if os.path.exists(output_image_path):
-        if is_file_older_than_x_days(output_image_path, 1):
+        if is_file_older_than_x_days(output_image_path, 30):
             makeFile = True
     else: 
         makeFile = True
