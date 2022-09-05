@@ -14,7 +14,6 @@ from  .prim_utils import get_font_size_from_length
 import omni.kit.notification_manager as nm
 import omni
 import asyncio
-import asyncbg
 import logging
 import shutil
 import locale 
@@ -135,8 +134,8 @@ class DataManager:
     def load_sample_company(self):
 
         self._dataStore.wipe_data()
-        src_filel = IMPORTS_PATH.joinpath("SolidCloud_RG.csv")
-        src_file2 = IMPORTS_PATH.joinpath("SolidCloud_all.csv")
+        src_filel = IMPORTS_PATH.joinpath("SmallCompany_RG.csv")
+        src_file2 = IMPORTS_PATH.joinpath("SmallCompany_all.csv")
 
         self.load_and_process_manual(src_filel, src_file2)
 

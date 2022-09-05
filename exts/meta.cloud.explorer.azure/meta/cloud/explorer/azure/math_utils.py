@@ -18,9 +18,7 @@ def calcPlaneSizeForGroup(scaleFactor:float, resourceCount: int):
     # 1-30 squared, return the square root, this is the size of the space needed
     for i in [1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400, 441, 484,529,576,625,676,729, 784, 841,900]:
         if resourceCount > 0 and resourceCount <= i:
-            return float(((math.sqrt(i)*100)*scaleFactor)+1)
-
-
+            return float(((math.sqrt(i)*100)*scaleFactor))
 
 
 #FIGURES OUT WHERE TO PUT THE PRIMS ON A VARIABLE SIZED-PLANE

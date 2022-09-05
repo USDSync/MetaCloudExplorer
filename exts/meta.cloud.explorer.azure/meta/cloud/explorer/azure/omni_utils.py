@@ -133,7 +133,6 @@ def get_selected_prims(self):
         """
         Get the currently selected prims in the scene
         """
-        
         context = omni.usd.get_context()
         stage = context.get_stage()
         prims = [stage.GetPrimAtPath(m) for m in context.get_selection().get_selected_prim_paths()]
