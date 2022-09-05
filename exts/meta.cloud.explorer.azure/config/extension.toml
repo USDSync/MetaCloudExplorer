@@ -12,7 +12,7 @@ readme  = "docs/README.md"
 changelog = "docs/CHANGELOG.md"
 
 # URL of the extension source repository.
-repository = "https://github.com/CloudArchitectLive/MetaCloudExplorer"
+repository = "https://github.com/USDSync/MetaCloudExplorer"
 
 # Keywords for the extension
 keywords = ["Azure", "CloudArchitect.live", "Meta Cloud Explorer (Azure)", "scene authoring tools"]
