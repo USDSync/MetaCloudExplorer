@@ -146,7 +146,7 @@ class DataManager:
         self._dataStore.wipe_data()
         self._dataStore._source_of_data = "SampleFiles"
         src_filel = IMPORTS_PATH.joinpath("LargeCompany_RG.csv")
-        src_file2 = IMPORTS_PATH.joinpath("LarrgeCompany_all.csv")
+        src_file2 = IMPORTS_PATH.joinpath("LargeCompany_all.csv")
 
         self.load_and_process_manual(src_filel, src_file2)
 
