@@ -84,20 +84,6 @@ def draw_text_on_image_at_position(
 
     #image.save(output_image_path)
 
-def create_image_with_text(output_image_path:str, textToDraw:str, x:int, y:int, h:int, w:int, color:str, alignment:str, fillColor:str, fontPath:str, fontSize:int):    
-    image = Image.new("RGB", (h, w), color)
-    draw = ImageDraw.Draw(image)
-
-    # Load font from URI
-    #font1 = "https://github.com/googlefonts/Arimo/raw/main/fonts/ttf/Arimo-Regular.ttf"
-    font1 = 'https://github.com/googlefonts/roboto/blob/main/src/hinted/Roboto-Black.ttf?raw=true'
-    font = load_font_from_uri(fontSize, font1)
-
-    #font = ImageFont.truetype(fontPath, layout_engine=ImageFont.LAYOUT_BASIC, size=fontSize)
-    draw.text((x, y), textToDraw, font=font, anchor="ls", fill=fillColor)
-    image.save(output_image_path)
-
-
 #angled text 
 #https://stackoverflow.com/questions/245447/how-do-i-draw-text-at-an-angle-using-pythons-pil
 def draw_text_90_into(text: str, into, at):
