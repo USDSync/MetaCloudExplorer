@@ -90,4 +90,5 @@ MCE even works in Omniverse XR!  Just save your USD scene and open it in Omniver
 
 To the Metaverse and beyond! (kinda dumb I know, but it's better than Infinity, heh)
 
+Goto the Wiki to Get Started!
 https://github.com/USDSync/MetaCloudExplorer/wiki
