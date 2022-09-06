@@ -238,8 +238,8 @@ class DataManager:
                 rawCost = float(self._dataStore._subscription_cost[recText])
                 costToDraw = locale.currency(self._dataStore._subscription_cost[recText])
 
-                carb.log_info ("RawCost: " + recText + " $" + str(rawCost))
-                carb.log_info ("Cost: " + recText + " $" + str(costToDraw))
+                #carb.log_info ("RawCost: " + recText + " $" + str(rawCost))
+                #carb.log_info ("Cost: " + recText + " $" + str(costToDraw))
 
                 if rawCost < 500:
                     src_image = src_filel
@@ -275,8 +275,8 @@ class DataManager:
                 rawCost = float(self._dataStore._location_cost[recText])
                 costToDraw = locale.currency(self._dataStore._location_cost[recText])      
 
-                carb.log_info ("RawCost: " + recText + " $" + str(rawCost))
-                carb.log_info ("Cost: " + recText + " $" + str(costToDraw))
+                #carb.log_info ("RawCost: " + recText + " $" + str(rawCost))
+                #carb.log_info ("Cost: " + recText + " $" + str(costToDraw))
 
                 if rawCost < 500:
                     src_image = src_filel
@@ -308,8 +308,8 @@ class DataManager:
                 rawCost = float(self._dataStore._group_cost[rec])
                 costToDraw = locale.currency(self._dataStore._group_cost[recText])
 
-                carb.log_info ("RawCost: " + recText + " $" + str(rawCost))
-                carb.log_info ("Cost: " + recText + " $" + str(costToDraw))
+                #carb.log_info ("RawCost: " + recText + " $" + str(rawCost))
+                #carb.log_info ("Cost: " + recText + " $" + str(costToDraw))
 
                 if rawCost < 500:
                     src_image = src_filel
@@ -340,8 +340,8 @@ class DataManager:
                 locale.setlocale( locale.LC_ALL, 'en_CA.UTF-8' )
                 rawCost = float(self._dataStore._type_cost[recText])
                 costToDraw = locale.currency(self._dataStore._type_cost[recText])
-                carb.log_info ("RawCost: " + recText + " $" + str(rawCost))
-                carb.log_info ("Cost: " + recText + " $" + str(costToDraw))
+                #carb.log_info ("RawCost: " + recText + " $" + str(rawCost))
+                #carb.log_info ("Cost: " + recText + " $" + str(costToDraw))
                 if rawCost < 500:
                     src_image = src_filel
                 if rawCost > 500 and rawCost < 1500:
@@ -372,8 +372,8 @@ class DataManager:
                 rawCost = float(self._dataStore._tag_cost[recText])
                 costToDraw = locale.currency(self._dataStore._tag_cost[recText])
 
-                carb.log_info ("RawCost: " + recText + " $" + str(rawCost))
-                carb.log_info ("Cost: " + recText + " $" + str(costToDraw))
+                #carb.log_info ("RawCost: " + recText + " $" + str(rawCost))
+                #carb.log_info ("Cost: " + recText + " $" + str(costToDraw))
 
                 if rawCost < 500:
                     src_image = src_filel

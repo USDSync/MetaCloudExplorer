@@ -53,6 +53,7 @@ from .azure_resource_map import shape_usda_name
 from .data_manager import DataManager
 from .data_store import DataStore
 from .scatter_complex import distributePlanes
+from .math_utils import calcPlaneSizeForGroup
 
 #Import View Models
 from .group_aad import AADGrpView
@@ -151,16 +152,12 @@ class StageManager():
         self._dataStore._lcl_groups.sort(key=lambda element: element['size'], reverse=True)
         self._dataStore._lcl_sizes.sort(reverse=True)
 
-        asyncio.ensure_future(self.AddLightsToStage())
-
-        #Create the groups in an async loop
-        grpCnt = len(self._dataStore._lcl_groups)
-        if (grpCnt) >0 :
-            asyncio.ensure_future(self.ActiveView.CreateGroups(transforms=transforms))
-        
-        self.ActiveView.loadResources() #Abstract Method      
-        
-        self.sendNotify("Stage loading complete: " + str(grpCnt) + " groups loaded.", nm.NotificationStatus.INFO)
+        #Sanity check!!
+        #Guard, check settings
+        if self.checkSettingsBeforeLoad(transforms) == True:
+            self.approved_settings(transforms)
+        else:
+            pass #The user needs to OK or Cancel the Notification
 
     #Load the resources by group
     def LoadResources(self, viewType:str):
@@ -169,7 +166,7 @@ class StageManager():
 
         self.ActiveView.initializeStage(self.stage_unit_per_meter) #Base Method
         self.ActiveView.calcGroupPlaneSizes() #Abstract Method
-        self.ActiveView.calulateCosts() #Abstract Method
+        self.ActiveView.calulateCosts() #Abstract Method     
 
         #View is already set, show resources for specific or all paths
         if self.ActiveView is None:
@@ -248,6 +245,67 @@ class StageManager():
             value=Gf.Vec3f(90.0, 0.0, 0.0),
             prev=Gf.Vec3f(0.0, 0.0, 0.0))
 
+    #Sanity check on settings
+    def checkSettingsBeforeLoad(self, transforms):
+
+        grpCnt = len(self._dataStore._lcl_groups)
+        largestPlane = self._dataStore._lcl_sizes[0]
+        smallestGroup = 0
+        largestGroup = 0
+        xDistance = self._dataStore._options_dist_models[0]
+        yDistance = self._dataStore._options_dist_models[1]
+        xCount = self._dataStore._options_count_models[0]
+        yCount = self._dataStore._options_count_models[1]
+        
+        #Assume there isn't gonna be a problem
+        isSane = True
+        sanityDesc = ""
+
+        #is Use symmetric planes checked?
+        if self._dataStore._use_symmetric_planes: 
+
+            #Recalc the sizes before symettric planes applied
+            lcl_sizes = []
+            _lcl_groups = []
+            gpz = self._dataStore._group_count.copy()
+
+            for grp in gpz:
+                size = calcPlaneSizeForGroup(
+                        scaleFactor=self._scale, 
+                        resourceCount=self._dataStore._group_count.get(grp)
+                    )
+                #record group size extents
+                if size < smallestGroup:
+                    smallestGroup = size
+                elif size > largestGroup:
+                    largestGroup = size
+
+                #mixed plane sizes
+                lcl_sizes.append(size)
+                grp = cleanup_prim_path(self, grp)
+                _lcl_groups.append({ "group":grp, "size":size })
+
+            #Sanity checks
+            if grpCnt > 1 and xCount > 1 and xDistance < largestPlane:
+                sanityDesc = "Groups will overlap on X Axis, suggest you increase X Distance {xDistance} to at least {largestPlane} to not cause planes to overlap."
+                isSane = False
+            
+            if grpCnt > 1 and yCount > 1 and yDistance < largestPlane:
+                sanityDesc = sanityDesc + " Groups will overlap on Y Axis, suggest you increase Y Distance {yDistance} to at least {largestPlane} to not cause planes to overlap."
+                isSane = False
+            
+            #Additional Sanity Checks here
+            
+            if isSane == False:
+                #let the user know.
+                
+                self.sendbadSettingsNotify("MCE: Sanity Check: " + sanityDesc, nm.NotificationStatus.WARNING)            
+                return False
+            else:
+                return True
+        else:
+            return True
+
 
     def Select_Planes(self):
 
@@ -271,10 +329,41 @@ class StageManager():
     # next_shape.GetDisplayColorAttr().Set(
     #     category_colors[int(cluster) % self.max_num_clusters])           
 
+    def approved_settings(self, transforms):
 
+        #Create the groups in an async loop
+        grpCnt = len(self._dataStore._lcl_groups)
+        if (grpCnt) >0 :
+            asyncio.ensure_future(self.AddLightsToStage())
+            asyncio.ensure_future(self.ActiveView.CreateGroups(transforms=transforms))
+        
+        self.ActiveView.loadResources() #Abstract Method             
+        self.sendNotify("Stage loading complete: " + str(grpCnt) + " groups loaded.", nm.NotificationStatus.INFO)
+
+
+    def cancel_bad_settings(self):
+        pass
+    
 
     def clicked_ok(self):
         pass
+
+
+    def sendbadSettingsNotify(self, message:str, status:nm.NotificationStatus, transforms):
+        
+        # https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.kit.notification_manager/docs/index.html?highlight=omni%20kit%20notification_manager#
+
+        import omni.kit.notification_manager as nm
+        proceed_button = nm.NotificationButtonInfo("I understand, Proceed.", on_complete=self.approved_settings(transforms))
+        cancel_button = nm.NotificationButtonInfo("Cancel", on_complete=self.cancel_bad_settings)
+
+        nm.post_notification(
+            message,
+            hide_after_timeout=True,
+            duration=5,
+            status=status,
+            button_infos=[proceed_button, cancel_button]
+        )        
 
 
     def sendNotify(self, message:str, status:nm.NotificationStatus):

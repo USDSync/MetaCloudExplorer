@@ -5,8 +5,8 @@ import carb
 from .Singleton import Singleton
 import omni.ui as ui
 from .combo_box_model import ComboBoxModel
-import pickle
 from pathlib import Path
+import os
 
 CURRENT_PATH = Path(__file__).parent
 DATA_PATH = CURRENT_PATH.joinpath("temp")
@@ -191,6 +191,12 @@ class DataStore():
         self._azure_tenant_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_tenant_id")
         self._azure_client_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_client_id")
         self._azure_subscription_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_subscription_id")
+
+        try:
+            self._azure_client_secret = os.getenv('MCE_CLIENT_SECRET')
+        except:
+            self._azure_client_secret= ""
+            
         self._source_of_data = settings.get("/persistent/exts/meta.cloud.explorer.azure/last_data_source")
         self._bgl_file_path = settings.get("/persistent/exts/meta.cloud.explorer.azure/bgl_file_path")
         self._bgm_file_path = settings.get("/persistent/exts/meta.cloud.explorer.azure/bgm_file_path")
