@@ -2,7 +2,8 @@
 # NVIDIA Onmiverse Extension, a Scene Authoring Tool
 
 MetaCloudExplorer.com
-(In Alpha Development phase)
+(In Beta Development phase)
+![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/meta_cloud_explorer_800.png)
 
 The true power of the Metaverse is to gain new insights to existing problems by experiencing things in a different way.  A simple change in perspective can sometimes work wonders!  Meta Cloud Explorer helps Cloud Architects visualize thier cloud infrastructure at scale.  It's a dynamic metaverse creation tool for Nvidia's Omniverse.
 
