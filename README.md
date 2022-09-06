@@ -24,68 +24,69 @@ This extension generates digital models of your Cloud Infrastructure that can be
 **Only works with Microsoft Azure Cloud currently*
 AWS, GCP planned on roadmap.
 
-# Azure 3D Objects
+The whole point of Meta Cloud Explorer (MCE) is to let you experience your cloud infrastructure in a new way.  The Metaverse is here, it means a lot of different things, but one of the key tenants of the Metaverse is to be able to experience new things, or to experience existing things in a different or new contexts.
 
-The Azure 3D Icon set is a derivative work, created by several artists to help bring the needed visual context into the Meta Cloud Explorer.  The application code includes an Object Resource Map that maps Azure Objects to their corresponding 3D object assets.  By default these can use Cubes or other primitive shapes.  see: exts/meta.cloud.explorer.azure/meta/cloud/explorer/azure/azure_resource_map.py
+A Metaverse is just a 3D space you can customize and share, or even visit it with other people.  The ability to experience a virtual place with others opens up a world of possibility for training, knowledge sharing and helping others to understand technology.   
 
-**The icon set is available here, it is pending copyright permission from Microsoft.**
-https://drive.google.com/file/d/1IPVqOR5HsXn8A-dcJYMUl78mKHhnXqbQ/view?usp=sharing
+### Cloud Infrastructure 2023 +
 
-Extract and upload to your local omniverse://localhost/MCE/
+Azure, AWS, GCP are massive in reach, with millions of customers, and probably billions of pieces of infrastructure, it's a lot for cloud architect, infrastructure and SRE engineers manage.  Cloud Architects have many tools to help manage the complexity and risk of managing cloud operations, infrastructure and deployments at scale.
 
-# Enable the extension
-Pull this repo to your local machine, add the path to the extension to your Extensions Search Path in Omniverse Code:  <local folder>/metacloudexplorer/exts
+Infrastructure is now managed just like code, in Source Control and connected to powerful Cloud Orchestration software like Cloud Formation, Terraform, Bicep and others, giving Cloud Architects, Engineers and Developers even more powerful tools to help scale and manage the cloud.
 
-Look for "meta.cloud.explorer.azure" extension in extension manager and enable it. 
+Existing Web based UIs suffer from "focusing on small groups of trees" which makes it hard to "see the forest" in this context.
 
-# Azure API App Link Setup
-![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/mce_ui.png)
+There is no shortage of "Infrastructure diagram generation" tools that can produce 2d representations of your cloud infrastructure.  Visio, Lucid Scale and other cloud based diagramming tools help architects manage and understand cloud infrastructure design and architecture.  Many diagrams are still manually maintained and time-consuming. 
 
-This extension lets you easily load and explore a representation of your Cloud Infrastructure in the Omniverse. This extension can connect to the Azure Resource Manager API to access your Azure Infrastructure. A read-only account can be utilized to ensure infrastructure security.  See the wiki page for detailed steps on creating an application to access your Azure environment.
+Lucid Scale lets you generate a model from your cloud infrastructure like this:
 
-Steps to Connect:
-1. Create an Azure AAD Application to act as a Service principal to read your Azure resources.
-2. Create a Client secret for your new AAD App.
-3. Give the AAD app the Global Reader Role in AAD.
-4. Add the Application a Reader Role in IAM for each of the subscriptions you want to model.
-5. Enter the Tenant ID, Client Id, Subscription and Client Secret into the extension connection.*
-6. Connect and Explore your Cloud Infrastructure in the Omniverse!
+![Current state of 2D diagrams](https://d15shllkswkct0.cloudfront.net/wp-content/blogs.dir/1/files/2021/10/lucidscale-overview.png)
 
-* Your Client Secret is NOT SAVED.  You will need to re-enter your secret each time you restart Omniverse.
-  
-# Disconnected mode
+### NVIDIA Omniverse and USD Universal Scene Description
 
-You don't have to let MCE connect directly to your Azure Account.  Although we only use a read-only account for security, you can also export 2 data files from your Azure account and load them into MCE for modeling.  This allows you to work in "Disconnected mode"
+Meta Cloud Explorer doesn't replace any of these tools, It's a new tool, a new way to see, understand and experience your cloud infrastructure at scale.
 
-1. Export a list of Resource Groups (CSV) Include fields: NAME,SUBSCRIPTION,LOCATION
-2. Export a list of All Azure Resources (CSV) Include fields: #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION, LMCOST*
-3. Aggregate the data into high level groupings
-4. Select the Resource Group and Resources CSV files as input for the extension
-5. Explore your Azure Infrastructure in the Omniverse!
+Thanks to the power of NVIDIA's Omniverse, we can now create real-time, photo realistic environments modeled directly from your cloud infrastructure!
+As Meta Cloud Explorer matures, it will help you travel through time, see infrastructure differences and configurations in new ways, even create entirely new architectures.  The power to visualize networks, network traffic and "the edge" can help engineers understand cloud security, endpoints and vulnerabilities. 
 
-*Cost values need to be added manually in the current version.
+In version 1.0 of Meta Cloud Explorer, we've just began to bridge the gap between cloud infrastructure and the metaverse.  There is so much that can be done in this new context!  v1.0 provides a read-only view of your cloud infrastructure and gives you an easy to use toolbox to create a simulated world that represents your cloud.
 
-Extension working in Omniverse Code 2021.1.1!
+Future versions will let you create infrastructure from template libraries, learn about new architecture techniques and simulate design changes.
+USDSync.com aims to create a SaaS based "AzureverseAsAService", where we can host your "Azureverse" live and in sync with your real cloud 24x7.
+No more scene composition and design, USDSync.com can host these resources and keep them in sync automatically.
 
-EXTENSION NOT WORKING in Code 2021.1.2 and 2021.1.3! ;(
+### The right tool for the right job
 
-# Welcome to The Future of Cloud Insights!
+Have you ever tried to cleanup your hard drive?  Windows File Explorer suffers from the same problem as the Azure, AWS and GCP UI portals.  You are always in just one folder, or just one group or just one project, it's really hard just to understand the scale of the whole thing!
 
-Not quite the future yet, but this is the beginning of a new way to gain insight to your cloud infrastructure.  What insight will you gain from seeing all your resources in this context?  What are you hoping to see?  Whatever MCE generates is just that start of a stage where you can add animation, events, etc.
+Want to understand "Whats taking up space on your hard disk?"...  Good luck... Yes, you can right click on every folder and view usage, but it's just not as easy as it should be! - We just keep running out of space and adding bigger and bigger hard drives! Ever used WinDirStat?
 
-You can also create resources in Azure from the OmniVerse! This extension gives you the ability to create and model your environment in a metaverse and then create it in your Azure Cloud!
+WinDirStat is a free program that shows visually what is taking up space on your hard drive allowing you to gain insights that windows just doesn't provide.  Once it has scanned your drive it visually shows you all the files on your disk, in a bin-packed graph.  This graph allows you to easily see and understand what files and folders are taking up the space on your disk.  Look what a simple change in context does for you?!?!
 
-Review Templates, Architectures, Cloud Design Patterns and then create them for real in your cloud directly from the Onmiverse environment.  
+![MCE is like the WinDirStat of Cloud Infrastructure](https://github.com/USDSync/MetaCloudExplorer/blob/ab0d10ca2035e5db79b426425c54b79eb70ad4d9/exts/meta.cloud.explorer.azure/data/resources/windirstat.png)
 
-This feature is an alpha and not ready for general use.
-Load the Template view to check it out!
+Think of MCE as the "WinDirStat" of your Azure,. AWS, GCP cloud infrastructure..  just another tool, but wow, the instant insights, change in context, really helps sometimes.  I honestly don't know how you would figure out whats taking up space on your hard disk without a tool like WinDirStat.
 
-The roadmap is long, but full of amazing potential!
+Look at the difference between looking at your infrastructure in Azure, AWS or GCP, vs looking at it in MCE!
+While the context is obviously a bit different and MCE does not replace these tools at all, you can immediately gain insight!
 
-# Development Roadmap
+### Azure Portal 
+![](https://github.com/USDSync/MetaCloudExplorer/blob/0f864116d2b2ea3e65532fdf9f1b7105e79158ab/exts/meta.cloud.explorer.azure/data/resources/azure_resource_list.png)
+### AWS Portal
+![](https://github.com/USDSync/MetaCloudExplorer/blob/0f864116d2b2ea3e65532fdf9f1b7105e79158ab/exts/meta.cloud.explorer.azure/data/resources/aws_services_list.png)
+### GCP Portal
+![](https://github.com/USDSync/MetaCloudExplorer/blob/0f864116d2b2ea3e65532fdf9f1b7105e79158ab/exts/meta.cloud.explorer.azure/data/resources/google_cloud_ui.png)
 
-Azure - In development
-AWS - future
-GCP - future
-Others...
-Terraform, bicep integration
+### I just want to see ALL MY INFRASTRUCUTRE, in ONE PLACE, RIGHT NOW!
+I don't always want to just look at one resource group at a time.  I don't want to endlessly filter lists or search for things. I don't always want to just look at diagrams or templates or even the code that built this infrastructure, I JUST WANT TO SEE IT!  In one place, like it's a place I could go and if its virtual, be able to rearrange it instantly!  
+
+I rest my case, may I present **Meta Cloud Explorer**!! :)
+### Meta Cloud Explorer Extension in Omniverse!
+![](https://github.com/USDSync/MetaCloudExplorer/blob/0f864116d2b2ea3e65532fdf9f1b7105e79158ab/exts/meta.cloud.explorer.azure/data/resources/resourcegroups.png)
+
+This is just "a picture" of my Azureverse.  It's really a digital world I can travel around inside, rearrange, re-group, change groupings, costs, layouts and more.  It's an easy way to just see your cloud infrastructure, right now, visually..  it's actually quite cool ;)
+
+MCE even works in Omniverse XR!  Just save your USD scene and open it in Omniverse XR, strap on your VR headset and immerse yourself inside your cloud.  The future is here and it's time you have a tool that lets you quickly understand your cloud infrastructure, costs and resources distribution.
+
+To the Metaverse and beyond! (kinda dumb I know, but it's better than Infinity, heh)
+
