@@ -4,7 +4,7 @@
 MetaCloudExplorer.com
 (In Alpha Development phase)
 
-The true power of the Metaverse is to gain new insights to existing problems by experiencing things in a different way.  A simple change in perspective can sometimes work wonders!  Meta Cloud Explorer help Cloud Architects visualize thier cloud infrastructure at scale.  A Dynamic metaverse creation tool for Nvidia's Omniverse.
+The true power of the Metaverse is to gain new insights to existing problems by experiencing things in a different way.  A simple change in perspective can sometimes work wonders!  Meta Cloud Explorer helps Cloud Architects visualize thier cloud infrastructure at scale.  A Dynamic metaverse creation tool for Nvidia's Omniverse.
 
 Quickly connect to your Cloud Infrastructure and visualize it in your private Omniverse!*
 This extension generates digital models of your Cloud Infrastructure that can be used to gain insights to drive better infrastructure, optimized resources, reduced costs, and breakthrough customer experiences.
