@@ -103,13 +103,13 @@ class MainView(ui.Window):
     #___________________________________________________________________________________________________
 
     def on_docs(self):
-        webbrowser.open_new("https://github.com/CloudArchitectLive/MetaCloudExplorer/wiki/Meta-Cloud-Explorer-(Azure)")
+        webbrowser.open_new("https://github.com/USDSync/MetaCloudExplorer/wiki")
 
     def on_code(self):
         webbrowser.open_new("http://metacloudexplorer.com")
 
     def on_help(self):
-        webbrowser.open_new("https://github.com/CloudArchitectLive/MetaCloudExplorer/issues")
+        webbrowser.open_new("https://github.com/USDSync/MetaCloudExplorer/issues")
 
     #Callback invoked when data model changes
     def model_changed(self):
