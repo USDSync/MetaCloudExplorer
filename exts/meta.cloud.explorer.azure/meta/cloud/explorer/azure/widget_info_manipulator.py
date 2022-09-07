@@ -76,7 +76,7 @@ class WidgetInfoManipulator(sc.Manipulator):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.destroy()
+        #self.destroy()
 
         self._radius = 2
         self._distance_to_top = 5
@@ -85,8 +85,7 @@ class WidgetInfoManipulator(sc.Manipulator):
 
     def destroy(self):
         self._root = None
-        self._slider_subscription = None
-        self._slider_model = None
+        self._path_label = None
         self._name_label = None
         self._grp_label = None
         self._type_label = None
@@ -125,13 +124,6 @@ class WidgetInfoManipulator(sc.Manipulator):
                 self._sub_label = ui.Label("Sub:", height=0, alignment=ui.Alignment.LEFT)
                 self._cost_label = ui.Label("Cost:", height=0, alignment=ui.Alignment.LEFT)
                 
-                # ui.Spacer(height=10)
-                # with ui.HStack():
-                #     ui.Spacer(width=10)
-                    
-                #     ui.Spacer(width=10)
-                # ui.Spacer(height=4)
-                # ui.Spacer()
 
         self.on_model_updated(None)
 
@@ -141,24 +133,29 @@ class WidgetInfoManipulator(sc.Manipulator):
     def on_build(self):
         carb.log_info("WidgetInfoManipulator - on_build")
         """Called when the model is chenged and rebuilds the whole slider"""
+
         self._root = sc.Transform(visible=False)
         with self._root:
             with sc.Transform(scale_to=sc.Space.SCREEN):
                 with sc.Transform(transform=sc.Matrix44.get_translation_matrix(0, 100, 0)):
                     # Label
                     with sc.Transform(look_at=sc.Transform.LookAt.CAMERA):
-                        self._widget = sc.Widget(500, 150, update_policy=sc.Widget.UpdatePolicy.ON_MOUSE_HOVERED)
+                        self._widget = sc.Widget(600, 250, update_policy=sc.Widget.UpdatePolicy.ON_MOUSE_HOVERED)
                         self._widget.frame.set_build_fn(self._on_build_widgets)
-
+                        self._on_build_widgets()
+       
     def on_model_updated(self, _):
+
         # if we don't have selection then show nothing
         if not self.model or not self.model.get_item("name"):
-            self._root.visible = False
-            return
+            if hasattr(self, "_root"):
+                self._root.visible = False
+                return
 
-        name = self.model.get_item('name')
-        if name.find("Collision") == -1:
-            return
+        #how to select parent ?
+        # name = self.model.get_item('name')
+        # if name.find("Collision") != -1:
+        #     return
 
         # Update the shapes
         position = self.model.get_as_floats(self.model.get_item("position"))
@@ -166,8 +163,8 @@ class WidgetInfoManipulator(sc.Manipulator):
         self._root.visible = True
 
         # Update the shape name
-        if self._name_label:
-
+        if hasattr(self, "_name_label"):
+            
             name = self.model.get_item('name')
 
             infoBlurb = name.replace("/World/RGrps/", "")
@@ -178,37 +175,28 @@ class WidgetInfoManipulator(sc.Manipulator):
         try:
             self._path_label.text = f"{infoBlurb}"
         except:
-            self._path_label.text  = ""
+            self._path_label = ui.Label("Path:", height=20, alignment=ui.Alignment.LEFT)
         try:
-            self._name_label.text = self.model.get_custom('res_name')
+            self._name_label.text = "Name: " + self.model.get_custom('res_name')
         except:
-            self._name_label.text =""
+            self._name_label = ui.Label("Name:" , height=40, alignment=ui.Alignment.LEFT)
         try:
-            self._grp_label.text = self.model.get_custom('res_grp')
+            self._grp_label.text = "ResGrp: " + self.model.get_custom('res_grp')
         except:
-            self._grp_label.text = ""
-        
+            self._grp_label = ui.Label("RGrp:", height=60, alignment=ui.Alignment.LEFT)
         try:
-            self._type_label.text = self.model.get_custom('res_type')
+            self._type_label.text = "Type: " + self.model.get_custom('res_type')
         except:
-            self._type_label.text = ""
+            self._type_label = ui.Label("Type: ", height=80, alignment=ui.Alignment.LEFT)
         try:
-            self._location_label.text = self.model.get_custom('res_loc')
+            self._location_label.text = "Location: " + self.model.get_custom('res_loc')
         except:
-            self._location_label.text = ""
+            self._location_label = ui.Label("Location: ", height=100, alignment=ui.Alignment.LEFT)
         try:
-            self._sub_label.text = self.model.get_custom('res_sub')
+            self._sub_label.text = "Sub: " + self.model.get_custom('res_sub')
         except:
-            self._sub_label.text = ""
+            self._sub_label = ui.Label("Sub: " , height=120, alignment=ui.Alignment.LEFT)
         try:
-            self._cost_label.text = self.model.get_custom('res_cost')
+            self._cost_label.text = "Cost: " + self.model.get_custom('res_cost')
         except:
-            self._cost_label.text = ""
-
-
-# self._name_label = ui.Label("Name:", height=0, alignment=ui.Alignment.LEFT)
-# self._grp_label = ui.Label("RGrp:", height=0, alignment=ui.Alignment.LEFT)
-# self._type_label = ui.Label("Type:", height=0, alignment=ui.Alignment.LEFT)
-# self._location_label = ui.Label("Location:", height=0, alignment=ui.Alignment.LEFT)
-# self._sub_label = ui.Label("Sub:", height=0, alignment=ui.Alignment.LEFT)
-# self._cost_label = ui.Label("Cost:", height=0, alignment=ui.Alignment.LEFT)
+            self._cost_label = ui.Label("Cost:", height=140, alignment=ui.Alignment.LEFT)

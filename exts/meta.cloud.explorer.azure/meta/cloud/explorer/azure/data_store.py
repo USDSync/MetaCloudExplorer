@@ -52,6 +52,7 @@ class DataStore():
         self._source_of_data = ""
         self._use_symmetric_planes = False
         self._use_packing_algo = True
+        self._show_info_widgets = True
         self._last_view_type = "ByGroup" # ByGroup, ByLocation, ByType, BySub, ByTag
         self._scale_model = 1.0
 
@@ -87,6 +88,7 @@ class DataStore():
         #composition options (UI settings)
         self._symmetric_planes_model = ui.SimpleBoolModel(False)
         self._packing_algo_model = ui.SimpleBoolModel(True)
+        self._show_info_widgets_model = ui.SimpleBoolModel(True)
         self._primary_axis_model = ComboBoxModel("Z", "X", "Y") # track which Axis is up
         self._shape_up_axis_model = ComboBoxModel("Z", "X", "Y") # track which Axis is up for the shape placement
         self._composition_scale_model = ui.SimpleFloatModel()
@@ -178,6 +180,10 @@ class DataStore():
         if self._options_random_models[2].as_float >= 0:
             settings.set("/persistent/exts/meta.cloud.explorer.azure/z_random_count", self._options_random_models[2].as_float)                        
 
+            settings.set("/persistent/exts/meta.cloud.explorer.azure/show_info_widgets", self._show_info_widgets)                        
+
+
+
         # #Serailize dictionaries
         # pickle.dump(self._aad_count, open('aad_count', 'w'))
         # pickle.dump(self._subscription_count, open('subscription_count', 'w'))
@@ -217,6 +223,7 @@ class DataStore():
         self._bgm_file_path = settings.get("/persistent/exts/meta.cloud.explorer.azure/bgm_file_path")
         self._bgh_file_path = settings.get("/persistent/exts/meta.cloud.explorer.azure/bgh_file_path")
         self._last_view_type= settings.get("/persistent/exts/meta.cloud.explorer.azure/last_view_type")
+        self._show_info_widgets= settings.get("/persistent/exts/meta.cloud.explorer.azure/show_info_widgets")
 
         try:
             self._options_count_models[0].set_value(int(settings.get("/persistent/exts/meta.cloud.explorer.azure/x_group_count")))

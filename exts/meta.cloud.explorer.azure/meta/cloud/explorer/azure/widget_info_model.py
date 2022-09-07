@@ -18,6 +18,7 @@ from pxr import UsdLux
 
 import omni.usd
 import omni.kit.commands
+from .prim_utils import only_select_parent_prims
 
 
 class WidgetInfoModel(sc.AbstractManipulatorModel):
@@ -125,6 +126,9 @@ class WidgetInfoModel(sc.AbstractManipulatorModel):
             return
 
         prim_paths = usd_context.get_selection().get_selected_prim_paths()
+        #Selectively choose the paths
+        prim_paths = only_select_parent_prims(prim_paths=prim_paths)
+
         if not prim_paths:
             self._item_changed(self.position)
             # Revoke the Tf.Notice listener, we don't need to update anything

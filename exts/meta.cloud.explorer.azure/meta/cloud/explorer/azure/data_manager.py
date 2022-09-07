@@ -146,7 +146,7 @@ class DataManager:
         self._dataStore.wipe_data()
         self._dataStore._source_of_data = "SampleFiles"
         src_filel = IMPORTS_PATH.joinpath("LargeCompany_RG.csv")
-        src_file2 = IMPORTS_PATH.joinpath("LarrgeCompany_all.csv")
+        src_file2 = IMPORTS_PATH.joinpath("LargeCompany_all.csv")
 
         self.load_and_process_manual(src_filel, src_file2)
 
@@ -174,13 +174,13 @@ class DataManager:
             await asyncio.sleep(0)
 
             ### AGGREGATE COUNTS
-            await self.AggregateCountsAsync(obj)
+            self.AggregateCountsAsync(obj)
 
             ### AGGREGATE COSTS
-            await self.AggregateCostsAsync(obj)
+            self.AggregateCostsAsync(obj)
             
             ### MAP RESOURCES TO AGGREGATES
-            await self.MapResourcesToGroupsAsync(obj)
+            self.MapResourcesToGroupsAsync(obj)
 
         #Pre-create images for the groups
         carb.log_info("Creating images..")        
@@ -395,7 +395,7 @@ class DataManager:
         pass
 
     #Async context
-    async def AggregateCostsAsync(self, obj):
+    def AggregateCostsAsync(self, obj):
 
         ### AGGREGATE COSTS
         #Cost per Sub
@@ -427,7 +427,7 @@ class DataManager:
             self._dataStore._group_cost[grpKey] = float(self._dataStore._group_cost[grpKey]) + float(obj["lmcost"])
 
     #Async Context
-    async def AggregateCountsAsync(self, obj):
+    def AggregateCountsAsync(self, obj):
 
         ### AGGREGATE COUNTS
         #Count per Sub
@@ -459,7 +459,7 @@ class DataManager:
             self._dataStore._group_count[grpKey] = self._dataStore._group_count[grpKey] + 1
 
     #Given a resource, Map it to all the groups it belongs to.
-    async def MapResourcesToGroupsAsync(self, obj):
+    def MapResourcesToGroupsAsync(self, obj):
         
         #Get the mapped shape and figure out the prim path for the map
         # Set a default
@@ -478,23 +478,23 @@ class DataManager:
             carb.log_info("Error getting priom values - " + resName)
 
         # SUBSCRIPTION MAP
-        await self.map_objects(resName, typeName, group, location, sub, cost, "/Subs" ,shape_to_render, self._dataStore._map_subscription, obj, "subscription")
+        self.map_objects(resName, typeName, group, location, sub, cost, "/Subs" ,shape_to_render, self._dataStore._map_subscription, obj, "subscription")
 
         # GROUP MAP
-        await self.map_objects(resName, typeName, group, location, sub, cost, "/RGrps", shape_to_render, self._dataStore._map_group, obj, "group")
+        self.map_objects(resName, typeName, group, location, sub, cost, "/RGrps", shape_to_render, self._dataStore._map_group, obj, "group")
 
         # TYPE MAP
-        await self.map_objects(resName, typeName, group, location, sub, cost, "/Types", shape_to_render, self._dataStore._map_type, obj, "type")
+        self.map_objects(resName, typeName, group, location, sub, cost, "/Types", shape_to_render, self._dataStore._map_type, obj, "type")
 
         # LOCATION MAP
-        await self.map_objects(resName, typeName, group, location, sub, cost, "/Locs", shape_to_render, self._dataStore._map_location, obj, "location")
+        self.map_objects(resName, typeName, group, location, sub, cost, "/Locs", shape_to_render, self._dataStore._map_location, obj, "location")
 
         #TODO TAGMAP
         #self.map_objects(typeName, "/Tag", shape_to_render, self._dataStore._tag_map, obj, "tag")
 
 
     #Maps objects to create to each aggregate
-    async def map_objects(self, resName, typeName,grp, loc, sub, cost, root, shape, map, obj, field:str):
+    def map_objects(self, resName, typeName,grp, loc, sub, cost, root, shape, map, obj, field:str):
         
         cleaned_group_name = cleanup_prim_path(self, Name=obj[field])
         carb.log_info(cleaned_group_name)

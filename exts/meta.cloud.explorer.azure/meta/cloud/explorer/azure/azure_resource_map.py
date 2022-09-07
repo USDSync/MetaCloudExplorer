@@ -76,7 +76,7 @@ shape_usda_name = {
     "Virtual_network":"omniverse://localhost/MCE/3dIcons/Virtual_Network.usd",
     "Web_App_Bot":"omniverse://localhost/MCE/3dIcons/Web_App_Bot.usd",
     "Coat_Rack":"omniverse://localhost/MCE/3dIcons/Coat_Rack_Bowler_Hat.usdz",
-    "Observation_Chair":"omniverse://localhost/MCE/Nvidia-Ball-Chair/Nvidia-Ball-Chair.usd",
+    "Observation_Chair":"omniverse://localhost/MCE/3dIcons/Green-Ball-Chair.usd",
     "Leather_Jacket":"omniverse://localhost/MCE/3dIcons/Leather_Jacket.usdz",
     "Rug_V4": "omniverse://localhost/MCE/3dIcons/RugV4.usd",
     "Neon_All_Resources":  "omniverse://localhost/MCE/NeonSigns/all_resources/all_resources.usd",

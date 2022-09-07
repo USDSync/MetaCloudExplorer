@@ -40,32 +40,33 @@ class MetaCloudExplorerAzure(omni.ext.IExt):
         self._ext_id = ext_id
         self._menu_path = f"Window/{WINDOW_NAME}"
         self._window = None
-        self._menu = omni.kit.ui.get_editor_menu().add_item(self._menu_path, self._on_menu_click, True)
 
-    def _on_menu_click(self, menu, toggled):
-        """Handles showing and hiding the window from the 'Windows' menu."""
-        if toggled:
+        def on_menu_click(menu, toggled):
+            """Handles showing and hiding the window from the 'Windows' menu."""
+            if toggled:
 
-            # Get the active Viewport (which at startup is the default Viewport)
-            self._viewport_window = get_active_viewport_window()
+                # Get the active Viewport (which at startup is the default Viewport)
+                self._viewport_window = get_active_viewport_window()
 
-            # Issue an error if there is no Viewport
-            if not self._viewport_window:
-                carb.log_error(f"No Viewport Window to add {self._ext_id} scene to")
-                return
-           
-            # Build out the scene
-            objModel = ObjectInfoModel()
-            widModel = WidgetInfoModel()
-            self._viewport_scene = ViewportScene(viewport_window=self._viewport_window, 
-                ext_id=self._ext_id,widgetModel=widModel, objectModel=objModel)
-            self._window = MainView(WINDOW_NAME, widgetModel=widModel, objectModel=objModel)
+                # Issue an error if there is no Viewport
+                if not self._viewport_window:
+                    carb.log_error(f"No Viewport Window to add {self._ext_id} scene to")
+                    return
+                
+                # Build out the scene
+                objModel = ObjectInfoModel()
+                widModel = WidgetInfoModel()
+                self._viewport_scene = ViewportScene(viewport_window=self._viewport_window, 
+                    ext_id=self._ext_id,widgetModel=widModel, objectModel=objModel)
+                self._window = MainView(WINDOW_NAME, widgetModel=widModel, objectModel=objModel)
 
-        else:
-            self._window.show()
+            else:
+                self._window.show()
 
-        # Deregister the function that shows the window from omni.ui
-        #ui.Workspace.set_show_window_fn(MetaCloudExplorerAzure.WINDOW_NAME, None)
+                # Deregister the function that shows the window from omni.ui
+                #ui.Workspace.set_show_window_fn(MetaCloudExplorerAzure.WINDOW_NAME, None)
+
+        self._menu = omni.kit.ui.get_editor_menu().add_item(self._menu_path, on_menu_click, True)
 
 
     def on_shutdown(self):

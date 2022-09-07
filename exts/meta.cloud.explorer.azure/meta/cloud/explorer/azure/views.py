@@ -74,6 +74,37 @@ class MainView(ui.Window):
         # Set the function that is called to build widgets when the window is visible
         self.frame.set_build_fn(self._build_fn)
 
+
+    def __del__(self):
+        self.destroy()
+
+    def destroy(self):
+
+        super().destroy()
+
+        if self._dataManager:
+             self._dataManager.destroy()
+        
+        if self._dataStore:
+            self._dataStore = None
+
+        if self._stageManager:
+            self._stageManager = None
+            
+        self.objModel= None
+        self.widModel= None
+        
+        if self._viewport_scene:
+            # Empty the SceneView of any elements it may have
+            self._viewport_scene = None
+            # Be a good citizen, and un-register the SceneView from Viewport updates
+            if self._viewport_window:
+                self._viewport_window.viewport_api.remove_scene_view(self._scene_view)
+        # Remove our references to these objects
+        self._viewport_window = None
+        self._scene_view = None
+        self._menu_path = None
+
     def on_shutdown(self):
         self._win = None
 
@@ -119,7 +150,7 @@ class MainView(ui.Window):
         if (hasattr(self, "_resLbl")):
             self._resLbl.text = "RESOURCES: " + str(len(self._dataStore._resources))
 
-
+    #Set defaults from quickstarts
     def set_defaults(self, defType:str):
         if defType == "tower":
             self.sendNotify("MCE: Tower defaults set... Select a VIEW", nm.NotificationStatus.INFO)
@@ -138,8 +169,8 @@ class MainView(ui.Window):
             self.sendNotify("MCE: Symmetric defaults set... Select a VIEW", nm.NotificationStatus.INFO)
             self._dataStore._symmetric_planes_model.set_value(True)
             self._dataStore._packing_algo_model.set_value(False)
-            self._dataStore._options_count_models[0].set_value(4)
-            self._dataStore._options_count_models[1].set_value(4)
+            self._dataStore._options_count_models[0].set_value(10)
+            self._dataStore._options_count_models[1].set_value(10)
             self._dataStore._options_count_models[2].set_value(40)
             self._dataStore._options_dist_models[0].set_value(500.0)
             self._dataStore._options_dist_models[1].set_value(500.0)
@@ -261,6 +292,7 @@ class MainView(ui.Window):
                 self._build_connection()
                 self._build_import()
                 self._build_help()
+                #self.buildSliderTest()
 
     # slider = ui.FloatSlider(min=1.0, max=150.0)
     # slider.model.as_float = 10.0
@@ -305,8 +337,8 @@ class MainView(ui.Window):
             with ui.HStack():
                 ui.Button("Clear Stage", clicked_fn=lambda: asyncio.ensure_future(self.clear_stage()), name="clr", height=35)
                 ui.Button("Show/Hide Costs", clicked_fn=lambda: self.showHideCosts(),name="subs", height=35)
-                ui.Button("Show Object Info", clicked_fn=lambda: self.show_info_objects(),name="clr", height=35)
-                #ui.Button("Select All Groups", clicked_fn=lambda: self.select_planes(),name="clr", height=35)
+                #ui.Button("Show Object Info", clicked_fn=lambda: self.show_info_objects(),name="clr", height=35)
+                ui.Button("Select All Groups", clicked_fn=lambda: self.select_planes(),name="clr", height=35)
             
             # with ui.HStack():
             #     ui.Button("Network View", clicked_fn=lambda: self.load_stage("ByNetwork"), height=15)
@@ -461,6 +493,8 @@ class MainView(ui.Window):
             self._dataStore._use_packing_algo = model.as_bool
         def _on_value_changed_sg(model):
             self._dataStore._use_symmetric_planes = model.as_bool
+        def _on_value_changed_wd(model):
+            self._dataStore._show_info_widgets = model.as_bool
 
         with ui.CollapsableFrame("Scene Composition Options", name="group", collapsed=True, style={"color": cl("#2069e0"), "font_size":20}): 
             with ui.VStack(height=0, spacing=SPACING, style={"color": 0xFFFFFFFF, "font_size":16}):
@@ -477,7 +511,11 @@ class MainView(ui.Window):
                     ui.Label("Use Bin Packing?", name="attribute_name", width=self.label_width)
                     cb2 = ui.CheckBox(self._dataStore._packing_algo_model)                    
                     cb2.model.add_value_changed_fn(lambda model: _on_value_changed_bp(model))
-
+                with ui.HStack():
+                    ui.Label("Show Info UI on select?", name="attribute_name", width=self.label_width)
+                    cb3 = ui.CheckBox(self._dataStore._show_info_widgets_model)                    
+                    cb3.model.add_value_changed_fn(lambda model: _on_value_changed_wd(model))
+                
                 self._build_image_options()
 
                 self._build_axis(0, "Groups on X Axis")
@@ -568,3 +606,41 @@ class MainView(ui.Window):
     
     def clicked_ok(self):
         pass
+
+
+    def buildSliderTest(self):
+
+        style = {
+            "Button": {"stack_direction": ui.Direction.TOP_TO_BOTTOM},
+            "Button.Image": {
+                "color": 0xFFFFCC99,
+                "image_url": "resources/icons/Learn_128.png",
+                "alignment": ui.Alignment.CENTER,
+            },
+            "Button.Label": {"alignment": ui.Alignment.CENTER},
+        }
+
+        def layout(model, button, padding, style=style):
+            padding = "padding" if padding else "margin"
+            style["Button"][padding] = model.get_value_as_float()
+            button.set_style(style)
+
+        def spacing(model, button):
+            button.spacing = model.get_value_as_float()       
+       
+        button = ui.Button("Label", style=style, width=64, height=64)
+
+        with ui.HStack(width=ui.Percent(50)):
+            ui.Label("padding", name="text")
+            model = ui.FloatSlider(min=0, max=500).model
+            model.add_value_changed_fn(lambda m, b=button: layout(m, b, 1))
+
+        with ui.HStack(width=ui.Percent(50)):
+            ui.Label("margin", name="text")
+            model = ui.FloatSlider(min=0, max=500).model
+            model.add_value_changed_fn(lambda m, b=button: layout(m, b, 0))
+
+        with ui.HStack(width=ui.Percent(50)):
+            ui.Label("Button.spacing", name="text")
+            model = ui.FloatSlider(min=0, max=50).model
+            model.add_value_changed_fn(lambda m, b=button: spacing(m, b))

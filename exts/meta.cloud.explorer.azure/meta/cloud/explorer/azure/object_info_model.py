@@ -14,6 +14,7 @@ from pxr import UsdGeom
 
 from omni.ui import scene as sc
 import omni.usd
+from .prim_utils import only_select_parent_prims
 
 # The distance to raise above the top of the object's bounding box
 TOP_OFFSET = 5
@@ -72,6 +73,9 @@ class ObjectInfoModel(sc.AbstractManipulatorModel):
         self._selection = usd_context.get_selection()
         self._paths = self._selection.get_selected_prim_paths()
 
+        #Selectively choose the paths
+        self._paths = only_select_parent_prims(prim_paths=self._paths)
+
         #if len(self._current_paths) > 1: #ONLY SHOW ON MULTISELECT!
         for path in self._paths:
             prim = stage.GetPrimAtPath(path)
@@ -125,3 +129,12 @@ class ObjectInfoModel(sc.AbstractManipulatorModel):
         # Find the top center of the bounding box and add a small offset upward.
         position = [(bboxMin[0] + bboxMax[0]) * 0.5, bboxMax[1] + TOP_OFFSET, (bboxMin[2] + bboxMax[2]) * 0.5]
         return position
+
+    
+
+
+
+
+
+
+

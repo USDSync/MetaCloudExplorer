@@ -40,6 +40,9 @@ class ObjectInfoManipulator(sc.Manipulator):
             infoBlurb = infoBlurb.replace("/World/Locs/", "")
             infoBlurb = infoBlurb.replace("/World/Types/", "")
 
+            if infoBlurb == 'None':
+                continue
+
             # Move everything to where the object is
             with sc.Transform(transform=sc.Matrix44.get_translation_matrix(*position)):
                 # Rotate everything to face the camera
