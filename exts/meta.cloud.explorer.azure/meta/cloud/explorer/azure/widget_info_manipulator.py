@@ -146,12 +146,15 @@ class WidgetInfoManipulator(sc.Manipulator):
        
     def on_model_updated(self, _):
 
-        # if we don't have selection then show nothing
-        if not self.model or not self.model.get_item("name"):
-            if hasattr(self, "_root"):
-                self._root.visible = False
-                return
-
+        try:
+            # if we don't have selection then show nothing
+            if not self.model or not self.model.get_item("name"):
+                if hasattr(self, "_root"):
+                    self._root.visible = False
+                    return
+        except:
+            return 
+            
         #how to select parent ?
         # name = self.model.get_item('name')
         # if name.find("Collision") != -1:

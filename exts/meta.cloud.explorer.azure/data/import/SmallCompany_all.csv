@@ -81,4 +81,3 @@ webapp,SQL server,webappprod,West US 2,Subscription 2,23
 webapp,Storage account,webappprod,West US 2,Subscription 2,40
 website-test,App Service,website-test,West US 2,Subscription 1,49.47
 TestVault,Key vault,computertest,West US 3,Subscription 1,20
-TestVault,Key vault,USDsync.com,West US 3,Subscription 1,20
