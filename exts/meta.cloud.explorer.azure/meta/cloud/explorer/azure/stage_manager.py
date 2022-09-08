@@ -152,12 +152,21 @@ class StageManager():
         self._dataStore._lcl_groups.sort(key=lambda element: element['size'], reverse=True)
         self._dataStore._lcl_sizes.sort(reverse=True)
 
+        #Create the groups in an async loop
+        grpCnt = len(self._dataStore._lcl_groups)
+        if (grpCnt) >0 :
+            asyncio.ensure_future(self.AddLightsToStage())
+            asyncio.ensure_future(self.ActiveView.CreateGroups(self.transforms))
+        
+        self.ActiveView.loadResources() #Abstract Method             
+        self.sendNotify("Stage loading complete: " + str(grpCnt) + " groups loaded.", nm.NotificationStatus.INFO)
+
         #Sanity check!!
         #Guard, check settings
-        if self.checkSettingsBeforeLoad() == True:
-            self.approved_settings()
-        else:
-            pass #The user needs to OK or Cancel the Notification
+        #if self.checkSettingsBeforeLoad() == True:
+        #    self.approved_settings()
+        #else:
+        #    pass #The user needs to OK or Cancel the Notification
 
     #Load the resources by group
     def LoadResources(self, viewType:str):
