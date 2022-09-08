@@ -57,7 +57,7 @@ class DataManager:
         self._callbacks = []
         self._offlineDataManager = None
         self._onlineDataManager = None
-        self._dataStore = None
+        self._dataStore = None #this seems to cause problems
 
     #add a callback for model changed
     def add_model_changed_callback(self, func):
@@ -109,46 +109,50 @@ class DataManager:
         self._model_changed()
 
     def refresh_data(self):
-        if self._dataStore._source_of_data =="OfflineData":
-            self.load_csv_files()
-            carb.log_info("CSV Data Refreshed.")
-        elif self._dataStore._source_of_data == "LiveAzureAPI":
-            self.load_from_api()
-            carb.log_info("Live Data Refreshed.")
-        else:
-            carb.log_info("Load some data!")
+        if self._dataStore:
+            if self._dataStore._source_of_data =="OfflineData":
+                self.load_csv_files()
+                carb.log_info("CSV Data Refreshed.")
+            elif self._dataStore._source_of_data == "LiveAzureAPI":
+                self.load_from_api()
+                carb.log_info("Live Data Refreshed.")
+            else:
+                carb.log_info("Load some data!")
 
     #Load the "All resources (Shapes) set"
     #This sample contains 1 resource per group
     def load_sample_resources(self):
 
-        self._dataStore.wipe_data()
-        self._dataStore._source_of_data = "SampleFiles"
-        src_filel = IMPORTS_PATH.joinpath("TestShapes_RG.csv")
-        src_file2 = IMPORTS_PATH.joinpath("TestShapes_all.csv")
+        if self._dataStore:
+            self._dataStore.wipe_data()
+            self._dataStore._source_of_data = "SampleFiles"
+            src_filel = IMPORTS_PATH.joinpath("TestShapes_RG.csv")
+            src_file2 = IMPORTS_PATH.joinpath("TestShapes_all.csv")
 
-        self.load_and_process_manual(src_filel, src_file2)
+            self.load_and_process_manual(src_filel, src_file2)
 
 
     #Load the "Small Company sample"
     def load_small_company(self):
 
-        self._dataStore.wipe_data()
-        self._dataStore._source_of_data = "SampleFiles"
-        src_filel = IMPORTS_PATH.joinpath("SmallCompany_RG.csv")
-        src_file2 = IMPORTS_PATH.joinpath("SmallCompany_all.csv")
+        if self._dataStore:
+            self._dataStore.wipe_data()
+            self._dataStore._source_of_data = "SampleFiles"
+            src_filel = IMPORTS_PATH.joinpath("SmallCompany_RG.csv")
+            src_file2 = IMPORTS_PATH.joinpath("SmallCompany_all.csv")
 
-        self.load_and_process_manual(src_filel, src_file2)
+            self.load_and_process_manual(src_filel, src_file2)
 
     #Load the "Large Company sample"
     def load_large_company(self):
 
-        self._dataStore.wipe_data()
-        self._dataStore._source_of_data = "SampleFiles"
-        src_filel = IMPORTS_PATH.joinpath("LargeCompany_RG.csv")
-        src_file2 = IMPORTS_PATH.joinpath("LargeCompany_all.csv")
+        if self._dataStore:
+            self._dataStore.wipe_data()
+            self._dataStore._source_of_data = "SampleFiles"
+            src_filel = IMPORTS_PATH.joinpath("LargeCompany_RG.csv")
+            src_file2 = IMPORTS_PATH.joinpath("LargeCompany_all.csv")
 
-        self.load_and_process_manual(src_filel, src_file2)
+            self.load_and_process_manual(src_filel, src_file2)
 
 
     #load the files async
