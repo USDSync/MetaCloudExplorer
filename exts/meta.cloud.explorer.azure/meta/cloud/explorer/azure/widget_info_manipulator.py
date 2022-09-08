@@ -152,18 +152,19 @@ class WidgetInfoManipulator(sc.Manipulator):
                 if hasattr(self, "_root"):
                     self._root.visible = False
                     return
+            else:
+                # Update the shapes
+                position = self.model.get_as_floats(self.model.get_item("position"))
+                self._root.transform = sc.Matrix44.get_translation_matrix(*position)
+                self._root.visible = True
+
         except:
             return 
-            
+
         #how to select parent ?
         # name = self.model.get_item('name')
         # if name.find("Collision") != -1:
         #     return
-
-        # Update the shapes
-        position = self.model.get_as_floats(self.model.get_item("position"))
-        self._root.transform = sc.Matrix44.get_translation_matrix(*position)
-        self._root.visible = True
 
         # Update the shape name
         if hasattr(self, "_name_label"):
