@@ -2,6 +2,11 @@
 
 ## [2022.1.3-pre] - 2022-09-08
 ### Added
+- updated readme, some issues with release tag pulling main instead.
+- merging 2022.1.3 with main
+
+## [2022.1.3-pre] - 2022-09-08
+### Added
 - pre-release
 
 
