@@ -24,7 +24,7 @@ class DataStore():
         self._groups = {}
 
         #All the reosurces
-        #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION
+        #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION, LMCOST
         self._resources = {}        
 
         #aggregated data (counts)
@@ -55,6 +55,7 @@ class DataStore():
         self._source_of_data = ""
         self._use_symmetric_planes = False
         self._use_packing_algo = True
+        self._show_info_widgets = True
         self._last_view_type = "ByGroup" # ByGroup, ByLocation, ByType, BySub, ByTag
         self._scale_model = 1.0
 
@@ -90,6 +91,7 @@ class DataStore():
         #composition options (UI settings)
         self._symmetric_planes_model = ui.SimpleBoolModel(False)
         self._packing_algo_model = ui.SimpleBoolModel(True)
+        self._show_info_widgets_model = ui.SimpleBoolModel(True)
         self._primary_axis_model = ComboBoxModel("Z", "X", "Y") # track which Axis is up
         self._shape_up_axis_model = ComboBoxModel("Z", "X", "Y") # track which Axis is up for the shape placement
         self._composition_scale_model = ui.SimpleFloatModel()
@@ -181,6 +183,7 @@ class DataStore():
         if self._options_random_models[2].as_float >= 0:
             settings.set("/persistent/exts/meta.cloud.explorer.azure/z_random_count", self._options_random_models[2].as_float)                        
 
+        settings.set("/persistent/exts/meta.cloud.explorer.azure/show_info_widgets", self._show_info_widgets)                        
 
 
     #Load Saved config data                        
@@ -202,6 +205,7 @@ class DataStore():
         self._bgm_file_path = settings.get("/persistent/exts/meta.cloud.explorer.azure/bgm_file_path")
         self._bgh_file_path = settings.get("/persistent/exts/meta.cloud.explorer.azure/bgh_file_path")
         self._last_view_type= settings.get("/persistent/exts/meta.cloud.explorer.azure/last_view_type")
+        self._show_info_widgets= settings.get("/persistent/exts/meta.cloud.explorer.azure/show_info_widgets")
 
         try:
             self._options_count_models[0].set_value(int(settings.get("/persistent/exts/meta.cloud.explorer.azure/x_group_count")))
@@ -232,30 +236,7 @@ class DataStore():
             self._bgm_file_path = RES_PATH.joinpath("grid_blue.png")
             self._bgh_file_path = RES_PATH.joinpath("grid_red.png")
             self.Save_Config_Data()
-            
-        # #Reload dictionaries
-        # self._aad_count = pickle.load(open('aad_count', 'r'))
-        # self._subscription_count = pickle.load(open('subscription_count', 'r'))
-        # self._location_count = pickle.load(open('location_count', 'r'))
-        # self._group_count = pickle.load(open('group_count', 'r'))
-        # self._type_count = pickle.load(open('type_count', 'r'))
-        # self._tag_count = pickle.load(open('tag_count', 'r'))
 
-        # #aggregated data (costs)
-        # self._aad_cost = pickle.load(open('aad_cost', 'r'))
-        # self._subscription_cost = pickle.load(open('subscription_cost', 'r'))
-        # self._location_cost = pickle.load(open('location_cost', 'r'))
-        # self._group_cost = pickle.load(open('group_cost', 'r'))
-        # self._type_cost = pickle.load(open('type_cost', 'r'))
-        # self._tag_cost = pickle.load(open('tag_cost', 'r'))
-
-        # #mapped resources (indexes)
-        # self._map_aad = pickle.load(open('map_aad', 'r'))
-        # self._map_subscription = pickle.load(open('map_subscription', 'r'))
-        # self._map_location = pickle.load(open('map_location', 'r'))
-        # self._map_group = pickle.load(open('map_group', 'r'))
-        # self._map_type = pickle.load(open('map_type', 'r'))
-        # self._map_tag = pickle.load(open('map_tag', 'r'))
 
 #-- SINGLETON SUPPORT
 
