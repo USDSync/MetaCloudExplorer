@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [2022.1.1] - 2022-09-07
+### Overlap check function issues
+- Commented out sanity check / overlap alogrithm, limited testing was done on it.
+- Will implement sanity algo in 2022.1.3
+
 ## [2022.1.1-pre] - 2022-09-07
 ### Updates to docs
 - Testing pre-release
