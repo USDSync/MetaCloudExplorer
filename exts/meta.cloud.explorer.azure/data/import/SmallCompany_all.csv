@@ -1,0 +1,84 @@
+﻿NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION,LMCOST
+backupnas,Storage account,backups,West US,Subscription 3,40
+bot-demo,App Service,botdemo,West US 3,Subscription 1,99.95
+cs4100300008e99fab9,Storage account,cloud-shell-storage-westus,West US,Subscription 1,40
+webapp,Container registry,containers,West US 2,Subscription 1,15
+DefaultWorkspace-79578656-b8cc-4f0f-af93-8fabe7398ea7-EA,Log Analytics workspace,defaultresourcegroup-ea,East Asia,Subscription 2,0
+DefaultWorkspace-79578656-b8cc-4f0f-af93-8fabe7398ea7-USW3,Log Analytics workspace,defaultresourcegroup-usw3,West US 3,Subscription 2,0
+DefaultWorkspace-9af72be6-0c53-464c-aa30-0834b42c0d94-USW3,Log Analytics workspace,defaultresourcegroup-usw3,West US 3,Subscription 1,0
+SecurityCenterFree(DefaultWorkspace-9af72be6-0c53-464c-aa30-0834b42c0d94-USW3),Solution,defaultresourcegroup-usw3,West US 3,Subscription 1,0
+DefaultWorkspace-9af72be6-0c53-464c-aa30-0834b42c0d94-WUS,Log Analytics workspace,defaultresourcegroup-wus,West US,Subscription 1,0
+SecurityCenterFree(DefaultWorkspace-9af72be6-0c53-464c-aa30-0834b42c0d94-WUS),Solution,defaultresourcegroup-wus,West US,Subscription 1,0
+DefaultWorkspace-9af72be6-0c53-464c-aa30-0834b42c0d94-WUS2,Log Analytics workspace,defaultresourcegroup-wus2,West US 2,Subscription 1,0
+SecurityCenterFree(DefaultWorkspace-9af72be6-0c53-464c-aa30-0834b42c0d94-WUS2),Solution,defaultresourcegroup-wus2,West US 2,Subscription 1,0
+portalvhdslqyyx49rhsj1d,Storage account (classic),default-storage-westus,West US,Subscription 1,40
+storage_test,Storage account (classic),default-storage-westus,West US,Subscription 1,40
+ASP-WebApps-a9fd,App Service plan,usdsync,West US 3,Subscription 1,138
+website.com,DNS zone,usdsync,Global,Subscription 1,0
+usdsync.com,DNS zone,usdsync,Global,Subscription 3,0
+web-admin-portal-m6g2pf3tx5vaa,App Service,mrg-nmm-20220527104325,West US,Subscription 3,49.47
+web-admin-portal-plan-m6g2pf3tx5vaa,App Service plan,mrg-nmm-20220527104325,West US,Subscription 3,55
+web-admin-portal-insights-m6g2pf3tx5vaa,Application Insights,mrg-nmm-20220527104325,West US,Subscription 3,5
+kv-m6g2pf3tx5vaa,Key vault,mrg-nmm-20220527104325,West US,Subscription 3,20
+db-m6g2pf3tx5vaa (sql-server-m6g2pf3tx5vaa/db-m6g2pf3tx5vaa),SQL database,mrg-nmm-20220527104325,West US,Subscription 3,67
+sql-server-m6g2pf3tx5vaa,SQL server,mrg-nmm-20220527104325,West US,Subscription 3,66
+ASP-MyBusyBrush-b45f,App Service plan,mybusyday,West US 2,Subscription 1,99
+mybusyday.com,DNS zone,mybusyday,Global,Subscription 1,0
+mybusyday,Storage account,mybusyday,West US,Subscription 1,40
+NetworkWatcher_japaneast,Network Watcher,networkwatcherrg,Japan East,Subscription 1,0
+NetworkWatcher_koreacentral,Network Watcher,networkwatcherrg,Korea Central,Subscription 1,0
+NetworkWatcher_westus,Network Watcher,networkwatcherrg,West US,Subscription 1,0
+NetworkWatcher_westus3,Network Watcher,networkwatcherrg,West US 3,Subscription 1,0
+botdemo,App Service,botdemo,West US 3,Subscription 1,49.47
+botdemo,Application Insights,botdemo,West US 3,Subscription 1,5
+bot-demo,Web App Bot,botdemo,Global,Subscription 1,10
+testbot,Azure Cosmos DB account,bot-demo,West US 3,Subscription 2,225
+testbot-dev,App Service,bot-dev,East Asia,Subscription 2,49.47
+testbot-asp-dev,App Service plan,bot-dev,East Asia,Subscription 2,135.15
+testbot-dev,Application Insights,bot-dev,East Asia,Subscription 2,5
+testbot-dev,Azure Bot,bot-dev,Global,Subscription 2,50
+bot-secrets-4cdetj,Key vault,bot-dev,East US,Subscription 2,20
+testbotweb,Application Insights,bot-resources,West US 2,Subscription 2,5
+bitzbot,Azure Bot,bot-resources,Global,Subscription 2,50
+testbot,Azure Bot,bot-resources,Global,Subscription 2,50
+test.bot,DNS zone,bot-resources,Global,Subscription 2,0
+bot-secrets-vk7lxh,Key vault,bot-resources,West US 3,Subscription 2,20
+language-bottest,Language,bot-resources,West US 2,Subscription 2,44
+testbot-luis,Language understanding,bot-resources,West US,Subscription 2,23
+prediction,Language understanding,bot-resources,West US 2,Subscription 2,23
+testsearchnft,Search service,bot-resources,West US 2,Subscription 2,55
+cf442821-7f9f-4846-9dc4-6bccd4d861db-dashboard (nftbotweb Dashboard),Shared dashboard,bot-resources,West US 2,Subscription 2,0
+testbot,SQL server,bot-resources,West US 2,Subscription 2,35
+botlabstorage,Storage account,bot-resources,West US 3,Subscription 2,40
+NerdioManagerMSP,Managed application,nmmrgmao,West US,Subscription 3,0
+observation chair,Observation_Chair,observation_deck,West US,Subscription 4,0
+leather jacket,Leather_Jacket,observation_deck,West US,Subscription 4,0
+coat rack,Coat_Rack,observation_deck,West US,Subscription 4,0
+USDSync,Azure DevOps organization,usdsync,North Central US,Subscription 3,0
+cloudprojects,Storage account,usdsync,West US,Subscription 3,40
+mcsdstorage,Storage account,usdsync,West US 2,Subscription 3,40
+usdclouddata,Storage account,usdsync,West US 2,Subscription 3,40
+usdcloudvault,Key vault,clouddata,West US 2,Subscription 1,20
+usdcloudbackup,Recovery Services vault,clouddata,West US,Subscription 1,33
+scdevstg4,Storage account,clouddata,West US 2,Subscription 1,40
+webapp,App Service,webapp,West US 2,Subscription 1,49.47
+webapp-api,App Service,webapp,West US 2,Subscription 1,49.47
+webapp-api,Application Insights,webapp,West US 2,Subscription 1,5
+webapp1954785880,Application Insights,webapp,West US 3,Subscription 1,5
+webapp3236856211,Key vault,webapp,West US 3,Subscription 1,20
+077fe40b-7c8e-45bd-8bc1-025708876c87-dashboard (webapp-api Dashboard),Shared dashboard,webapp,West US 2,Subscription 1,0
+webapp-app,App Service,webappprod,West US 3,Subscription 2,49.47
+webapp-bot,App Service,webappprod,West US 3,Subscription 2,49.47
+webapp-meta,App Service,webappprod,West US 3,Subscription 2,49.47
+ASP-webappProd-9280,App Service plan,webappprod,West US 3,Subscription 2,135.15
+webapp,Application Insights,webappprod,West US 3,Subscription 2,5
+webapp,Azure Bot,webappprod,Global,Subscription 2,50
+bot-secrets-whpjw4,Key vault,webappprod,West US 3,Subscription 2,20
+webapp,Managed Identity,webappprod,West US 3,Subscription 2,0
+webapp,SignalR,webappprod,West US 2,Subscription 2,20
+webapp (webapp/webapp),SQL database,webappprod,West US 2,Subscription 2,111
+webapp,SQL server,webappprod,West US 2,Subscription 2,23
+webapp,Storage account,webappprod,West US 2,Subscription 2,40
+website-test,App Service,website-test,West US 2,Subscription 1,49.47
+TestVault,Key vault,computertest,West US 3,Subscription 1,20
+TestVault,Key vault,USDsync.com,West US 3,Subscription 1,20

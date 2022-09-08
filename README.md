@@ -1,27 +1,27 @@
+# USDSync.com
 # Meta Cloud Explorer (MCE)
 # NVIDIA Onmiverse Extension, a Scene Authoring Tool
 
-MetaCloudExplorer.com
 (In Beta Development phase)
 
-![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/meta_cloud_explorer_800.png)
+![Meta Cloud Explorer](https://github.com/USDSync/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/meta_cloud_explorer_800.png)
 
 The true power of the Metaverse is to gain new insights to existing problems by experiencing things in a different way.  A simple change in perspective can sometimes work wonders!  Meta Cloud Explorer helps Cloud Architects visualize thier cloud infrastructure at scale.  It's a dynamic metaverse creation tool for Nvidia's Omniverse.
 
 Quickly connect to your Cloud Infrastructure and visualize it in your private Omniverse!*
 This extension generates digital models of your Cloud Infrastructure that can be used to gain insights to drive better infrastructure, optimized resources, reduced costs, and breakthrough customer experiences.
 
-![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/azurescaled.png)
+![Meta Cloud Explorer](https://github.com/USDSync/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/azurescaled.png)
 **Gain Insight by seeing your infrastructure at scale:**
-![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/resourcegroups.png)
+![Meta Cloud Explorer](https://github.com/USDSync/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/resourcegroups.png)
 **View resources by Location, Group, Type, Subscription**
-![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/westus.png)
+![Meta Cloud Explorer](https://github.com/USDSync/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/westus.png)
 **Optional costs data integrated to groups**
-![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/costs.png)
+![Meta Cloud Explorer](https://github.com/USDSync/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/costs.png)
 
 **Can support multiple clouds!**
 
-![Meta Cloud Explorer](https://github.com/CloudArchitectLive/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/aws-azure-gcp.png)
+![Meta Cloud Explorer](https://github.com/USDSync/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/aws-azure-gcp.png)
 
 **Only works with Microsoft Azure Cloud currently*
 AWS, GCP planned on roadmap.

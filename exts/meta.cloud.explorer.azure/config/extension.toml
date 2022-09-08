@@ -1,9 +1,9 @@
 [package]
 title = "Meta Cloud Explorer (Azure)"
 description="An Omniverse scene authoring tool to help visualize your Azure Infrastructure in your own private Metaverse!"
-version = "1.0.0"
+version = "2022.1.3"
 category = "Browsers"
-authors = ["CloudArchitect.live"]
+authors = ["USDSync.com, MetaCloudExplorer.com - Gavin Stevens"]
 preview_image = "data/resources/azurescaled.png"
 icon = "data/resources/meta_cloud_explorer.png"
 
@@ -12,10 +12,10 @@ readme  = "docs/README.md"
 changelog = "docs/CHANGELOG.md"
 
 # URL of the extension source repository.
-repository = "https://github.com/CloudArchitectLive/MetaCloudExplorer"
+repository = "https://github.com/USDSync/MetaCloudExplorer"
 
 # Keywords for the extension
-keywords = ["Azure", "CloudArchitect.live", "Meta Cloud Explorer (Azure)", "scene authoring tools"]
+keywords = ["Azure", "USD Sync", "Cloud Infrastructure", "Visualization", "Scene composition"]
 
 # Use omni.ui to build simple UI
 [dependencies]

@@ -74,7 +74,7 @@ class StageManager():
 
         self._dataManager = DataManager.instance() # Get A Singleton instance
         self._dataStore = DataStore.instance() # Get A Singleton instance
-       
+        #self._dataManager.add_model_changed_callback(self.model_changed)
         self.stage_unit_per_meter = 1
 
         #Get Composition Options from UI
@@ -106,37 +106,32 @@ class StageManager():
 
                 #Set a subclass to handle the View Creation    
         if viewType == "ByGroup":
-            #asyncio.ensure_future(self.sendNotify("Group View loaded...", nm.NotificationStatus.INFO))   
             view = ResGrpView(viewPath="RGrps", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, 
                 symPlanes=self._dataStore._symmetric_planes_model.as_bool, binPack=self._use_packing_algo)
             
         if viewType == "ByLocation":    
-            #asyncio.ensure_future(self.sendNotify("Location View loaded...", nm.NotificationStatus.INFO))
             view = LocGrpView(viewPath="Locs", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, 
                 symPlanes=self._dataStore._symmetric_planes_model.as_bool, binPack=self._use_packing_algo)
             
         if viewType == "ByType":    
-            #asyncio.ensure_future(self.sendNotify("Type View loaded...", nm.NotificationStatus.INFO))
             view = TypeGrpView(viewPath="Types", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, 
                 symPlanes=self._dataStore._symmetric_planes_model.as_bool, binPack=self._use_packing_algo)
             
         if viewType == "BySub":    
-            #asyncio.ensure_future(self.sendNotify("Subscription View loaded..", nm.NotificationStatus.INFO))
             view = SubGrpView(viewPath="Subs", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, 
                 symPlanes=self._dataStore._symmetric_planes_model.as_bool, binPack=self._use_packing_algo)
             
         if viewType == "ByTag":    
-            #asyncio.ensure_future(self.sendNotify("Tag View loaded..", nm.NotificationStatus.INFO))
             view = TagGrpView(viewPath="Tags", scale=self._scale, upAxis=self._upAxis, shapeUpAxis=self._shapeUpAxis, 
                 symPlanes=self._dataStore._symmetric_planes_model.as_bool, binPack=self._use_packing_algo)
 
         return view
 
+    # def model_changed():
+    #     pass
                 
     #Invoked from UI - Show the Stages based on the View.
     def ShowStage(self, viewType:str):
-
-        self.AddLightsToStage()
 
         #Reset view data
         self._dataStore._lcl_sizes = [] 
@@ -156,12 +151,16 @@ class StageManager():
         self._dataStore._lcl_groups.sort(key=lambda element: element['size'], reverse=True)
         self._dataStore._lcl_sizes.sort(reverse=True)
 
+        asyncio.ensure_future(self.AddLightsToStage())
+
         #Create the groups in an async loop
         grpCnt = len(self._dataStore._lcl_groups)
         if (grpCnt) >0 :
             asyncio.ensure_future(self.ActiveView.CreateGroups(transforms=transforms))
         
-        asyncio.ensure_future(self.sendNotify("Stage loading complete: " + str(grpCnt) + " groups loaded.", nm.NotificationStatus.INFO))   
+        self.ActiveView.loadResources() #Abstract Method      
+        
+        self.sendNotify("Stage loading complete: " + str(grpCnt) + " groups loaded.", nm.NotificationStatus.INFO)
 
     #Load the resources by group
     def LoadResources(self, viewType:str):
@@ -185,23 +184,25 @@ class StageManager():
             #Use Packer Algorithm to determine positioning
             transforms = []
             blocks = []
-            sorted_sizes = sorted(self._dataStore._lcl_sizes, reverse=True)
-            for size in sorted_sizes:
-                sz = (size*2) #double the size end to end
-                blocks.append(Block((sz,sz)))
 
-            pack = Packer()
-            pack.fit(blocks)
+            if len(self._dataStore._lcl_sizes) >0:
+                sorted_sizes = sorted(self._dataStore._lcl_sizes, reverse=True)
+                for size in sorted_sizes:
+                    sz = (size*2) #double the size end to end
+                    blocks.append(Block((sz,sz)))
 
-            for block in blocks:
-                if block.fit:
-                    fitX = block.fit.location[0]
-                    fitY = block.fit.location[1]
-                    fitZ = 0
-                    transforms.append(Gf.Vec3f(fitX, fitY ,fitZ))
-                    #print("size: {} loc: {},{}".format(str(block.size[0]), str(block.fit.location[0]), str(block.fit.location[1])))
-                else:
-                    print("not fit: {}".format(block.size[0]))
+                pack = Packer()
+                pack.fit(blocks)
+
+                for block in blocks:
+                    if block.fit:
+                        fitX = block.fit.location[0]
+                        fitY = block.fit.location[1]
+                        fitZ = 0
+                        transforms.append(Gf.Vec3f(fitX, fitY ,fitZ))
+                        #print("size: {} loc: {},{}".format(str(block.size[0]), str(block.fit.location[0]), str(block.fit.location[1])))
+                    else:
+                        print("not fit: {}".format(block.size[0]))
             
             return transforms
 
@@ -210,38 +211,44 @@ class StageManager():
             maxDims = (self._dataStore._options_count_models[0].as_float * self._dataStore._options_count_models[1].as_float * self._dataStore._options_count_models[2].as_float)
             grpCnt = len(self._dataStore._lcl_groups)
             if grpCnt > maxDims:
-                asyncio.ensure_future(self.sendNotify("Not enough dimensions for ..." + str(grpCnt) + "res groups, Max Dims: " + str(maxDims), nm.NotificationStatus.WARNING))   
+                self.sendNotify("Not enough dimensions for ..." + str(grpCnt) + "res groups, Max Dims: " + str(maxDims), nm.NotificationStatus.WARNING)
                 return
 
-            #Use Customized Scatter algorithm get coordinates for varying sized planes
-            transforms = distributePlanes(
-                UpAxis=self._upAxis,
-                count=[m.as_int for m in self._dataStore._options_count_models],
-                distance=[m.as_float for m in self._dataStore._options_dist_models],
-                sizes=self._dataStore._lcl_sizes,
-                randomization=[m.as_float for m in self._dataStore._options_random_models],
-                seed=0,
-                scaleFactor=self._dataStore._composition_scale_model.as_float)
+            if grpCnt >0:
+                #Use Customized Scatter algorithm get coordinates for varying sized planes
+                transforms = distributePlanes(
+                    UpAxis=self._upAxis,
+                    count=[m.as_int for m in self._dataStore._options_count_models],
+                    distance=[m.as_float for m in self._dataStore._options_dist_models],
+                    sizes=self._dataStore._lcl_sizes,
+                    randomization=[m.as_float for m in self._dataStore._options_random_models],
+                    seed=0,
+                    scaleFactor=self._dataStore._composition_scale_model.as_float)
 
             return transforms
 
-    def AddLightsToStage(self):
+    async def AddLightsToStage(self):
 
         stage = omni.usd.get_context().get_stage()
 
-        # add a light
-        light_prim_path = Sdf.Path("/World").AppendPath('DomeLight')
-        light_prim = UsdLux.DistantLight.Define(stage, str(light_prim_path))
-        light_prim.CreateAngleAttr(0.53)
-        light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
-        light_prim.CreateIntensityAttr(500.0)
-    
-        # add a light
-        light_prim_path = Sdf.Path("/World").AppendPath('DistantLight')
-        light_prim = UsdLux.DistantLight.Define(stage, str(light_prim_path))
-        light_prim.CreateAngleAttr(0.53)
-        light_prim.CreateColorAttr(Gf.Vec3f(1.0, 1.0, 0.745))
-        light_prim.CreateIntensityAttr(750.0)    
+        try:
+            if stage.GetPrimAtPath('/Environment/sky'):
+                omni.kit.commands.execute('DeletePrimsCommand',
+                    paths=['/Environment/sky'])
+        except:
+            pass #ignore this
+
+        await omni.kit.app.get_app().next_update_async()
+
+        omni.kit.commands.execute('CreateDynamicSkyCommand',
+            sky_url='http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Skies/Dynamic/NightSky.usd',
+            sky_path='/Environment/sky')
+
+        omni.kit.commands.execute('ChangeProperty',
+            prop_path=Sdf.Path('/Environment/sky.xformOp:rotateZYX'),
+            value=Gf.Vec3f(90.0, 0.0, 0.0),
+            prev=Gf.Vec3f(0.0, 0.0, 0.0))
+
 
     def Select_Planes(self):
 
@@ -261,7 +268,6 @@ class StageManager():
         asyncio.ensure_future(self.ActiveView.showHideCosts())
 
 
-
     # Set Color
     # next_shape.GetDisplayColorAttr().Set(
     #     category_colors[int(cluster) % self.max_num_clusters])           
@@ -272,7 +278,7 @@ class StageManager():
         pass
 
 
-    async def sendNotify(self, message:str, status:nm.NotificationStatus):
+    def sendNotify(self, message:str, status:nm.NotificationStatus):
         
         # https://docs.omniverse.nvidia.com/py/kit/source/extensions/omni.kit.notification_manager/docs/index.html?highlight=omni%20kit%20notification_manager#
 
@@ -287,10 +293,6 @@ class StageManager():
             button_infos=[]
         )        
         
-        #Let the Ui breathe ;)
-        for x in range(5):
-            await omni.kit.app.get_app().next_update_async()    
-
 
 
     #log the vectors

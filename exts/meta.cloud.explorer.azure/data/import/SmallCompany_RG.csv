@@ -1,0 +1,33 @@
+NAME,SUBSCRIPTION,LOCATION
+Backups,Subscription 3,West US
+cloud-shell-storage-westus,Subscription 1,West US
+containers,Subscription 1,West US 2
+webapp,Subscription 1,West US 3
+webappProd,Subscription 2,West US 3
+Default-Storage-WestUS,Subscription 1,West US
+Default-Web-WestUS,Subscription 1,West US
+DefaultResourceGroup-EA,Subscription 2,East Asia
+DefaultResourceGroup-USW3,Subscription 2,West US 3
+DefaultResourceGroup-USW3,Subscription 1,West US 3
+DefaultResourceGroup-WUS,Subscription 1,West US
+DefaultResourceGroup-WUS2,Subscription 1,West US 2
+EndiVerse,Subscription 1,West US 3
+EndiVerse-DNS,Subscription 1,West US 3
+EscrowContract,Subscription 3,East US
+Marketplace-CE1904AED45643F883B4F8E709F1E647,Subscription 1,North Central US
+mrg-nmm-20220527104325,Subscription 3,West US
+website-test,Subscription 1,East US
+NetworkWatcherRG,Subscription 1,Japan East
+bot-demo,Subscription 2,West US 3
+bot-dev,Subscription 2,East US
+bot-resources,Subscription 2,West US 3
+botdemo,Subscription 1,West US 3
+NMMRGMAO,Subscription 3,West US
+PythonAzureExample-rg-dac,Subscription 1,Central US
+ResourceMoverRG-westus3-westus2-eus2,Subscription 1,East US 2
+usdsync,Subscription 3,West US
+clouddata,Subscription 1,West US
+computertest,Subscription 1,West US 3
+observation_deck,Subscription 4,West US
+mybusyday,Subscription 1,West US
+USDsync.com,Subscription 1,West US

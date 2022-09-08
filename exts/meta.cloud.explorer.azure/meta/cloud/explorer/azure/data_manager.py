@@ -2,7 +2,9 @@
 from typing import Dict
 from .Singleton import Singleton
 from .csv_data_manager import CSVDataManager
-from .azure_data_manager import AzureDataManager
+from .azure_data_manager_stub import AzureDataManager
+#Azure API disabled in this version, due to:
+
 from .data_store import DataStore
 from .prim_utils import cleanup_prim_path, draw_image
 from .azure_resource_map import shape_usda_name
@@ -14,7 +16,6 @@ from  .prim_utils import get_font_size_from_length
 import omni.kit.notification_manager as nm
 import omni
 import asyncio
-import asyncbg
 import logging
 import shutil
 import locale 
@@ -33,10 +34,13 @@ ASYNC_ENABLED = True
 CURRENT_PATH = Path(__file__).parent
 DATA_PATH = CURRENT_PATH.joinpath("temp")
 RES_PATH = CURRENT_PATH.parent.parent.parent.parent.joinpath("data\\resources")
+IMPORTS_PATH = CURRENT_PATH.parent.parent.parent.parent.joinpath("data\\import")
 
 @Singleton
 class DataManager:
     def __init__(self):
+
+        self._callbacks = []
 
         logging.getLogger("asyncio").setLevel(logging.WARNING)
 
@@ -47,48 +51,62 @@ class DataManager:
         self._dataStore.Load_Config_Data()
         self.refresh_data()
 
+    #shut it down...
+    def destroy(self):
+        carb.log_info("DataManager Destroyed.")
+        self._callbacks = []
+        self._offlineDataManager = None
+        self._onlineDataManager = None
+        self._dataStore = None
+
+    #add a callback for model changed
+    def add_model_changed_callback(self, func):
+        self._callbacks.append(func)
+
+    #Invoke the callbacks that want to know when the data changes
+    def _model_changed(self):
+        for c in self._callbacks:
+            c()
+
+    #Load data from file
     def load_csv_files(self):
         self._dataStore._groups.clear()
         self._dataStore._resources.clear()
-        self._dataStore._source_of_data = "OfflineData"
-        self._dataStore.Save_Config_Data()
-        self._offlineDataManager.loadFiles()
-        if ASYNC_ENABLED:
-            asyncio.ensure_future(self.process_data())
-        else:
-            self.process_data()
+        self._lcl_sizes = [] 
+        self._lcl_groups = [] 
+        self._lcl_resources = [] 
 
-    def load_from_api(self):
-        self._dataStore._groups.clear()
-        self._dataStore._resources.clear()
-        self._dataStore._source_of_data = "LiveAzureAPI"
+        self._dataStore._source_of_data = "OfflineData"
         self._dataStore.Save_Config_Data()
         
         #Load data from Cloud API
-        self._onlineDataManager.connect()
-        self._onlineDataManager.load_data()
+        self._offlineDataManager.loadFiles()
 
-        #Aggregate the info
-        asyncio.ensure_future(self.process_data())
-        
+        #Aggregate the info, wait for it
+        if len(self._dataStore._groups) >0:
+            asyncio.ensure_future(self.process_data())
 
-    def wipe_data(self):
+    #Load data from Azure API
+    def load_from_api(self):
         self._dataStore._groups.clear()
         self._dataStore._resources.clear()
-
-        self._dataStore._subscription_count = {}
-        self._dataStore._location_count = {}
-        self._dataStore._group_count = {}
-        self._dataStore._type_count = {}
-        self._dataStore._tag_count = {}
-
-        self._dataStore._subscription_cost = {}
-        self._dataStore._location_cost = {}
-        self._dataStore._group_cost = {}
-        self._dataStore._type_cost = {}
-        self._dataStore._tag_cost = {}
+        self._lcl_sizes = [] 
+        self._lcl_groups = [] 
+        self._lcl_resources = [] 
+        self._dataStore._source_of_data = "LiveAzureAPI"
+        self._dataStore.Save_Config_Data()
         
-        carb.log_info("Data Cleared.")
+        #Load the data and process it
+        if self._onlineDataManager.connect():
+            self._onlineDataManager.load_data()
+            #wait for data to finish loading
+
+        if len(self._dataStore._groups) >0:
+            asyncio.ensure_future(self.process_data())
+
+    def wipe_data(self):
+        self._dataStore.wipe_data()
+        self._model_changed()
 
     def refresh_data(self):
         if self._dataStore._source_of_data =="OfflineData":
@@ -97,6 +115,52 @@ class DataManager:
         elif self._dataStore._source_of_data == "LiveAzureAPI":
             self.load_from_api()
             carb.log_info("Live Data Refreshed.")
+        else:
+            carb.log_info("Load some data!")
+
+    #Load the "All resources (Shapes) set"
+    #This sample contains 1 resource per group
+    def load_sample_resources(self):
+
+        self._dataStore.wipe_data()
+        self._dataStore._source_of_data = "SampleFiles"
+        src_filel = IMPORTS_PATH.joinpath("TestShapes_RG.csv")
+        src_file2 = IMPORTS_PATH.joinpath("TestShapes_all.csv")
+
+        self.load_and_process_manual(src_filel, src_file2)
+
+
+    #Load the "Small Company sample"
+    def load_small_company(self):
+
+        self._dataStore.wipe_data()
+        self._dataStore._source_of_data = "SampleFiles"
+        src_filel = IMPORTS_PATH.joinpath("SmallCompany_RG.csv")
+        src_file2 = IMPORTS_PATH.joinpath("SmallCompany_all.csv")
+
+        self.load_and_process_manual(src_filel, src_file2)
+
+    #Load the "Large Company sample"
+    def load_large_company(self):
+
+        self._dataStore.wipe_data()
+        self._dataStore._source_of_data = "SampleFiles"
+        src_filel = IMPORTS_PATH.joinpath("LargeCompany_RG.csv")
+        src_file2 = IMPORTS_PATH.joinpath("LargeCompany_all.csv")
+
+        self.load_and_process_manual(src_filel, src_file2)
+
+
+    #load the files async
+    def load_and_process_manual(self, grpFile, rgFIle ):
+    
+        #load the files
+        self._offlineDataManager.loadFilesManual(grpFile, rgFIle)
+
+        #Aggregate the info
+        if len(self._dataStore._groups) >0:
+            asyncio.ensure_future(self.process_data())
+
 
     #Aggregate subscription, resources counts to DataManager Dictionaries
     async def process_data(self):  
@@ -105,18 +169,26 @@ class DataManager:
         #For every resrouce...
         for key in self._dataStore._resources:
             obj = self._dataStore._resources[key]
+            
+            #yield control
+            await asyncio.sleep(0)
 
             ### AGGREGATE COUNTS
-            await self.AggregateCountsAsync(obj)
+            self.AggregateCountsAsync(obj)
 
             ### AGGREGATE COSTS
-            await self.AggregateCostsAsync(obj)
+            self.AggregateCostsAsync(obj)
             
             ### MAP RESOURCES TO AGGREGATES
-            await self.MapResourcesToGroupsAsync(obj)
+            self.MapResourcesToGroupsAsync(obj)
 
         #Pre-create images for the groups
+        carb.log_info("Creating images..")        
         await self.CreateImagesForGroups()
+        carb.log_info("Creating images complete..")        
+
+        #let everyone know, stuff changed...
+        self._model_changed()
 
         #output aggregation results to console
         carb.log_info("Data processing complete..")
@@ -323,7 +395,7 @@ class DataManager:
         pass
 
     #Async context
-    async def AggregateCostsAsync(self, obj):
+    def AggregateCostsAsync(self, obj):
 
         ### AGGREGATE COSTS
         #Cost per Sub
@@ -354,17 +426,8 @@ class DataManager:
         else:
             self._dataStore._group_cost[grpKey] = float(self._dataStore._group_cost[grpKey]) + float(obj["lmcost"])
 
-        #your_dictionary = {'Australia':1780, 'England':6723, 'Tokyo': 1946}
-
-#        new_maximum_val = max([obj["subscription"]].values(), key=(lambda new_k: your_dictionary[new_k]))
-#        carb.log_info('Maximum Value: ',your_dictionary[new_maximum_val])
-#        new_minimum_val = min(your_dictionary.keys(), key=(lambda new_k: your_dictionary[new_k]))
-#        carb.log_info('Minimum Value: ',your_dictionary[new_minimum_val])
-
-
-
     #Async Context
-    async def AggregateCountsAsync(self, obj):
+    def AggregateCountsAsync(self, obj):
 
         ### AGGREGATE COUNTS
         #Count per Sub
@@ -395,45 +458,48 @@ class DataManager:
         else:
             self._dataStore._group_count[grpKey] = self._dataStore._group_count[grpKey] + 1
 
-
-      
     #Given a resource, Map it to all the groups it belongs to.
-    async def MapResourcesToGroupsAsync(self, obj):
+    def MapResourcesToGroupsAsync(self, obj):
         
         #Get the mapped shape and figure out the prim path for the map
         # Set a default
         shape_to_render = "omniverse://localhost/Resources/3dIcons/scene.usd"
+        #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION, LMCOST
 
         try:
             resName = obj["name"]
-            typeName = cleanup_prim_path(self,  obj["type"])
+            typeName = cleanup_prim_path(self,  obj["type"]) #needs to be clean, used to map to shapes
+            group = obj["group"]
+            location = obj["location"]
+            sub = obj["subscription"]
+            cost =obj["lmcost"]
             shape_to_render = shape_usda_name[typeName]   
         except:
-            carb.log_info("No matching prim found - " + typeName)                                  
+            carb.log_info("Error getting priom values - " + resName)
 
         # SUBSCRIPTION MAP
-        await self.map_objects(resName, typeName, "/Subs" ,shape_to_render, self._dataStore._map_subscription, obj, "subscription")
+        self.map_objects(resName, typeName, group, location, sub, cost, "/Subs" ,shape_to_render, self._dataStore._map_subscription, obj, "subscription")
 
         # GROUP MAP
-        await self.map_objects(resName, typeName, "/RGrps", shape_to_render, self._dataStore._map_group, obj, "group")
+        self.map_objects(resName, typeName, group, location, sub, cost, "/RGrps", shape_to_render, self._dataStore._map_group, obj, "group")
 
         # TYPE MAP
-        await self.map_objects(resName, typeName, "/Types", shape_to_render, self._dataStore._map_type, obj, "type")
+        self.map_objects(resName, typeName, group, location, sub, cost, "/Types", shape_to_render, self._dataStore._map_type, obj, "type")
 
         # LOCATION MAP
-        await self.map_objects(resName, typeName, "/Locs", shape_to_render, self._dataStore._map_location, obj, "location")
+        self.map_objects(resName, typeName, group, location, sub, cost, "/Locs", shape_to_render, self._dataStore._map_location, obj, "location")
 
         #TODO TAGMAP
         #self.map_objects(typeName, "/Tag", shape_to_render, self._dataStore._tag_map, obj, "tag")
 
 
     #Maps objects to create to each aggregate
-    async def map_objects(self, resName, typeName, root, shape, map, obj, field:str):
+    def map_objects(self, resName, typeName,grp, loc, sub, cost, root, shape, map, obj, field:str):
         
         cleaned_group_name = cleanup_prim_path(self, Name=obj[field])
         carb.log_info(cleaned_group_name)
         
-        map_obj = {"name": resName, "type":typeName, "shape":shape}
+        map_obj = {"name": resName, "type":typeName, "shape":shape, "location":loc, "subscription":sub, "group":grp, "cost":cost }
 
         if cleaned_group_name not in map.keys():
             #new map!
