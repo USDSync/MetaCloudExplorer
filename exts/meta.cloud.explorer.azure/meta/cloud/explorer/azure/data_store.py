@@ -258,7 +258,6 @@ class DataStore():
         # self._map_tag = pickle.load(open('map_tag', 'r'))
 
 #-- SINGLETON SUPPORT
-#-- SINGLETON SUPPORT
 
     def instance(self):
         """
