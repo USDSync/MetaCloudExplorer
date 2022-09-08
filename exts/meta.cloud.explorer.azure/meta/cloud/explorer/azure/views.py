@@ -527,22 +527,22 @@ class MainView(ui.Window):
 
         with ui.CollapsableFrame("About", name="group", collapsed=True, style={"color": cl("#2069e0"), "font_size":20}): 
             with ui.VStack(height=0, spacing=SPACING, style={"color": 0xFFFFFFFF, "font_size":16}):
+                # with ui.HStack():
+                #     with ui.VStack():        
+                #         with ui.HStack():
+                #             ui.Label("Meta Cloud Explorer (MCE)", clicked_fn=lambda: self.on_docs(), height=15)
+                #             ui.Label("v1.0.0", clicked_fn=lambda: self.on_docs(), height=15)
+                # with ui.HStack():
+                #     with ui.VStack():        
+                #         with ui.HStack():
+                #             ui.Label("The true power of the Metaverse is to gain new insights to existing problems by experiencing things in a different way, a simple change in perspective!",
+                #                 style={"color":0xFF000000},
+                #                 elided_text=True,
+                #             )                            
                 with ui.HStack():
                     with ui.VStack():        
                         with ui.HStack():
-                            ui.Label("Meta Cloud Explorer (MCE)", clicked_fn=lambda: self.on_docs(), height=15)
-                            ui.Label("v1.0.0", clicked_fn=lambda: self.on_docs(), height=15)
-                with ui.HStack():
-                    with ui.VStack():        
-                        with ui.HStack():
-                            ui.Label("The true power of the Metaverse is to gain new insights to existing problems by experiencing things in a different way, a simple change in perspective!",
-                                style={"color":0xFF000000},
-                                elided_text=True,
-                            )                            
-                with ui.HStack():
-                    with ui.VStack():        
-                        with ui.HStack():
-                            ui.Line(style={"color": cl("#bebebe")}, height=20)                    
+                            #ui.Line(style={"color": cl("#bebebe")}, height=20)                    
                             ui.Button("Docs", clicked_fn=lambda: self.on_docs(), height=15)
                             ui.Button("Code", clicked_fn=lambda: self.on_code(), height=15)
                             ui.Button("Help", clicked_fn=lambda: self.on_help(), height=15)           
