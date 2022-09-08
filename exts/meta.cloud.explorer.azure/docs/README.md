@@ -18,7 +18,7 @@ This version requires the Omni.Viewport.Utility extension be installed.
 This version works fine with sample data and offline data files.
 This version enables resource Object / Info widgets!
 This version will become the main branch once 2021.1.3+ supports the azure-identity library.
-*Compatible with Omniverse code 2022.1.2, 2022.1.2
+*Compatible with Omniverse code 2022.1.2, 2022.1.3+
 
 **This version was created to enable Object / Info widgets, but using 2022.1.2 and 2022.1.3 causes azure-identity to fail due to:
 
