@@ -18,9 +18,9 @@ This extension generates digital models of your Cloud Infrastructure that can be
 ![Meta Cloud Explorer](https://github.com/USDSync/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/westus.png)
 **Optional costs data integrated to groups**
 ![Meta Cloud Explorer](https://github.com/USDSync/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/costs.png)
-
+**Click any shape for more inforamtion**
+![Meta Cloud Explorer](https://github.com/USDSync/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/CostDetails.png)
 **Can support multiple clouds!**
-
 ![Meta Cloud Explorer](https://github.com/USDSync/MetaCloudExplorer/blob/main/exts/meta.cloud.explorer.azure/data/resources/aws-azure-gcp.png)
 
 **Only works with Microsoft Azure Cloud currently*
