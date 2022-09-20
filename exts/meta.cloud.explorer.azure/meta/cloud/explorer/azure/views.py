@@ -206,8 +206,12 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[2].set_value(1)
     
     def show_info_objects(self):
-
         self.model.populate()
+
+
+    def select_planes(self):
+        self._stageManager.Select_Planes()
+
 
     #Load a fresh stage
     def load_stage(self, viewType: str):

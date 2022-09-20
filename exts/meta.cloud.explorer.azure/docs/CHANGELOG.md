@@ -1,5 +1,10 @@
 # CHANGELOG
 
+
+## [2022.1.3.262] - 2022-09-19 (262)
+### Added
+- fixed Select all Groups button
+
 ## [2022.1.3-pre] - 2022-09-08
 ### Added
 - updated readme, some issues with release tag pulling main instead.
