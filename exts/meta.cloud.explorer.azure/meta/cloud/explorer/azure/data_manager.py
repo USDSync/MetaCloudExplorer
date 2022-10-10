@@ -2,7 +2,9 @@
 from typing import Dict
 from .Singleton import Singleton
 from .csv_data_manager import CSVDataManager
-from .azure_data_manager import AzureDataManager
+from .azure_data_manager_stub import AzureDataManager
+#Azure API disabled in this version, due to:
+
 from .data_store import DataStore
 from .prim_utils import cleanup_prim_path, draw_image
 from .azure_resource_map import shape_usda_name
@@ -55,7 +57,7 @@ class DataManager:
         self._callbacks = []
         self._offlineDataManager = None
         self._onlineDataManager = None
-        self._dataStore = None
+        self._dataStore = None #this seems to cause problems
 
     #add a callback for model changed
     def add_model_changed_callback(self, func):
@@ -107,37 +109,51 @@ class DataManager:
         self._model_changed()
 
     def refresh_data(self):
-        if self._dataStore._source_of_data =="OfflineData":
-            self.load_csv_files()
-            carb.log_info("CSV Data Refreshed.")
-        elif self._dataStore._source_of_data == "LiveAzureAPI":
-            self.load_from_api()
-            carb.log_info("Live Data Refreshed.")
-
-    #Load a sample company data
-    def load_sample():
-        pass
+        if self._dataStore:
+            if self._dataStore._source_of_data =="OfflineData":
+                self.load_csv_files()
+                carb.log_info("CSV Data Refreshed.")
+            elif self._dataStore._source_of_data == "LiveAzureAPI":
+                self.load_from_api()
+                carb.log_info("Live Data Refreshed.")
+            else:
+                carb.log_info("Load some data!")
 
     #Load the "All resources (Shapes) set"
     #This sample contains 1 resource per group
     def load_sample_resources(self):
 
-        self._dataStore.wipe_data()
-        src_filel = IMPORTS_PATH.joinpath("TestShapes_RG.csv")
-        src_file2 = IMPORTS_PATH.joinpath("TestShapes_all.csv")
+        if self._dataStore:
+            self._dataStore.wipe_data()
+            self._dataStore._source_of_data = "SampleFiles"
+            src_filel = IMPORTS_PATH.joinpath("TestShapes_RG.csv")
+            src_file2 = IMPORTS_PATH.joinpath("TestShapes_all.csv")
 
-        self.load_and_process_manual(src_filel, src_file2)
+            self.load_and_process_manual(src_filel, src_file2)
 
 
-    #Load the "All resources (Shapes) set"
-    #This sample contains 1 resource per group
-    def load_sample_company(self):
+    #Load the "Small Company sample"
+    def load_small_company(self):
 
-        self._dataStore.wipe_data()
-        src_filel = IMPORTS_PATH.joinpath("SmallCompany_RG.csv")
-        src_file2 = IMPORTS_PATH.joinpath("SmallCompany_all.csv")
+        if self._dataStore:
+            self._dataStore.wipe_data()
+            self._dataStore._source_of_data = "SampleFiles"
+            src_filel = IMPORTS_PATH.joinpath("SmallCompany_RG.csv")
+            src_file2 = IMPORTS_PATH.joinpath("SmallCompany_all.csv")
 
-        self.load_and_process_manual(src_filel, src_file2)
+            self.load_and_process_manual(src_filel, src_file2)
+
+    #Load the "Large Company sample"
+    def load_large_company(self):
+
+        if self._dataStore:
+            self._dataStore.wipe_data()
+            self._dataStore._source_of_data = "SampleFiles"
+            src_filel = IMPORTS_PATH.joinpath("LargeCompany_RG.csv")
+            src_file2 = IMPORTS_PATH.joinpath("LargeCompany_all.csv")
+
+            self.load_and_process_manual(src_filel, src_file2)
+
 
     #load the files async
     def load_and_process_manual(self, grpFile, rgFIle ):
@@ -162,13 +178,13 @@ class DataManager:
             await asyncio.sleep(0)
 
             ### AGGREGATE COUNTS
-            await self.AggregateCountsAsync(obj)
+            self.AggregateCountsAsync(obj)
 
             ### AGGREGATE COSTS
-            await self.AggregateCostsAsync(obj)
+            self.AggregateCostsAsync(obj)
             
             ### MAP RESOURCES TO AGGREGATES
-            await self.MapResourcesToGroupsAsync(obj)
+            self.MapResourcesToGroupsAsync(obj)
 
         #Pre-create images for the groups
         carb.log_info("Creating images..")        
@@ -383,7 +399,7 @@ class DataManager:
         pass
 
     #Async context
-    async def AggregateCostsAsync(self, obj):
+    def AggregateCostsAsync(self, obj):
 
         ### AGGREGATE COSTS
         #Cost per Sub
@@ -415,7 +431,7 @@ class DataManager:
             self._dataStore._group_cost[grpKey] = float(self._dataStore._group_cost[grpKey]) + float(obj["lmcost"])
 
     #Async Context
-    async def AggregateCountsAsync(self, obj):
+    def AggregateCountsAsync(self, obj):
 
         ### AGGREGATE COUNTS
         #Count per Sub
@@ -447,42 +463,47 @@ class DataManager:
             self._dataStore._group_count[grpKey] = self._dataStore._group_count[grpKey] + 1
 
     #Given a resource, Map it to all the groups it belongs to.
-    async def MapResourcesToGroupsAsync(self, obj):
+    def MapResourcesToGroupsAsync(self, obj):
         
         #Get the mapped shape and figure out the prim path for the map
         # Set a default
         shape_to_render = "omniverse://localhost/Resources/3dIcons/scene.usd"
+        #NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION, LMCOST
 
         try:
             resName = obj["name"]
-            typeName = cleanup_prim_path(self,  obj["type"])
+            typeName = cleanup_prim_path(self,  obj["type"]) #needs to be clean, used to map to shapes
+            group = obj["group"]
+            location = obj["location"]
+            sub = obj["subscription"]
+            cost =obj["lmcost"]
             shape_to_render = shape_usda_name[typeName]   
         except:
-            carb.log_info("No matching prim found - " + typeName)                                  
+            carb.log_info("Error getting priom values - " + resName)
 
         # SUBSCRIPTION MAP
-        await self.map_objects(resName, typeName, "/Subs" ,shape_to_render, self._dataStore._map_subscription, obj, "subscription")
+        self.map_objects(resName, typeName, group, location, sub, cost, "/Subs" ,shape_to_render, self._dataStore._map_subscription, obj, "subscription")
 
         # GROUP MAP
-        await self.map_objects(resName, typeName, "/RGrps", shape_to_render, self._dataStore._map_group, obj, "group")
+        self.map_objects(resName, typeName, group, location, sub, cost, "/RGrps", shape_to_render, self._dataStore._map_group, obj, "group")
 
         # TYPE MAP
-        await self.map_objects(resName, typeName, "/Types", shape_to_render, self._dataStore._map_type, obj, "type")
+        self.map_objects(resName, typeName, group, location, sub, cost, "/Types", shape_to_render, self._dataStore._map_type, obj, "type")
 
         # LOCATION MAP
-        await self.map_objects(resName, typeName, "/Locs", shape_to_render, self._dataStore._map_location, obj, "location")
+        self.map_objects(resName, typeName, group, location, sub, cost, "/Locs", shape_to_render, self._dataStore._map_location, obj, "location")
 
         #TODO TAGMAP
         #self.map_objects(typeName, "/Tag", shape_to_render, self._dataStore._tag_map, obj, "tag")
 
 
     #Maps objects to create to each aggregate
-    async def map_objects(self, resName, typeName, root, shape, map, obj, field:str):
+    def map_objects(self, resName, typeName,grp, loc, sub, cost, root, shape, map, obj, field:str):
         
         cleaned_group_name = cleanup_prim_path(self, Name=obj[field])
         carb.log_info(cleaned_group_name)
         
-        map_obj = {"name": resName, "type":typeName, "shape":shape}
+        map_obj = {"name": resName, "type":typeName, "shape":shape, "location":loc, "subscription":sub, "group":grp, "cost":cost }
 
         if cleaned_group_name not in map.keys():
             #new map!

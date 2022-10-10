@@ -250,6 +250,10 @@ class GroupBase(ABC):
             resName = res["name"]
             resShape = res["shape"]
             resType = res["type"]
+            resGrp = res["group"]
+            resLoc = res["location"]
+            resSub = res["subscription"]
+            cost = res["cost"]
             prim_vector = transforms[i]
             
             carb.log_info("Creating prim path:" + str(group_prim_path) + " " + str(resName))
@@ -261,12 +265,20 @@ class GroupBase(ABC):
             await create_and_place_prim(self,
                 prim_type= resType,
                 prim_name=resName,
-                grp_name=group_name,
+                grp_name=resGrp,          
+                sub_name=resSub,
+                loc_name=resLoc,
+                cost=cost,
                 new_prim_path=str(new_prim_path),
                 shapeToRender=resShape,
                 scale=(self._scale*self.base_prim_size),
                 position=prim_vector
             )                    
+
+            omni.kit.commands.execute('ChangeMetadata',
+                object_paths=[str(new_prim_path)],
+                key='kind',
+                value='component')
 
             i=i+1 #increment resource id
 

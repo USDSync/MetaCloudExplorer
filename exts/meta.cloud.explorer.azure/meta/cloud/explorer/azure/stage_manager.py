@@ -232,8 +232,9 @@ class StageManager():
         stage = omni.usd.get_context().get_stage()
 
         try:
-            omni.kit.commands.execute('DeletePrimsCommand',
-                paths=['/Environment/sky'])
+            if stage.GetPrimAtPath('/Environment/sky'):
+                omni.kit.commands.execute('DeletePrimsCommand',
+                    paths=['/Environment/sky'])
         except:
             pass #ignore this
 

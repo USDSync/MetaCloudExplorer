@@ -47,27 +47,63 @@ DATA_PATH = CURRENT_PATH.parent.parent.parent.parent.joinpath("data\\resources")
 
 class MainView(ui.Window):
     """The class that represents the window"""
-    def __init__(self, title: str, menu_path):
-        self.__label_width = LABEL_WIDTH
+    def __init__(self, title: str = None, menu_path:str = "", delegate=None, **kwargs):
+        super().__init__(title, width=640, height=480, **kwargs)
 
-        super().__init__(title, width=640, height=480)
+        self.__label_width = LABEL_WIDTH
+        self._viewport_scene = None
+        self.objModel = kwargs["objectModel"]
+        self.widModel = kwargs["widgetModel"]
+
+        self._menu_path = menu_path
 
         #Helper Class instances
         self._stageManager = StageManager()
         self._dataManager = DataManager.instance()
         self._dataStore = DataStore.instance()
-
-        self._menu_path = menu_path
+        
+        #Get notified when visibility changes
         self.set_visibility_changed_fn(self._on_visibility_changed)
-        self._build_fn()
 
+        #Get notifed when the datamodel changes
         self._dataManager.add_model_changed_callback(self.model_changed)
-                
+               
         # Apply the style to all the widgets of this window
         self.frame.style = meta_window_style
        
         # Set the function that is called to build widgets when the window is visible
         self.frame.set_build_fn(self._build_fn)
+
+
+    def __del__(self):
+        self.destroy()
+
+    def destroy(self):
+
+        super().destroy()
+
+        if self._dataManager:
+             self._dataManager.destroy()
+        
+        if self._dataStore:
+            self._dataStore = None
+
+        if self._stageManager:
+            self._stageManager = None
+            
+        self.objModel= None
+        self.widModel= None
+        
+        if self._viewport_scene:
+            # Empty the SceneView of any elements it may have
+            self._viewport_scene = None
+            # Be a good citizen, and un-register the SceneView from Viewport updates
+            if self._viewport_window:
+                self._viewport_window.viewport_api.remove_scene_view(self._scene_view)
+        # Remove our references to these objects
+        self._viewport_window = None
+        self._scene_view = None
+        self._menu_path = None
 
     def on_shutdown(self):
         self._win = None
@@ -78,7 +114,6 @@ class MainView(ui.Window):
 
     def hide(self):
         self.visible = False
-
     
     def _on_visibility_changed(self, visible):
         omni.kit.ui.get_editor_menu().set_value(self._menu_path, visible)
@@ -99,13 +134,13 @@ class MainView(ui.Window):
     #___________________________________________________________________________________________________
 
     def on_docs(self):
-        webbrowser.open_new("https://github.com/CloudArchitectLive/MetaCloudExplorer/wiki/Meta-Cloud-Explorer-(Azure)")
+        webbrowser.open_new("https://github.com/USDSync/MetaCloudExplorer/wiki")
 
     def on_code(self):
         webbrowser.open_new("http://metacloudexplorer.com")
 
     def on_help(self):
-        webbrowser.open_new("https://github.com/CloudArchitectLive/MetaCloudExplorer/issues")
+        webbrowser.open_new("https://github.com/USDSync/MetaCloudExplorer/issues")
 
     #Callback invoked when data model changes
     def model_changed(self):
@@ -115,7 +150,7 @@ class MainView(ui.Window):
         if (hasattr(self, "_resLbl")):
             self._resLbl.text = "RESOURCES: " + str(len(self._dataStore._resources))
 
-
+    #Set defaults from quickstarts
     def set_defaults(self, defType:str):
         if defType == "tower":
             self.sendNotify("MCE: Tower defaults set... Select a VIEW", nm.NotificationStatus.INFO)
@@ -134,8 +169,8 @@ class MainView(ui.Window):
             self.sendNotify("MCE: Symmetric defaults set... Select a VIEW", nm.NotificationStatus.INFO)
             self._dataStore._symmetric_planes_model.set_value(True)
             self._dataStore._packing_algo_model.set_value(False)
-            self._dataStore._options_count_models[0].set_value(4)
-            self._dataStore._options_count_models[1].set_value(4)
+            self._dataStore._options_count_models[0].set_value(10)
+            self._dataStore._options_count_models[1].set_value(10)
             self._dataStore._options_count_models[2].set_value(40)
             self._dataStore._options_dist_models[0].set_value(500.0)
             self._dataStore._options_dist_models[1].set_value(500.0)
@@ -169,9 +204,14 @@ class MainView(ui.Window):
             self._dataStore._options_random_models[0].set_value(1)
             self._dataStore._options_random_models[1].set_value(1)
             self._dataStore._options_random_models[2].set_value(1)
+    
+    def show_info_objects(self):
+        self.model.populate()
+
 
     def select_planes(self):
         self._stageManager.Select_Planes()
+
 
     #Load a fresh stage
     def load_stage(self, viewType: str):
@@ -236,7 +276,9 @@ class MainView(ui.Window):
             if (ground_prim.IsValid()):
                 stage.RemovePrim('/Tag')
 
-            omni.kit.commands.execute('DeletePrimsCommand',paths=['/Environment/sky'])
+            if stage.GetPrimAtPath('/Environment/sky'):
+                omni.kit.commands.execute('DeletePrimsCommand',paths=['/Environment/sky'])
+                
         except:
             pass #ignore failure
 
@@ -254,6 +296,7 @@ class MainView(ui.Window):
                 self._build_connection()
                 self._build_import()
                 self._build_help()
+                #self.buildSliderTest()
 
     # slider = ui.FloatSlider(min=1.0, max=150.0)
     # slider.model.as_float = 10.0
@@ -273,12 +316,13 @@ class MainView(ui.Window):
                 with ui.VStack():
                     with ui.HStack():
                         with ui.VStack():
-                            ui.Label("Meta Cloud Explorer", style={"color": cl("#A4B7FD"), "font_size":36 }, alignment=ui.Alignment.LEFT, height=0)
-                            ui.Label("Cloud Infrastructure Scene Authoring Extension", style={"color": cl("#878683"), "font_size":18}, alignment=ui.Alignment.LEFT, height=0)                              
+                            ui.Label("Meta Cloud Explorer", style={"color": cl("#A4B7FD"), "font_size":20}, alignment=ui.Alignment.LEFT, height=0)
+                            ui.Label("Cloud Infrastructure Scene Authoring Extension", style={"color": cl("#878683"), "font_size":16}, alignment=ui.Alignment.LEFT, height=0)                              
                         with ui.VStack():
                             ui.Spacer(height=15)                                    
                             self._grpLbl = ui.Label("GROUPS: " + str(len(self._dataStore._groups)),style={"color": cl("#2069e0"), "font_size":18 }, alignment=ui.Alignment.RIGHT, height=0)
                             self._resLbl = ui.Label("RESOURCES: " + str(len(self._dataStore._resources)), style={"color": cl("#2069e0"), "font_size":18}, alignment=ui.Alignment.RIGHT, height=0)
+            ui.Line(style={"color": cl("#66b3ff")}, height=20)    
 
         with ui.VStack(height=0, spacing=SPACING):
             #ui.Spacer(height=80)
@@ -297,6 +341,7 @@ class MainView(ui.Window):
             with ui.HStack():
                 ui.Button("Clear Stage", clicked_fn=lambda: asyncio.ensure_future(self.clear_stage()), name="clr", height=35)
                 ui.Button("Show/Hide Costs", clicked_fn=lambda: self.showHideCosts(),name="subs", height=35)
+                #ui.Button("Show Object Info", clicked_fn=lambda: self.show_info_objects(),name="clr", height=35)
                 ui.Button("Select All Groups", clicked_fn=lambda: self.select_planes(),name="clr", height=35)
             
             # with ui.HStack():
@@ -325,9 +370,10 @@ class MainView(ui.Window):
                     ui.Button("Load", width=40, clicked_fn=lambda: self._dataManager.select_file("res"))
                 with ui.HStack():
                     ui.Button("Clear imported Data", clicked_fn=lambda: self._dataManager.wipe_data())            
-                    ui.Button("Import Data Files", clicked_fn=lambda: self._dataManager.load_csv_files())            
+                    ui.Button("Import Selected Files", clicked_fn=lambda: self._dataManager.load_csv_files())            
                 with ui.HStack():
-                    ui.Button("Load Sample Company", clicked_fn=lambda: self._dataManager.load_sample_company())            
+                    ui.Button("Load Small Company", clicked_fn=lambda: self._dataManager.load_small_company())            
+                    ui.Button("Load Large Company", clicked_fn=lambda: self._dataManager.load_large_company())            
                     ui.Button("Load Shapes Library", clicked_fn=lambda: self._dataManager.load_sample_resources())                                
 
     def _build_connection(self):
@@ -407,16 +453,16 @@ class MainView(ui.Window):
                 with ui.HStack(style={}):
                     with ui.VStack():
                         ui.Label("TOWER", name="attribute_name", width=self.label_width)
-                        SimpleImageButton(image="omniverse://localhost/MCE/images/tower.png", size=150, name="twr_btn", clicked_fn=lambda: _on_clicked(self, source="tower"))
+                        SimpleImageButton(image="omniverse://localhost/MCE/images/tower.png", size=125, name="twr_btn", clicked_fn=lambda: _on_clicked(self, source="tower"))
                     with ui.VStack():
                         ui.Label("ISLANDS", name="attribute_name", width=self.label_width)
-                        SimpleImageButton(image="omniverse://localhost/MCE/images/islands.png", size=150, name="isl_btn", clicked_fn=lambda: _on_clicked(self, source="islands"))
+                        SimpleImageButton(image="omniverse://localhost/MCE/images/islands.png", size=125, name="isl_btn", clicked_fn=lambda: _on_clicked(self, source="islands"))
                     with ui.VStack():
                         ui.Label("SYMMETRIC", name="attribute_name", width=self.label_width)
-                        SimpleImageButton(image="omniverse://localhost/MCE/images/Symmetric.png", size=150, name="sym_btn", clicked_fn=lambda: _on_clicked(self, source="symmetric"))
+                        SimpleImageButton(image="omniverse://localhost/MCE/images/Symmetric.png", size=125, name="sym_btn", clicked_fn=lambda: _on_clicked(self, source="symmetric"))
                     with ui.VStack():
                         ui.Label("BIN PACKER", name="attribute_name", width=self.label_width)
-                        SimpleImageButton(image="omniverse://localhost/MCE/images/packer.png", size=150, name="row_btn",clicked_fn=lambda: _on_clicked(self, source="packer"))
+                        SimpleImageButton(image="omniverse://localhost/MCE/images/packer.png", size=125, name="row_btn",clicked_fn=lambda: _on_clicked(self, source="packer"))
 
     def _build_image_options(self):
         with ui.CollapsableFrame("Group Images", name="group", collapsed=True):        
@@ -438,7 +484,7 @@ class MainView(ui.Window):
                     ui.Button("Load", width=40, clicked_fn=lambda: self._dataManager.select_file("bgm"))
                     
                 with ui.HStack():
-                    ui.Label("BgHighCost", name="attribute_name", width=self.label_width)
+                    ui.Label("Bg High Cost", name="attribute_name", width=self.label_width)
                     self._bgh_data_import_field = ui.StringField(height=15)
                     self._bgh_data_import_field.enabled = True
                     self._bgh_data_import_field.model.set_value(str(self._dataStore._bgh_file_path))
@@ -451,6 +497,8 @@ class MainView(ui.Window):
             self._dataStore._use_packing_algo = model.as_bool
         def _on_value_changed_sg(model):
             self._dataStore._use_symmetric_planes = model.as_bool
+        def _on_value_changed_wd(model):
+            self._dataStore._show_info_widgets = model.as_bool
 
         with ui.CollapsableFrame("Scene Composition Options", name="group", collapsed=True, style={"color": cl("#2069e0"), "font_size":20}): 
             with ui.VStack(height=0, spacing=SPACING, style={"color": 0xFFFFFFFF, "font_size":16}):
@@ -467,7 +515,11 @@ class MainView(ui.Window):
                     ui.Label("Use Bin Packing?", name="attribute_name", width=self.label_width)
                     cb2 = ui.CheckBox(self._dataStore._packing_algo_model)                    
                     cb2.model.add_value_changed_fn(lambda model: _on_value_changed_bp(model))
-
+                with ui.HStack():
+                    ui.Label("Show Info UI on select?", name="attribute_name", width=self.label_width)
+                    cb3 = ui.CheckBox(self._dataStore._show_info_widgets_model)                    
+                    cb3.model.add_value_changed_fn(lambda model: _on_value_changed_wd(model))
+                
                 self._build_image_options()
 
                 self._build_axis(0, "Groups on X Axis")
@@ -476,13 +528,28 @@ class MainView(ui.Window):
 
 
     def _build_help(self):
-        ui.Line(style={"color": cl("#bebebe")}, height=20)
 
-        with ui.VStack():
-            with ui.HStack():
-                ui.Button("Docs", clicked_fn=lambda: self.on_docs(), height=15)
-                ui.Button("Code", clicked_fn=lambda: self.on_code(), height=15)
-                ui.Button("Help", clicked_fn=lambda: self.on_help(), height=15)           
+        with ui.CollapsableFrame("About", name="group", collapsed=True, style={"color": cl("#2069e0"), "font_size":20}): 
+            with ui.VStack(height=0, spacing=SPACING, style={"color": 0xFFFFFFFF, "font_size":16}):
+                # with ui.HStack():
+                #     with ui.VStack():        
+                #         with ui.HStack():
+                #             ui.Label("Meta Cloud Explorer (MCE)", clicked_fn=lambda: self.on_docs(), height=15)
+                #             ui.Label("v1.0.0", clicked_fn=lambda: self.on_docs(), height=15)
+                # with ui.HStack():
+                #     with ui.VStack():        
+                #         with ui.HStack():
+                #             ui.Label("The true power of the Metaverse is to gain new insights to existing problems by experiencing things in a different way, a simple change in perspective!",
+                #                 style={"color":0xFF000000},
+                #                 elided_text=True,
+                #             )                            
+                with ui.HStack():
+                    with ui.VStack():        
+                        with ui.HStack():
+                            #ui.Line(style={"color": cl("#bebebe")}, height=20)                    
+                            ui.Button("Docs", clicked_fn=lambda: self.on_docs(), height=15)
+                            ui.Button("Code", clicked_fn=lambda: self.on_code(), height=15)
+                            ui.Button("Help", clicked_fn=lambda: self.on_help(), height=15)           
                     
 
     def __build_value_changed_widget(self):
@@ -543,3 +610,41 @@ class MainView(ui.Window):
     
     def clicked_ok(self):
         pass
+
+
+    def buildSliderTest(self):
+
+        style = {
+            "Button": {"stack_direction": ui.Direction.TOP_TO_BOTTOM},
+            "Button.Image": {
+                "color": 0xFFFFCC99,
+                "image_url": "resources/icons/Learn_128.png",
+                "alignment": ui.Alignment.CENTER,
+            },
+            "Button.Label": {"alignment": ui.Alignment.CENTER},
+        }
+
+        def layout(model, button, padding, style=style):
+            padding = "padding" if padding else "margin"
+            style["Button"][padding] = model.get_value_as_float()
+            button.set_style(style)
+
+        def spacing(model, button):
+            button.spacing = model.get_value_as_float()       
+       
+        button = ui.Button("Label", style=style, width=64, height=64)
+
+        with ui.HStack(width=ui.Percent(50)):
+            ui.Label("padding", name="text")
+            model = ui.FloatSlider(min=0, max=500).model
+            model.add_value_changed_fn(lambda m, b=button: layout(m, b, 1))
+
+        with ui.HStack(width=ui.Percent(50)):
+            ui.Label("margin", name="text")
+            model = ui.FloatSlider(min=0, max=500).model
+            model.add_value_changed_fn(lambda m, b=button: layout(m, b, 0))
+
+        with ui.HStack(width=ui.Percent(50)):
+            ui.Label("Button.spacing", name="text")
+            model = ui.FloatSlider(min=0, max=50).model
+            model.add_value_changed_fn(lambda m, b=button: spacing(m, b))
