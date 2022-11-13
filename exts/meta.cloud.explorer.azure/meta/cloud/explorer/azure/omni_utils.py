@@ -17,7 +17,6 @@ from pxr import Sdf, Gf, Usd, UsdGeom
 from .prim_utils import create_plane
 from omni.physxcommands import AddGroundPlaneCommand, SetRigidBodyCommand, SetStaticColliderCommand
 
-
 def get_selection() -> List[str]:
     """Get the list of currently selected prims"""
     return omni.usd.get_context().get_selection().get_selected_prim_paths()
