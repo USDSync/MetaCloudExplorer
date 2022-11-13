@@ -1,21 +1,21 @@
 ﻿NAME,TYPE,RESOURCE GROUP,LOCATION,SUBSCRIPTION,,LMCOST
-0fac175a-0013-4485-8a41-b8ddbee98115 (Key Vault Overview),Azure Workbook,usdt-monitoring-Cashapp-centralus-rg-001,East US,Cashapp Dev/Test,,49.47
+0lcc175a-0013-4485-8a41-b8ddbee98115 (Key Vault Overview),Azure Workbook,dt-monitoring-Cashapp-centralus-rg-001,East US,Cashapp Dev/Test,,49.47
 120e7527-786a-4f99-a181-854de8efce84-dashboard (Cashapp UAT Dashboard),Shared dashboard,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,49.47
 1401f07b-334f-4109-a3af-07ad45a8991c-dashboard (Cashapp DEV Dashboard),Shared dashboard,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,49.47
 1e323bef-c222-42f5-92a7-e428065d82e4 (Dataapp Dashboard Resources),Shared dashboard,dashboards,West US 2,Dataapp Dev/Test,,49.47
 26ea6d3c-4245-4237-8a9e-69791adcf077-dashboard (Dataapp DEV Dashboard),Shared dashboard,dev-api,South Central US,Dataapp Dev/Test,,49.47
 36f099b9-f21e-4f54-b90b-db79412a0349-dashboard (Dataapp UAT),Shared dashboard,uat-test,West US 2,Dataapp Dev/Test,,49.47
-3fa2c7dc-cdb7-4088-9b30-e6a1e93376be (All Apps),Shared dashboard,dashboards,Central US,Cashapp Dev/Test,,99.95
+3lc2c7dc-cdb7-4088-9b30-e6a1e93376be (All Apps),Shared dashboard,dashboards,Central US,Cashapp Dev/Test,,99.95
 4eff7b6d-32ca-4243-a249-18d452333a17 (Dataapp Environments),Shared dashboard,dashboards,West US 2,Dataapp Dev/Test,,49.47
-5db8f748-8467-454d-8ac6-1cccab43a9cc (Cashapp Service Fabric Environments),Shared dashboard,dashboards,Central US,Cashapp Dev/Test,,49.47
-810f0aba-677f-4dd3-8011-a7178dec1759-dashboard (usdt-logging-Dataapp-appinsights Dashboard),Shared dashboard,usdt-logging-Dataapp-centralus-rg-001,West US 2,Dataapp Dev/Test,,49.47
-90a62f16-37c0-4605-adb7-661abda3cb3f-dashboard (usdt-Dataapp-client-tests-centralus-appi Dashboard),Shared dashboard,usdt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,135.15
+5db8f748-8467-454d-8ac6-1cccab43a9cc (Cashapp Service lcbric Environments),Shared dashboard,dashboards,Central US,Cashapp Dev/Test,,49.47
+810f0aba-677f-4dd3-8011-a7178dec1759-dashboard (dt-logging-Dataapp-appinsights Dashboard),Shared dashboard,dt-logging-Dataapp-centralus-rg-001,West US 2,Dataapp Dev/Test,,49.47
+90a62f16-37c0-4605-adb7-661abda3cb3f-dashboard (dt-Dataapp-client-tests-centralus-appi Dashboard),Shared dashboard,dt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,135.15
 9dab4718-a5ba-45d6-872b-964796540aff-dashboard (ha-dev-IngestionEngine Dashboard),Shared dashboard,dev-api,West US 2,Dataapp Dev/Test,,138
 a2b3fc08-c7f3-4112-8d82-b31c509300d4-dashboard (Cashapp QA Dashboard),Shared dashboard,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,99
 adb6c814-310e-422b-a15c-07fd1426b18b (ERP Connectors),Shared dashboard,dashboards,West US 2,Dataapp Dev/Test,,135.15
-aks-agentpool-29687680-nsg,Network security group,mc_usdt-aks-devops-centralus-rg-01_usdt-aks-devops-clstr-01_centralus,Central US,DevOps Dev/Test,,55
-aks-agentpool-29714445-vmss,Virtual machine scale set,mc_usdt-aks-devops-centralus-rg-01_usdt-aks-devops-clstr-01_centralus,Central US,DevOps Dev/Test,,5
-apim-Dataapp-client-01,API Management service,usdt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,5
+aks-agentpool-29687680-nsg,Network security group,mc_dt-aks-devops-centralus-rg-01_dt-aks-devops-clstr-01_centralus,Central US,DevOps Dev/Test,,55
+aks-agentpool-29714445-vmss,Virtual machine scale set,mc_dt-aks-devops-centralus-rg-01_dt-aks-devops-clstr-01_centralus,Central US,DevOps Dev/Test,,5
+apim-Dataapp-client-01,API Management service,dt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,5
 apim-Dataapp-dev,API Management service,dev-api,Central US,Dataapp Dev/Test,,5
 apim-Dataapp-dev-v2,API Management service,dev-api,East US,Dataapp Dev/Test,,5
 apim-Dataapp-qa,API Management service,qa-api,Central US,Dataapp Dev/Test,,5
@@ -24,7 +24,7 @@ apim-Dataapp-uat,API Management service,uat-api,Central US,Dataapp Dev/Test,,5
 apim-Dataapp-uat-v2,API Management service,uat-api,Central US,Dataapp Dev/Test,,50
 apitickler,Storage account,Cashapp-ase,West Central US,Cashapp Dev/Test,,50
 ASP-Dataappdevops-964a,App Service plan,Dataapp-devops,Central US,Dataapp Dev/Test,,50
-ASP-fadevapi-a59c,App Service plan,dev-api,West Central US,Dataapp Dev/Test,,50
+ASP-lcdevapi-a59c,App Service plan,dev-api,West Central US,Dataapp Dev/Test,,50
 ASP-Company1cnxerptk-a69a,App Service plan,Company1-cnx-erptk,West US,Dataapp Dev/Test,,225
 ASP-Company1cnxoracle-8ab0,App Service plan,Company1-cnx-oracle,East US,Dataapp Dev/Test,,0
 audit-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,15
@@ -54,10 +54,10 @@ azureblob,API Connection,Company1-cnx-infor,West Central US,Dataapp Dev/Test,,0
 azureblob,API Connection,la-platform-orchestrator,West US 2,Dataapp Dev/Test,,0
 azureblob,API Connection,pbi-deployment-rg,West US,Dataapp Dev/Test,,0
 azureblob-1,API Connection,Company1-cnx-infor,West US,Dataapp Dev/Test,,33
-AzureFirewallPIP,Public IP address,usdt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,55
-AzureSQLAnalytics(fadhsqlserverdev-law),Solution,dev-data,Central US,Dataapp Dev/Test,,0
+AzureFirewallPIP,Public IP address,dt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,55
+AzuredbAnalytics(lcdhdbserverdev-law),Solution,dev-data,Central US,Dataapp Dev/Test,,0
 azuretables,API Connection,Company1-cnx-dynamics,West US,Dataapp Dev/Test,,0
-basetenantdb (catalog-mt-bbfa1/basetenantdb),SQL database,wingtip-sql-mt-bbfa1,Central US,Dataapp Dev/Test,,20
+basetenantdb (catalog-mt-bblc1/basetenantdb),db database,wingtip-db-mt-bblc1,Central US,Dataapp Dev/Test,,20
 bd31cbc6-2174-4342-9e21-e70b2f99166b-dashboard (ha-qa-IngestionEngine Dashboard),Shared dashboard,qa-api,West US 2,Dataapp Dev/Test,,0
 blob.core.windows.net,Private DNS zone,qa-sftp-rg-001,Global,Dataapp Dev/Test,,0
 ca-frontend-qa,App Service,ca-qa,West US 2,Cashapp Dev/Test,,0
@@ -76,25 +76,25 @@ calendar-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Casha
 calendar-info-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,40
 calendar-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,40
 Cashappauditing,Storage account,sf-data-hf,West US 2,Cashapp Dev/Test,,40
-Cashappdevsfdiagdev001,Storage account,usdt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,40
-Cashappdevsflogs001,Storage account,usdt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,10
-Cashapphfsfdiag003,Storage account,usdt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,49.47
-Cashapphfsflogs003,Storage account,usdt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,49.47
-Cashappqasfdiag001,Storage account,usdt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,49.47
-Cashappqasflogs001,Storage account,usdt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,49.47
-Cashappsqlauditingdev,Storage account,usdt-data-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,49.47
-Cashappsqlauditinghf,Storage account,usdt-data-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,49.47
-Cashappsqlauditingqa,Storage account,usdt-data-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,99.95
-Cashappsqlauditinguat,Storage account,usdt-data-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,49.47
-Cashappsqlthreatsdev,Storage account,usdt-data-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,49.47
-Cashappsqlthreatshf,Storage account,usdt-data-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,49.47
-Cashappsqlthreatsqa,Storage account,usdt-data-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,135.15
-Cashappsqlthreatsuat,Storage account,usdt-data-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,138
-Cashappuatsfdiag001,Storage account,usdt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,99
-Cashappuatsflogs001,Storage account,usdt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,135.15
-Cashappuatstoragebackup,Storage account,usdt-data-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,55
-Cashappusdtcosmosbackup,Storage account,usdt-backups-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,5
-catalog-mt-bbfa1,SQL server,wingtip-sql-mt-bbfa1,Central US,Dataapp Dev/Test,,5
+Cashappdevsfdiagdev001,Storage account,dt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,40
+Cashappdevsflogs001,Storage account,dt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,10
+Cashapphfsfdiag003,Storage account,dt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,49.47
+Cashapphfsflogs003,Storage account,dt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,49.47
+Cashappqasfdiag001,Storage account,dt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,49.47
+Cashappqasflogs001,Storage account,dt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,49.47
+Cashappdbauditingdev,Storage account,dt-data-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,49.47
+Cashappdbauditinghf,Storage account,dt-data-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,49.47
+Cashappdbauditingqa,Storage account,dt-data-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,99.95
+Cashappdbauditinguat,Storage account,dt-data-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,49.47
+Cashappdbthreatsdev,Storage account,dt-data-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,49.47
+Cashappdbthreatshf,Storage account,dt-data-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,49.47
+Cashappdbthreatsqa,Storage account,dt-data-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,135.15
+Cashappdbthreatsuat,Storage account,dt-data-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,138
+Cashappuatsfdiag001,Storage account,dt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,99
+Cashappuatsflogs001,Storage account,dt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,135.15
+Cashappuatstoragebackup,Storage account,dt-data-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,55
+Cashappdtcosmosbackup,Storage account,dt-backups-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,5
+catalog-mt-bblc1,db server,wingtip-db-mt-bblc1,Central US,Dataapp Dev/Test,,5
 category-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,5
 category-app-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,5
 category-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,5
@@ -104,7 +104,7 @@ category-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Casha
 category-info-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,50
 cf-uat-eh,Event Hubs Namespace,sf-data-uat,West US 2,Cashapp Dev/Test,,50
 cfdevteststorage,Storage account,Cashapp-ase,West US 2,Cashapp Dev/Test,,50
-cfusdtcosmoshfbackups,Storage account,usdt-backups-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,225
+cfdtcosmoshfbackups,Storage account,dt-backups-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,225
 client-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,0
 client-app-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,15
 client-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,0
@@ -121,11 +121,11 @@ comment-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev
 comment-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,44
 comment-info-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,23
 commondataservice,API Connection,dev-infrastructure,West US,Dataapp Dev/Test,,23
-ContainerInsights(defaultworkspace-db5e8945-f308-4ddb-a061-e58473c2c016-eus),Solution,defaultresourcegroup-eus,East US,Dataapp Dev/Test,,0
-ContainerInsights(ha-shared-log-analytics),Solution,defaultresourcegroup-cus,Central US,Dataapp Dev/Test,,0
-ContainerInsights(usdt-logging-devops-law-001),Solution,usdt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,0
-ContainerInsights(usdt-logging-shared-law-001),Solution,usdt-aks-shared-centralus-rg-01,Central US,DevOps Dev/Test,,0
-ContainerInsights(usdt-manage-shared-centralus-law-001),Solution,usdt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,0
+ContainerInsights(delcultworkspace-db5e8945-f308-4ddb-a061-e58473c2c016-eus),Solution,delcultresourcegroup-eus,East US,Dataapp Dev/Test,,0
+ContainerInsights(ha-shared-log-analytics),Solution,delcultresourcegroup-cus,Central US,Dataapp Dev/Test,,0
+ContainerInsights(dt-logging-devops-law-001),Solution,dt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,0
+ContainerInsights(dt-logging-shared-law-001),Solution,dt-aks-shared-centralus-rg-01,Central US,DevOps Dev/Test,,0
+ContainerInsights(dt-manage-shared-centralus-law-001),Solution,dt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,0
 conversionservice,API Connection,dev-infrastructure,Central US,Dataapp Dev/Test,,0
 costa-cnx-d365-fx-extract,Logic app,Company1-cnx-dynamics,West US,Dataapp Dev/Test,,0
 cs210032000ad24aeb9,Storage account,cloud-shell-storage-eastus,East US,Cashapp Dev/Test,,0
@@ -145,31 +145,31 @@ currency-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,C
 D365-Company1-ERP-Import,API Connection,dev-infrastructure,West US,Dataapp Dev/Test,,23
 D365-Company1-ERP-Import,Logic apps custom connector,dev-infrastructure,West US,Dataapp Dev/Test,,35
 D365-to-Company1-Demo,Logic app,dev-infrastructure,West US,Dataapp Dev/Test,,66
-data hub report api-usdt-Dataapp-client-tests-centralus-appi,Availability test,usdt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,40
-Dataapp workflow api service  v1-usdt-Dataapp-client-tests-centralus-appi,Availability test,usdt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+data hub report api-dt-Dataapp-client-tests-centralus-appi,Availability test,dt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+Dataapp workflow api service  v1-dt-Dataapp-client-tests-centralus-appi,Availability test,dt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,40
 Dataapp-devops,Function App,Dataapp-devops,Central US,Dataapp Dev/Test,,40
 Dataapp-devops,Application Insights,Dataapp-devops,Central US,Dataapp Dev/Test,,40
 Dataapp-devops-ai,Application Insights,Dataapp-devops,Central US,Dataapp Dev/Test,,40
 DataappAutomation,Automation Account,dev-infrastructure,Central US,Dataapp Dev/Test,,40
 Dataapptfstate21,Storage account,Dataapp-tfstate,Central US,Dataapp Dev/Test,,40
-DefaultQueryPack,Log Analytics query pack,loganalyticsdefaultresources,West US 2,Dataapp Dev/Test,,40
-DefaultWorkspace-4d5bd3d4-df16-4662-934b-6d778c438235-CUS,Log Analytics workspace,defaultresourcegroup-cus,Central US,DevOps Dev/Test,,40
-DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-CUS,Log Analytics workspace,defaultresourcegroup-cus,Central US,Cashapp Dev/Test,,40
-DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EAU,Log Analytics workspace,defaultresourcegroup-eau,Australia East,Cashapp Dev/Test,,40
-DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EUS,Log Analytics workspace,defaultresourcegroup-eus,East US,Cashapp Dev/Test,,10
-DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WCUS,Log Analytics workspace,defaultresourcegroup-wcus,West Central US,Cashapp Dev/Test,,49.47
-DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS,Log Analytics workspace,defaultresourcegroup-wus,West US,Cashapp Dev/Test,,49.47
-DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS2,Log Analytics workspace,defaultresourcegroup-wus2,West US 2,Cashapp Dev/Test,,49.47
-DefaultWorkspace-b3df7fa9-7793-48df-9f1d-188d5a08abf7-WUS,Log Analytics workspace,defaultresourcegroup-wus,West US,Dynamics Dev/Test,,49.47
-DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-CUS,Log Analytics workspace,defaultresourcegroup-cus,Central US,Dataapp Dev/Test,,49.47
-DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EAU,Log Analytics workspace,defaultresourcegroup-eau,Australia East,Dataapp Dev/Test,,49.47
-DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EUS,Log Analytics workspace,defaultresourcegroup-eus,East US,Dataapp Dev/Test,,99.95
-DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS,Log Analytics workspace,defaultresourcegroup-wus,West US,Dataapp Dev/Test,,49.47
-DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS2,Log Analytics workspace,defaultresourcegroup-wus2,West US 2,Dataapp Dev/Test,,49.47
+DelcultQueryPack,Log Analytics query pack,loganalyticsdelcultresources,West US 2,Dataapp Dev/Test,,40
+DelcultWorkspace-4d5bd3d4-df16-4662-934b-6d778c438235-CUS,Log Analytics workspace,delcultresourcegroup-cus,Central US,DevOps Dev/Test,,40
+DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-CUS,Log Analytics workspace,delcultresourcegroup-cus,Central US,Cashapp Dev/Test,,40
+DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EAU,Log Analytics workspace,delcultresourcegroup-eau,Australia East,Cashapp Dev/Test,,40
+DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EUS,Log Analytics workspace,delcultresourcegroup-eus,East US,Cashapp Dev/Test,,10
+DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WCUS,Log Analytics workspace,delcultresourcegroup-wcus,West Central US,Cashapp Dev/Test,,49.47
+DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS,Log Analytics workspace,delcultresourcegroup-wus,West US,Cashapp Dev/Test,,49.47
+DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS2,Log Analytics workspace,delcultresourcegroup-wus2,West US 2,Cashapp Dev/Test,,49.47
+DelcultWorkspace-b3df7lc9-7793-48df-9f1d-188d5a08abf7-WUS,Log Analytics workspace,delcultresourcegroup-wus,West US,Dynamics Dev/Test,,49.47
+DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-CUS,Log Analytics workspace,delcultresourcegroup-cus,Central US,Dataapp Dev/Test,,49.47
+DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EAU,Log Analytics workspace,delcultresourcegroup-eau,Australia East,Dataapp Dev/Test,,49.47
+DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EUS,Log Analytics workspace,delcultresourcegroup-eus,East US,Dataapp Dev/Test,,99.95
+DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS,Log Analytics workspace,delcultresourcegroup-wus,West US,Dataapp Dev/Test,,49.47
+DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS2,Log Analytics workspace,delcultresourcegroup-wus2,West US 2,Dataapp Dev/Test,,49.47
 demo-1,Virtual machine,zxgold,West US,Dynamics Dev/Test,,49.47
-demo-1,SQL virtual machine,zxgold,West US,Dynamics Dev/Test,,135.15
+demo-1,db virtual machine,zxgold,West US,Dynamics Dev/Test,,135.15
 demo-1,Virtual machine,Company1-gold,West US,Dynamics Dev/Test,,138
-demo-1,SQL virtual machine,Company1-gold,West US,Dynamics Dev/Test,,99
+demo-1,db virtual machine,Company1-gold,West US,Dynamics Dev/Test,,99
 demo-buildDisk,Disk,zxgold,West US,Dynamics Dev/Test,,135.15
 demo-buildDisk,Disk,Company1-gold,West US,Dynamics Dev/Test,,55
 demo-dataDisk0,Disk,zxgold,West US,Dynamics Dev/Test,,5
@@ -204,8 +204,8 @@ demo-dataDisk9,Disk,zxgold,West US,Dynamics Dev/Test,,0
 demo-dataDisk9,Disk,Company1-gold,West US,Dynamics Dev/Test,,0
 demo-loadbalancer,Load balancer,zxgold,West US,Dynamics Dev/Test,,0
 demo-loadbalancer,Load balancer,Company1-gold,West US,Dynamics Dev/Test,,0
-demo-nic-0,Network Interface,zxgold,West US,Dynamics Dev/Test,,0
-demo-nic-0,Network Interface,Company1-gold,West US,Dynamics Dev/Test,,0
+demo-nic-0,Network Interlcce,zxgold,West US,Dynamics Dev/Test,,0
+demo-nic-0,Network Interlcce,Company1-gold,West US,Dynamics Dev/Test,,0
 demo-osdisk,Disk,zxgold,West US,Dynamics Dev/Test,,0
 demo-osdisk,Disk,Company1-gold,West US,Dynamics Dev/Test,,0
 deploy-bot-dev,Web App Bot,deploy-bot,Global,Cashapp Dev/Test,,0
@@ -213,22 +213,22 @@ deploy-bot-dev,App Service,deploy-bot,West Central US,Cashapp Dev/Test,,0
 deploybotdev905c,Storage account,deploy-bot,West Central US,Cashapp Dev/Test,,0
 dev-data-Oms-Workspace,Log Analytics workspace,dev-data,East US,Dataapp Dev/Test,,33
 dev5baeee6929-1,Virtual machine,zxdev,West US,Dynamics Dev/Test,,55
-dev5baeee6929-1,SQL virtual machine,zxdev,West US,Dynamics Dev/Test,,0
+dev5baeee6929-1,db virtual machine,zxdev,West US,Dynamics Dev/Test,,0
 dev5baeee6929-buildDisk,Disk,zxdev,West US,Dynamics Dev/Test,,0
 dev5baeee6929-dataDisk0,Disk,zxdev,West US,Dynamics Dev/Test,,20
 dev5baeee6929-dataDisk1,Disk,zxdev,West US,Dynamics Dev/Test,,0
 dev5baeee6929-dataDisk2,Disk,zxdev,West US,Dynamics Dev/Test,,0
 dev5baeee6929-loadbalancer,Load balancer,zxdev,West US,Dynamics Dev/Test,,0
-dev5baeee6929-nic-0,Network Interface,zxdev,West US,Dynamics Dev/Test,,111
+dev5baeee6929-nic-0,Network Interlcce,zxdev,West US,Dynamics Dev/Test,,111
 dev5baeee6929-osdisk,Disk,zxdev,West US,Dynamics Dev/Test,,67
 devcd71760476-1,Virtual machine,zxtest,West US,Dynamics Dev/Test,,23
-devcd71760476-1,SQL virtual machine,zxtest,West US,Dynamics Dev/Test,,35
+devcd71760476-1,db virtual machine,zxtest,West US,Dynamics Dev/Test,,35
 devcd71760476-buildDisk,Disk,zxtest,West US,Dynamics Dev/Test,,66
 devcd71760476-dataDisk0,Disk,zxtest,West US,Dynamics Dev/Test,,40
 devcd71760476-dataDisk1,Disk,zxtest,West US,Dynamics Dev/Test,,40
 devcd71760476-dataDisk2,Disk,zxtest,West US,Dynamics Dev/Test,,40
 devcd71760476-loadbalancer,Load balancer,zxtest,West US,Dynamics Dev/Test,,40
-devcd71760476-nic-0,Network Interface,zxtest,West US,Dynamics Dev/Test,,40
+devcd71760476-nic-0,Network Interlcce,zxtest,West US,Dynamics Dev/Test,,40
 devcd71760476-osdisk,Disk,zxtest,West US,Dynamics Dev/Test,,40
 devdeploybot,Language understanding,deploy-bot,West US,Cashapp Dev/Test,,40
 devops,Disk,devops,West Central US,Cashapp Dev/Test,,40
@@ -238,7 +238,7 @@ devops-automation,Automation Account,Cashapp-ase,West Central US,Cashapp Dev/Tes
 devops-build,Virtual machine,devops,West Central US,Cashapp Dev/Test,,10
 devops-build-db,Image,devops-build,Central US,Dataapp Dev/Test,,49.47
 devops-build-db,Virtual machine,devops-build,Central US,Dataapp Dev/Test,,49.47
-devops-build-db,Network Interface,devops-build,Central US,Dataapp Dev/Test,,49.47
+devops-build-db,Network Interlcce,devops-build,Central US,Dataapp Dev/Test,,49.47
 devops-build-db_disk1_2ed52b7fb4db4808bad5daf46a486459,Disk,devops-build,Central US,Dataapp Dev/Test,,49.47
 devops-build-ip,Public IP address,devops,West Central US,Cashapp Dev/Test,,49.47
 devops-build-nsg,Network security group,devops,West Central US,Cashapp Dev/Test,,49.47
@@ -248,33 +248,33 @@ devops-build-vnet,Virtual network,devops-build,Central US,Dataapp Dev/Test,,49.4
 devops-build2-image-20210511101632,Image,devops,West Central US,Cashapp Dev/Test,,49.47
 devops-build2-ip,Public IP address,devops,West Central US,Cashapp Dev/Test,,135.15
 devops-build2-nsg,Network security group,devops,West Central US,Cashapp Dev/Test,,138
-devops-build2568,Network Interface,devops,West Central US,Cashapp Dev/Test,,99
+devops-build2568,Network Interlcce,devops,West Central US,Cashapp Dev/Test,,99
 devops-build2_OsDisk_1_1e5547ef4841499abe8699b485fe37e3,Disk,devops,West Central US,Cashapp Dev/Test,,135.15
 devops-build3,Disk,devops,West US,Cashapp Dev/Test,,55
 devops-build3,Virtual machine,devops,West US,Cashapp Dev/Test,,5
 devops-build3-ip,Public IP address,devops,West US 2,Cashapp Dev/Test,,5
 devops-build3-nsg,Network security group,devops,West US 2,Cashapp Dev/Test,,5
-devops-build3216,Network Interface,devops,West US 2,Cashapp Dev/Test,,5
-devops-build3456,Network Interface,devops,West US,Cashapp Dev/Test,,5
-devops-build3877,Network Interface,devops,West US 2,Cashapp Dev/Test,,5
+devops-build3216,Network Interlcce,devops,West US 2,Cashapp Dev/Test,,5
+devops-build3456,Network Interlcce,devops,West US,Cashapp Dev/Test,,5
+devops-build3877,Network Interlcce,devops,West US 2,Cashapp Dev/Test,,5
 devops-build3_OsDisk_1_d55ff36723ad41b0a219508023838f05,Disk,devops,West US,Cashapp Dev/Test,,5
 devops-build4,Disk,devops,West Central US,Cashapp Dev/Test,,50
 devops-build4,Virtual machine,devops,West Central US,Cashapp Dev/Test,,50
 devops-build4-ip,Public IP address,devops,West Central US,Cashapp Dev/Test,,50
 devops-build4-nsg,Network security group,devops,West Central US,Cashapp Dev/Test,,50
-devops-build4202,Network Interface,devops,West Central US,Cashapp Dev/Test,,225
-devops-build954,Network Interface,devops,West Central US,Cashapp Dev/Test,,0
+devops-build4202,Network Interlcce,devops,West Central US,Cashapp Dev/Test,,225
+devops-build954,Network Interlcce,devops,West Central US,Cashapp Dev/Test,,0
 devops-build_OsDisk_1_aa7b0ffd2dec42c09a8a3b6c48f7e6be,Disk,devops,West Central US,Cashapp Dev/Test,,15
 devops-deploy,Virtual machine,devops,West Central US,Cashapp Dev/Test,,0
 devops-deploy-ip,Public IP address,devops,West Central US,Cashapp Dev/Test,,0
 devops-deploy-nsg,Network security group,devops,West Central US,Cashapp Dev/Test,,0
-devops-deploy252,Network Interface,devops,West Central US,Cashapp Dev/Test,,0
+devops-deploy252,Network Interlcce,devops,West Central US,Cashapp Dev/Test,,0
 devops-deploy_OsDisk_1_cffb45f26702478893692ca1cb2541d1,Disk,devops,West Central US,Cashapp Dev/Test,,20
 devops-test,Virtual machine,devops-gavin,West US,Cashapp Dev/Test,,20
 devops-test-nsg,Network security group,devops-gavin,West US,Cashapp Dev/Test,,20
 devops-test-vnet,Virtual network,devops-gavin,West US,Cashapp Dev/Test,,20
 devops-test2,Public IP address,devops-gavin,West US,Cashapp Dev/Test,,20
-devops-test563,Network Interface,devops-gavin,West US,Cashapp Dev/Test,,20
+devops-test563,Network Interlcce,devops-gavin,West US,Cashapp Dev/Test,,20
 devops-test_OsDisk_1_dbbdf403aec04e06905d29df7c85216c,Disk,devops-gavin,West US,Cashapp Dev/Test,,20
 devops-ml,Azure Machine Learning,ml-testing,West US 2,DevOps Dev/Test,,44
 devops-kv,Key vault,devops-nabil,West Europe,Cashapp Dev/Test,,23
@@ -300,66 +300,66 @@ devopsperfdiag137,Storage account,devops,West Central US,Cashapp Dev/Test,,0
 devopsvnet366,Virtual network,devops,West US,Cashapp Dev/Test,,0
 devopsvnet875,Virtual network,devops,West US 2,Cashapp Dev/Test,,111
 ha-api-devtest,App Service,dev-api,West Central US,Dataapp Dev/Test,,67
-ha-api-inbound-client,App Service,usdt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,23
-ha-api-inbound-test,App Service,usdt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,35
-ha-api-ingestion-core-client,App Service,usdt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,66
-ha-api-ingestion-core-test,App Service,usdt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
-ha-api-metadata-client,App Service,usdt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
-ha-api-metadata-test,App Service,usdt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
-ha-api-msgbus-client,App Service,usdt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
-ha-api-msgbus-test,App Service,usdt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
-ha-api-outbound-client,App Service,usdt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
-ha-api-outbound-test,App Service,usdt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
-ha-api-report-data-client,App Service,usdt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
-ha-api-report-data-test,App Service,usdt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
-ha-api-reports-client,App Service,usdt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
-ha-api-reports-test,App Service,usdt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
-ha-api-security-client,App Service,usdt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,10
-ha-api-security-test,App Service,usdt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
-ha-api-workflow-client,App Service,usdt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
-ha-api-workflow-test,App Service,usdt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+ha-api-inbound-client,App Service,dt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,23
+ha-api-inbound-test,App Service,dt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,35
+ha-api-ingestion-core-client,App Service,dt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,66
+ha-api-ingestion-core-test,App Service,dt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+ha-api-metadata-client,App Service,dt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+ha-api-metadata-test,App Service,dt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+ha-api-msgbus-client,App Service,dt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+ha-api-msgbus-test,App Service,dt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+ha-api-outbound-client,App Service,dt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+ha-api-outbound-test,App Service,dt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+ha-api-report-data-client,App Service,dt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+ha-api-report-data-test,App Service,dt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+ha-api-reports-client,App Service,dt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+ha-api-reports-test,App Service,dt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+ha-api-security-client,App Service,dt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,10
+ha-api-security-test,App Service,dt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+ha-api-workflow-client,App Service,dt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+ha-api-workflow-test,App Service,dt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
 ha-cosmosdb-dev,Azure Cosmos DB account,dev-data,Central US,Dataapp Dev/Test,,49.47
-ha-datafactory-dev,Data factory (V2),dev-data,Central US,Dataapp Dev/Test,,49.47
+ha-datalcctory-dev,Data lcctory (V2),dev-data,Central US,Dataapp Dev/Test,,49.47
 ha-dev-admin-console,App Service,dev-api,Central US,Dataapp Dev/Test,,49.47
 ha-dev-sso-portal,App Service,dev-api,Central US,Dataapp Dev/Test,,99.95
-ha-devops-identity,Managed Identity,usdt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,49.47
-ha-sftp-client-nic,Network Interface,usdt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
-ha-sftp-client-vm,Virtual machine,usdt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
-ha-sftp-client-vm_disk1_64c1346a6199466c9fe2de669dfb3dc6,Disk,usdt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,135.15
-ha-sftp-qa-nic,Network Interface,qa-sftp-rg-001,Central US,Dataapp Dev/Test,,138
+ha-devops-identity,Managed Identity,dt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,49.47
+ha-sftp-client-nic,Network Interlcce,dt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+ha-sftp-client-vm,Virtual machine,dt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+ha-sftp-client-vm_disk1_64c1346a6199466c9fe2de669dfb3dc6,Disk,dt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,135.15
+ha-sftp-qa-nic,Network Interlcce,qa-sftp-rg-001,Central US,Dataapp Dev/Test,,138
 ha-sftp-qa-vm,Virtual machine,qa-sftp-rg-001,Central US,Dataapp Dev/Test,,99
 ha-sftp-qa-vm_OsDisk_1_7324da026c794272b9507c427d4a9684,Disk,qa-sftp-rg-001,Central US,Dataapp Dev/Test,,135.15
-ha-sftp-test-nic,Network Interface,usdt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,55
-ha-sftp-test-vm,Virtual machine,usdt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,5
-ha-sftp-test-vm_OsDisk_1_087675a4705f49da9b5a1bdc964492ab,Disk,usdt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,5
-ha-shared-log-analytics,Log Analytics workspace,defaultresourcegroup-cus,Central US,Dataapp Dev/Test,,5
+ha-sftp-test-nic,Network Interlcce,dt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,55
+ha-sftp-test-vm,Virtual machine,dt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,5
+ha-sftp-test-vm_OsDisk_1_087675a4705f49da9b5a1bdc964492ab,Disk,dt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,5
+ha-shared-log-analytics,Log Analytics workspace,delcultresourcegroup-cus,Central US,Dataapp Dev/Test,,5
 ha-splunk-events-dev,Event Hubs Namespace,splunk_logging,West Central US,Dataapp Dev/Test,,5
-ha-test-platform-config,App Configuration,usdt-Dataapp-test-security-centralus-rg-001,Central US,Dataapp Dev/Test,,5
-dhcommon (fadhsqlserverdev/dhcommon),SQL database,dev-data,Central US,Dataapp Dev/Test,,5
-dhcommon (fadhsqlserverqa/dhcommon),SQL database,qa-data,Central US,Dataapp Dev/Test,,5
-dhcommon (fadhsqlserveruat/dhcommon),SQL database,uat-data,Central US,Dataapp Dev/Test,,50
-dhcommon (usdtdhclientsql01/dhcommon),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,50
-dhcommon (dhsqlsrvtest/dhcommon),SQL database,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,50
-dhclientcentralus-logic,Logic app,usdt-Dataapp-client-logic-centralus-rg-001,Central US,Dataapp Dev/Test,,50
-dhclientsftpdiag,Storage account,usdt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,225
+ha-test-platform-config,App Configuration,dt-Dataapp-test-security-centralus-rg-001,Central US,Dataapp Dev/Test,,5
+dhcommon (lcdhdbserverdev/dhcommon),db database,dev-data,Central US,Dataapp Dev/Test,,5
+dhcommon (lcdhdbserverqa/dhcommon),db database,qa-data,Central US,Dataapp Dev/Test,,5
+dhcommon (lcdhdbserveruat/dhcommon),db database,uat-data,Central US,Dataapp Dev/Test,,50
+dhcommon (dtdhclientdb01/dhcommon),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,50
+dhcommon (dhdbsrvtest/dhcommon),db database,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,50
+dhclientcentralus-logic,Logic app,dt-Dataapp-client-logic-centralus-rg-001,Central US,Dataapp Dev/Test,,50
+dhclientsftpdiag,Storage account,dt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,225
 dhdevops,Storage account,Dataapp-devops,Central US,Dataapp Dev/Test,,0
-dhdevsqlpool0001 (fadhsqlserverdev/dhdevsqlpool0001),SQL elastic pool,dev-data,Central US,Dataapp Dev/Test,,15
+dhdevdbpool0001 (lcdhdbserverdev/dhdevdbpool0001),db elastic pool,dev-data,Central US,Dataapp Dev/Test,,15
 dhlakedev,Data Lake Analytics,dev-data,Central US,Dataapp Dev/Test,,0
 dhlakedevadls,Data Lake Storage Gen1,dev-data,Central US,Dataapp Dev/Test,,0
-dhmaster (fadhsqlserverdev/dhmaster),SQL database,dev-data,Central US,Dataapp Dev/Test,,0
-dhmaster (fadhsqlserverqa/dhmaster),SQL database,qa-data,Central US,Dataapp Dev/Test,,0
-dhmaster (fadhsqlserveruat/dhmaster),SQL database,uat-data,Central US,Dataapp Dev/Test,,20
-dhmaster (usdtdhclientsql01/dhmaster),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,20
-dhmaster (dhsqlsrvtest/dhmaster),SQL database,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,20
-dhmaster_2020-11-19T21-00Z (fadhsqlserverdev/dhmaster_2020-11-19T21-00Z),SQL database,dev-data,Central US,Dataapp Dev/Test,,20
-dhptsbustest,Service Bus Namespace,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,20
+dhmaster (lcdhdbserverdev/dhmaster),db database,dev-data,Central US,Dataapp Dev/Test,,0
+dhmaster (lcdhdbserverqa/dhmaster),db database,qa-data,Central US,Dataapp Dev/Test,,0
+dhmaster (lcdhdbserveruat/dhmaster),db database,uat-data,Central US,Dataapp Dev/Test,,20
+dhmaster (dtdhclientdb01/dhmaster),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,20
+dhmaster (dhdbsrvtest/dhmaster),db database,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,20
+dhmaster_2020-11-19T21-00Z (lcdhdbserverdev/dhmaster_2020-11-19T21-00Z),db database,dev-data,Central US,Dataapp Dev/Test,,20
+dhptsbustest,Service Bus Namespace,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,20
 dhqasftpdiag,Storage account,qa-sftp-rg-001,Central US,Dataapp Dev/Test,,20
-dhsqlsrvtest,SQL server,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,20
-dhsqlsrvtest-law,Log Analytics workspace,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,44
-dhtestsftpdiag,Storage account,usdt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,23
-dhtestsqlpool0001 (dhsqlsrvtest/dhtestsqlpool0001),SQL elastic pool,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,23
-dhuatsqlpool0001 (fadhsqlserveruat/dhuatsqlpool0001),SQL elastic pool,uat-data,Central US,Dataapp Dev/Test,,0
-dhworkflow (fadhsqlserverdev/dhworkflow),SQL database,dev-data,Central US,Dataapp Dev/Test,,0
+dhdbsrvtest,db server,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,20
+dhdbsrvtest-law,Log Analytics workspace,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,44
+dhtestsftpdiag,Storage account,dt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,23
+dhtestdbpool0001 (dhdbsrvtest/dhtestdbpool0001),db elastic pool,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,23
+dhuatdbpool0001 (lcdhdbserveruat/dhuatdbpool0001),db elastic pool,uat-data,Central US,Dataapp Dev/Test,,0
+dhworkflow (lcdhdbserverdev/dhworkflow),db database,dev-data,Central US,Dataapp Dev/Test,,0
 documentdb,API Connection,Company1-cnx-dynamics,West US,Dataapp Dev/Test,,0
 dyn48917145f9d05bbe,Storage account,dynamicsdeployments-westus,West US,Dynamics Dev/Test,,0
 dynamicsax,API Connection,dev-infrastructure,West US,Dataapp Dev/Test,,0
@@ -393,10 +393,10 @@ entity-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/
 entity-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,40
 entity-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,40
 ERP-Ingestion,Logic app,zx-etl-randd,Central US,Dataapp Dev/Test,,40
-events-wingtip-mt-bbfa1,Traffic Manager profile,wingtip-sql-mt-bbfa1,Global,Dataapp Dev/Test,,10
-events-wingtip-mt-bbfa1,App Service plan,wingtip-sql-mt-bbfa1,Central US,Dataapp Dev/Test,,49.47
-events-wingtip-mt-bbfa1,App Service,wingtip-sql-mt-bbfa1,Central US,Dataapp Dev/Test,,49.47
-f953c1e7-1177-4309-ad43-d7a185b3c811,Public IP address,mc_usdt-aks-devops-centralus-rg-01_usdt-aks-devops-clstr-01_centralus,Central US,DevOps Dev/Test,,49.47
+events-wingtip-mt-bblc1,Traffic Manager profile,wingtip-db-mt-bblc1,Global,Dataapp Dev/Test,,10
+events-wingtip-mt-bblc1,App Service plan,wingtip-db-mt-bblc1,Central US,Dataapp Dev/Test,,49.47
+events-wingtip-mt-bblc1,App Service,wingtip-db-mt-bblc1,Central US,Dataapp Dev/Test,,49.47
+f953c1e7-1177-4309-ad43-d7a185b3c811,Public IP address,mc_dt-aks-devops-centralus-rg-01_dt-aks-devops-clstr-01_centralus,Central US,DevOps Dev/Test,,49.47
 admin-console-qa,App Service,qa-api,Central US,Dataapp Dev/Test,,49.47
 api-inbound-dev,App Service,dev-api,Central US,Dataapp Dev/Test,,49.47
 api-inbound-qa,App Service,qa-api,Central US,Dataapp Dev/Test,,49.47
@@ -442,7 +442,7 @@ dev-sftp-admin,Virtual machine,dev-sftp-admin,Central US,Dataapp Dev/Test,,0
 dev-sftp-admin-ip,Public IP address,dev-sftp-admin,Central US,Dataapp Dev/Test,,0
 dev-sftp-admin-nsg,Network security group,dev-sftp-admin,Central US,Dataapp Dev/Test,,0
 dev-sftp-admin-vnet,Virtual network,dev-sftp-admin,Central US,Dataapp Dev/Test,,0
-dev-sftp-admin617,Network Interface,dev-sftp-admin,Central US,Dataapp Dev/Test,,0
+dev-sftp-admin617,Network Interlcce,dev-sftp-admin,Central US,Dataapp Dev/Test,,0
 dev-sftp-admin_disk1_0f83d68cff504acfb397c93dc99da9eb,Disk,dev-sftp-admin,Central US,Dataapp Dev/Test,,0
 dev-sftp-ip,Public IP address,dev-sftp,Central US,Dataapp Dev/Test,,0
 dev-sftp-nsg,Network security group,dev-sftp,Central US,Dataapp Dev/Test,,0
@@ -450,10 +450,10 @@ dev-sftp-v2,Virtual machine,dev-sftp-v2,Central US,Dataapp Dev/Test,,0
 dev-sftp-v2-ip,Public IP address,dev-sftp-v2,Central US,Dataapp Dev/Test,,0
 dev-sftp-v2-nsg,Network security group,dev-sftp-v2,Central US,Dataapp Dev/Test,,33
 dev-sftp-v2-vnet,Virtual network,dev-sftp-v2,Central US,Dataapp Dev/Test,,55
-dev-sftp-v2401,Network Interface,dev-sftp-v2,Central US,Dataapp Dev/Test,,0
-dev-sftp-v2_disk1_d3bbf33fa05440cba1627a5ea0bcb115,Disk,dev-sftp-v2,Central US,Dataapp Dev/Test,,0
+dev-sftp-v2401,Network Interlcce,dev-sftp-v2,Central US,Dataapp Dev/Test,,0
+dev-sftp-v2_disk1_d3bbf33lc05440cba1627a5ea0bcb115,Disk,dev-sftp-v2,Central US,Dataapp Dev/Test,,0
 dev-sftp-vnet,Virtual network,dev-sftp,Central US,Dataapp Dev/Test,,20
-dev-sftp830,Network Interface,dev-sftp,Central US,Dataapp Dev/Test,,0
+dev-sftp830,Network Interlcce,dev-sftp,Central US,Dataapp Dev/Test,,0
 dev-sftp_disk1_43ff81f21704416e8105ed74512311f2,Disk,dev-sftp,Central US,Dataapp Dev/Test,,0
 devops-bot,Web App Bot,devops-bot,Global,Cashapp Dev/Test,,0
 devops-bot,App Service plan,devops-bot,West US,Cashapp Dev/Test,,111
@@ -463,7 +463,7 @@ devops-bot-search,Search service,devops-bot,West US,Cashapp Dev/Test,,35
 docker-linux,Virtual machine,devops,West US,Cashapp Dev/Test,,66
 docker-linux-ip,Public IP address,devops,West US,Cashapp Dev/Test,,40
 docker-linux-nsg,Network security group,devops,West US,Cashapp Dev/Test,,40
-docker-linux362,Network Interface,devops,West US,Cashapp Dev/Test,,40
+docker-linux362,Network Interlcce,devops,West US,Cashapp Dev/Test,,40
 docker-linux_OsDisk_1_e8e7d755020e4747b3b197f45b12a294,Disk,devops,West US,Cashapp Dev/Test,,40
 frontend-dev,App Service,ca-dev,West US 2,Cashapp Dev/Test,,40
 notification-orchestrator,Logic app,dev-infrastructure,Central US,Dataapp Dev/Test,,40
@@ -479,13 +479,13 @@ qa-sftp,Virtual machine,qa-sftp,Central US,Dataapp Dev/Test,,49.47
 qa-sftp-ip,Public IP address,qa-sftp,Central US,Dataapp Dev/Test,,49.47
 qa-sftp-nsg,Network security group,qa-sftp,Central US,Dataapp Dev/Test,,49.47
 qa-sftp-vnet,Virtual network,qa-sftp,Central US,Dataapp Dev/Test,,49.47
-qa-sftp321,Network Interface,qa-sftp,Central US,Dataapp Dev/Test,,99.95
-qa-sftp_disk1_10d131ed291540efae5c82ef6caeca58,Disk,qa-sftp,Central US,Dataapp Dev/Test,,49.47
+qa-sftp321,Network Interlcce,qa-sftp,Central US,Dataapp Dev/Test,,99.95
+qa-sftp_disk1_10d131ed291540elce5c82ef6caeca58,Disk,qa-sftp,Central US,Dataapp Dev/Test,,49.47
 sso-portal-qa,App Service,qa-api,Central US,Dataapp Dev/Test,,49.47
 tenable-scanner,Virtual machine,tenable-scanner,West US 2,Cashapp Dev/Test,,49.47
 tenable-scanner-ip,Public IP address,tenable-scanner,West US 2,Cashapp Dev/Test,,135.15
 tenable-scanner-nsg,Network security group,tenable-scanner,West US 2,Cashapp Dev/Test,,138
-tenable-scanner677,Network Interface,tenable-scanner,West US 2,Cashapp Dev/Test,,99
+tenable-scanner677,Network Interlcce,tenable-scanner,West US 2,Cashapp Dev/Test,,99
 tenable-scanner_DataDisk_0,Disk,tenable-scanner,West US 2,Cashapp Dev/Test,,135.15
 tenable-scanner_OsDisk_1_cd3bfc7e966841e289a500f48ab76f49,Disk,tenable-scanner,West US 2,Cashapp Dev/Test,,55
 uat-apis,Application Insights,uat-test,West US 2,Dataapp Dev/Test,,5
@@ -495,91 +495,91 @@ uat-sftp,Virtual machine,uat-sftp,Central US,Dataapp Dev/Test,,5
 uat-sftp-ip,Public IP address,uat-sftp,Central US,Dataapp Dev/Test,,5
 uat-sftp-nsg,Network security group,uat-sftp,Central US,Dataapp Dev/Test,,5
 uat-sftp-vnet,Virtual network,uat-sftp,Central US,Dataapp Dev/Test,,5
-uat-sftp247,Network Interface,uat-sftp,Central US,Dataapp Dev/Test,,50
+uat-sftp247,Network Interlcce,uat-sftp,Central US,Dataapp Dev/Test,,50
 uat-sftp_disk1_f3477d01713343ebb886b7f97b63e7a5,Disk,uat-sftp,Central US,Dataapp Dev/Test,,50
-fa99teststorage,Storage account,terraform-test,West US 3,DevOps Dev/Test,,50
-faapplogging,Storage account,Cashapp-ase,West Central US,Cashapp Dev/Test,,50
-fadeploy,Web App Bot,deploy-bot,Global,Cashapp Dev/Test,,225
-fadeploy,App Service plan,deploy-bot,West US 2,Cashapp Dev/Test,,0
-fadeploy,App Service,deploy-bot,West US 2,Cashapp Dev/Test,,15
-fadeployb83c,Storage account,deploy-bot,West US 2,Cashapp Dev/Test,,0
-fadevcentralus-logic,Logic app,dev-logic,Central US,Dataapp Dev/Test,,0
-fadevcentralus-sample-sb-conn,Logic app,dev-sample-sb-conn,Central US,Cashapp Dev/Test,,0
-fadevkeyvaultlogs,Storage account,dev-logging,West US 2,Dataapp Dev/Test,,0
-fadevops,Storage account,Cashapp-ase,West Central US,Cashapp Dev/Test,,20
-fadevopsbot,Storage account,devops-bot,West US,Cashapp Dev/Test,,20
-fadevsftpadmindiag,Storage account,dev-sftp-admin,Central US,Dataapp Dev/Test,,20
-fadevsftpdiag,Storage account,dev-sftp,Central US,Dataapp Dev/Test,,20
-fadevsftpv2diag,Storage account,dev-sftp-v2,Central US,Dataapp Dev/Test,,20
-fadhsqlpoolqa0001 (fadhsqlserverqa/fadhsqlpoolqa0001),SQL elastic pool,qa-data,Central US,Dataapp Dev/Test,,20
-fadhsqlserverdev,SQL server,dev-data,Central US,Dataapp Dev/Test,,20
-fadhsqlserverdev-law,Log Analytics workspace,dev-data,Central US,Dataapp Dev/Test,,44
-fadhsqlserverqa,SQL server,qa-data,Central US,Dataapp Dev/Test,,23
-fadhsqlserverqa-law,Log Analytics workspace,qa-data,Central US,Dataapp Dev/Test,,23
-fadhsqlserveruat,SQL server,uat-data,Central US,Dataapp Dev/Test,,0
-fadhsqlserveruat-law,Log Analytics workspace,uat-data,Central US,Dataapp Dev/Test,,0
-fadhstoragedev,Storage account,dev-data,Central US,Dataapp Dev/Test,,0
-fadhstoragedev-52a08834-9aeb-428d-be3f-d69faad63827,Event Grid System Topic,dev-data,Central US,Dataapp Dev/Test,,0
-fadhstoragetest,Storage account,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-fadhstoragetest-pe,Private endpoint,usdt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-fadhstoragetest-pe.nic.b6603a77-4f7c-4045-aa41-54a4f58c5964,Network Interface,usdt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-faef932b-c10d-411a-ac08-b9c3d8ade059-dashboard (Cashapp Hotfix Dashboard),Shared dashboard,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,0
-faitaasetdashds,Storage account,fa_it_asset_dash_rg,West US,Cashapp Dev/Test,,0
-faplatform,Container registry,docker,West US 2,Dataapp Dev/Test,,0
-faptanalyticsqa,Data Lake Analytics,qa-data,Central US,Dataapp Dev/Test,,0
-faptanalyticsuat,Data Lake Analytics,uat-data,Central US,Dataapp Dev/Test,,33
-faptcosmosqa,Azure Cosmos DB account,qa-data,Central US,Dataapp Dev/Test,,55
-faptcosmosuat,Azure Cosmos DB account,uat-data,Central US,Dataapp Dev/Test,,0
-faptdlstoreqa,Data Lake Storage Gen1,qa-data,Central US,Dataapp Dev/Test,,0
-faptdlstoreuat,Data Lake Storage Gen1,uat-data,Central US,Dataapp Dev/Test,,20
-faptsbqa,Service Bus Namespace,qa-data,Central US,Dataapp Dev/Test,,0
-faptsbuat,Service Bus Namespace,uat-data,Central US,Dataapp Dev/Test,,0
-faptsbusdev,Service Bus Namespace,dev-data,Central US,Dataapp Dev/Test,,0
-faptstorageqa,Storage account,qa-data,Central US,Dataapp Dev/Test,,111
-faptstorageqa-pe,Private endpoint,qa-sftp-rg-001,Central US,Dataapp Dev/Test,,67
-faptstorageqa-pe.nic.a4f245f0-1d2b-4e6f-bf2f-97a8369cacac,Network Interface,qa-sftp-rg-001,Central US,Dataapp Dev/Test,,23
-faptstorageuat,Storage account,uat-data,Central US,Dataapp Dev/Test,,35
-faqacentralus-logic,Logic app,qa-logic,Central US,Dataapp Dev/Test,,66
-faqasftpdiag,Storage account,qa-sftp,Central US,Dataapp Dev/Test,,40
-fareporttest,Storage account,reporttest,West US 2,Dataapp Dev/Test,,40
-fasqllogs,Storage account,sf-data-dev,West Central US,Cashapp Dev/Test,,40
-fatenablescannerdiag,Storage account,tenable-scanner,West US 2,Cashapp Dev/Test,,40
-fatrdssds01,Storage account,tr_dss,West US,Cashapp Dev/Test,,40
-fauatcentralus-logic,Logic app,uat-logic,Central US,Dataapp Dev/Test,,40
-fauatsftpdiag,Storage account,uat-sftp,Central US,Dataapp Dev/Test,,40
-fftch-income-actuals-loadtest (fadhsqlserverdev/fftch-income-actuals-loadtest),SQL database,dev-data,Central US,Dataapp Dev/Test,,40
+lc99teststorage,Storage account,terraform-test,West US 3,DevOps Dev/Test,,50
+lcapplogging,Storage account,Cashapp-ase,West Central US,Cashapp Dev/Test,,50
+lcdeploy,Web App Bot,deploy-bot,Global,Cashapp Dev/Test,,225
+lcdeploy,App Service plan,deploy-bot,West US 2,Cashapp Dev/Test,,0
+lcdeploy,App Service,deploy-bot,West US 2,Cashapp Dev/Test,,15
+lcdeployb83c,Storage account,deploy-bot,West US 2,Cashapp Dev/Test,,0
+lcdevcentralus-logic,Logic app,dev-logic,Central US,Dataapp Dev/Test,,0
+lcdevcentralus-sample-sb-conn,Logic app,dev-sample-sb-conn,Central US,Cashapp Dev/Test,,0
+lcdevkeyvaultlogs,Storage account,dev-logging,West US 2,Dataapp Dev/Test,,0
+lcdevops,Storage account,Cashapp-ase,West Central US,Cashapp Dev/Test,,20
+lcdevopsbot,Storage account,devops-bot,West US,Cashapp Dev/Test,,20
+lcdevsftpadmindiag,Storage account,dev-sftp-admin,Central US,Dataapp Dev/Test,,20
+lcdevsftpdiag,Storage account,dev-sftp,Central US,Dataapp Dev/Test,,20
+lcdevsftpv2diag,Storage account,dev-sftp-v2,Central US,Dataapp Dev/Test,,20
+lcdhdbpoolqa0001 (lcdhdbserverqa/lcdhdbpoolqa0001),db elastic pool,qa-data,Central US,Dataapp Dev/Test,,20
+lcdhdbserverdev,db server,dev-data,Central US,Dataapp Dev/Test,,20
+lcdhdbserverdev-law,Log Analytics workspace,dev-data,Central US,Dataapp Dev/Test,,44
+lcdhdbserverqa,db server,qa-data,Central US,Dataapp Dev/Test,,23
+lcdhdbserverqa-law,Log Analytics workspace,qa-data,Central US,Dataapp Dev/Test,,23
+lcdhdbserveruat,db server,uat-data,Central US,Dataapp Dev/Test,,0
+lcdhdbserveruat-law,Log Analytics workspace,uat-data,Central US,Dataapp Dev/Test,,0
+lcdhstoragedev,Storage account,dev-data,Central US,Dataapp Dev/Test,,0
+lcdhstoragedev-52a08834-9aeb-428d-be3f-d69lcad63827,Event Grid System Topic,dev-data,Central US,Dataapp Dev/Test,,0
+lcdhstoragetest,Storage account,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+lcdhstoragetest-pe,Private endpoint,dt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+lcdhstoragetest-pe.nic.b6603a77-4f7c-4045-aa41-54a4f58c5964,Network Interlcce,dt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+lcef932b-c10d-411a-ac08-b9c3d8ade059-dashboard (Cashapp Hotfix Dashboard),Shared dashboard,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,0
+lcitaasetdashds,Storage account,lc_it_asset_dash_rg,West US,Cashapp Dev/Test,,0
+lcplatform,Container registry,docker,West US 2,Dataapp Dev/Test,,0
+lcptanalyticsqa,Data Lake Analytics,qa-data,Central US,Dataapp Dev/Test,,0
+lcptanalyticsuat,Data Lake Analytics,uat-data,Central US,Dataapp Dev/Test,,33
+lcptcosmosqa,Azure Cosmos DB account,qa-data,Central US,Dataapp Dev/Test,,55
+lcptcosmosuat,Azure Cosmos DB account,uat-data,Central US,Dataapp Dev/Test,,0
+lcptdlstoreqa,Data Lake Storage Gen1,qa-data,Central US,Dataapp Dev/Test,,0
+lcptdlstoreuat,Data Lake Storage Gen1,uat-data,Central US,Dataapp Dev/Test,,20
+lcptsbqa,Service Bus Namespace,qa-data,Central US,Dataapp Dev/Test,,0
+lcptsbuat,Service Bus Namespace,uat-data,Central US,Dataapp Dev/Test,,0
+lcptsbusdev,Service Bus Namespace,dev-data,Central US,Dataapp Dev/Test,,0
+lcptstorageqa,Storage account,qa-data,Central US,Dataapp Dev/Test,,111
+lcptstorageqa-pe,Private endpoint,qa-sftp-rg-001,Central US,Dataapp Dev/Test,,67
+lcptstorageqa-pe.nic.a4f245f0-1d2b-4e6f-bf2f-97a8369cacac,Network Interlcce,qa-sftp-rg-001,Central US,Dataapp Dev/Test,,23
+lcptstorageuat,Storage account,uat-data,Central US,Dataapp Dev/Test,,35
+lcqacentralus-logic,Logic app,qa-logic,Central US,Dataapp Dev/Test,,66
+lcqasftpdiag,Storage account,qa-sftp,Central US,Dataapp Dev/Test,,40
+lcreporttest,Storage account,reporttest,West US 2,Dataapp Dev/Test,,40
+lcdblogs,Storage account,sf-data-dev,West Central US,Cashapp Dev/Test,,40
+lctenablescannerdiag,Storage account,tenable-scanner,West US 2,Cashapp Dev/Test,,40
+lctrdssds01,Storage account,tr_dss,West US,Cashapp Dev/Test,,40
+lcuatcentralus-logic,Logic app,uat-logic,Central US,Dataapp Dev/Test,,40
+lcuatsftpdiag,Storage account,uat-sftp,Central US,Dataapp Dev/Test,,40
+fftch-income-actuals-loadtest (lcdhdbserverdev/fftch-income-actuals-loadtest),db database,dev-data,Central US,Dataapp Dev/Test,,40
 fireapps,Container registry,Cashapp-docker,West Central US,Cashapp Dev/Test,,40
 fireappsdocker,Container registry,dockerregistry,West US 2,Cashapp Dev/Test,,40
 fireappsdocker,Storage account,Cashapp-docker,West Central US,Cashapp Dev/Test,,40
-forecast analysis-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,10
-forecast-analysis-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,49.47
-forecast-analysis-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,49.47
-forecast-analysis-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,49.47
-forecast-analysis-info-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,49.47
-forecast-analysis-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,49.47
-forecast-analysis-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,49.47
-forecast-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,99.95
-forecast-app-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,49.47
-forecast-data-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,49.47
-forecast-data-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,49.47
-forecast-data-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,135.15
-forecast-data-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,138
-forecast-data-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,99
-forecast-data-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,135.15
-forecast-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,55
-forecast-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,5
-forecast-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,5
-forecast-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,5
-forecast-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,5
-function712c7a62a9fa,Storage account,Cashapp-ase,West US,Cashapp Dev/Test,,5
+fc analysis-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,10
+fc-analysis-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,49.47
+fc-analysis-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,49.47
+fc-analysis-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,49.47
+fc-analysis-info-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,49.47
+fc-analysis-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,49.47
+fc-analysis-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,49.47
+fc-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,99.95
+fc-app-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,49.47
+fc-data-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,49.47
+fc-data-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,49.47
+fc-data-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,135.15
+fc-data-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,138
+fc-data-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,99
+fc-data-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,135.15
+fc-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,55
+fc-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,5
+fc-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,5
+fc-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,5
+fc-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,5
+function712c7a62a9lc,Storage account,Cashapp-ase,West US,Cashapp Dev/Test,,5
 gateway-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,5
 gateway-app-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,5
 gateway-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,50
 gateway-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,50
 gmail,API Connection,dev-infrastructure,Central US,Dataapp Dev/Test,,50
 gmail-1,API Connection,dev-infrastructure,Central US,Dataapp Dev/Test,,50
-gstevens8A041174-01D4-468A-93CF-B22E0620509A,Network Interface,devops-images,West US 2,Cashapp Dev/Test,,225
-gstevens8CFA0572-43CD-4AE4-BF37-9EDD1C613130,Virtual network,devops-images,West US 2,Cashapp Dev/Test,,0
+gstevens8A041174-01D4-468A-93CF-B22E0620509A,Network Interlcce,devops-images,West US 2,Cashapp Dev/Test,,225
+gstevens8Clc0572-43CD-4AE4-BF37-9EDD1C613130,Virtual network,devops-images,West US 2,Cashapp Dev/Test,,0
 gstevensBAAE2470-A98C-4875-8883-C57C7F2DF68C,Public IP address,devops-images,West US 2,Cashapp Dev/Test,,15
 hedge-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,0
 hedge-app-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,0
@@ -590,29 +590,29 @@ hedge-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp 
 hedge-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,20
 HubDevTest-ip,Public IP address,Company1hubrandd,West US,Dataapp Dev/Test,,20
 HubDevTest-nsg,Network security group,Company1hubrandd,West US,Dataapp Dev/Test,,20
-hubdevtest738,Network Interface,Company1hubrandd,West US,Dataapp Dev/Test,,20
+hubdevtest738,Network Interlcce,Company1hubrandd,West US,Dataapp Dev/Test,,20
 HubDevTest_OsDisk_1_7cd8df0226b04b8798ed69075c8cb132,Disk,Company1hubrandd,West US,Dataapp Dev/Test,,20
-inbound api v2-usdt-Dataapp-client-tests-centralus-appi,Availability test,usdt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,44
+inbound api v2-dt-Dataapp-client-tests-centralus-appi,Availability test,dt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,44
 inbound-api-swagger-dev-apis,Availability test,dev-api,South Central US,Dataapp Dev/Test,,23
 inbound-api-swagger-qa-apis,Availability test,qa-test,West US 2,Dataapp Dev/Test,,23
-ingestion engine core-usdt-Dataapp-client-tests-centralus-appi,Availability test,usdt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+ingestion engine core-dt-Dataapp-client-tests-centralus-appi,Availability test,dt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,0
 ingestion-api-swagger-dev-apis,Availability test,dev-api,South Central US,Dataapp Dev/Test,,0
 ingestion-api-swagger-qa-apis,Availability test,qa-test,West US 2,Dataapp Dev/Test,,0
-ingress-client-sftp-pip-001,Public IP address,usdt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+ingress-client-sftp-pip-001,Public IP address,dt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,0
 ingress-qa-sftp-pip-001,Public IP address,qa-sftp-rg-001,Central US,Dataapp Dev/Test,,0
-ingress-test-sftp-pip-001,Public IP address,usdt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+ingress-test-sftp-pip-001,Public IP address,dt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,0
 ismsstorage,Storage account,isms-resources,West US,Cashapp Dev/Test,,0
 xapp-int-dev,Virtual machine,xapp-integration-dev,West US 2,Cashapp Dev/Test,,0
 xapp-int-dev-gwy-ip,Public IP address,xapp-integration-dev,West US 2,Cashapp Dev/Test,,0
 xapp-int-dev-ip,Public IP address,xapp-integration-dev,West US 2,Cashapp Dev/Test,,0
 xapp-int-dev-nsg,Network security group,xapp-integration-dev,West US 2,Cashapp Dev/Test,,0
-xapp-int-dev80,Network Interface,xapp-integration-dev,West US 2,Cashapp Dev/Test,,33
+xapp-int-dev80,Network Interlcce,xapp-integration-dev,West US 2,Cashapp Dev/Test,,33
 xapp-int-dev_OsDisk_1_f75dc92cadc24e25a8aa1eb786023bc0,Disk,xapp-integration-dev,West US 2,Cashapp Dev/Test,,55
 xapp-int-qa,Virtual machine,xapp-integration-qa,West US 2,Cashapp Dev/Test,,0
 xapp-int-qa-gwy-ip,Public IP address,xapp-integration-qa,West US 2,Cashapp Dev/Test,,0
 xapp-int-qa-ip,Public IP address,xapp-integration-qa,West US 2,Cashapp Dev/Test,,20
 xapp-int-qa-nsg,Network security group,xapp-integration-qa,West US 2,Cashapp Dev/Test,,0
-xapp-int-qa80,Network Interface,xapp-integration-qa,West US 2,Cashapp Dev/Test,,0
+xapp-int-qa80,Network Interlcce,xapp-integration-qa,West US 2,Cashapp Dev/Test,,0
 xapp-int-qa_disk1_075bcb8522b04d9cb903682a6957679c,Disk,xapp-integration-qa,West US 2,Cashapp Dev/Test,,0
 xapp-integration-dev-vnet,Virtual network,xapp-integration-dev,West US 2,Cashapp Dev/Test,,111
 xapp-integration-dev-vnet-identity,Managed Identity,xapp-integration-dev,West US 2,Cashapp Dev/Test,,67
@@ -623,13 +623,13 @@ xappintegrationqadiag,Storage account,xapp-integration-qa,West US 2,Cashapp Dev/
 keyvault,API Connection,dev-logic,Central US,Dataapp Dev/Test,,40
 keyvault,API Connection,qa-logic,Central US,Dataapp Dev/Test,,40
 keyvault,API Connection,uat-logic,Central US,Dataapp Dev/Test,,40
-keyvault,API Connection,usdt-Dataapp-client-logic-centralus-rg-001,Central US,Dataapp Dev/Test,,40
-kubernetes,Load balancer,mc_usdt-aks-devops-centralus-rg-01_usdt-aks-devops-clstr-01_centralus,Central US,DevOps Dev/Test,,40
+keyvault,API Connection,dt-Dataapp-client-logic-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+kubernetes,Load balancer,mc_dt-aks-devops-centralus-rg-01_dt-aks-devops-clstr-01_centralus,Central US,DevOps Dev/Test,,40
 zx-cnx-dummy,Logic App (Standard),Company1-cnx-erptk,West US,Dataapp Dev/Test,,40
 zx-cnx-dummy,Application Insights,Company1-cnx-erptk,West US,Dataapp Dev/Test,,40
 zx-dy-payment-status-update,Logic app,dev-infrastructure,West US,Dataapp Dev/Test,,40
 zx-hilton-hedge-in,Logic app,zx-hilton-wf,Central US,Dataapp Dev/Test,,40
-zx-hilton-rates-in,Logic app,zx-hilton-wf,Central US,Dataapp Dev/Test,,40
+zx-hilton-fcruns-in,Logic app,zx-hilton-wf,Central US,Dataapp Dev/Test,,40
 zxdev-ddda8104,Virtual network,zxdev,West US,Dynamics Dev/Test,,10
 zxdev-networksecuritygroup,Network security group,zxdev,West US,Dynamics Dev/Test,,49.47
 zxdev9a97100216a31966,Storage account,zxdev,West US,Dynamics Dev/Test,,49.47
@@ -643,8 +643,8 @@ the-dev-api-vault,Key vault,the-api-dev,West US 2,Dataapp Dev/Test,,49.47
 the-devops,Function App,devops,West US 2,Cashapp Dev/Test,,49.47
 the-devops,Application Insights,devops,West US 2,Cashapp Dev/Test,,135.15
 the-devops-law,Log Analytics workspace,devops,West US,Cashapp Dev/Test,,138
-the-gateway-qa,Public IP address,usdt-Cashapp-qa-centralus-rg-001,West US 2,Cashapp Dev/Test,,99
-theCashappuatsqlstorage,Storage account,the-Cashapp-uat,West US 2,Cashapp Dev/Test,,135.15
+the-gateway-qa,Public IP address,dt-Cashapp-qa-centralus-rg-001,West US 2,Cashapp Dev/Test,,99
+theCashappuatdbstorage,Storage account,the-Cashapp-uat,West US 2,Cashapp Dev/Test,,135.15
 Company1-buddybot,Cognitive Service,ca-dev,Global,Cashapp Dev/Test,,55
 Company1-cnx-cashmgmt-test,Logic app,Company1-cnx-dynamics,West US,Dataapp Dev/Test,,5
 Company1-cnx-context,Logic app,Company1-cnx-dynamics,West US,Dataapp Dev/Test,,5
@@ -714,13 +714,13 @@ Company1-testdev,Public IP address,Company1-test,West US,Dynamics Dev/Test,,49.4
 Company1_D365_Integrations,Virtual network,Company1-dev,West US,Dynamics Dev/Test,,49.47
 Company1cnxoracle9bde,Storage account,Company1-cnx-oracle,East US,Dataapp Dev/Test,,49.47
 Company1Dev-1,Virtual machine,Company1-dev,West US,Dynamics Dev/Test,,49.47
-Company1dev-1,SQL virtual machine,Company1-dev,West US,Dynamics Dev/Test,,49.47
+Company1dev-1,db virtual machine,Company1-dev,West US,Dynamics Dev/Test,,49.47
 Company1Dev-buildDisk,Disk,Company1-dev,West US,Dynamics Dev/Test,,49.47
 Company1Dev-dataDisk0,Disk,Company1-dev,West US,Dynamics Dev/Test,,99.95
 Company1Dev-dataDisk1,Disk,Company1-dev,West US,Dynamics Dev/Test,,49.47
 Company1Dev-dataDisk2,Disk,Company1-dev,West US,Dynamics Dev/Test,,49.47
 Company1dev-loadbalancer,Load balancer,Company1-dev,West US,Dynamics Dev/Test,,49.47
-Company1Dev-nic-0,Network Interface,Company1-dev,West US,Dynamics Dev/Test,,135.15
+Company1Dev-nic-0,Network Interlcce,Company1-dev,West US,Dynamics Dev/Test,,135.15
 Company1Dev-osdisk,Disk,Company1-dev,West US,Dynamics Dev/Test,,138
 Company1devbdccae09724c663,Storage account,Company1-dev,West US,Dynamics Dev/Test,,99
 Company1ERPConnector,Logic apps custom connector,Company1-cnx-dynamics,West US,Dataapp Dev/Test,,135.15
@@ -728,13 +728,13 @@ Company1gold935fe11060a0b9,Storage account,Company1-gold,West US,Dynamics Dev/Te
 Company1HubRandD-vnet,Virtual network,Company1hubrandd,West US,Dataapp Dev/Test,,5
 Company1hubrandddiag,Storage account,Company1hubrandd,West US,Dataapp Dev/Test,,5
 Company1Test-1,Virtual machine,Company1-test,West US,Dynamics Dev/Test,,5
-Company1test-1,SQL virtual machine,Company1-test,West US,Dynamics Dev/Test,,5
+Company1test-1,db virtual machine,Company1-test,West US,Dynamics Dev/Test,,5
 Company1Test-buildDisk,Disk,Company1-test,West US,Dynamics Dev/Test,,5
 Company1Test-dataDisk0,Disk,Company1-test,West US,Dynamics Dev/Test,,5
 Company1Test-dataDisk1,Disk,Company1-test,West US,Dynamics Dev/Test,,5
 Company1Test-dataDisk2,Disk,Company1-test,West US,Dynamics Dev/Test,,50
 Company1test-loadbalancer,Load balancer,Company1-test,West US,Dynamics Dev/Test,,50
-Company1Test-nic-0,Network Interface,Company1-test,West US,Dynamics Dev/Test,,50
+Company1Test-nic-0,Network Interlcce,Company1-test,West US,Dynamics Dev/Test,,50
 Company1Test-osdisk,Disk,Company1-test,West US,Dynamics Dev/Test,,50
 Company1test4d81a214b88aba,Storage account,Company1-test,West US,Dynamics Dev/Test,,225
 theuatdatalogs,Storage account,sf-data-uat,West US 2,Cashapp Dev/Test,,0
@@ -759,7 +759,7 @@ log-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp De
 log-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,0
 LogicAppsManagement(platform-oms-ws),Solution,dev-infrastructure,East US,Dataapp Dev/Test,,0
 LogicAppsManagement(Company1-cnx-logicapp-monitor),Solution,Company1-cnx-monitor-log,West US,Dataapp Dev/Test,,0
-msgbus api  v2  oas3-usdt-Dataapp-client-tests-centralus-appi,Availability test,usdt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+msgbus api  v2  oas3-dt-Dataapp-client-tests-centralus-appi,Availability test,dt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,0
 msgbus-api-swagger-dev-apis,Availability test,dev-api,South Central US,Dataapp Dev/Test,,0
 msgbus-api-swagger-qa-apis,Availability test,qa-test,West US 2,Dataapp Dev/Test,,0
 NetworkWatcher_australiaeast,Network Watcher,networkwatcherrg,Australia East,Cashapp Dev/Test,,0
@@ -806,13 +806,13 @@ office365,API Connection,dev-logic,Central US,Dataapp Dev/Test,,135.15
 office365,API Connection,qa-logic,Central US,Dataapp Dev/Test,,55
 office365,API Connection,uat-logic,Central US,Dataapp Dev/Test,,5
 office365,API Connection,la-platform-orchestrator,West US 2,Dataapp Dev/Test,,5
-office365,API Connection,usdt-Dataapp-client-logic-centralus-rg-001,Central US,Dataapp Dev/Test,,5
+office365,API Connection,dt-Dataapp-client-logic-centralus-rg-001,Central US,Dataapp Dev/Test,,5
 office365-1,API Connection,dev-infrastructure,Central US,Dataapp Dev/Test,,5
 office365-1,API Connection,qa-infrastructure,Central US,Dataapp Dev/Test,,5
 office365-2,API Connection,dev-infrastructure,Central US,Dataapp Dev/Test,,5
 office365-3,API Connection,dev-infrastructure,Central US,Dataapp Dev/Test,,5
-oidcissuer17ffa6bf,Storage account,usdt-aks-devops-centralus-oidc-issuer,Central US,DevOps Dev/Test,,50
-outbound api v2  v2  oas3-usdt-Dataapp-client-tests-centralus-appi,Availability test,usdt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,50
+oidcissuer17flc6bf,Storage account,dt-aks-devops-centralus-oidc-issuer,Central US,DevOps Dev/Test,,50
+outbound api v2  v2  oas3-dt-Dataapp-client-tests-centralus-appi,Availability test,dt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,50
 outbound-api-swagger-dev-apis,Availability test,dev-api,South Central US,Dataapp Dev/Test,,50
 outbound-api-swagger-qa-apis,Availability test,qa-test,West US 2,Dataapp Dev/Test,,50
 pagerduty,API Connection,devops,West Central US,Cashapp Dev/Test,,225
@@ -832,43 +832,43 @@ period-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/
 period-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,44
 periof-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,23
 pkrosdh2n46jqbb,Disk,devops-build,Central US,Dataapp Dev/Test,,23
-platform reports api-usdt-Dataapp-client-tests-centralus-appi,Availability test,usdt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-platform security api  v1-usdt-Dataapp-client-tests-centralus-appi,Availability test,usdt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-privatelink.blob.core.windows.net,Private DNS zone,usdt-Dataapp-client-sftp-centralus-rg-001,Global,Dataapp Dev/Test,,0
-privatelink.blob.core.windows.net,Private DNS zone,usdt-Dataapp-test-sftp-centralus-rg-001,Global,Dataapp Dev/Test,,0
-provisioning metadata api service  v1-usdt-Dataapp-client-tests-centralus-appi,Availability test,usdt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+platform reports api-dt-Dataapp-client-tests-centralus-appi,Availability test,dt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+platform security api  v1-dt-Dataapp-client-tests-centralus-appi,Availability test,dt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+privatelink.blob.core.windows.net,Private DNS zone,dt-Dataapp-client-sftp-centralus-rg-001,Global,Dataapp Dev/Test,,0
+privatelink.blob.core.windows.net,Private DNS zone,dt-Dataapp-test-sftp-centralus-rg-001,Global,Dataapp Dev/Test,,0
+provisioning metadata api service  v1-dt-Dataapp-client-tests-centralus-appi,Availability test,dt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,0
 PublicIP-LB-FE,Public IP address,the-Cashapp-qa,West US 2,Cashapp Dev/Test,,0
 qa-Cashapp,Function App,qa-Cashapp,West Central US,Cashapp Dev/Test,,0
 qaCashapp80bf,Storage account,qa-Cashapp,West Central US,Cashapp Dev/Test,,0
-rate-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,0
-rate-app-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,0
-rate-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,0
-rate-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,33
-rate-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,55
-rate-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,0
-rate-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,0
-rateset data-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,20
-rateset-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,0
-rateset-app-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,0
-rateset-data-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,0
-rateset-data-app-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,111
-rateset-data-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,67
-rateset-data-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,23
-rateset-data-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,35
-rateset-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,66
-rateset-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,40
-rateset-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,40
-rateset-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,40
-rateset-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,40
-ratesetdata-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,40
-ratesource app-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,40
-ratesource-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,40
-ratesource-app-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,40
-ratesource-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,40
-ratesource-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,40
-ratesource-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,40
-ratesource-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,10
-reefinitive-dss-get-interest-rates,Logic app,tr_dss,West US,Cashapp Dev/Test,,49.47
+fcrun-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,0
+fcrun-app-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,0
+fcrun-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,0
+fcrun-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,33
+fcrun-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,55
+fcrun-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,0
+fcrun-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,0
+fcrunset data-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,20
+fcrunset-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,0
+fcrunset-app-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,0
+fcrunset-data-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,0
+fcrunset-data-app-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,111
+fcrunset-data-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,67
+fcrunset-data-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,23
+fcrunset-data-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,35
+fcrunset-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,66
+fcrunset-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,40
+fcrunset-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,40
+fcrunset-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,40
+fcrunset-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,40
+fcrunsetdata-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,40
+fcrunsource app-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,40
+fcrunsource-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,40
+fcrunsource-app-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,40
+fcrunsource-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,40
+fcrunsource-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,40
+fcrunsource-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,40
+fcrunsource-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,10
+reefinitive-dss-get-interest-fcruns,Logic app,tr_dss,West US,Cashapp Dev/Test,,49.47
 report data-dev-apis,Availability test,dev-api,South Central US,Dataapp Dev/Test,,49.47
 report data-qa-apis,Availability test,qa-test,West US 2,Dataapp Dev/Test,,49.47
 report-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,49.47
@@ -880,7 +880,7 @@ report-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp
 report-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,49.47
 reports api-dev-apis,Availability test,dev-api,South Central US,Dataapp Dev/Test,,135.15
 reports api-qa-apis,Availability test,qa-test,West US 2,Dataapp Dev/Test,,138
-salixsalsa (tenants1-mt-bbfa1/salixsalsa),SQL database,wingtip-sql-mt-bbfa1,Central US,Dataapp Dev/Test,,99
+salixsalsa (tenants1-mt-bblc1/salixsalsa),db database,wingtip-db-mt-bblc1,Central US,Dataapp Dev/Test,,99
 sap-scf-cnx-pt-export,Logic app,Company1-cnx-erptk,West US 2,Dataapp Dev/Test,,135.15
 sap-test-cf-upload,Logic app,Company1-cnx-erp-sap,West US,Dataapp Dev/Test,,55
 sap-test-scf-download,Logic app,Company1-cnx-erp-sap,West US,Dataapp Dev/Test,,5
@@ -894,19 +894,19 @@ ScheduledStartStop_Base_Classic (devops-auto-vms/ScheduledStartStop_Base_Classic
 ScheduledStartStop_Child (devops-auto-vms/ScheduledStartStop_Child),Runbook,devops,West US,Cashapp Dev/Test,,50
 ScheduledStartStop_Child_Classic (devops-auto-vms/ScheduledStartStop_Child_Classic),Runbook,devops,West US,Cashapp Dev/Test,,50
 ScheduledStartStop_Parent (devops-auto-vms/ScheduledStartStop_Parent),Runbook,devops,West US,Cashapp Dev/Test,,50
-Security(DefaultWorkspace-4d5bd3d4-df16-4662-934b-6d778c438235-CUS),Solution,defaultresourcegroup-cus,Central US,DevOps Dev/Test,,225
-Security(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-CUS),Solution,defaultresourcegroup-cus,Central US,Cashapp Dev/Test,,0
-Security(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EAU),Solution,defaultresourcegroup-eau,Australia East,Cashapp Dev/Test,,15
-Security(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EUS),Solution,defaultresourcegroup-eus,East US,Cashapp Dev/Test,,0
-Security(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WCUS),Solution,defaultresourcegroup-wcus,West Central US,Cashapp Dev/Test,,0
-Security(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS),Solution,defaultresourcegroup-wus,West US,Cashapp Dev/Test,,0
-Security(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS2),Solution,defaultresourcegroup-wus2,West US 2,Cashapp Dev/Test,,0
-Security(DefaultWorkspace-b3df7fa9-7793-48df-9f1d-188d5a08abf7-WUS),Solution,defaultresourcegroup-wus,West US,Dynamics Dev/Test,,20
-Security(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-CUS),Solution,defaultresourcegroup-cus,Central US,Dataapp Dev/Test,,20
-Security(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EAU),Solution,defaultresourcegroup-eau,Australia East,Dataapp Dev/Test,,20
-Security(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EUS),Solution,defaultresourcegroup-eus,East US,Dataapp Dev/Test,,20
-Security(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS),Solution,defaultresourcegroup-wus,West US,Dataapp Dev/Test,,20
-Security(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS2),Solution,defaultresourcegroup-wus2,West US 2,Dataapp Dev/Test,,20
+Security(DelcultWorkspace-4d5bd3d4-df16-4662-934b-6d778c438235-CUS),Solution,delcultresourcegroup-cus,Central US,DevOps Dev/Test,,225
+Security(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-CUS),Solution,delcultresourcegroup-cus,Central US,Cashapp Dev/Test,,0
+Security(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EAU),Solution,delcultresourcegroup-eau,Australia East,Cashapp Dev/Test,,15
+Security(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EUS),Solution,delcultresourcegroup-eus,East US,Cashapp Dev/Test,,0
+Security(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WCUS),Solution,delcultresourcegroup-wcus,West Central US,Cashapp Dev/Test,,0
+Security(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS),Solution,delcultresourcegroup-wus,West US,Cashapp Dev/Test,,0
+Security(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS2),Solution,delcultresourcegroup-wus2,West US 2,Cashapp Dev/Test,,0
+Security(DelcultWorkspace-b3df7lc9-7793-48df-9f1d-188d5a08abf7-WUS),Solution,delcultresourcegroup-wus,West US,Dynamics Dev/Test,,20
+Security(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-CUS),Solution,delcultresourcegroup-cus,Central US,Dataapp Dev/Test,,20
+Security(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EAU),Solution,delcultresourcegroup-eau,Australia East,Dataapp Dev/Test,,20
+Security(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EUS),Solution,delcultresourcegroup-eus,East US,Dataapp Dev/Test,,20
+Security(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS),Solution,delcultresourcegroup-wus,West US,Dataapp Dev/Test,,20
+Security(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS2),Solution,delcultresourcegroup-wus2,West US 2,Dataapp Dev/Test,,20
 security-api-swagger-dev-apis,Availability test,dev-api,South Central US,Dataapp Dev/Test,,20
 security-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,44
 security-app-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,23
@@ -915,19 +915,19 @@ security-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Tes
 security-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Test,,0
 security-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,0
 security-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,0
-SecurityCenterFree(DefaultWorkspace-4d5bd3d4-df16-4662-934b-6d778c438235-CUS),Solution,defaultresourcegroup-cus,Central US,DevOps Dev/Test,,0
-SecurityCenterFree(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-CUS),Solution,defaultresourcegroup-cus,Central US,Cashapp Dev/Test,,0
-SecurityCenterFree(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EAU),Solution,defaultresourcegroup-eau,Australia East,Cashapp Dev/Test,,0
-SecurityCenterFree(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EUS),Solution,defaultresourcegroup-eus,East US,Cashapp Dev/Test,,0
-SecurityCenterFree(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WCUS),Solution,defaultresourcegroup-wcus,West Central US,Cashapp Dev/Test,,0
-SecurityCenterFree(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS),Solution,defaultresourcegroup-wus,West US,Cashapp Dev/Test,,0
-SecurityCenterFree(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS2),Solution,defaultresourcegroup-wus2,West US 2,Cashapp Dev/Test,,0
-SecurityCenterFree(DefaultWorkspace-b3df7fa9-7793-48df-9f1d-188d5a08abf7-WUS),Solution,defaultresourcegroup-wus,West US,Dynamics Dev/Test,,33
-SecurityCenterFree(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-CUS),Solution,defaultresourcegroup-cus,Central US,Dataapp Dev/Test,,55
-SecurityCenterFree(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EAU),Solution,defaultresourcegroup-eau,Australia East,Dataapp Dev/Test,,0
-SecurityCenterFree(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EUS),Solution,defaultresourcegroup-eus,East US,Dataapp Dev/Test,,0
-SecurityCenterFree(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS),Solution,defaultresourcegroup-wus,West US,Dataapp Dev/Test,,20
-SecurityCenterFree(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS2),Solution,defaultresourcegroup-wus2,West US 2,Dataapp Dev/Test,,0
+SecurityCenterFree(DelcultWorkspace-4d5bd3d4-df16-4662-934b-6d778c438235-CUS),Solution,delcultresourcegroup-cus,Central US,DevOps Dev/Test,,0
+SecurityCenterFree(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-CUS),Solution,delcultresourcegroup-cus,Central US,Cashapp Dev/Test,,0
+SecurityCenterFree(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EAU),Solution,delcultresourcegroup-eau,Australia East,Cashapp Dev/Test,,0
+SecurityCenterFree(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EUS),Solution,delcultresourcegroup-eus,East US,Cashapp Dev/Test,,0
+SecurityCenterFree(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WCUS),Solution,delcultresourcegroup-wcus,West Central US,Cashapp Dev/Test,,0
+SecurityCenterFree(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS),Solution,delcultresourcegroup-wus,West US,Cashapp Dev/Test,,0
+SecurityCenterFree(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS2),Solution,delcultresourcegroup-wus2,West US 2,Cashapp Dev/Test,,0
+SecurityCenterFree(DelcultWorkspace-b3df7lc9-7793-48df-9f1d-188d5a08abf7-WUS),Solution,delcultresourcegroup-wus,West US,Dynamics Dev/Test,,33
+SecurityCenterFree(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-CUS),Solution,delcultresourcegroup-cus,Central US,Dataapp Dev/Test,,55
+SecurityCenterFree(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EAU),Solution,delcultresourcegroup-eau,Australia East,Dataapp Dev/Test,,0
+SecurityCenterFree(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EUS),Solution,delcultresourcegroup-eus,East US,Dataapp Dev/Test,,0
+SecurityCenterFree(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS),Solution,delcultresourcegroup-wus,West US,Dataapp Dev/Test,,20
+SecurityCenterFree(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS2),Solution,delcultresourcegroup-wus2,West US 2,Dataapp Dev/Test,,0
 SecurityCenterFree(dev-data-Oms-Workspace),Solution,dev-data,East US,Dataapp Dev/Test,,0
 SecurityCenterFree(platform-oms-ws),Solution,dev-infrastructure,East US,Dataapp Dev/Test,,0
 seovjpt5vqu5y2,Storage account,the-Cashapp-qa,West US 2,Cashapp Dev/Test,,111
@@ -938,22 +938,22 @@ servicebus,API Connection,dev-logic,Central US,Dataapp Dev/Test,,66
 servicebus,API Connection,qa-logic,Central US,Dataapp Dev/Test,,40
 servicebus,API Connection,uat-logic,Central US,Dataapp Dev/Test,,40
 servicebus,API Connection,zx-hilton-wf,Central US,Dataapp Dev/Test,,40
-servicebus,API Connection,usdt-Dataapp-client-logic-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+servicebus,API Connection,dt-Dataapp-client-logic-centralus-rg-001,Central US,Dataapp Dev/Test,,40
 servicebus-1,API Connection,dev-infrastructure,Central US,Dataapp Dev/Test,,40
 servicebus-2,API Connection,dev-infrastructure,Central US,Dataapp Dev/Test,,40
-sf-data-dev (usdt-Cashapp-dev-centralus-sqlserver-001/sf-data-dev),SQL database,usdt-data-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,40
-sf-data-hf (usdt-Cashapp-hf-centralus-sqlserver-001/sf-data-hf),SQL database,usdt-data-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,40
+sf-data-dev (dt-Cashapp-dev-centralus-dbserver-001/sf-data-dev),db database,dt-data-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,40
+sf-data-hf (dt-Cashapp-hf-centralus-dbserver-001/sf-data-hf),db database,dt-data-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,40
 sf-data-hfx,Service Bus Namespace,sf-data-hf,West US 2,Cashapp Dev/Test,,40
-sf-data-qa (usdt-Cashapp-qa-centralus-sqlserver-001/sf-data-qa),SQL database,usdt-data-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,40
-sf-data-uat (usdt-Cashapp-uat-centralus-sqlserver-001/sf-data-uat),SQL database,usdt-data-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,40
+sf-data-qa (dt-Cashapp-qa-centralus-dbserver-001/sf-data-qa),db database,dt-data-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,40
+sf-data-uat (dt-Cashapp-uat-centralus-dbserver-001/sf-data-uat),db database,dt-data-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,40
 sf-data-uat,Azure Cosmos DB API for MongoDB account,sf-data-uat,West US 2,Cashapp Dev/Test,,10
 sf-data-uat,Service Bus Namespace,sf-data-uat,West US 2,Cashapp Dev/Test,,49.47
-sf-data-uat,SQL server,sf-data-uat,West US 2,Cashapp Dev/Test,,49.47
-sf-data-uat (sf-data-uat/sf-data-uat),SQL database,sf-data-uat,West US 2,Cashapp Dev/Test,,49.47
+sf-data-uat,db server,sf-data-uat,West US 2,Cashapp Dev/Test,,49.47
+sf-data-uat (sf-data-uat/sf-data-uat),db database,sf-data-uat,West US 2,Cashapp Dev/Test,,49.47
 SF-Logging-dev,Application Insights,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,49.47
 sf-logging-uat,Application Insights,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,49.47
-sftp-main,Firewall Policy,usdt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,49.47
-sftpfirewall,Firewall,usdt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,99.95
+sftp-main,Firewall Policy,dt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,49.47
+sftpfirewall,Firewall,dt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,99.95
 sftpwithssh,API Connection,Company1-cnx-dynamics,West US,Dataapp Dev/Test,,49.47
 sftpwithssh-1,API Connection,Company1-cnx-dynamics,West US,Dataapp Dev/Test,,49.47
 sharepointonline,API Connection,pbi-deployment-rg,West US,Dataapp Dev/Test,,49.47
@@ -964,7 +964,7 @@ slack,API Connection,qa-infrastructure,Central US,Dataapp Dev/Test,,135.15
 slack,API Connection,qa-logic,Central US,Dataapp Dev/Test,,55
 slack,API Connection,uat-infrastructure,Central US,Dataapp Dev/Test,,5
 slack,API Connection,uat-logic,Central US,Dataapp Dev/Test,,5
-slack,API Connection,usdt-Dataapp-client-logic-centralus-rg-001,Central US,Dataapp Dev/Test,,5
+slack,API Connection,dt-Dataapp-client-logic-centralus-rg-001,Central US,Dataapp Dev/Test,,5
 slack-1,API Connection,dev-infrastructure,Central US,Dataapp Dev/Test,,5
 slack-1,API Connection,qa-infrastructure,Central US,Dataapp Dev/Test,,5
 slack-2,API Connection,dev-infrastructure,Central US,Dataapp Dev/Test,,5
@@ -976,116 +976,116 @@ SlackLogicAppsPlan,App Service plan,devops,West Central US,Cashapp Dev/Test,,50
 smtp,API Connection,dev-infrastructure,Central US,Dataapp Dev/Test,,225
 source-disk,Disk,devops-gavin,West US,Cashapp Dev/Test,,0
 splunkloggingdev,Storage account,splunk_logging,West Central US,Dataapp Dev/Test,,15
-sql,API Connection,Company1-cnx-dynamics,West US,Dataapp Dev/Test,,0
-sql-1,API Connection,zx-hilton-wf,Central US,Dataapp Dev/Test,,0
-sql-1,API Connection,Company1-cnx-dynamics,West US,Dataapp Dev/Test,,0
-sql-2,API Connection,Company1-cnx-dynamics,West US,Dataapp Dev/Test,,0
-SQLAdvancedThreatProtection(DefaultWorkspace-4d5bd3d4-df16-4662-934b-6d778c438235-CUS),Solution,defaultresourcegroup-cus,Central US,DevOps Dev/Test,,20
-SQLAdvancedThreatProtection(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-CUS),Solution,defaultresourcegroup-cus,Central US,Cashapp Dev/Test,,20
-SQLAdvancedThreatProtection(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EAU),Solution,defaultresourcegroup-eau,Australia East,Cashapp Dev/Test,,20
-SQLAdvancedThreatProtection(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EUS),Solution,defaultresourcegroup-eus,East US,Cashapp Dev/Test,,20
-SQLAdvancedThreatProtection(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WCUS),Solution,defaultresourcegroup-wcus,West Central US,Cashapp Dev/Test,,20
-SQLAdvancedThreatProtection(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS),Solution,defaultresourcegroup-wus,West US,Cashapp Dev/Test,,20
-SQLAdvancedThreatProtection(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS2),Solution,defaultresourcegroup-wus2,West US 2,Cashapp Dev/Test,,20
-SQLAdvancedThreatProtection(DefaultWorkspace-b3df7fa9-7793-48df-9f1d-188d5a08abf7-WUS),Solution,defaultresourcegroup-wus,West US,Dynamics Dev/Test,,44
-SQLAdvancedThreatProtection(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-CUS),Solution,defaultresourcegroup-cus,Central US,Dataapp Dev/Test,,23
-SQLAdvancedThreatProtection(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EAU),Solution,defaultresourcegroup-eau,Australia East,Dataapp Dev/Test,,23
-SQLAdvancedThreatProtection(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EUS),Solution,defaultresourcegroup-eus,East US,Dataapp Dev/Test,,0
-SQLAdvancedThreatProtection(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS),Solution,defaultresourcegroup-wus,West US,Dataapp Dev/Test,,0
-SQLAdvancedThreatProtection(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS2),Solution,defaultresourcegroup-wus2,West US 2,Dataapp Dev/Test,,0
-SQLAuditing[fadhsqlserverdev-law],Solution,dev-data,Central US,Dataapp Dev/Test,,0
-SQLDB-prc_IndexMaintenance (devops-automation/SQLDB-prc_IndexMaintenance),Runbook,Cashapp-ase,West Central US,Cashapp Dev/Test,,0
-SQLDB-Scheduled-IndexMaintenance (devops-automation/SQLDB-Scheduled-IndexMaintenance),Runbook,Cashapp-ase,West Central US,Cashapp Dev/Test,,0
-sqlEU_E03f42e714 (fadhsqlserverdev/sqlEU_E03f42e714),SQL database,dev-data,Central US,Dataapp Dev/Test,,0
-sqlEU_E03f42e714 (fadhsqlserverqa/sqlEU_E03f42e714),SQL database,qa-data,Central US,Dataapp Dev/Test,,0
-sqlEU_E03f42e714 (fadhsqlserveruat/sqlEU_E03f42e714),SQL database,uat-data,Central US,Dataapp Dev/Test,,0
-sqlEU_E03f42e714 (usdtdhclientsql01/sqlEU_E03f42e714),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-sqlEU_E03f42e714 (dhsqlsrvtest/sqlEU_E03f42e714),SQL database,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-sqlEU_E48f3ec3f8 (fadhsqlserverdev/sqlEU_E48f3ec3f8),SQL database,dev-data,Central US,Dataapp Dev/Test,,33
-sqlEU_E48f3ec3f8 (fadhsqlserverqa/sqlEU_E48f3ec3f8),SQL database,qa-data,Central US,Dataapp Dev/Test,,55
-sqlEU_E48f3ec3f8 (fadhsqlserveruat/sqlEU_E48f3ec3f8),SQL database,uat-data,Central US,Dataapp Dev/Test,,0
-sqlEU_E48f3ec3f8 (usdtdhclientsql01/sqlEU_E48f3ec3f8),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-sqlEU_E5e452a95e (fadhsqlserverdev/sqlEU_E5e452a95e),SQL database,dev-data,Central US,Dataapp Dev/Test,,20
-sqlEU_E5e452a95e (fadhsqlserverqa/sqlEU_E5e452a95e),SQL database,qa-data,Central US,Dataapp Dev/Test,,0
-sqlEU_E5e452a95e (fadhsqlserveruat/sqlEU_E5e452a95e),SQL database,uat-data,Central US,Dataapp Dev/Test,,0
-sqlEU_E5e452a95e (usdtdhclientsql01/sqlEU_E5e452a95e),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-sqlEU_E5e452a95e (dhsqlsrvtest/sqlEU_E5e452a95e),SQL database,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,111
-sqlEU_E756018007 (fadhsqlserverdev/sqlEU_E756018007),SQL database,dev-data,Central US,Dataapp Dev/Test,,67
-sqlEU_E756018007 (fadhsqlserverqa/sqlEU_E756018007),SQL database,qa-data,Central US,Dataapp Dev/Test,,23
-sqlEU_E756018007 (fadhsqlserveruat/sqlEU_E756018007),SQL database,uat-data,Central US,Dataapp Dev/Test,,35
-sqlEU_E756018007 (usdtdhclientsql01/sqlEU_E756018007),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,66
-sqleventsessionstorage,Storage account,Cashapp-ase,West Central US,Cashapp Dev/Test,,40
-sqlUS_E348abf423 (fadhsqlserverdev/sqlUS_E348abf423),SQL database,dev-data,Central US,Dataapp Dev/Test,,40
-sqlUS_E348abf423 (fadhsqlserverqa/sqlUS_E348abf423),SQL database,qa-data,Central US,Dataapp Dev/Test,,40
-sqlUS_E348abf423 (fadhsqlserveruat/sqlUS_E348abf423),SQL database,uat-data,Central US,Dataapp Dev/Test,,40
-sqlUS_E348abf423 (usdtdhclientsql01/sqlUS_E348abf423),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,40
-sqlUS_E39f427cb1 (fadhsqlserverdev/sqlUS_E39f427cb1),SQL database,dev-data,Central US,Dataapp Dev/Test,,40
-sqlUS_E39f427cb1 (fadhsqlserverqa/sqlUS_E39f427cb1),SQL database,qa-data,Central US,Dataapp Dev/Test,,40
-sqlUS_E39f427cb1 (fadhsqlserveruat/sqlUS_E39f427cb1),SQL database,uat-data,Central US,Dataapp Dev/Test,,40
-sqlUS_E39f427cb1 (usdtdhclientsql01/sqlUS_E39f427cb1),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,40
-sqlUS_E4ee9bb6b9 (fadhsqlserverdev/sqlUS_E4ee9bb6b9),SQL database,dev-data,Central US,Dataapp Dev/Test,,40
-sqlUS_E4ee9bb6b9 (fadhsqlserverqa/sqlUS_E4ee9bb6b9),SQL database,qa-data,Central US,Dataapp Dev/Test,,40
-sqlUS_E4ee9bb6b9 (fadhsqlserveruat/sqlUS_E4ee9bb6b9),SQL database,uat-data,Central US,Dataapp Dev/Test,,10
-sqlUS_E4ee9bb6b9 (usdtdhclientsql01/sqlUS_E4ee9bb6b9),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
-sqlUS_E4ee9bb6b9 (dhsqlsrvtest/sqlUS_E4ee9bb6b9),SQL database,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
-sqlUS_E563b14a2c (fadhsqlserverdev/sqlUS_E563b14a2c),SQL database,dev-data,Central US,Dataapp Dev/Test,,49.47
-sqlUS_E563b14a2c (fadhsqlserverqa/sqlUS_E563b14a2c),SQL database,qa-data,Central US,Dataapp Dev/Test,,49.47
-sqlUS_E563b14a2c (fadhsqlserveruat/sqlUS_E563b14a2c),SQL database,uat-data,Central US,Dataapp Dev/Test,,49.47
-sqlUS_E563b14a2c (usdtdhclientsql01/sqlUS_E563b14a2c),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
-sqlUS_E563b14a2c (dhsqlsrvtest/sqlUS_E563b14a2c),SQL database,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,99.95
-sqlUS_E78f759eb5 (fadhsqlserverdev/sqlUS_E78f759eb5),SQL database,dev-data,Central US,Dataapp Dev/Test,,49.47
-sqlUS_E78f759eb5 (fadhsqlserverqa/sqlUS_E78f759eb5),SQL database,qa-data,Central US,Dataapp Dev/Test,,49.47
-sqlUS_E78f759eb5 (fadhsqlserveruat/sqlUS_E78f759eb5),SQL database,uat-data,Central US,Dataapp Dev/Test,,49.47
-sqlUS_E78f759eb5 (usdtdhclientsql01/sqlUS_E78f759eb5),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,135.15
-sqlUS_E78f759eb5 (dhsqlsrvtest/sqlUS_E78f759eb5),SQL database,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,138
-sqlUS_E8e1b22ea8 (fadhsqlserverdev/sqlUS_E8e1b22ea8),SQL database,dev-data,Central US,Dataapp Dev/Test,,99
-sqlUS_E8e1b22ea8 (fadhsqlserverqa/sqlUS_E8e1b22ea8),SQL database,qa-data,Central US,Dataapp Dev/Test,,135.15
-sqlUS_E8e1b22ea8 (fadhsqlserveruat/sqlUS_E8e1b22ea8),SQL database,uat-data,Central US,Dataapp Dev/Test,,55
-sqlUS_E8e1b22ea8 (usdtdhclientsql01/sqlUS_E8e1b22ea8),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,5
-sqlUS_Ea63164776 (fadhsqlserverdev/sqlUS_Ea63164776),SQL database,dev-data,Central US,Dataapp Dev/Test,,5
-sqlUS_Ea63164776 (fadhsqlserverqa/sqlUS_Ea63164776),SQL database,qa-data,Central US,Dataapp Dev/Test,,5
-sqlUS_Ea63164776 (fadhsqlserveruat/sqlUS_Ea63164776),SQL database,uat-data,Central US,Dataapp Dev/Test,,5
-sqlUS_Ea63164776 (usdtdhclientsql01/sqlUS_Ea63164776),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,5
-sqlUS_Eb37eaa78b (fadhsqlserverdev/sqlUS_Eb37eaa78b),SQL database,dev-data,Central US,Dataapp Dev/Test,,5
-sqlUS_Eb37eaa78b (fadhsqlserverqa/sqlUS_Eb37eaa78b),SQL database,qa-data,Central US,Dataapp Dev/Test,,5
-sqlUS_Eb37eaa78b (fadhsqlserveruat/sqlUS_Eb37eaa78b),SQL database,uat-data,Central US,Dataapp Dev/Test,,50
-sqlUS_Eb37eaa78b (usdtdhclientsql01/sqlUS_Eb37eaa78b),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,50
-sqlUS_Ebd0ebcaac (fadhsqlserverdev/sqlUS_Ebd0ebcaac),SQL database,dev-data,Central US,Dataapp Dev/Test,,50
-sqlUS_Ebd0ebcaac (fadhsqlserverqa/sqlUS_Ebd0ebcaac),SQL database,qa-data,Central US,Dataapp Dev/Test,,50
-sqlUS_Ebd0ebcaac (fadhsqlserveruat/sqlUS_Ebd0ebcaac),SQL database,uat-data,Central US,Dataapp Dev/Test,,225
-sqlUS_Ebd0ebcaac (usdtdhclientsql01/sqlUS_Ebd0ebcaac),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-sqlUS_F65a32408b (fadhsqlserverdev/sqlUS_F65a32408b),SQL database,dev-data,Central US,Dataapp Dev/Test,,15
-sqlUS_I055401242 (fadhsqlserverdev/sqlUS_I055401242),SQL database,dev-data,Central US,Dataapp Dev/Test,,0
-sqlUS_I055401242 (fadhsqlserverqa/sqlUS_I055401242),SQL database,qa-data,Central US,Dataapp Dev/Test,,0
-sqlUS_I055401242 (fadhsqlserveruat/sqlUS_I055401242),SQL database,uat-data,Central US,Dataapp Dev/Test,,0
-sqlUS_I055401242 (usdtdhclientsql01/sqlUS_I055401242),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-sqlUS_I055401242 (dhsqlsrvtest/sqlUS_I055401242),SQL database,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,20
-sqlUS_I1e39c8a1c (fadhsqlserverdev/sqlUS_I1e39c8a1c),SQL database,dev-data,Central US,Dataapp Dev/Test,,20
-sqlUS_I1e39c8a1c (fadhsqlserverqa/sqlUS_I1e39c8a1c),SQL database,qa-data,Central US,Dataapp Dev/Test,,20
-sqlUS_I1e39c8a1c (fadhsqlserveruat/sqlUS_I1e39c8a1c),SQL database,uat-data,Central US,Dataapp Dev/Test,,20
-sqlUS_I1e39c8a1c (usdtdhclientsql01/sqlUS_I1e39c8a1c),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,20
-sqlUS_I999999999 (fadhsqlserverdev/sqlUS_I999999999),SQL database,dev-data,Central US,Dataapp Dev/Test,,20
-sqlUS_I999999999 (fadhsqlserverqa/sqlUS_I999999999),SQL database,qa-data,Central US,Dataapp Dev/Test,,20
-sqlUS_I999999999 (fadhsqlserveruat/sqlUS_I999999999),SQL database,uat-data,Central US,Dataapp Dev/Test,,44
-sqlUS_I999999999 (usdtdhclientsql01/sqlUS_I999999999),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,23
-sqlUS_I999999999 (dhsqlsrvtest/sqlUS_I999999999),SQL database,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,23
-sqlUS_If6bab46d7 (fadhsqlserverdev/sqlUS_If6bab46d7),SQL database,dev-data,Central US,Dataapp Dev/Test,,0
-sqlUS_If6bab46d7 (fadhsqlserverqa/sqlUS_If6bab46d7),SQL database,qa-data,Central US,Dataapp Dev/Test,,0
-sqlUS_If6bab46d7 (fadhsqlserveruat/sqlUS_If6bab46d7),SQL database,uat-data,Central US,Dataapp Dev/Test,,0
-sqlUS_If6bab46d7 (usdtdhclientsql01/sqlUS_If6bab46d7),SQL database,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-SQLVulnerabilityAssessment(DefaultWorkspace-4d5bd3d4-df16-4662-934b-6d778c438235-CUS),Solution,defaultresourcegroup-cus,Central US,DevOps Dev/Test,,0
-SQLVulnerabilityAssessment(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-CUS),Solution,defaultresourcegroup-cus,Central US,Cashapp Dev/Test,,0
-SQLVulnerabilityAssessment(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EAU),Solution,defaultresourcegroup-eau,Australia East,Cashapp Dev/Test,,0
-SQLVulnerabilityAssessment(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EUS),Solution,defaultresourcegroup-eus,East US,Cashapp Dev/Test,,0
-SQLVulnerabilityAssessment(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WCUS),Solution,defaultresourcegroup-wcus,West Central US,Cashapp Dev/Test,,0
-SQLVulnerabilityAssessment(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS),Solution,defaultresourcegroup-wus,West US,Cashapp Dev/Test,,0
-SQLVulnerabilityAssessment(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS2),Solution,defaultresourcegroup-wus2,West US 2,Cashapp Dev/Test,,0
-SQLVulnerabilityAssessment(DefaultWorkspace-b3df7fa9-7793-48df-9f1d-188d5a08abf7-WUS),Solution,defaultresourcegroup-wus,West US,Dynamics Dev/Test,,33
-SQLVulnerabilityAssessment(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-CUS),Solution,defaultresourcegroup-cus,Central US,Dataapp Dev/Test,,55
-SQLVulnerabilityAssessment(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EAU),Solution,defaultresourcegroup-eau,Australia East,Dataapp Dev/Test,,0
-SQLVulnerabilityAssessment(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EUS),Solution,defaultresourcegroup-eus,East US,Dataapp Dev/Test,,0
-SQLVulnerabilityAssessment(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS),Solution,defaultresourcegroup-wus,West US,Dataapp Dev/Test,,20
-SQLVulnerabilityAssessment(DefaultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS2),Solution,defaultresourcegroup-wus2,West US 2,Dataapp Dev/Test,,0
+db,API Connection,Company1-cnx-dynamics,West US,Dataapp Dev/Test,,0
+db-1,API Connection,zx-hilton-wf,Central US,Dataapp Dev/Test,,0
+db-1,API Connection,Company1-cnx-dynamics,West US,Dataapp Dev/Test,,0
+db-2,API Connection,Company1-cnx-dynamics,West US,Dataapp Dev/Test,,0
+dbAdvancedThreatProtection(DelcultWorkspace-4d5bd3d4-df16-4662-934b-6d778c438235-CUS),Solution,delcultresourcegroup-cus,Central US,DevOps Dev/Test,,20
+dbAdvancedThreatProtection(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-CUS),Solution,delcultresourcegroup-cus,Central US,Cashapp Dev/Test,,20
+dbAdvancedThreatProtection(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EAU),Solution,delcultresourcegroup-eau,Australia East,Cashapp Dev/Test,,20
+dbAdvancedThreatProtection(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EUS),Solution,delcultresourcegroup-eus,East US,Cashapp Dev/Test,,20
+dbAdvancedThreatProtection(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WCUS),Solution,delcultresourcegroup-wcus,West Central US,Cashapp Dev/Test,,20
+dbAdvancedThreatProtection(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS),Solution,delcultresourcegroup-wus,West US,Cashapp Dev/Test,,20
+dbAdvancedThreatProtection(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS2),Solution,delcultresourcegroup-wus2,West US 2,Cashapp Dev/Test,,20
+dbAdvancedThreatProtection(DelcultWorkspace-b3df7lc9-7793-48df-9f1d-188d5a08abf7-WUS),Solution,delcultresourcegroup-wus,West US,Dynamics Dev/Test,,44
+dbAdvancedThreatProtection(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-CUS),Solution,delcultresourcegroup-cus,Central US,Dataapp Dev/Test,,23
+dbAdvancedThreatProtection(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EAU),Solution,delcultresourcegroup-eau,Australia East,Dataapp Dev/Test,,23
+dbAdvancedThreatProtection(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EUS),Solution,delcultresourcegroup-eus,East US,Dataapp Dev/Test,,0
+dbAdvancedThreatProtection(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS),Solution,delcultresourcegroup-wus,West US,Dataapp Dev/Test,,0
+dbAdvancedThreatProtection(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS2),Solution,delcultresourcegroup-wus2,West US 2,Dataapp Dev/Test,,0
+dbAuditing[lcdhdbserverdev-law],Solution,dev-data,Central US,Dataapp Dev/Test,,0
+dbDB-prc_IndexMaintenance (devops-automation/dbDB-prc_IndexMaintenance),Runbook,Cashapp-ase,West Central US,Cashapp Dev/Test,,0
+dbDB-Scheduled-IndexMaintenance (devops-automation/dbDB-Scheduled-IndexMaintenance),Runbook,Cashapp-ase,West Central US,Cashapp Dev/Test,,0
+dbEU_E03f42e714 (lcdhdbserverdev/dbEU_E03f42e714),db database,dev-data,Central US,Dataapp Dev/Test,,0
+dbEU_E03f42e714 (lcdhdbserverqa/dbEU_E03f42e714),db database,qa-data,Central US,Dataapp Dev/Test,,0
+dbEU_E03f42e714 (lcdhdbserveruat/dbEU_E03f42e714),db database,uat-data,Central US,Dataapp Dev/Test,,0
+dbEU_E03f42e714 (dtdhclientdb01/dbEU_E03f42e714),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dbEU_E03f42e714 (dhdbsrvtest/dbEU_E03f42e714),db database,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dbEU_E48f3ec3f8 (lcdhdbserverdev/dbEU_E48f3ec3f8),db database,dev-data,Central US,Dataapp Dev/Test,,33
+dbEU_E48f3ec3f8 (lcdhdbserverqa/dbEU_E48f3ec3f8),db database,qa-data,Central US,Dataapp Dev/Test,,55
+dbEU_E48f3ec3f8 (lcdhdbserveruat/dbEU_E48f3ec3f8),db database,uat-data,Central US,Dataapp Dev/Test,,0
+dbEU_E48f3ec3f8 (dtdhclientdb01/dbEU_E48f3ec3f8),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dbEU_E5e452a95e (lcdhdbserverdev/dbEU_E5e452a95e),db database,dev-data,Central US,Dataapp Dev/Test,,20
+dbEU_E5e452a95e (lcdhdbserverqa/dbEU_E5e452a95e),db database,qa-data,Central US,Dataapp Dev/Test,,0
+dbEU_E5e452a95e (lcdhdbserveruat/dbEU_E5e452a95e),db database,uat-data,Central US,Dataapp Dev/Test,,0
+dbEU_E5e452a95e (dtdhclientdb01/dbEU_E5e452a95e),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dbEU_E5e452a95e (dhdbsrvtest/dbEU_E5e452a95e),db database,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,111
+dbEU_E756018007 (lcdhdbserverdev/dbEU_E756018007),db database,dev-data,Central US,Dataapp Dev/Test,,67
+dbEU_E756018007 (lcdhdbserverqa/dbEU_E756018007),db database,qa-data,Central US,Dataapp Dev/Test,,23
+dbEU_E756018007 (lcdhdbserveruat/dbEU_E756018007),db database,uat-data,Central US,Dataapp Dev/Test,,35
+dbEU_E756018007 (dtdhclientdb01/dbEU_E756018007),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,66
+dbeventsessionstorage,Storage account,Cashapp-ase,West Central US,Cashapp Dev/Test,,40
+dbUS_E348abf423 (lcdhdbserverdev/dbUS_E348abf423),db database,dev-data,Central US,Dataapp Dev/Test,,40
+dbUS_E348abf423 (lcdhdbserverqa/dbUS_E348abf423),db database,qa-data,Central US,Dataapp Dev/Test,,40
+dbUS_E348abf423 (lcdhdbserveruat/dbUS_E348abf423),db database,uat-data,Central US,Dataapp Dev/Test,,40
+dbUS_E348abf423 (dtdhclientdb01/dbUS_E348abf423),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+dbUS_E39f427cb1 (lcdhdbserverdev/dbUS_E39f427cb1),db database,dev-data,Central US,Dataapp Dev/Test,,40
+dbUS_E39f427cb1 (lcdhdbserverqa/dbUS_E39f427cb1),db database,qa-data,Central US,Dataapp Dev/Test,,40
+dbUS_E39f427cb1 (lcdhdbserveruat/dbUS_E39f427cb1),db database,uat-data,Central US,Dataapp Dev/Test,,40
+dbUS_E39f427cb1 (dtdhclientdb01/dbUS_E39f427cb1),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,40
+dbUS_E4ee9bb6b9 (lcdhdbserverdev/dbUS_E4ee9bb6b9),db database,dev-data,Central US,Dataapp Dev/Test,,40
+dbUS_E4ee9bb6b9 (lcdhdbserverqa/dbUS_E4ee9bb6b9),db database,qa-data,Central US,Dataapp Dev/Test,,40
+dbUS_E4ee9bb6b9 (lcdhdbserveruat/dbUS_E4ee9bb6b9),db database,uat-data,Central US,Dataapp Dev/Test,,10
+dbUS_E4ee9bb6b9 (dtdhclientdb01/dbUS_E4ee9bb6b9),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+dbUS_E4ee9bb6b9 (dhdbsrvtest/dbUS_E4ee9bb6b9),db database,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+dbUS_E563b14a2c (lcdhdbserverdev/dbUS_E563b14a2c),db database,dev-data,Central US,Dataapp Dev/Test,,49.47
+dbUS_E563b14a2c (lcdhdbserverqa/dbUS_E563b14a2c),db database,qa-data,Central US,Dataapp Dev/Test,,49.47
+dbUS_E563b14a2c (lcdhdbserveruat/dbUS_E563b14a2c),db database,uat-data,Central US,Dataapp Dev/Test,,49.47
+dbUS_E563b14a2c (dtdhclientdb01/dbUS_E563b14a2c),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+dbUS_E563b14a2c (dhdbsrvtest/dbUS_E563b14a2c),db database,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,99.95
+dbUS_E78f759eb5 (lcdhdbserverdev/dbUS_E78f759eb5),db database,dev-data,Central US,Dataapp Dev/Test,,49.47
+dbUS_E78f759eb5 (lcdhdbserverqa/dbUS_E78f759eb5),db database,qa-data,Central US,Dataapp Dev/Test,,49.47
+dbUS_E78f759eb5 (lcdhdbserveruat/dbUS_E78f759eb5),db database,uat-data,Central US,Dataapp Dev/Test,,49.47
+dbUS_E78f759eb5 (dtdhclientdb01/dbUS_E78f759eb5),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,135.15
+dbUS_E78f759eb5 (dhdbsrvtest/dbUS_E78f759eb5),db database,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,138
+dbUS_E8e1b22ea8 (lcdhdbserverdev/dbUS_E8e1b22ea8),db database,dev-data,Central US,Dataapp Dev/Test,,99
+dbUS_E8e1b22ea8 (lcdhdbserverqa/dbUS_E8e1b22ea8),db database,qa-data,Central US,Dataapp Dev/Test,,135.15
+dbUS_E8e1b22ea8 (lcdhdbserveruat/dbUS_E8e1b22ea8),db database,uat-data,Central US,Dataapp Dev/Test,,55
+dbUS_E8e1b22ea8 (dtdhclientdb01/dbUS_E8e1b22ea8),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,5
+dbUS_Ea63164776 (lcdhdbserverdev/dbUS_Ea63164776),db database,dev-data,Central US,Dataapp Dev/Test,,5
+dbUS_Ea63164776 (lcdhdbserverqa/dbUS_Ea63164776),db database,qa-data,Central US,Dataapp Dev/Test,,5
+dbUS_Ea63164776 (lcdhdbserveruat/dbUS_Ea63164776),db database,uat-data,Central US,Dataapp Dev/Test,,5
+dbUS_Ea63164776 (dtdhclientdb01/dbUS_Ea63164776),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,5
+dbUS_Eb37eaa78b (lcdhdbserverdev/dbUS_Eb37eaa78b),db database,dev-data,Central US,Dataapp Dev/Test,,5
+dbUS_Eb37eaa78b (lcdhdbserverqa/dbUS_Eb37eaa78b),db database,qa-data,Central US,Dataapp Dev/Test,,5
+dbUS_Eb37eaa78b (lcdhdbserveruat/dbUS_Eb37eaa78b),db database,uat-data,Central US,Dataapp Dev/Test,,50
+dbUS_Eb37eaa78b (dtdhclientdb01/dbUS_Eb37eaa78b),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,50
+dbUS_Ebd0ebcaac (lcdhdbserverdev/dbUS_Ebd0ebcaac),db database,dev-data,Central US,Dataapp Dev/Test,,50
+dbUS_Ebd0ebcaac (lcdhdbserverqa/dbUS_Ebd0ebcaac),db database,qa-data,Central US,Dataapp Dev/Test,,50
+dbUS_Ebd0ebcaac (lcdhdbserveruat/dbUS_Ebd0ebcaac),db database,uat-data,Central US,Dataapp Dev/Test,,225
+dbUS_Ebd0ebcaac (dtdhclientdb01/dbUS_Ebd0ebcaac),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dbUS_F65a32408b (lcdhdbserverdev/dbUS_F65a32408b),db database,dev-data,Central US,Dataapp Dev/Test,,15
+dbUS_I055401242 (lcdhdbserverdev/dbUS_I055401242),db database,dev-data,Central US,Dataapp Dev/Test,,0
+dbUS_I055401242 (lcdhdbserverqa/dbUS_I055401242),db database,qa-data,Central US,Dataapp Dev/Test,,0
+dbUS_I055401242 (lcdhdbserveruat/dbUS_I055401242),db database,uat-data,Central US,Dataapp Dev/Test,,0
+dbUS_I055401242 (dtdhclientdb01/dbUS_I055401242),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dbUS_I055401242 (dhdbsrvtest/dbUS_I055401242),db database,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,20
+dbUS_I1e39c8a1c (lcdhdbserverdev/dbUS_I1e39c8a1c),db database,dev-data,Central US,Dataapp Dev/Test,,20
+dbUS_I1e39c8a1c (lcdhdbserverqa/dbUS_I1e39c8a1c),db database,qa-data,Central US,Dataapp Dev/Test,,20
+dbUS_I1e39c8a1c (lcdhdbserveruat/dbUS_I1e39c8a1c),db database,uat-data,Central US,Dataapp Dev/Test,,20
+dbUS_I1e39c8a1c (dtdhclientdb01/dbUS_I1e39c8a1c),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,20
+dbUS_I999999999 (lcdhdbserverdev/dbUS_I999999999),db database,dev-data,Central US,Dataapp Dev/Test,,20
+dbUS_I999999999 (lcdhdbserverqa/dbUS_I999999999),db database,qa-data,Central US,Dataapp Dev/Test,,20
+dbUS_I999999999 (lcdhdbserveruat/dbUS_I999999999),db database,uat-data,Central US,Dataapp Dev/Test,,44
+dbUS_I999999999 (dtdhclientdb01/dbUS_I999999999),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,23
+dbUS_I999999999 (dhdbsrvtest/dbUS_I999999999),db database,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,23
+dbUS_If6bab46d7 (lcdhdbserverdev/dbUS_If6bab46d7),db database,dev-data,Central US,Dataapp Dev/Test,,0
+dbUS_If6bab46d7 (lcdhdbserverqa/dbUS_If6bab46d7),db database,qa-data,Central US,Dataapp Dev/Test,,0
+dbUS_If6bab46d7 (lcdhdbserveruat/dbUS_If6bab46d7),db database,uat-data,Central US,Dataapp Dev/Test,,0
+dbUS_If6bab46d7 (dtdhclientdb01/dbUS_If6bab46d7),db database,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dbVulnerabilityAssessment(DelcultWorkspace-4d5bd3d4-df16-4662-934b-6d778c438235-CUS),Solution,delcultresourcegroup-cus,Central US,DevOps Dev/Test,,0
+dbVulnerabilityAssessment(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-CUS),Solution,delcultresourcegroup-cus,Central US,Cashapp Dev/Test,,0
+dbVulnerabilityAssessment(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EAU),Solution,delcultresourcegroup-eau,Australia East,Cashapp Dev/Test,,0
+dbVulnerabilityAssessment(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-EUS),Solution,delcultresourcegroup-eus,East US,Cashapp Dev/Test,,0
+dbVulnerabilityAssessment(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WCUS),Solution,delcultresourcegroup-wcus,West Central US,Cashapp Dev/Test,,0
+dbVulnerabilityAssessment(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS),Solution,delcultresourcegroup-wus,West US,Cashapp Dev/Test,,0
+dbVulnerabilityAssessment(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS2),Solution,delcultresourcegroup-wus2,West US 2,Cashapp Dev/Test,,0
+dbVulnerabilityAssessment(DelcultWorkspace-b3df7lc9-7793-48df-9f1d-188d5a08abf7-WUS),Solution,delcultresourcegroup-wus,West US,Dynamics Dev/Test,,33
+dbVulnerabilityAssessment(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-CUS),Solution,delcultresourcegroup-cus,Central US,Dataapp Dev/Test,,55
+dbVulnerabilityAssessment(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EAU),Solution,delcultresourcegroup-eau,Australia East,Dataapp Dev/Test,,0
+dbVulnerabilityAssessment(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-EUS),Solution,delcultresourcegroup-eus,East US,Dataapp Dev/Test,,0
+dbVulnerabilityAssessment(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS),Solution,delcultresourcegroup-wus,West US,Dataapp Dev/Test,,20
+dbVulnerabilityAssessment(DelcultWorkspace-db5e8945-f308-4ddb-a061-e58473c2c016-WUS2),Solution,delcultresourcegroup-wus2,West US 2,Dataapp Dev/Test,,0
 Start-Stop-VM[the-devops-law],Solution,devops,West US,Cashapp Dev/Test,,0
 storageaccountdatah9138,Storage account,Dataapp-devops,Central US,Dataapp Dev/Test,,0
 storageaccountdevopa973,Storage account,devops,West US 2,Cashapp Dev/Test,,111
@@ -1094,11 +1094,11 @@ streamset-demo-rg-vnet,Virtual network,streamset-demo-rg,West US,Dataapp Dev/Tes
 streamset-demo-vm,Virtual machine,streamset-demo-rg,West US,Dataapp Dev/Test,,35
 streamset-demo-vm-ip,Public IP address,streamset-demo-rg,West US,Dataapp Dev/Test,,66
 streamset-demo-vm-nsg,Network security group,streamset-demo-rg,West US,Dataapp Dev/Test,,40
-streamset-demo-vm390,Network Interface,streamset-demo-rg,West US,Dataapp Dev/Test,,40
+streamset-demo-vm390,Network Interlcce,streamset-demo-rg,West US,Dataapp Dev/Test,,40
 streamset-demo-vm_OsDisk_1_693b166a9eef4e609514924be937d817,Disk,streamset-demo-rg,West US,Dataapp Dev/Test,,40
-tenantcatalog (catalog-mt-bbfa1/tenantcatalog),SQL database,wingtip-sql-mt-bbfa1,Central US,Dataapp Dev/Test,,40
-tenants1 (tenants1-mt-bbfa1/tenants1),SQL database,wingtip-sql-mt-bbfa1,Central US,Dataapp Dev/Test,,40
-tenants1-mt-bbfa1,SQL server,wingtip-sql-mt-bbfa1,Central US,Dataapp Dev/Test,,40
+tenantcatalog (catalog-mt-bblc1/tenantcatalog),db database,wingtip-db-mt-bblc1,Central US,Dataapp Dev/Test,,40
+tenants1 (tenants1-mt-bblc1/tenants1),db database,wingtip-db-mt-bblc1,Central US,Dataapp Dev/Test,,40
+tenants1-mt-bblc1,db server,wingtip-db-mt-bblc1,Central US,Dataapp Dev/Test,,40
 test-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,40
 test2-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,40
 testdeploybot,Language understanding,deploy-bot,West Central US,Cashapp Dev/Test,,40
@@ -1118,137 +1118,137 @@ uat-outbound-uat-apis,Availability test,uat-test,West US 2,Dataapp Dev/Test,,49.
 uat-report-data-uat-apis,Availability test,uat-test,West US 2,Dataapp Dev/Test,,135.15
 uat-reports-uat-apis,Availability test,uat-test,West US 2,Dataapp Dev/Test,,138
 uat-security-uat-apis,Availability test,uat-test,West US 2,Dataapp Dev/Test,,99
-Update-SQLIndexRunbook (devops-automation/Update-SQLIndexRunbook),Runbook,Cashapp-ase,West Central US,Cashapp Dev/Test,,135.15
-usdt-aks-devops-centralus-vnet-01,Virtual network,usdt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,55
-usdt-aks-devops-clstr-01,Kubernetes service,usdt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,5
-usdt-aks-devops-clstr-pip-01,Public IP address,usdt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,5
-usdt-aks-devops-ingress-gwy-01,Application gateway,usdt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,5
-usdt-aks-shared-centralus-vnet-01,Virtual network,usdt-aks-shared-centralus-rg-01,Central US,DevOps Dev/Test,,5
-usdt-backups-Cashapp-centralus-df-001,Data factory (V2),usdt-backups-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,5
-usdt-backups-Cashapp-centralus-rv-001,Recovery Services vault,usdt-backups-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,5
-usdt-backups-Cashapp-uat-centralus-rv-001,Recovery Services vault,usdt-backups-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,5
-usdt-backups-Dataapp-centralus-rv-001,Recovery Services vault,usdt-backups-Dataapp-centralus-rg-001,Central US,Dataapp Dev/Test,,50
-usdt-bas-shared-centralus-vnet-001,Virtual network,usdt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,50
-usdt-Cashapp-dev-centralus-asp,App Service plan,usdt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,50
-usdt-Cashapp-dev-centralus-cosmos-001,Azure Cosmos DB API for MongoDB account,usdt-data-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,50
-usdt-Cashapp-dev-centralus-lb-001,Load balancer,usdt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,225
-usdt-Cashapp-dev-centralus-nsg-001,Network security group,usdt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdt-Cashapp-dev-centralus-pip-001,Public IP address,usdt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,15
-usdt-Cashapp-dev-centralus-servicebus-001,Service Bus Namespace,usdt-data-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdt-Cashapp-dev-centralus-sf-001,Service Fabric cluster,usdt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdt-Cashapp-dev-centralus-sqlserver-001,SQL server,usdt-data-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdt-Cashapp-dev-centralus-vmss-001,Virtual machine scale set,usdt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdt-Cashapp-dev-centralus-vnet-001,Virtual network,usdt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,20
-usdt-Cashapp-hf-centralus-asp,App Service plan,usdt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,20
-usdt-Cashapp-hf-centralus-cosmos-001,Azure Cosmos DB API for MongoDB account,usdt-data-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,20
-usdt-Cashapp-hf-centralus-lb-003,Load balancer,usdt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,20
-usdt-Cashapp-hf-centralus-nsg-001,Network security group,usdt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,20
-usdt-Cashapp-hf-centralus-pip-003,Public IP address,usdt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,20
-usdt-Cashapp-hf-centralus-servicebus-001,Service Bus Namespace,usdt-data-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,20
-USDT-Cashapp-HF-CENTRALUS-SF-003,Service Fabric cluster,usdt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,44
-usdt-Cashapp-hf-centralus-sqlserver-001,SQL server,usdt-data-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,23
-usdt-Cashapp-hf-centralus-vmss-003,Virtual machine scale set,usdt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,23
-usdt-Cashapp-hf-centralus-vnet-001,Virtual network,usdt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdt-Cashapp-qa-centralus-asp,App Service plan,usdt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdt-Cashapp-qa-centralus-cosmos-001,Azure Cosmos DB API for MongoDB account,usdt-data-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdt-Cashapp-qa-centralus-lb-001,Load balancer,usdt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdt-Cashapp-qa-centralus-nsg-001,Network security group,usdt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdt-Cashapp-qa-centralus-pip-001,Public IP address,usdt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdt-Cashapp-qa-centralus-servicebus-001,Service Bus Namespace,usdt-data-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdt-Cashapp-qa-centralus-sf-001,Service Fabric cluster,usdt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdt-Cashapp-qa-centralus-sqlserver-001,SQL server,usdt-data-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdt-Cashapp-qa-centralus-vmss-001,Virtual machine scale set,usdt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdt-Cashapp-qa-centralus-vnet-001,Virtual network,usdt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdt-Cashapp-uat-centralus-asp,App Service plan,usdt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,33
-usdt-Cashapp-uat-centralus-cosmos-001,Azure Cosmos DB API for MongoDB account,usdt-data-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,55
-usdt-Cashapp-uat-centralus-lb-001,Load balancer,usdt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,0
-usdt-Cashapp-uat-centralus-nsg-001,Network security group,usdt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,0
-usdt-Cashapp-uat-centralus-pip-001,Public IP address,usdt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,20
-usdt-Cashapp-uat-centralus-servicebus-001,Service Bus Namespace,usdt-data-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,0
-usdt-Cashapp-uat-centralus-sf-001,Service Fabric cluster,usdt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,0
-usdt-Cashapp-uat-centralus-sqlserver-001,SQL server,usdt-data-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,0
-usdt-Cashapp-uat-centralus-vmss-001,Virtual machine scale set,usdt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,111
-usdt-Cashapp-uat-centralus-vnet-001,Virtual network,usdt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,67
-usdt-Cashappfrontend-dev-centralus-app,App Service,usdt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,23
-usdt-Cashappfrontend-hf-centralus-app,App Service,usdt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,35
-usdt-Cashappfrontend-qa-centralus-app,App Service,usdt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,66
-usdt-Cashappfrontend-uat-centralus-app,App Service,usdt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,40
-usdt-Cashappgwy-dev-centralus-app,App Service,usdt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,40
-usdt-Cashappgwy-hf-centralus-app,App Service,usdt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,40
-usdt-Cashappgwy-qa-centralus-app,App Service,usdt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,40
-usdt-Cashappgwy-uat-centralus-app,App Service,usdt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,40
-usdt-cf-dev-centralus-kv,Key vault,usdt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,40
-usdt-cf-hf-centralus-kv,Key vault,usdt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,40
-usdt-cf-qa-centralus-kv,Key vault,usdt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,40
-usdt-cf-uat-centralus-kv,Key vault,usdt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,40
-usdt-config-Cashapp-centralus-appcs-001,App Configuration,usdt-config-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,40
-usdt-config-Cashapp-uat-centralus-appcs-001,App Configuration,usdt-config-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,40
-usdt-Dataapp-client-centralus-plan,App Service plan,usdt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,10
-usdt-Dataapp-client-sftp-centralus-vnet-001,Virtual network,usdt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
-usdt-Dataapp-client-sftp-centralus-vnet-001-bastion,Bastion,usdt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
-usdt-Dataapp-client-sftp-centralus-vnet-001-ip,Public IP address,usdt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
-usdt-Dataapp-client-sftp-centralus-vnet-001-nsg,Network security group,usdt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
-usdt-Dataapp-client-tests-centralus-appi,Application Insights,usdt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
-usdt-Dataapp-test-centralus-plan,App Service plan,usdt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
-usdt-Dataapp-test-sftp-centralus-vnet-001,Virtual network,usdt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,99.95
-usdt-Dataapp-test-sftp-centralus-vnet-001-nsg,Network security group,usdt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
-usdt-Dataapp-test-tests-centralus-appi,Application Insights,usdt-Dataapp-test-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
-usdt-ha-client-cosmos-01,Azure Cosmos DB account,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
-usdt-ha-client-kv,Key vault,usdt-Dataapp-client-security-centralus-rg-001,Central US,Dataapp Dev/Test,,135.15
-usdt-ha-test-cosmos-01,Azure Cosmos DB account,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,138
-usdt-ha-test-kv,Key vault,usdt-Dataapp-test-security-centralus-rg-001,Central US,Dataapp Dev/Test,,99
-usdt-qa-sftp-centralus-vnet-001,Virtual network,qa-sftp-rg-001,Central US,Dataapp Dev/Test,,135.15
-usdt-qa-sftp-centralus-vnet-001-nsg,Network security group,qa-sftp-rg-001,Central US,Dataapp Dev/Test,,55
-usdt-fwl-shared-centralus-vnet-001,Virtual network,usdt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,5
-usdt-jump-devops-centralus-nic,Network Interface,usdt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,5
-usdt-jump-devops-centralus-vm,Virtual machine,usdt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,5
-usdt-jump-devops-centralus-vm_OsDisk_1_fb8ad4d151934f44807a7422a009e96a,Disk,usdt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,5
-usdt-jump-shared-centralus-nic,Network Interface,usdt-aks-shared-centralus-rg-01,Central US,DevOps Dev/Test,,5
-usdt-jump-shared-centralus-vm,Virtual machine,usdt-aks-shared-centralus-rg-01,Central US,DevOps Dev/Test,,5
-usdt-jump-shared-centralus-vm_OsDisk_1_ecab33673eab4691ad809f3e9b880d50,Disk,usdt-aks-shared-centralus-rg-01,Central US,DevOps Dev/Test,,5
-usdt-logging-Cashapp-centralus-evhns-001,Event Hubs Namespace,usdt-logging-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,50
-usdt-logging-Cashapp-centralus-plan-001,App Service plan,usdt-logging-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,50
-usdt-logging-Cashapp-evh-func-001,Function App,usdt-logging-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,50
-usdt-logging-Cashapp-stg-func-001,Function App,usdt-logging-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,50
-usdt-logging-Cashapp-uat-centralus-evhns-001,Event Hubs Namespace,usdt-logging-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,225
-usdt-logging-Cashapp-uat-centralus-plan-001,App Service plan,usdt-logging-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,0
-usdt-logging-Cashapp-uat-evh-func-001,Function App,usdt-logging-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,15
-usdt-logging-Cashapp-uat-stg-func-001,Function App,usdt-logging-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,0
-usdt-logging-Dataapp-appinsights,Application Insights,usdt-logging-Dataapp-centralus-rg-001,West US 2,Dataapp Dev/Test,,0
-usdt-logging-Dataapp-centralus-evhns-001,Event Hubs Namespace,usdt-logging-Dataapp-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-usdt-logging-Dataapp-centralus-plan-001,App Service plan,usdt-logging-Dataapp-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-usdt-logging-Dataapp-evh-func-001,Function App,usdt-logging-Dataapp-centralus-rg-001,Central US,Dataapp Dev/Test,,20
-usdt-logging-Dataapp-stg-func-001,Function App,usdt-logging-Dataapp-centralus-rg-001,Central US,Dataapp Dev/Test,,20
-usdt-logging-devops-law-001,Log Analytics workspace,usdt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,20
-usdt-logging-shared-centralus-evhns-001,Event Hubs Namespace,usdt-logging-shared-centralus-rg-001,Central US,DevOps Dev/Test,,20
-usdt-logging-shared-centralus-plan-001,App Service plan,usdt-logging-shared-centralus-rg-001,Central US,DevOps Dev/Test,,20
-usdt-logging-shared-evh-func-001,Function App,usdt-logging-shared-centralus-rg-001,Central US,DevOps Dev/Test,,20
-usdt-logging-shared-evh-func-001,Application Insights,usdt-logging-shared-centralus-rg-001,Central US,DevOps Dev/Test,,20
-usdt-logging-shared-law-001,Log Analytics workspace,usdt-aks-shared-centralus-rg-01,Central US,DevOps Dev/Test,,44
-usdt-logging-shared-stg-func-001,Function App,usdt-logging-shared-centralus-rg-001,Central US,DevOps Dev/Test,,23
-usdt-manage-shared-centralus-law-001,Log Analytics workspace,usdt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,23
-usdt-shared-kv-001,Key vault,usdt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,0
-usdt-svc-shared-centralus-bas-001,Bastion,usdt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,0
-usdt-svc-shared-centralus-bas-001PublicIp,Public IP address,usdt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,0
-usdtCashappappbackup,Storage account,usdt-backups-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,0
-usdtdhclientdla001,Data Lake Analytics,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-usdtdhclientdls001,Data Lake Storage Gen1,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-usdtdhclientpool01 (usdtdhclientsql01/usdtdhclientpool01),SQL elastic pool,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-usdtdhclientsb,Service Bus Namespace,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-usdtdhclientsql01,SQL server,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-usdtdhclientsql01-law,Log Analytics workspace,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-usdtdhclientst001,Storage account,usdt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-usdtdhclientst001-pe,Private endpoint,usdt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,33
-usdtdhclientst001-pe.nic.275c56dc-7aee-428d-ae86-0218907b0f60,Network Interface,usdt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,55
-usdtdhtestdla001,Data Lake Analytics,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-usdtdhtestdls001,Data Lake Storage Gen1,usdt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-usdtloggingCashappst1,Storage account,usdt-logging-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,20
-usdtloggingCashappuatst,Storage account,usdt-logging-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,0
-usdtloggingDataappst1,Storage account,usdt-logging-Dataapp-centralus-rg-001,Central US,Dataapp Dev/Test,,0
-usdtloggingshared,Azure Data Explorer Cluster,usdt-logging-shared-centralus-rg-001,Central US,DevOps Dev/Test,,0
-usdtloggingsharedst001,Storage account,usdt-logging-shared-centralus-rg-001,Central US,DevOps Dev/Test,,111
-usdtuatCashappappbackup,Storage account,usdt-backups-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,67
-Use-SqlCommandSample (devops-automation/Use-SqlCommandSample),Runbook,Cashapp-ase,West Central US,Cashapp Dev/Test,,23
+Update-dbIndexRunbook (devops-automation/Update-dbIndexRunbook),Runbook,Cashapp-ase,West Central US,Cashapp Dev/Test,,135.15
+dt-aks-devops-centralus-vnet-01,Virtual network,dt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,55
+dt-aks-devops-clstr-01,Kubernetes service,dt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,5
+dt-aks-devops-clstr-pip-01,Public IP address,dt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,5
+dt-aks-devops-ingress-gwy-01,Application gateway,dt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,5
+dt-aks-shared-centralus-vnet-01,Virtual network,dt-aks-shared-centralus-rg-01,Central US,DevOps Dev/Test,,5
+dt-backups-Cashapp-centralus-df-001,Data lcctory (V2),dt-backups-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,5
+dt-backups-Cashapp-centralus-rv-001,Recovery Services vault,dt-backups-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,5
+dt-backups-Cashapp-uat-centralus-rv-001,Recovery Services vault,dt-backups-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,5
+dt-backups-Dataapp-centralus-rv-001,Recovery Services vault,dt-backups-Dataapp-centralus-rg-001,Central US,Dataapp Dev/Test,,50
+dt-bas-shared-centralus-vnet-001,Virtual network,dt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,50
+dt-Cashapp-dev-centralus-asp,App Service plan,dt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,50
+dt-Cashapp-dev-centralus-cosmos-001,Azure Cosmos DB API for MongoDB account,dt-data-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,50
+dt-Cashapp-dev-centralus-lb-001,Load balancer,dt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,225
+dt-Cashapp-dev-centralus-nsg-001,Network security group,dt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dt-Cashapp-dev-centralus-pip-001,Public IP address,dt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,15
+dt-Cashapp-dev-centralus-servicebus-001,Service Bus Namespace,dt-data-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dt-Cashapp-dev-centralus-sf-001,Service lcbric cluster,dt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dt-Cashapp-dev-centralus-dbserver-001,db server,dt-data-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dt-Cashapp-dev-centralus-vmss-001,Virtual machine scale set,dt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dt-Cashapp-dev-centralus-vnet-001,Virtual network,dt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,20
+dt-Cashapp-hf-centralus-asp,App Service plan,dt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,20
+dt-Cashapp-hf-centralus-cosmos-001,Azure Cosmos DB API for MongoDB account,dt-data-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,20
+dt-Cashapp-hf-centralus-lb-003,Load balancer,dt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,20
+dt-Cashapp-hf-centralus-nsg-001,Network security group,dt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,20
+dt-Cashapp-hf-centralus-pip-003,Public IP address,dt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,20
+dt-Cashapp-hf-centralus-servicebus-001,Service Bus Namespace,dt-data-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,20
+dt-Cashapp-HF-CENTRALUS-SF-003,Service lcbric cluster,dt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,44
+dt-Cashapp-hf-centralus-dbserver-001,db server,dt-data-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,23
+dt-Cashapp-hf-centralus-vmss-003,Virtual machine scale set,dt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,23
+dt-Cashapp-hf-centralus-vnet-001,Virtual network,dt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dt-Cashapp-qa-centralus-asp,App Service plan,dt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dt-Cashapp-qa-centralus-cosmos-001,Azure Cosmos DB API for MongoDB account,dt-data-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dt-Cashapp-qa-centralus-lb-001,Load balancer,dt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dt-Cashapp-qa-centralus-nsg-001,Network security group,dt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dt-Cashapp-qa-centralus-pip-001,Public IP address,dt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dt-Cashapp-qa-centralus-servicebus-001,Service Bus Namespace,dt-data-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dt-Cashapp-qa-centralus-sf-001,Service lcbric cluster,dt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dt-Cashapp-qa-centralus-dbserver-001,db server,dt-data-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dt-Cashapp-qa-centralus-vmss-001,Virtual machine scale set,dt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dt-Cashapp-qa-centralus-vnet-001,Virtual network,dt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dt-Cashapp-uat-centralus-asp,App Service plan,dt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,33
+dt-Cashapp-uat-centralus-cosmos-001,Azure Cosmos DB API for MongoDB account,dt-data-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,55
+dt-Cashapp-uat-centralus-lb-001,Load balancer,dt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,0
+dt-Cashapp-uat-centralus-nsg-001,Network security group,dt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,0
+dt-Cashapp-uat-centralus-pip-001,Public IP address,dt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,20
+dt-Cashapp-uat-centralus-servicebus-001,Service Bus Namespace,dt-data-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,0
+dt-Cashapp-uat-centralus-sf-001,Service lcbric cluster,dt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,0
+dt-Cashapp-uat-centralus-dbserver-001,db server,dt-data-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,0
+dt-Cashapp-uat-centralus-vmss-001,Virtual machine scale set,dt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,111
+dt-Cashapp-uat-centralus-vnet-001,Virtual network,dt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,67
+dt-Cashappfrontend-dev-centralus-app,App Service,dt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,23
+dt-Cashappfrontend-hf-centralus-app,App Service,dt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,35
+dt-Cashappfrontend-qa-centralus-app,App Service,dt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,66
+dt-Cashappfrontend-uat-centralus-app,App Service,dt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,40
+dt-Cashappgwy-dev-centralus-app,App Service,dt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,40
+dt-Cashappgwy-hf-centralus-app,App Service,dt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,40
+dt-Cashappgwy-qa-centralus-app,App Service,dt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,40
+dt-Cashappgwy-uat-centralus-app,App Service,dt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,40
+dt-cf-dev-centralus-kv,Key vault,dt-Cashapp-dev-centralus-rg-001,Central US,Cashapp Dev/Test,,40
+dt-cf-hf-centralus-kv,Key vault,dt-Cashapp-hf-centralus-rg-001,Central US,Cashapp Dev/Test,,40
+dt-cf-qa-centralus-kv,Key vault,dt-Cashapp-qa-centralus-rg-001,Central US,Cashapp Dev/Test,,40
+dt-cf-uat-centralus-kv,Key vault,dt-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,40
+dt-config-Cashapp-centralus-appcs-001,App Configuration,dt-config-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,40
+dt-config-Cashapp-uat-centralus-appcs-001,App Configuration,dt-config-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,40
+dt-Dataapp-client-centralus-plan,App Service plan,dt-Dataapp-client-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,10
+dt-Dataapp-client-sftp-centralus-vnet-001,Virtual network,dt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+dt-Dataapp-client-sftp-centralus-vnet-001-bastion,Bastion,dt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+dt-Dataapp-client-sftp-centralus-vnet-001-ip,Public IP address,dt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+dt-Dataapp-client-sftp-centralus-vnet-001-nsg,Network security group,dt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+dt-Dataapp-client-tests-centralus-appi,Application Insights,dt-Dataapp-client-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+dt-Dataapp-test-centralus-plan,App Service plan,dt-Dataapp-test-apps-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+dt-Dataapp-test-sftp-centralus-vnet-001,Virtual network,dt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,99.95
+dt-Dataapp-test-sftp-centralus-vnet-001-nsg,Network security group,dt-Dataapp-test-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+dt-Dataapp-test-tests-centralus-appi,Application Insights,dt-Dataapp-test-tests-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+dt-ha-client-cosmos-01,Azure Cosmos DB account,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,49.47
+dt-ha-client-kv,Key vault,dt-Dataapp-client-security-centralus-rg-001,Central US,Dataapp Dev/Test,,135.15
+dt-ha-test-cosmos-01,Azure Cosmos DB account,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,138
+dt-ha-test-kv,Key vault,dt-Dataapp-test-security-centralus-rg-001,Central US,Dataapp Dev/Test,,99
+dt-qa-sftp-centralus-vnet-001,Virtual network,qa-sftp-rg-001,Central US,Dataapp Dev/Test,,135.15
+dt-qa-sftp-centralus-vnet-001-nsg,Network security group,qa-sftp-rg-001,Central US,Dataapp Dev/Test,,55
+dt-fwl-shared-centralus-vnet-001,Virtual network,dt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,5
+dt-jump-devops-centralus-nic,Network Interlcce,dt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,5
+dt-jump-devops-centralus-vm,Virtual machine,dt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,5
+dt-jump-devops-centralus-vm_OsDisk_1_fb8ad4d151934f44807a7422a009e96a,Disk,dt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,5
+dt-jump-shared-centralus-nic,Network Interlcce,dt-aks-shared-centralus-rg-01,Central US,DevOps Dev/Test,,5
+dt-jump-shared-centralus-vm,Virtual machine,dt-aks-shared-centralus-rg-01,Central US,DevOps Dev/Test,,5
+dt-jump-shared-centralus-vm_OsDisk_1_ecab33673eab4691ad809f3e9b880d50,Disk,dt-aks-shared-centralus-rg-01,Central US,DevOps Dev/Test,,5
+dt-logging-Cashapp-centralus-evhns-001,Event Hubs Namespace,dt-logging-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,50
+dt-logging-Cashapp-centralus-plan-001,App Service plan,dt-logging-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,50
+dt-logging-Cashapp-evh-func-001,Function App,dt-logging-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,50
+dt-logging-Cashapp-stg-func-001,Function App,dt-logging-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,50
+dt-logging-Cashapp-uat-centralus-evhns-001,Event Hubs Namespace,dt-logging-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,225
+dt-logging-Cashapp-uat-centralus-plan-001,App Service plan,dt-logging-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,0
+dt-logging-Cashapp-uat-evh-func-001,Function App,dt-logging-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,15
+dt-logging-Cashapp-uat-stg-func-001,Function App,dt-logging-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,0
+dt-logging-Dataapp-appinsights,Application Insights,dt-logging-Dataapp-centralus-rg-001,West US 2,Dataapp Dev/Test,,0
+dt-logging-Dataapp-centralus-evhns-001,Event Hubs Namespace,dt-logging-Dataapp-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dt-logging-Dataapp-centralus-plan-001,App Service plan,dt-logging-Dataapp-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dt-logging-Dataapp-evh-func-001,Function App,dt-logging-Dataapp-centralus-rg-001,Central US,Dataapp Dev/Test,,20
+dt-logging-Dataapp-stg-func-001,Function App,dt-logging-Dataapp-centralus-rg-001,Central US,Dataapp Dev/Test,,20
+dt-logging-devops-law-001,Log Analytics workspace,dt-aks-devops-centralus-rg-01,Central US,DevOps Dev/Test,,20
+dt-logging-shared-centralus-evhns-001,Event Hubs Namespace,dt-logging-shared-centralus-rg-001,Central US,DevOps Dev/Test,,20
+dt-logging-shared-centralus-plan-001,App Service plan,dt-logging-shared-centralus-rg-001,Central US,DevOps Dev/Test,,20
+dt-logging-shared-evh-func-001,Function App,dt-logging-shared-centralus-rg-001,Central US,DevOps Dev/Test,,20
+dt-logging-shared-evh-func-001,Application Insights,dt-logging-shared-centralus-rg-001,Central US,DevOps Dev/Test,,20
+dt-logging-shared-law-001,Log Analytics workspace,dt-aks-shared-centralus-rg-01,Central US,DevOps Dev/Test,,44
+dt-logging-shared-stg-func-001,Function App,dt-logging-shared-centralus-rg-001,Central US,DevOps Dev/Test,,23
+dt-manage-shared-centralus-law-001,Log Analytics workspace,dt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,23
+dt-shared-kv-001,Key vault,dt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,0
+dt-svc-shared-centralus-bas-001,Bastion,dt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,0
+dt-svc-shared-centralus-bas-001PublicIp,Public IP address,dt-manage-shared-centralus-rg-001,Central US,DevOps Dev/Test,,0
+dtCashappappbackup,Storage account,dt-backups-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,0
+dtdhclientdla001,Data Lake Analytics,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dtdhclientdls001,Data Lake Storage Gen1,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dtdhclientpool01 (dtdhclientdb01/dtdhclientpool01),db elastic pool,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dtdhclientsb,Service Bus Namespace,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dtdhclientdb01,db server,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dtdhclientdb01-law,Log Analytics workspace,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dtdhclientst001,Storage account,dt-Dataapp-client-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dtdhclientst001-pe,Private endpoint,dt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,33
+dtdhclientst001-pe.nic.275c56dc-7aee-428d-ae86-0218907b0f60,Network Interlcce,dt-Dataapp-client-sftp-centralus-rg-001,Central US,Dataapp Dev/Test,,55
+dtdhtestdla001,Data Lake Analytics,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dtdhtestdls001,Data Lake Storage Gen1,dt-Dataapp-test-data-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dtloggingCashappst1,Storage account,dt-logging-Cashapp-centralus-rg-001,Central US,Cashapp Dev/Test,,20
+dtloggingCashappuatst,Storage account,dt-logging-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,0
+dtloggingDataappst1,Storage account,dt-logging-Dataapp-centralus-rg-001,Central US,Dataapp Dev/Test,,0
+dtloggingshared,Azure Data Explorer Cluster,dt-logging-shared-centralus-rg-001,Central US,DevOps Dev/Test,,0
+dtloggingsharedst001,Storage account,dt-logging-shared-centralus-rg-001,Central US,DevOps Dev/Test,,111
+dtuatCashappappbackup,Storage account,dt-backups-Cashapp-uat-centralus-rg-001,Central US,Cashapp UAT,,67
+Use-dbCommandSample (devops-automation/Use-dbCommandSample),Runbook,Cashapp-ase,West Central US,Cashapp Dev/Test,,23
 user-app-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,35
 user-app-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,66
 user-Cashapp-hf,Availability test,Cashapp-hf-tests,West US 2,Cashapp Dev/Test,,40
@@ -1257,7 +1257,7 @@ user-info-Cashapp-qa,Availability test,Cashapp-qa-tests,West US 2,Cashapp Dev/Te
 user-info-sf-logging-dev,Availability test,Cashapp-dev-tests,West US 2,Cashapp Dev/Test,,40
 user-info-uat-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,40
 usLinux,App Service plan,ca-dev,West US 2,Cashapp Dev/Test,,40
-VMInsights(DefaultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS2),Solution,defaultresourcegroup-wus2,West US 2,Cashapp Dev/Test,,40
+VMInsights(DelcultWorkspace-a7a2514f-1b96-4dee-84c6-7e6056ba5097-WUS2),Solution,delcultresourcegroup-wus2,West US 2,Cashapp Dev/Test,,40
 VNet,Virtual network,the-Cashapp-qa,West US 2,Cashapp Dev/Test,,40
 VNet-Cashapp-dev,Virtual network,tenable-scanner,West US 2,Cashapp Dev/Test,,40
 zuul gateway-sf-logging-uat,Availability test,Cashapp-uat-tests,West US 2,Cashapp Dev/Test,,40

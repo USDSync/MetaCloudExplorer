@@ -3,6 +3,7 @@ import sys
 from tokenize import Double
 import omni.usd
 import omni.kit.commands
+from omni.kit.environment.core import GroundHelper
 import shutil
 import carb
 from pathlib import Path
@@ -108,13 +109,15 @@ def create_plane(self,Path:str, Name :str, Size: int, Location: Gf.Vec3f, Color:
 
     stage_ref = omni.usd.get_context().get_stage()  
 
-    omni.kit.commands.execute('AddGroundPlaneCommand',
-    stage=stage_ref,
-    planePath=Path,
-    axis="Z",
-    size=Size,
-    position=Location,
-    color=Color)
+    GroundHelper._create_default_ground(self)
+
+    # omni.kit.commands.execute('AddGroundPlaneCommand',
+    # stage=stage_ref,
+    # planePath=Path,
+    # axis="Z",
+    # size=Size,
+    # position=Location,
+    # color=Color)
 
 
 def cleanup_prim_path(self, Name: str):
@@ -181,7 +184,7 @@ def only_select_parent_prims(prim_paths):
                 parentPath = "/" + parts[1] + "/" + parts[2]
             if len(parts) == 4:
                 parentPath = "/" + parts[1] + "/" + parts[2] + "/" + parts[3]
-            if len(parts) == 5:
+            if len(parts) >= 5:
                 parentPath = "/" + parts[1] + "/" + parts[2] + "/" + parts[3] + "/" + parts[4]
             paths.append(parentPath)    
         

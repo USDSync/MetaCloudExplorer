@@ -15,6 +15,7 @@ import asyncio
 import omni.kit.commands
 from pxr import Sdf, Gf, Usd, UsdGeom
 from .prim_utils import create_plane
+from omni.physxcommands import AddGroundPlaneCommand, SetRigidBodyCommand, SetStaticColliderCommand
 
 
 def get_selection() -> List[str]:
@@ -82,7 +83,7 @@ def duplicate_prims(transforms: List = [], prim_names: List[str] = [], target_pa
             omni.kit.commands.execute("TransformPrim", path=path_to, new_transform_matrix=matrix)
 
 
-def create_prims(up_axis:str, plane_size:List[float], transforms: List = [], prim_names: List[str] = [], parent_path:str = ""):
+async def create_prims(up_axis:str, plane_size:List[float], transforms: List = [], prim_names: List[str] = [], parent_path:str = ""):
     """
     Returns generator with pairs containing transform matrices and ids to arrange multiple objects.
 
@@ -114,18 +115,27 @@ def create_prims(up_axis:str, plane_size:List[float], transforms: List = [], pri
         path = Sdf.Path(parent_path).AppendPath(prim_names[i]["group"])
         print(str(i) + " adding plane:" + str(path) + " " + str(plane_size[i]) +  " @ " + str(matrix[1]))
 
-        if prim_names[i]["group"] == "observation_deck":
-            matrix[1][0] = matrix[1][0] + 500
-            matrix[1][1] = matrix[1][1] + 500
-            matrix[1][2] = matrix[1][2] + 500
+        AddGroundPlaneCommand.execute(
+            stage_ref, path, 'Z', plane_size[i], matrix[1], Gf.Vec3f(0,0,0)
+        )
 
-        omni.kit.commands.execute('AddGroundPlaneCommand',
-        stage=stage_ref,
-        planePath=str(path), #'/RGrp/Test_Positioning'
-        axis='Z',
-        size=plane_size[i],
-        position=matrix[1],
-        color=Gf.Vec3f(0,0,0))
+        #await omni.kit.app.get_app().next_update_async()
+
+        #Move the Prim and resize it
+        #prim = stage_ref.GetPrimAtPath('/World/Plane')
+        #stage_ref.DefinePrim(path)
+
+        #omni.kit.commands.execute("MovePrim", path_from="/World/Plane", path_to=path)
+        #omni.kit.commands.execute("TransformPrim", path=path, new_transform_matrix=matrix[i])
+
+
+        # omni.kit.commands.execute('AddGroundPlaneCommand',
+        # stage=stage_ref,
+        # planePath=str(path), #'/RGrp/Test_Positioning'
+        # axis='Z',
+        # size=plane_size[i],
+        # position=matrix[1],
+        # color=Gf.Vec3f(0,0,0))
 
         i=i+1
 

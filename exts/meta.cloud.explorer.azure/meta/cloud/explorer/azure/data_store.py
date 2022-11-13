@@ -111,7 +111,6 @@ class DataStore():
         self._options_random_models[2].as_float = 1.0
         self.Load_Config_Data()
 
-
     def wipe_data(self):
         self._groups.clear()
         self._resources.clear()

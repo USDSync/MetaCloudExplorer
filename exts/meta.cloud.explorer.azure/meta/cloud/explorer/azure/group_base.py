@@ -79,7 +79,7 @@ class GroupBase(ABC):
 
             #Create new prims and then transform them
             path = str(Sdf.Path(self.root_path).AppendPath(self._view_path))
-            create_prims(
+            await create_prims(
                 transforms=transforms,
                 prim_names=self._dataStore._lcl_groups,
                 parent_path=path,
@@ -87,6 +87,8 @@ class GroupBase(ABC):
                 plane_size=self._dataStore._lcl_sizes
             )
 
+            await omni.kit.app.get_app().next_update_async()
+            
             #DEBUG
             i=0
             for grp in self._dataStore._lcl_groups:

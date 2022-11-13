@@ -222,6 +222,9 @@ class MainView(ui.Window):
         asyncio.ensure_future(self.clear_stage())
         
         self._stageManager.ShowStage(viewType)
+        self._stage = omni.usd.get_context().get_stage()
+
+        omni.kit.commands.execute("AddPhysicsScene", stage=self._stage, path="/World/PhysicsScene")
 
     #load the resource onto the stage
     def load_resources(self):

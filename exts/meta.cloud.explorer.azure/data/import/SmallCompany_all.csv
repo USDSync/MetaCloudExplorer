@@ -51,9 +51,6 @@ cf442821-7f9f-4846-9dc4-6bccd4d861db-dashboard (nftbotweb Dashboard),Shared dash
 testbot,SQL server,bot-resources,West US 2,Subscription 2,35
 botlabstorage,Storage account,bot-resources,West US 3,Subscription 2,40
 NerdioManagerMSP,Managed application,nmmrgmao,West US,Subscription 3,0
-observation chair,Observation_Chair,observation_deck,West US,Subscription 4,0
-leather jacket,Leather_Jacket,observation_deck,West US,Subscription 4,0
-coat rack,Coat_Rack,observation_deck,West US,Subscription 4,0
 USDSync,Azure DevOps organization,usdsync,North Central US,Subscription 3,0
 cloudprojects,Storage account,usdsync,West US,Subscription 3,40
 mcsdstorage,Storage account,usdsync,West US 2,Subscription 3,40
