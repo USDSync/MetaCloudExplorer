@@ -99,13 +99,13 @@ class MainView(ui.Window):
     #___________________________________________________________________________________________________
 
     def on_docs(self):
-        webbrowser.open_new("https://github.com/CloudArchitectLive/MetaCloudExplorer/wiki/Meta-Cloud-Explorer-(Azure)")
+        webbrowser.open_new("https://github.com/USDSync/MetaCloudExplorer/wiki")
 
     def on_code(self):
         webbrowser.open_new("http://metacloudexplorer.com")
 
     def on_help(self):
-        webbrowser.open_new("https://github.com/CloudArchitectLive/MetaCloudExplorer/issues")
+        webbrowser.open_new("https://github.com/USDSync/MetaCloudExplorer/issues")
 
     #Callback invoked when data model changes
     def model_changed(self):
@@ -327,8 +327,9 @@ class MainView(ui.Window):
                     ui.Button("Clear imported Data", clicked_fn=lambda: self._dataManager.wipe_data())            
                     ui.Button("Import Data Files", clicked_fn=lambda: self._dataManager.load_csv_files())            
                 with ui.HStack():
-                    ui.Button("Load Sample Company", clicked_fn=lambda: self._dataManager.load_sample_company())            
-                    ui.Button("Load Shapes Library", clicked_fn=lambda: self._dataManager.load_sample_resources())                                
+                    ui.Button("Load Small Company", clicked_fn=lambda: self._dataManager.load_small_company())            
+                    ui.Button("Load Large Company", clicked_fn=lambda: self._dataManager.load_large_company())            
+                    ui.Button("Load Shapes Library", clicked_fn=lambda: self._dataManager.load_sample_resources())        
 
     def _build_connection(self):
 

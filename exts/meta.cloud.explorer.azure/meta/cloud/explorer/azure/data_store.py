@@ -5,7 +5,12 @@ import carb
 from .Singleton import Singleton
 import omni.ui as ui
 from .combo_box_model import ComboBoxModel
-import pickle
+from pathlib import Path
+import os
+
+CURRENT_PATH = Path(__file__).parent
+DATA_PATH = CURRENT_PATH.joinpath("temp")
+RES_PATH = CURRENT_PATH.parent.parent.parent.parent.joinpath("data\\resources")
 
 
 @Singleton
@@ -176,30 +181,6 @@ class DataStore():
         if self._options_random_models[2].as_float >= 0:
             settings.set("/persistent/exts/meta.cloud.explorer.azure/z_random_count", self._options_random_models[2].as_float)                        
 
-        # #Serailize dictionaries
-        # pickle.dump(self._aad_count, open('aad_count', 'w'))
-        # pickle.dump(self._subscription_count, open('subscription_count', 'w'))
-        # pickle.dump(self._location_count, open('location_count', 'w'))
-        # pickle.dump(self._group_count, open('group_count', 'w'))
-        # pickle.dump(self._type_count, open('type_count', 'w'))
-        # pickle.dump(self._tag_count, open('tag_count', 'w'))
-
-        # #aggregated data (costs)
-        # pickle.dump(self._aad_cost, open('aad_count', 'w'))
-        # pickle.dump(self._subscription_cost, open('subscription_cost', 'w'))
-        # pickle.dump(self._location_cost, open('location_cost', 'w'))
-        # pickle.dump(self._group_cost, open('group_cost', 'w'))
-        # pickle.dump(self._type_cost, open('type_cost', 'w'))
-        # pickle.dump(self._tag_cost, open('tag_cost', 'w'))
-
-        # #mapped resources (indexes)
-        # pickle.dump(self._map_aad, open('map_aad', 'w'))
-        # pickle.dump(self._map_subscription, open('map_subscription', 'w'))
-        # pickle.dump(self._map_location, open('map_location', 'w'))
-        # pickle.dump(self._map_group, open('map_group', 'w'))
-        # pickle.dump(self._map_type, open('map_type', 'w'))
-        # pickle.dump(self._map_tag, open('map_tag', 'w'))
-
 
 
     #Load Saved config data                        
@@ -210,6 +191,12 @@ class DataStore():
         self._azure_tenant_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_tenant_id")
         self._azure_client_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_client_id")
         self._azure_subscription_id = settings.get("/persistent/exts/meta.cloud.explorer.azure/azure_subscription_id")
+
+        try:
+            self._azure_client_secret = os.getenv('MCE_CLIENT_SECRET')
+        except:
+            self._azure_client_secret= ""
+            
         self._source_of_data = settings.get("/persistent/exts/meta.cloud.explorer.azure/last_data_source")
         self._bgl_file_path = settings.get("/persistent/exts/meta.cloud.explorer.azure/bgl_file_path")
         self._bgm_file_path = settings.get("/persistent/exts/meta.cloud.explorer.azure/bgm_file_path")
@@ -226,7 +213,8 @@ class DataStore():
             self._options_random_models[0].set_value(float(settings.get("/persistent/exts/meta.cloud.explorer.azure/x_random_count")))
             self._options_random_models[1].set_value(float(settings.get("/persistent/exts/meta.cloud.explorer.azure/y_random_count")))
             self._options_random_models[2].set_value(float(settings.get("/persistent/exts/meta.cloud.explorer.azure/z_random_count")))
-        except: #set dfeualts
+        except: #set defualts
+            self._last_view_type = "ByGroup"
             self._composition_scale_model.set_value(1.0)
             self._options_count_models[0].set_value(10)
             self._options_count_models[1].set_value(10)
@@ -238,6 +226,13 @@ class DataStore():
             self._options_random_models[1].set_value(1.0)
             self._options_random_models[2].set_value(1)
 
+        #set defaults
+        if self._bgl_file_path is None: 
+            self._bgl_file_path = RES_PATH.joinpath("grid_green.png")
+            self._bgm_file_path = RES_PATH.joinpath("grid_blue.png")
+            self._bgh_file_path = RES_PATH.joinpath("grid_red.png")
+            self.Save_Config_Data()
+            
         # #Reload dictionaries
         # self._aad_count = pickle.load(open('aad_count', 'r'))
         # self._subscription_count = pickle.load(open('subscription_count', 'r'))
@@ -262,7 +257,6 @@ class DataStore():
         # self._map_type = pickle.load(open('map_type', 'r'))
         # self._map_tag = pickle.load(open('map_tag', 'r'))
 
-#-- SINGLETON SUPPORT
 #-- SINGLETON SUPPORT
 
     def instance(self):

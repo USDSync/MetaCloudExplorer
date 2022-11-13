@@ -15,7 +15,7 @@ changelog = "docs/CHANGELOG.md"
 repository = "https://github.com/USDSync/MetaCloudExplorer"
 
 # Keywords for the extension
-keywords = ["Azure", "USD Sync", "CloudArchitect.live", "Meta Cloud Explorer", "scene authoring tools"]
+keywords = ["Azure", "USD Sync", "Cloud Infrastructure", "Visualization", "Scene composition"]
 
 # Use omni.ui to build simple UI
 [dependencies]
