@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [2022.3.0] - 2022-11-27
+### Added
+- update for 2022.3, Requires Omni.Phyx.Commands extension, python library workaround outlined on wiki.
+
 ## [2022.1.3-pre] - 2022-09-08
 ### Added
 - updated readme, some issues with release tag pulling main instead.
