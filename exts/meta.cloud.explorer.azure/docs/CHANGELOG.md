@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [2022.3.0] - 2022-11-21
+### Added
+- Azure Integration Fixed! (with workaround)
+https://github.com/USDSync/MetaCloudExplorer/wiki/Adding-an-addition-Python-library-to-your-machine.
 
 ## [2022.1.3.262] - 2022-09-19 (262)
 ### Added
