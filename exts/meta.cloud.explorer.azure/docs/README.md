@@ -11,17 +11,11 @@ This extension generates digital models of your Azure Cloud Infrastructure that 
 Make sure to install the Azure 3D Icon Library!
 https://github.com/USDSync/MetaCloudExplorer/wiki/Installing-3D-Icon-library-locally
 
-2022.2.0
-This version CANNOT CONNECT** to Azure's live Resource Management API!
-(live connection supported in MCE 2022.1.1)
+2022.3.0
+This version connects to Azure's live Resource Management API!
 
 This version requires the Omni.Physx.Commands extension to be installed.
 This version requires the Omni.Viewport.Utility extension be installed.
-This version works fine with sample data and offline data files.
+
 This version enables resource Object / Info widgets!
-This version will become the main branch once 2021.1.3+ supports the azure-identity library.
-*Compatible with Omniverse code 2022.1.2, 2022.1.3+
-
-**This version was created to enable Object / Info widgets, but using 2022.1.2 and 2022.1.3 causes azure-identity to fail due to:
-
-https://forums.developer.nvidia.com/t/pip-library-wont-load-in-2021-1-2/222719/3
+*Compatible with Omniverse code 2022.1.2, 2022.1.3+, 2022.2.0, 2022.3.0

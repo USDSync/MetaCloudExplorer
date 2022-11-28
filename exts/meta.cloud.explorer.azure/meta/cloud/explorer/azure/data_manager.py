@@ -2,8 +2,7 @@
 from typing import Dict
 from .Singleton import Singleton
 from .csv_data_manager import CSVDataManager
-from .azure_data_manager_stub import AzureDataManager
-#Azure API disabled in this version, due to:
+from .azure_data_manager import AzureDataManager
 
 from .data_store import DataStore
 from .prim_utils import cleanup_prim_path, draw_image

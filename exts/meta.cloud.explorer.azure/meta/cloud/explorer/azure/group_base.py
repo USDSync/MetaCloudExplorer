@@ -83,7 +83,7 @@ class GroupBase(ABC):
                 transforms=transforms,
                 prim_names=self._dataStore._lcl_groups,
                 parent_path=path,
-                up_axis="Z",
+                up_axis="Y",
                 plane_size=self._dataStore._lcl_sizes
             )
 

@@ -53,8 +53,9 @@ async def create_and_place_prim(self,
 
     #Are we still set to default? Change cube size and position
     if shapeToRender == "omniverse://localhost/MCE/3dIcons/scene.usd":
-        scale = 3.0
-        position[2] = position[2] + 30 #Buffer the cube off the z
+        scale = 4.0
+        rotation = Gf.Vec3f(90,0,0)
+        position[2] = position[2] + 60 #Buffer the cube off the z
 
     #CUSTOM SHAPE OVERRIDES
     if prim_name.lower() == "observation_chair":

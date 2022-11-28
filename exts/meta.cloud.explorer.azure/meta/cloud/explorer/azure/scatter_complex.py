@@ -17,7 +17,7 @@ def distributePlanes(
     #print("UpAxis = " + UpAxis)
     random.seed(seed)
 
-    if(UpAxis == 'Z'):
+    if(UpAxis == 'Y'):
         nUpPlane = count[0]*count[1]
     elif(UpAxis == 'X'):
         nUpPlane = count[1]*count[2]

@@ -1,7 +1,7 @@
 [package]
 title = "Meta Cloud Explorer (Azure)"
 description="An Omniverse scene authoring tool to help visualize your Azure Infrastructure in your own private Metaverse!"
-version = "2022.1.3"
+version = "2022.3.0"
 category = "Browsers"
 authors = ["USDSync.com, MetaCloudExplorer.com - Gavin Stevens"]
 preview_image = "data/resources/azurescaled.png"
@@ -31,9 +31,10 @@ requirements = [
      "pandas",
      "numpy",
      "azure-mgmt-resource",
-     "azure-identity",
-     "typing-extensions"
+     "azure-identity"
 ]
+
+use_online_index = true
 
 # Main python module this extension provides, it will be publicly available as "import meta.cloud.explorer.azure".
 [[python.module]]

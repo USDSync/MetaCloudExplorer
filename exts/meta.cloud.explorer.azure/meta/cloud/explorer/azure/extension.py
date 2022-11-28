@@ -15,15 +15,8 @@ from .viewport_scene import ViewportScene
 from .object_info_model import ObjectInfoModel
 from .widget_info_model import WidgetInfoModel
 
-## AZURE API DISABLED IN 2022.1.3, due to PIP library problem wtih typing_extensions library.
-
-#omni.kit.pipapi.install("azure-identity", module="azure-identity", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
-#omni.kit.pipapi.install("azure-mgmt-resource", module="azure-mgmt-resource", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
-#omni.kit.pipapi.install("pandas", module="pandas", ignore_import_check=True, ignore_cache=True, surpress_output=False,use_online_index=True )
-#sys.path.append("D:/python37/lib/site-packages")
-#print(sys.modules.keys())
-#from azure.mgmt.resource import ResourceManagementClient
-#from azure.identity import AzureCliCredential
+from azure.mgmt.resource import ResourceManagementClient
+from azure.identity import AzureCliCredential
 
 # Any class derived from `omni.ext.IExt` in top level module (defined in `python.modules` of `extension.toml`)
 # will be instantiated when extension gets enabled and `on_startup(ext_id)` will be called.

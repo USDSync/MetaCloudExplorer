@@ -98,8 +98,8 @@ class StageManager():
         if self._last_view_type is None:
             self._last_view_type = "ByGroup"
 
-        self._upAxis="Z"
-        self._shapeUpAxis="Z"
+        self._upAxis="Y"
+        self._shapeUpAxis="Y"
         self.ActiveView = self.SetActiveView(self._last_view_type)
 
     def SetActiveView(self, viewType:str):
