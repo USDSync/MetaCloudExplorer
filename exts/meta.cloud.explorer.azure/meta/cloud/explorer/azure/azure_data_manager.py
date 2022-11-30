@@ -6,9 +6,9 @@ import sys
 from datetime import datetime
 import omni.kit.notification_manager as nm
 
-import typing_extensions
-from importlib import reload
-reload(typing_extensions)
+#import typing_extensions
+#from importlib import reload
+#reload(typing_extensions)
 
 sys.path.append("D:/python37/lib/site-packages")
 
