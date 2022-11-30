@@ -165,6 +165,7 @@ def get_parent_child_prim_path(self, groupPath:Sdf.Path, resName:str):
 
 def only_select_parent_prims(prim_paths):
         
+    try:
         paths = []
 
         for path in prim_paths:
@@ -190,6 +191,8 @@ def only_select_parent_prims(prim_paths):
             paths.append(parentPath)    
         
         return paths
+    except:
+        print("Oops!", sys.exc_info()[0], "occurred.")
 
 
 def get_font_size_from_length(nameLength:int):
