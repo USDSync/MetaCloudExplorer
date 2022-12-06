@@ -1,5 +1,5 @@
 import glob
-from PIL import Image, ImageDraw, ImageFont, ImageDraw
+from PIL import Image, ImageDraw, ImageFont
 import io
 import asyncio
 import os
